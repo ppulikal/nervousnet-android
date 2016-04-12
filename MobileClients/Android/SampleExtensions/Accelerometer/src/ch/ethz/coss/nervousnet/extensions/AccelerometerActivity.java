@@ -1,6 +1,5 @@
 package ch.ethz.coss.nervousnet.extensions;
 
-import ch.ethz.coss.nervousnet.extensions.R;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import ch.ethz.coss.nervousnet.extensions.util.SystemUiHider;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.Utils;
@@ -41,33 +39,30 @@ public class AccelerometerActivity extends Activity {
 
 	TextView accel_X, accel_Y, accel_Z, errorView;
 	LinearLayout reading, error;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_accelerometer);
 
-
-		Button aboutButton = (Button)findViewById(R.id.about_button);
+		Button aboutButton = (Button) findViewById(R.id.about_button);
 		aboutButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-            	Intent intent = new Intent(AccelerometerActivity.this, AboutActivity.class);
-        		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        		startActivity(intent);
-            }
-        });
-		
-		Button startButton = (Button)findViewById(R.id.startButton);
+			public void onClick(View v) {
+				Intent intent = new Intent(AccelerometerActivity.this, AboutActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				startActivity(intent);
+			}
+		});
+
+		Button startButton = (Button) findViewById(R.id.startButton);
 		startButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-            	startActivity(getPackageManager().getLaunchIntentForPackage("ch.ethz.coss.nervousnet.hub"));
-            	System.exit(0);
-            }
-        });
-		
-		
-		
+			public void onClick(View v) {
+				startActivity(getPackageManager().getLaunchIntentForPackage("ch.ethz.coss.nervousnet.hub"));
+				System.exit(0);
+			}
+		});
+
 		reading = (LinearLayout) findViewById(R.id.reading);
 		error = (LinearLayout) findViewById(R.id.error);
 		accel_X = (TextView) findViewById(R.id.accel_x);
@@ -93,11 +88,13 @@ public class AccelerometerActivity extends Activity {
 							"Download Now", new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int id) {
 									try {
-									    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=ch.ethz.coss.nervousnet.hub")));
+										startActivity(new Intent(Intent.ACTION_VIEW,
+												Uri.parse("market://details?id=ch.ethz.coss.nervousnet.hub")));
 									} catch (android.content.ActivityNotFoundException anfe) {
-									    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=ch.ethz.coss.nervousnet.hub")));
+										startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
+												"https://play.google.com/store/apps/details?id=ch.ethz.coss.nervousnet.hub")));
 									}
-									
+
 								}
 							}, "Exit", new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int id) {
@@ -145,9 +142,7 @@ public class AccelerometerActivity extends Activity {
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 
-		
 	}
-
 
 	void initConnection() {
 
@@ -235,11 +230,11 @@ public class AccelerometerActivity extends Activity {
 			accel_X.setText("" + aReading.getX());
 			accel_Y.setText("" + aReading.getY());
 			accel_Z.setText("" + aReading.getZ());
-			 reading.setVisibility(View.VISIBLE);
-			 error.setVisibility(View.INVISIBLE);
+			reading.setVisibility(View.VISIBLE);
+			error.setVisibility(View.INVISIBLE);
 		} else {
-			 error.setVisibility(View.VISIBLE);
-			 reading.setVisibility(View.INVISIBLE);
+			error.setVisibility(View.VISIBLE);
+			reading.setVisibility(View.INVISIBLE);
 		}
 
 	}
