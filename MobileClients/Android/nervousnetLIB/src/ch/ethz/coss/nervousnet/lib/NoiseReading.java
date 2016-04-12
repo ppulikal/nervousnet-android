@@ -50,7 +50,7 @@ public class NoiseReading extends SensorReading {
 	}
 
 	public void readFromParcel(Parcel in) {
-		timestamp = in.readInt();
+		timestamp = in.readLong();
 		dbValue = in.readFloat();
 	}
 

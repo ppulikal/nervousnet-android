@@ -52,7 +52,7 @@ public class LightReading extends SensorReading {
 
 	public void readFromParcel(Parcel in) {
 
-		timestamp = in.readInt();
+		timestamp = in.readLong();
 		value = in.readFloat();
 	}
 
