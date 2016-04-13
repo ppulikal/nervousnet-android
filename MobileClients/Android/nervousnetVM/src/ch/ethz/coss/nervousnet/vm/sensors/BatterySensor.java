@@ -92,16 +92,6 @@ public class BatterySensor implements SensorStatusImplementation {
 	public void readBattery() {
 		IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 		Intent batteryStatus = context.registerReceiver(null, ifilter);
-		int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-		int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-		int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-		boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING
-				|| status == BatteryManager.BATTERY_STATUS_FULL;
-		int chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
-		boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
-		boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
-		float batteryPct = level / (float) scale;
-
 		reading = extractBatteryData(batteryStatus);
 		dataReady();
 
@@ -136,9 +126,10 @@ public class BatterySensor implements SensorStatusImplementation {
 		boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
 		boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
 		float batteryPct = level / (float) scale;
+		String technology = batteryStatus.getExtras().getString(BatteryManager.EXTRA_TECHNOLOGY);
 
 		reading = new BatteryReading(System.currentTimeMillis(), batteryPct, isCharging, usbCharge,
-				acCharge, temp, volt, health);
+				acCharge, temp, volt, health, technology);
 		return reading;
 	}
 

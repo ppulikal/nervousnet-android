@@ -43,9 +43,10 @@ public class BatteryReading extends SensorReading {
 	private float temp = 0;
 	private int volt = 0;
 	private byte health = 0; // 0 = Unknown, -1 is not supported
+	private String tech;
 
 	public BatteryReading(long timestamp, float batteryPercent, boolean isCharging, boolean isUsbCharge,
-			boolean isAcCharge, float temp, int volt, byte health) {
+			boolean isAcCharge, float temp, int volt, byte health, String tech) {
 		this.type = LibConstants.SENSOR_BATTERY;
 		this.timestamp = timestamp;
 		this.percent = batteryPercent;
@@ -54,6 +55,7 @@ public class BatteryReading extends SensorReading {
 		this.temp = temp;
 		this.volt = volt;
 		this.health = health;
+		this.tech = tech;
 	}
 
 	public BatteryReading(boolean isCollect) {
@@ -78,6 +80,7 @@ public class BatteryReading extends SensorReading {
 		temp = in.readFloat();
 		volt = in.readInt();
 		health = in.readByte();
+		tech = in.readString();
 
 	}
 
@@ -106,6 +109,7 @@ public class BatteryReading extends SensorReading {
 		out.writeFloat(temp);
 		out.writeInt(volt);
 		out.writeByte(health);
+		out.writeString(tech);
 
 	}
 
@@ -161,6 +165,13 @@ public class BatteryReading extends SensorReading {
 	 */
 	public byte getHealth() {
 		return health;
+	}
+	
+	/**
+	 * @return the technology String
+	 */
+	public String getTechnology() {
+		return tech;
 	}
 
 	/**
