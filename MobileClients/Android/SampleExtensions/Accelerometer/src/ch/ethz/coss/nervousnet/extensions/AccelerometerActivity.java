@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.DeadObjectException;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -24,10 +25,12 @@ import ch.ethz.coss.nervousnet.lib.Utils;
 
 public class AccelerometerActivity extends Activity {
 
+	/**********Step 1 for nervousnet HUB API's**********/
 	protected NervousnetRemote mService;
 	private ServiceConnection mServiceConnection;
 	private Boolean bindFlag;
-
+	/***********END OF STEP 1**************/
+	
 	int m_interval = 100; // 100 milliseconds by default, can be changed later
 	Handler m_handler = new Handler();
 	Runnable m_statusChecker;
@@ -64,7 +67,8 @@ public class AccelerometerActivity extends Activity {
 		accel_Y = (TextView) findViewById(R.id.accel_y);
 		accel_Z = (TextView) findViewById(R.id.accel_z);
 		errorView = (TextView) findViewById(R.id.error_tv);
-		/*************/
+		
+		/***********STEP 2 for nervousnet HUB API's************/
 		if (mServiceConnection == null) {
 			initConnection();
 		}
@@ -130,7 +134,7 @@ public class AccelerometerActivity extends Activity {
 			//
 
 		}
-		/*************/
+		/**********END OF STEP 2**************/
 	}
 
 	@Override
@@ -138,7 +142,16 @@ public class AccelerometerActivity extends Activity {
 		super.onPostCreate(savedInstanceState);
 
 	}
+	
+	@Override
+	public void onBackPressed() {
 
+		doUnbindService();
+		finish();
+		System.exit(0);
+	}
+
+	/*********STEP3 for nervousnet HUB API's********/
 	void initConnection() {
 
 		Log.d("AccelerometerActivity", "Inside initConnection");
@@ -162,28 +175,7 @@ public class AccelerometerActivity extends Activity {
 
 				mService = NervousnetRemote.Stub.asInterface(service);
 
-				// try {
-				// count.setText(mService.getCounter() + "");
-				// } catch (RemoteException e) {
-				// // TODO Auto-generated catch block
-				// e.printStackTrace();
-				// }
-
-				// try {
-				// BatteryReading reading = mService.getBatteryReading();
-				// System.out.println("onServiceConnected 2");
-				// if(reading != null)
-				// counter.setText(reading.getBatteryPercent()+"");
-				// else
-				// counter.setText("Null object returned");
-				// } catch (RemoteException e) {
-				// // TODO Auto-generated catch block
-				// System.out.println("Exception thrown here");
-				// e.printStackTrace();
-				// }
-				// m_handler.post(m_statusChecker);
-
-				startRepeatingTask();
+					startRepeatingTask();
 				Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
 						.show();
 				Log.d("AccelerometerActivity", "Binding is done - Service connected");
@@ -220,13 +212,19 @@ public class AccelerometerActivity extends Activity {
 	protected void update() throws RemoteException {
 
 		if (mService != null) {
-			AccelerometerReading aReading = mService.getAccelerometerReading();
+			AccelerometerReading aReading = null;
+			try {	
+			aReading = mService.getAccelerometerReading();
 
 			accel_X.setText("" + aReading.getX());
 			accel_Y.setText("" + aReading.getY());
 			accel_Z.setText("" + aReading.getZ());
 			reading.setVisibility(View.VISIBLE);
 			error.setVisibility(View.INVISIBLE);
+			} catch (DeadObjectException doe) {
+				// TODO Auto-generated catch block
+				doe.printStackTrace();
+			} 
 		} else {
 			error.setVisibility(View.VISIBLE);
 			reading.setVisibility(View.INVISIBLE);
@@ -247,5 +245,5 @@ public class AccelerometerActivity extends Activity {
 		bindFlag = false;
 		Log.d("AccelerometerActivity ", "doUnbindService successfull");
 	}
-
+	/*********END OF STEP3********/
 }

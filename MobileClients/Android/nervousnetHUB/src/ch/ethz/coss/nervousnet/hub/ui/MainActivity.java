@@ -70,16 +70,16 @@ public class MainActivity extends BaseActivity {
 			startNextActivity(new Intent(MainActivity.this, SensorDisplayActivity.class));
 			break;
 		case 1:
-			startNextActivity(new Intent(MainActivity.this, AnalyticsActivity.class));
+//			startNextActivity(new Intent(MainActivity.this, AnalyticsActivity.class));
 			break;
 		case 2:
 			startNextActivity(new Intent(MainActivity.this, ShowcaseActivity.class));
 			break;
 		case 3:
-			startNextActivity(new Intent(MainActivity.this, SettingsActivity.class));
+//			startNextActivity(new Intent(MainActivity.this, SettingsActivity.class));
 			break;
 		case 4:
-			startNextActivity(new Intent(MainActivity.this, HelpActivity.class));
+//			startNextActivity(new Intent(MainActivity.this, HelpActivity.class));
 			break;
 		case 5:
 			startNextActivity(new Intent(MainActivity.this, AboutActivity.class));
