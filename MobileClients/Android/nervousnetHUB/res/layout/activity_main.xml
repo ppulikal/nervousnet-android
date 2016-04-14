@@ -16,7 +16,8 @@
         android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"
         android:textColor="@color/red"
-        android:verticalSpacing="10dp" >
+        android:verticalSpacing="10dp" 
+        android:stretchMode="columnWidth">
     </GridView>
 
 </RelativeLayout>

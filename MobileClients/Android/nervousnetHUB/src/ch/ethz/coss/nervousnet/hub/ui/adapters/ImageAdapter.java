@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 
@@ -79,6 +80,7 @@ public class ImageAdapter extends BaseAdapter {
 		// Add The Image!!!
 		ImageView iv = (ImageView) MyView.findViewById(R.id.grid_item_image);
 		iv.setImageResource(mThumbIds[position]);
+		iv.setScaleType(ScaleType.FIT_XY);
 
 		return MyView;
 	}

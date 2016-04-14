@@ -8,17 +8,18 @@
     android:duplicateParentState="false"
     android:gravity="left"
     android:longClickable="false"
-    android:paddingBottom="@dimen/listitem_vertical_margin"
-    android:paddingLeft="2dp"
-    android:paddingRight="16dp" >
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
 
     <ImageView
         android:id="@+id/logo_small"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/action_bar_logo_width"
+        android:layout_height="@dimen/action_bar_logo_height"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:paddingTop="5dp"
+        android:paddingLeft="5dp"
         android:src="@drawable/logo" />
 
     <Switch
@@ -27,9 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:switchMinWidth="30dp"
+        android:switchMinWidth="@dimen/switch_min_width"
         android:text="Data Collection"
-        android:textSize="10sp"
+        android:textSize="@dimen/switch_label_size"
         android:thumb="@drawable/thumb"
         android:track="@drawable/track" />
 
