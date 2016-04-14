@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.DeadObjectException;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -25,10 +26,12 @@ import ch.ethz.coss.nervousnet.lib.Utils;
 
 public class LightmeterActivity extends Activity {
 
+	/**********Step 1 for nervousnet HUB API's**********/
 	protected NervousnetRemote mService;
 	private ServiceConnection mServiceConnection;
 	private Boolean bindFlag;
-
+	/***********END OF STEP 1**************/
+	
 	int m_interval = 100; // 100 milliseconds by default, can be changed later
 	Handler m_handler = new Handler();
 	Runnable m_statusChecker;
@@ -66,7 +69,8 @@ public class LightmeterActivity extends Activity {
 		error = (LinearLayout) findViewById(R.id.error);
 		lux = (TextView) findViewById(R.id.lux);
 		errorView = (TextView) findViewById(R.id.error_tv);
-		/*************/
+		
+		/***********STEP 2 for nervousnet HUB API's************/
 		if (mServiceConnection == null) {
 			initConnection();
 		}
@@ -108,7 +112,7 @@ public class LightmeterActivity extends Activity {
 
 			
 		}
-		/*************/
+		/**********END OF STEP 2**************/
 	}
 
 	@Override
@@ -117,16 +121,24 @@ public class LightmeterActivity extends Activity {
 
 		
 	}
+	
+	@Override
+	public void onBackPressed() {
 
+		doUnbindService();
+		finish();
+		System.exit(0);
+	}
 
+	/*********STEP3 for nervousnet HUB API's********/
 	void initConnection() {
-
 		Log.d("LightmeterActivity", "Inside initConnection");
 		mServiceConnection = new ServiceConnection() {
 
 			@Override
 			public void onServiceDisconnected(ComponentName name) {
 				Log.d("LightmeterActivity", "Inside onServiceDisconnected 2");
+				stopRepeatingTask();
 				mService = null;
 				mServiceConnection = null;
 				Toast.makeText(getApplicationContext(), "NervousnetRemote Service not connected", Toast.LENGTH_SHORT)
@@ -139,27 +151,6 @@ public class LightmeterActivity extends Activity {
 				Log.d("LightmeterActivity", "onServiceConnected");
 
 				mService = NervousnetRemote.Stub.asInterface(service);
-
-				// try {
-				// count.setText(mService.getCounter() + "");
-				// } catch (RemoteException e) {
-				// // TODO Auto-generated catch block
-				// e.printStackTrace();
-				// }
-
-				// try {
-				// BatteryReading reading = mService.getBatteryReading();
-				// System.out.println("onServiceConnected 2");
-				// if(reading != null)
-				// counter.setText(reading.getBatteryPercent()+"");
-				// else
-				// counter.setText("Null object returned");
-				// } catch (RemoteException e) {
-				// // TODO Auto-generated catch block
-				// System.out.println("Exception thrown here");
-				// e.printStackTrace();
-				// }
-				// m_handler.post(m_statusChecker);
 
 				startRepeatingTask();
 				Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
@@ -198,11 +189,16 @@ public class LightmeterActivity extends Activity {
 	protected void update() throws RemoteException {
 
 		if (mService != null) {
-			LightReading lReading = mService.getLightReading();
-
-			 lux.setText("" + lReading.getLuxValue());
-			 reading.setVisibility(View.VISIBLE);
-			 error.setVisibility(View.INVISIBLE);
+			LightReading lReading = null;
+			try {
+				lReading = mService.getLightReading();
+				lux.setText("" + lReading.getLuxValue());
+				reading.setVisibility(View.VISIBLE);
+				error.setVisibility(View.INVISIBLE);
+			} catch (DeadObjectException doe) {
+				// TODO Auto-generated catch block
+				doe.printStackTrace();
+			} 
 		} else {
 			 error.setVisibility(View.VISIBLE);
 			 reading.setVisibility(View.INVISIBLE);
@@ -214,14 +210,14 @@ public class LightmeterActivity extends Activity {
 		Log.d("LightmeterActivity", "doBindService successfull");
 		Intent it = new Intent();
 		it.setClassName("ch.ethz.coss.nervousnet.hub", "ch.ethz.coss.nervousnet.hub.NervousnetHubApiService");
-		bindFlag = getApplicationContext().bindService(it, mServiceConnection, 0);
+		bindFlag = bindService(it, mServiceConnection, 0);
 
 	}
 
 	protected void doUnbindService() {
-		getApplicationContext().unbindService(mServiceConnection);
+		unbindService(mServiceConnection);
 		bindFlag = false;
 		Log.d("LightmeterActivity ", "doUnbindService successfull");
 	}
-
+	/*********END OF STEP3********/
 }
