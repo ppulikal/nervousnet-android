@@ -11,13 +11,6 @@ public class QueryHandler {
 		return 0;
 	}
 	
-	
-//	public ArrayList getReadings(int sensorID) {
-//		
-//	}
-	
-	
-		
-		
+   
 	
 }

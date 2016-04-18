@@ -1,5 +1,6 @@
 package ch.ethz.coss.nervousnet.vm;
 
+import java.util.List;
 import java.util.UUID;
 
 import android.content.Context;
@@ -26,13 +27,15 @@ import ch.ethz.coss.nervousnet.vm.storage.LocationData;
 import ch.ethz.coss.nervousnet.vm.storage.LocationDataDao;
 import ch.ethz.coss.nervousnet.vm.storage.NoiseData;
 import ch.ethz.coss.nervousnet.vm.storage.NoiseDataDao;
+import ch.ethz.coss.nervousnet.vm.storage.PressureData;
+import ch.ethz.coss.nervousnet.vm.storage.PressureDataDao;
 import ch.ethz.coss.nervousnet.vm.storage.SensorDataImpl;
+import de.greenrobot.dao.query.QueryBuilder;
 import ch.ethz.coss.nervousnet.vm.storage.DaoMaster.DevOpenHelper;
 
 
 public class NervousnetVM {
 
-//	private static NervousnetVM nervousVM;
 	private static String TAG = "NERVOUS_VM";
 	private static String DB_NAME = "NN-DB";
 	
@@ -50,13 +53,7 @@ public class NervousnetVM {
 	LocationDataDao locDao;
 	ConnectivityDataDao connDao;
 	GyroDataDao gyroDao;
-	
-//	public static synchronized  NervousnetVM getInstance(Context context) {
-//		if (nervousVM == null) {
-//			nervousVM = new NervousnetVM(context);
-//		}
-//		return nervousVM;
-//	}
+	PressureDataDao pressureDao;
 
 	public NervousnetVM(Context context) {
 		Log.d(TAG, "Inside constructor");
@@ -87,6 +84,7 @@ public class NervousnetVM {
 		 
 		 noiseDao = daoSession.getNoiseDataDao();
 		 
+		 pressureDao = daoSession.getPressureDataDao();
 	    boolean hasVMConfig = loadVMConfig();
 		if (!hasVMConfig) {
 			Log.d(TAG, "Inside Constructure after loadVMConfig() no config found. Create a new config.");
@@ -223,6 +221,75 @@ public class NervousnetVM {
 	}
 	
 
+	
+	public synchronized List getSensorReadings(int type, long startTime, long endTime) {
+		QueryBuilder qb = null;
+		
+		switch(type) {
+		case LibConstants.SENSOR_ACCELEROMETER:
+			 qb = accDao.queryBuilder();
+			 qb.where(AccelDataDao.Properties.TimeStamp.between(startTime, endTime));
+			 
+			return qb.list();
+		case LibConstants.SENSOR_BATTERY:
+			 qb = battDao.queryBuilder();
+			 qb.where(BatteryDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+			return qb.list();
+		case LibConstants.SENSOR_DEVICE:
+			
+			//TODO
+			return null;	
+		case LibConstants.SENSOR_LOCATION:
+			qb = locDao.queryBuilder();
+			 qb.where(LocationDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+			return qb.list();		
+		case LibConstants.SENSOR_BLEBEACON:
+			//TODO
+			return null;
+		case LibConstants.SENSOR_CONNECTIVITY:
+			qb = connDao.queryBuilder();
+			 qb.where(ConnectivityDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+			return qb.list();
+		case LibConstants.SENSOR_GYROSCOPE:
+			qb = gyroDao.queryBuilder();
+			 qb.where(GyroDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+			return qb.list();
+		case LibConstants.SENSOR_HUMIDITY:
+			//TODO
+			return null;
+		case LibConstants.SENSOR_LIGHT:
+			qb = lightDao.queryBuilder();
+			qb.where(LightDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+			return qb.list();
+		case LibConstants.SENSOR_MAGNETIC:
+			//TODO
+			return null;
+		case LibConstants.SENSOR_NOISE:
+			qb = noiseDao.queryBuilder();
+			 qb.where(NoiseDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+			return qb.list();
+		case LibConstants.SENSOR_PRESSURE:
+			qb = pressureDao.queryBuilder();
+			 qb.where(PressureDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+			return qb.list();
+		case LibConstants.SENSOR_PROXIMITY:
+				//TODO
+			return null;
+		case LibConstants.SENSOR_TEMPERATURE:
+				//TODO
+			return null;
+			
+		}
+		return null;
+		
+	}
 
 	public synchronized boolean storeSensor(SensorDataImpl sensorData) {
 		Log.d(TAG, "Inside storeSensor ");
@@ -300,6 +367,10 @@ public class NervousnetVM {
 			noiseDao.insert(noiseData);
 			return true;
 		case LibConstants.SENSOR_PRESSURE:
+			PressureData pressureData = (PressureData) sensorData;
+			Log.d(TAG, "PressureData table count = "+pressureDao.count());
+			Log.d(TAG, "Inside Switch, pressureData Type = (Type = "+pressureData.getType()+", Timestamp = "+pressureData.getTimeStamp()+", Volatility = "+pressureData.getVolatility());
+			pressureDao.insert(pressureData);
 			return true;
 		case LibConstants.SENSOR_PROXIMITY:
 			return true;
