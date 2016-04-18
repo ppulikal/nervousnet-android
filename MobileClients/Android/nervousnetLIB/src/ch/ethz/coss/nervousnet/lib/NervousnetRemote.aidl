@@ -7,24 +7,24 @@ import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
+import java.util.List;
 
-	interface NervousnetRemote
+interface NervousnetRemote
 	{
+		AccelerometerReading getAccelerometerReading();
+		
 		BatteryReading getBatteryReading();
-	    
-	    LocationReading getLocationReading();
-	    
-	    LightReading getLightReading();
-	    
-	    AccelerometerReading getAccelerometerReading();
 	    
 	    ConnectivityReading getConnectivityReading();
 	    
 	    GyroReading getGyroReading();
+	 
+	    LocationReading getLocationReading();
+	    
+	    LightReading getLightReading();
 	    
 	    NoiseReading getNoiseReading();
 	    
-	    float getStdev(int type);
-	    
-	    float getVar(int type);
+	    List getReadings(int type, long startTime, long endTime);
+	   
 	}
