@@ -71,20 +71,4 @@ public abstract class SensorReading implements Parcelable {
 	}
 	
 	
-	public abstract void readFromParcel(Parcel in);
-	
-	public abstract void writeToParcel(Parcel out, int flags);
-	
-	
-	public static final Parcelable.Creator<ProximityReading> CREATOR = new Parcelable.Creator<ProximityReading>() {
-		@Override
-		public ProximityReading createFromParcel(Parcel in) {
-			return new ProximityReading(in);
-		}
-
-		@Override
-		public ProximityReading[] newArray(int size) {
-			return new ProximityReading[size];
-		}
-	};
 }

@@ -230,7 +230,10 @@ public class NervousnetVM {
 			 qb = accDao.queryBuilder();
 			 qb.where(AccelDataDao.Properties.TimeStamp.between(startTime, endTime));
 			 
-			return qb.list();
+			 List list = qb.list();
+			 Log.d(TAG, "List size = "+list.size());
+			 
+			 return qb.list();
 		case LibConstants.SENSOR_BATTERY:
 			 qb = battDao.queryBuilder();
 			 qb.where(BatteryDataDao.Properties.TimeStamp.between(startTime, endTime));

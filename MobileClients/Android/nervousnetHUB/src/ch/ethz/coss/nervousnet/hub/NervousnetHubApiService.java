@@ -189,29 +189,47 @@ public class NervousnetHubApiService extends Service implements SensorEventListe
 
 	private final NervousnetRemote.Stub mBinder = new NervousnetRemote.Stub() {
 
-		
 		@Override
-		public SensorReading getReading(int type){
-			switch(type){
-			case LibConstants.SENSOR_ACCELEROMETER:
-					return accReading;
-			case LibConstants.SENSOR_BATTERY:
-				return batteryReading;
-			case LibConstants.SENSOR_CONNECTIVITY:
-				return connReading;
-			case LibConstants.SENSOR_GYROSCOPE:
-				return gyroReading;
-			case LibConstants.SENSOR_LIGHT:
-				return lightReading;
-			case LibConstants.SENSOR_LOCATION:
-				return locReading;
-			case LibConstants.SENSOR_NOISE:
-				return noiseReading;
-					default:
-						return null;
-			}
+		public LightReading getLightReading() throws RemoteException {
+			Log.d(LOG_TAG, "Light reading requested ");
+			return lightReading;
 		}
-	
+
+		@Override
+		public BatteryReading getBatteryReading() throws RemoteException {
+			Log.d(LOG_TAG, "Battery reading requested ");
+			return batteryReading;
+		}
+
+		@Override
+		public LocationReading getLocationReading() throws RemoteException {
+			Log.d(LOG_TAG, "Location reading requested ");
+			return locReading;
+		}
+
+		@Override
+		public AccelerometerReading getAccelerometerReading() throws RemoteException {
+			Log.d(LOG_TAG, "Accelerometer reading requested ");
+			return accReading;
+		}
+
+		@Override
+		public GyroReading getGyroReading() throws RemoteException {
+			Log.d(LOG_TAG, "Gyroscope reading requested ");
+			return gyroReading;
+		}
+
+		@Override
+		public ConnectivityReading getConnectivityReading() throws RemoteException {
+			Log.d(LOG_TAG, "Connectivity reading requested ");
+			return connReading;
+		}
+
+		@Override
+		public NoiseReading getNoiseReading() throws RemoteException {
+			Log.d(LOG_TAG, "Noise reading requested ");
+			return noiseReading;
+		}
 
 		@Override
 		public List getReadings(int type, long startTime, long endTime){
@@ -220,6 +238,7 @@ public class NervousnetHubApiService extends Service implements SensorEventListe
 			return  ((Application) getApplicationContext()).readSensorData(type, startTime, endTime);
 
 		}
+	
 	};
 
 	@Override

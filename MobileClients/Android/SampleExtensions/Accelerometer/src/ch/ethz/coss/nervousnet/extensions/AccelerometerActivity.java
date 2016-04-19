@@ -178,13 +178,15 @@ public class AccelerometerActivity extends Activity {
 				Log.d("AccelerometerActivity", "onServiceConnected");
 
 				mService = NervousnetRemote.Stub.asInterface(service);
-				try {
-					List list =  mService.getReadings(LibConstants.SENSOR_ACCELEROMETER, System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(20, TimeUnit.DAYS), System.currentTimeMillis());
-					Log.d("AccelerometerActivity", "List size is "+list.size());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+//				try {
+//				Used for testing getReadings method
+//					List list = mService.getReadings(LibConstants.SENSOR_ACCELEROMETER, System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS), System.currentTimeMillis());
+//					Thread.sleep(1000);
+//					Log.d("AccelerometerActivity", "List size retrived is "+list.size());
+//				} catch (RemoteException | InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 					startRepeatingTask();
 				Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
 						.show();
@@ -224,7 +226,7 @@ public class AccelerometerActivity extends Activity {
 		if (mService != null) {
 			AccelerometerReading aReading = null;
 			try {	
-			aReading = (AccelerometerReading) mService.getReading(LibConstants.SENSOR_ACCELEROMETER);
+			aReading = mService.getAccelerometerReading();
 
 			accel_X.setText("" + aReading.getX());
 			accel_Y.setText("" + aReading.getY());
