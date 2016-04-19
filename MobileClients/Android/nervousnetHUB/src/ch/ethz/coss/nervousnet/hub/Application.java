@@ -26,6 +26,9 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub;
 
+
+import java.util.List;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -38,9 +41,10 @@ import ch.ethz.coss.nervousnet.vm.NervousnetVM;
 import ch.ethz.coss.nervousnet.vm.storage.SensorDataImpl;
 
 public class Application extends android.app.Application {
+	
 	private static String LOG_TAG = Application.class.getSimpleName();
 	private static int NOTIFICATION = R.string.local_service_started;
-
+    
 	private static NotificationManager mNM;
 	private NervousnetVM nn_VM;
 
@@ -149,4 +153,8 @@ public class Application extends android.app.Application {
 		nn_VM.storeSensorAsync(sensorData);
 	}
 
+	@SuppressWarnings("rawtypes")
+	public List readSensorData(int type, long startTime, long endTime) {
+		return nn_VM.getSensorReadings(type, startTime, endTime);
+	}
 }

@@ -65,6 +65,7 @@ import ch.ethz.coss.nervousnet.hub.ui.fragments.HumidFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.LightFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.LocationFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.NoiseFragment;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
@@ -389,35 +390,34 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
 			switch (index) {
 			case 0:
-				updateStatus(mService.getAccelerometerReading(), index);
+				updateStatus(mService.getReading(LibConstants.SENSOR_ACCELEROMETER), index);
 				break;
 			case 1:
-				updateStatus(mService.getBatteryReading(), index);
+				updateStatus(mService.getReading(LibConstants.SENSOR_BATTERY), index);
 				break;
 			case 2:
 				// beacons
 				break;
 			case 3:
-				updateStatus(mService.getConnectivityReading(), index);
+				updateStatus(mService.getReading(LibConstants.SENSOR_CONNECTIVITY), index);
 				break;
 			case 4:
-				updateStatus(mService.getGyroReading(), index);
+				updateStatus(mService.getReading(LibConstants.SENSOR_GYROSCOPE), index);
 				break;
 			case 5:
 				// HUmidity
 				break;
 			case 6:
-				updateStatus(mService.getLocationReading(), index);
+				updateStatus(mService.getReading(LibConstants.SENSOR_LOCATION), index);
 				break;
 			case 7:
-				updateStatus(mService.getLightReading(), index);
+				updateStatus(mService.getReading(LibConstants.SENSOR_LIGHT), index);
 				break;
 			case 8:
 				// Magnetic
 				break;
-
 			case 9:
-				updateStatus(mService.getNoiseReading(), index);
+				updateStatus(mService.getReading(LibConstants.SENSOR_NOISE), index);
 				break;
 
 			}

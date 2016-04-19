@@ -1,5 +1,8 @@
 package ch.ethz.coss.nervousnet.extensions;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -19,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.Utils;
 
@@ -174,7 +178,13 @@ public class AccelerometerActivity extends Activity {
 				Log.d("AccelerometerActivity", "onServiceConnected");
 
 				mService = NervousnetRemote.Stub.asInterface(service);
-
+				try {
+					List list =  mService.getReadings(LibConstants.SENSOR_ACCELEROMETER, System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(20, TimeUnit.DAYS), System.currentTimeMillis());
+					Log.d("AccelerometerActivity", "List size is "+list.size());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 					startRepeatingTask();
 				Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
 						.show();
@@ -214,7 +224,7 @@ public class AccelerometerActivity extends Activity {
 		if (mService != null) {
 			AccelerometerReading aReading = null;
 			try {	
-			aReading = mService.getAccelerometerReading();
+			aReading = (AccelerometerReading) mService.getReading(LibConstants.SENSOR_ACCELEROMETER);
 
 			accel_X.setText("" + aReading.getX());
 			accel_Y.setText("" + aReading.getY());
