@@ -73,7 +73,7 @@ Root <br>
  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>nervousnetLIB</b> <i>( nervousnet Library Project. Native Axon App projects should include into their project)</i><br>
  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>nervousnetVM</b> <i>( nervousnet Virtual Machine, required by the main project)</i><br>
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
+ &nbsp;  |<br> 
  &nbsp; -- <b>Resources</b> <i>( Contains all resource, raw images and final images that are used for the nervousnet Android Project)</i><br>
 </small>
 
