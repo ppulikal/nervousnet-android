@@ -23,37 +23,33 @@ boundary for you. The code to do that marshalling is tedious to write, so Androi
 https://developer.android.com/guide/components/aidl.html<br><br>
 
 ![alt tag](https://github.com/nervousnet/nervousnet-android/blob/master/Resources/Images/Others/ppt_screens/Slide3.jpg)
-
+<br>
 ####Terminology
 #####Mobile App - Native Mobile Application built for Android and iOS platforms. <br>
-<ul>
-<li>Allows users to view and share various Sensor related Data</li><br>
-<li>Required to be installed for running external apps (Axons) built using nervousnet PlatformAPI’s.</li><br>
-<li>Acts like a connectivity hub for external products like smartwatches, beacons and external sensors that want to share sensor data with the nervousnet platform.</li><br>
-<li>Android version uses background Services to enable third party apps and extensions to connect and share data with the Nervousnet platform.</li><br>
-<li>iOS version uses WebViews and allows for external Axons to run inside a WebView container.</li><br>
-</ul>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Allows users to view and share various Sensor related Data<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Required to be installed for running external apps (Axons) built using nervousnet PlatformAPI’s.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Acts like a connectivity hub for external products like smartwatches, beacons and external sensors that want to share sensor data with the nervousnet platform.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Android version uses background Services to enable third party apps and extensions to connect and share data with the Nervousnet platform.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- iOS version uses WebViews and allows for external Axons to run inside a WebView container.<br><br>
+
 #####Axons (Native)- Native Android apps, Smart devices, beacons that can connect to the nervousnet HUB mobile app.<br>
-<ul>
-<li>Uses the nervousnet Platform API's to receive and share sensor data.</li><br>
-<li>Works only in Android devices. </li><br>
-<li>Uses the Android background services feature.</li><br>
-<li>Possibility of using Bluetooth, Wi-Fi Direct to do connect to the nervousnet mobile app.</li><br>
-</ul>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Uses the nervousnet Platform API's to receive and share sensor data.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Works only in Android devices.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Uses the Android background services feature.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Possibility of using Bluetooth, Wi-Fi Direct to do connect to the nervousnet mobile app.<br><br>
+
 #####Axons - HTML, JavaScript and CSS applications that run inside WebView containers inside the nervousnet apps. <br>
-<ul>
-<li>Currently supported on the iOS platform.</li><br>
-<li>Android Platform support in the next phase.</li><br>
-</ul>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Currently supported on the iOS platform.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Android Platform support in the next phase.<br><br>
+
 #####nervousnet CORE – Distributed and Decentralized set of Servers <br>
-<ul>
-<li>Used to store and collect Data shared by Clients (Mobile & Web), IOT Hardware sensors and devices, partner platforms and more.</li><br>
-<li>Individual Servers are called nervousnet Nodes.</li><br>
-<li>Mobile Clients will have the option of selecting a server from a list.</li><br>
-</ul>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Used to store and collect Data shared by Clients (Mobile & Web), IOT Hardware sensors and devices, partner platforms and more.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Individual Servers are called nervousnet Nodes.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Mobile Clients will have the option of selecting a server from a list.<br><br>
+
 
 ![alt tag](https://github.com/nervousnet/nervousnet-android/blob/master/Resources/Images/Others/ppt_screens/Slide5.jpg)
-
+<br>
 ### GitHub structure
 <small>
 Root <br>
