@@ -5,6 +5,15 @@ The planetary nervous system is enabled by Internet of Things technologies and a
 
 The social sensing services of the planetary nervous system can be publicly used for building novel innovative applications. Whether you would like to detect an earthquake, perform a secure evacuation or discover the hot spots of a visited city, the Planetary Nervous system makes this possible by collectively sensing social activity of participatory citizens.
 
+### Research<br>
+The nervousnet project and related services is based on the research mentioned below:<br>
+E. Pournaras, I. Moise and D. Helbing,<br>
+<b><i>Privacy-preserving Ubiquitous Social Mining via Modular and Compositional Virtual Sensors </b></i><br>
+in the proceedings of the 29th IEEE International Conference on Advanced Information Networking and Applications-AINA-2015, pages 332-338, Gwangju, South Korea, March 2015. © IEEE<br>
+
+https://github.com/nervousnet/nervousnet-android/blob/master/Documents/Architecture/Research_Paper_nervousnet.pdf
+
+
 
 ### Architecture<br>
 The Android nervousnet mobile application is based on the concept of Bound Services and Android Interface Definition
