@@ -63,15 +63,17 @@ Root <br>
  &nbsp; -- <b>Documents</b> <i>(Contains all documentation related to nervousnet and the Android Project)</i><br>
  |<br>
  &nbsp; -- <b>Mobile Clients</b> <i>( Contains nervousnet mobile app Android Project)</i><br>
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>Sample Extensionss</b> <i>( Contains native Axon App projects)</i><br>
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>nervousnetHUB</b> <i>( Main nervousnet Android Mobile App Project)</i><br>
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>nervousnetLIB</b> <i>( nervousnet Library Project. Native Axon App projects should include into their project)</i><br>
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>nervousnetVM</b> <i>( nervousnet Virtual Machine, required by the main project)</i><br>
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>Android</b><br>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>Sample Extensionss</b> <i>( Contains native Axon App projects)</i><br>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>nervousnetHUB</b> <i>( Main nervousnet Android Mobile App Project)</i><br>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>nervousnetLIB</b> <i>( nervousnet Library Project. Native Axon App projects should include into their project)</i><br>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -- <b>nervousnetVM</b> <i>( nervousnet Virtual Machine, required by the main project)</i><br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  |<br> 
  &nbsp; -- <b>Resources</b> <i>( Contains all resource, raw images and final images that are used for the nervousnet Android Project)</i><br>
 </small>
 
