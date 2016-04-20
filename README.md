@@ -23,7 +23,30 @@ boundary for you. The code to do that marshalling is tedious to write, so Androi
 https://developer.android.com/guide/components/aidl.html<br><br>
 
 ![alt tag](https://github.com/nervousnet/nervousnet-android/blob/master/Resources/Images/Others/ppt_screens/Slide3.jpg)
-![alt tag](https://github.com/nervousnet/nervousnet-android/blob/master/Resources/Images/Others/ppt_screens/Slide4.jpg)
+
+##Mobile App- Native Mobile Application built for Android and iOS platforms. 
+Allows users to view and share various Sensor related Data
+Required to be installed for running external apps (Axons) built using nervousnet PlatformAPI’s.
+Acts like a connectivity hub for external products like smartwatches, beacons and external sensors that want to share sensor data with the nervousnet platform.
+Android version uses background Services to enable third party apps and extensions to connect and share data with the Nervousnet platform.
+iOS version uses WebViews and allows for external Axons to run inside a WebView container.
+
+##Axons (Native)- Native Android apps, Smart devices, beacons that can connect to the nervousnet HUB mobile app.
+Uses the nervousnet Platform API's to receive and share sensor data.  
+Works only in Android devices
+Uses the Android background services feature.
+Possibility of using Bluetooth, Wi-Fi Direct to do connect to the nervousnet mobile app.
+
+##Axons - HTML, JavaScript and CSS applications that run inside WebView containers inside the nervousnet apps. 
+Currently supported on the iOS platform.
+Android Platform support in the next phase.
+
+##nervousnet CORE – Distributed and Decentralized set of Servers 
+Used to store and collect Data shared by Clients (Mobile & Web), IOT Hardware sensors and devices, partner platforms and more.
+Individual Servers are called nervousnet Nodes. 
+Mobile Clients will have the option of selecting a server from a list.
+
+
 ![alt tag](https://github.com/nervousnet/nervousnet-android/blob/master/Resources/Images/Others/ppt_screens/Slide5.jpg)
 ### Support or Contact
 For more information or support check out our website http://www.nervousnet.info
