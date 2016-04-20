@@ -53,5 +53,19 @@ https://developer.android.com/guide/components/aidl.html<br><br>
 </ul>
 
 ![alt tag](https://github.com/nervousnet/nervousnet-android/blob/master/Resources/Images/Others/ppt_screens/Slide5.jpg)
+
+### GitHub structure
+<small>
+Root <br>
+ |<br>
+ &nbsp; -- <b>Deliverables</b> <i>( Contains installables, apk files for nervousnet mobile app.)</i><br>
+ |<br>
+ &nbsp; -- <b>Documents</b> <i>(Contains all documentation related to nervousnet and the Android Project)</i><br>
+ |<br>
+ &nbsp; -- <b>Mobile Clients</b> <i>( Contains nervousnet main Mobile Projact and Sample Native Axons (Extensions) Projects built for demo purposes)</i><br>
+ |<br>
+ &nbsp; -- <b>Resources</b> <i>( Contains all images and other resources that are useful for the nervousnet Android Project)</i><br>
+</small>
+
 ### Support or Contact
 For more information or support check out our website http://www.nervousnet.info
