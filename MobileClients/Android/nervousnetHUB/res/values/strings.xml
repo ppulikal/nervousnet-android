@@ -14,10 +14,10 @@ Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
     <string name="title_data_retention">Data Retention</string>
     <string name="default_checkbox_data_retention"></string>
     <string name="title_data_privacy">Data Privacy</string>
-    <string name="app_name">nervousnet HUB</string>
+    <string name="app_name">nervousnet</string>
     <string name="button_accept_label">Accept</string>
-    <string name="local_service_started">Nervousnet Service Running</string>
-    <string name="local_service_label">Nervousnet HUB</string>
+    <string name="local_service_started">nervousnet Service Running</string>
+    <string name="local_service_label">nervousnet</string>
 
     <string-array name="main_grid">
         <item>Sensors</item>
