@@ -156,7 +156,7 @@ public class BatteryReading extends SensorReading {
 	/**
 	 * @return the volt
 	 */
-	public long getVolt() {
+	public int getVolt() {
 		return volt;
 	}
 

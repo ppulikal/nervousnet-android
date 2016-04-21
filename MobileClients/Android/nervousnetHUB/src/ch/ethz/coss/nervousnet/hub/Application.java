@@ -27,6 +27,7 @@
 package ch.ethz.coss.nervousnet.hub;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Notification;
@@ -34,6 +35,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+
 import android.util.Log;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.hub.ui.StartUpActivity;
@@ -154,7 +156,7 @@ public class Application extends android.app.Application {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public List readSensorData(int type, long startTime, long endTime) {
-		return nn_VM.getSensorReadings(type, startTime, endTime);
+	public void readSensorData(int type, long startTime, long endTime, ArrayList list) {
+		 nn_VM.getSensorReadings(type, startTime, endTime, list);
 	}
 }

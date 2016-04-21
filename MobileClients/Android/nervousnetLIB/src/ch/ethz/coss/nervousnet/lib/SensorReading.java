@@ -69,6 +69,15 @@ public abstract class SensorReading implements Parcelable {
 
 	public SensorReading(boolean isCollect) {
 	}
+	/**
+	 * @param in
+	 */
+	public SensorReading(Parcel in) {
+		readFromParcel(in);
+	}
 	
+	public abstract void readFromParcel(Parcel in);
+	
+	public static Parcelable.Creator<SensorReading> CREATOR;
 	
 }

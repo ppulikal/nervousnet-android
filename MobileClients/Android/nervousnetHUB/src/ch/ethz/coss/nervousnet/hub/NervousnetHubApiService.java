@@ -24,6 +24,7 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
@@ -65,6 +66,7 @@ import ch.ethz.coss.nervousnet.vm.sensors.LocationSensor.LocationSensorListener;
 import ch.ethz.coss.nervousnet.vm.sensors.NoiseSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.NoiseSensor.NoiseSensorListener;
 import ch.ethz.coss.nervousnet.vm.storage.AccelData;
+import ch.ethz.coss.nervousnet.vm.storage.BatteryData;
 import ch.ethz.coss.nervousnet.vm.storage.ConnectivityData;
 import ch.ethz.coss.nervousnet.vm.storage.GyroData;
 import ch.ethz.coss.nervousnet.vm.storage.LightData;
@@ -232,14 +234,16 @@ public class NervousnetHubApiService extends Service implements SensorEventListe
 		}
 
 		@Override
-		public List getReadings(int type, long startTime, long endTime){
+		public void getReadings(int type, long startTime, long endTime, List list) {
 			Log.d(LOG_TAG, "getReadings of Type = "+type+" requested ");
+			 ((Application) getApplicationContext()).readSensorData(type, startTime, endTime, (ArrayList)list);
 			
-			return  ((Application) getApplicationContext()).readSensorData(type, startTime, endTime);
-
 		}
+		
+
 	
 	};
+
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -532,6 +536,14 @@ public class NervousnetHubApiService extends Service implements SensorEventListe
 					true);
 			sensorData.setType(LibConstants.SENSOR_ACCELEROMETER);
 			return sensorData;
+			
+		case LibConstants.SENSOR_BATTERY:
+//			BatteryReading breading = (BatteryReading) reading;
+//			sensorData = new BatteryData(null, breading.timestamp, breading.getPercent(), breading.getCharging_type(), breading.getHealth(), breading.getTemp(), breading.getVolt(), breading.volatility, breading.isShare);
+//			sensorData.setType(LibConstants.SENSOR_BATTERY);
+//			return sensorData;
+			
+			return null;
 
 		case LibConstants.SENSOR_GYROSCOPE:
 			GyroReading greading = (GyroReading) reading;

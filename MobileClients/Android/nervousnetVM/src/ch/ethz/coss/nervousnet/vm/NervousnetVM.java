@@ -1,5 +1,7 @@
 package ch.ethz.coss.nervousnet.vm;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,7 +10,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
+import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
+import ch.ethz.coss.nervousnet.lib.BatteryReading;
+import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
+import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
+import ch.ethz.coss.nervousnet.lib.LightReading;
+import ch.ethz.coss.nervousnet.lib.LocationReading;
+import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.storage.AccelData;
 import ch.ethz.coss.nervousnet.vm.storage.AccelDataDao;
 import ch.ethz.coss.nervousnet.vm.storage.BatteryData;
@@ -221,76 +230,120 @@ public class NervousnetVM {
 	}
 	
 
+	private synchronized SensorReading convertSensorDataToSensorReading(SensorDataImpl data) {
+		Log.d(TAG, "convertSensorDataToSensorReading reading Type = " + data.getType());
+		SensorReading reading = null;
+
+		switch (data.getType()) {
+		case LibConstants.SENSOR_ACCELEROMETER:
+			AccelData adata = (AccelData) data;
+			reading = new AccelerometerReading(adata.getTimeStamp(), new float[] {adata.getX(), adata.getY(), adata.getZ()});
+			reading.type = LibConstants.SENSOR_ACCELEROMETER;
+			
+			return reading;
+			
+		case LibConstants.SENSOR_BATTERY:
+			
+//			BatteryData bdata = (BatteryData) data;
+//			reading = new BatteryReading(bdata.getTimeStamp(), bdata.getPercent(), false, false, false, state, state, state, null});
+//			reading.type = LibConstants.SENSOR_BATTERY;
+			
+			return reading;
+
+		case LibConstants.SENSOR_GYROSCOPE:
+			
+			return reading;
+
+		case LibConstants.SENSOR_CONNECTIVITY:
+			
+			return reading;
+
+		case LibConstants.SENSOR_LIGHT:
+			return reading;
+
+		case LibConstants.SENSOR_LOCATION:
+			
+			return reading;
+
+		default:
+			return null;
+
+		}
+	}
 	
-	public synchronized List getSensorReadings(int type, long startTime, long endTime) {
+	public synchronized void getSensorReadings(int type, long startTime, long endTime, ArrayList list) {
 		QueryBuilder qb = null;
 		
 		switch(type) {
 		case LibConstants.SENSOR_ACCELEROMETER:
 			 qb = accDao.queryBuilder();
 			 qb.where(AccelDataDao.Properties.TimeStamp.between(startTime, endTime));
-			 
-			 List list = qb.list();
+			 ArrayList aList = (ArrayList) qb.list();
+			 Iterator<SensorDataImpl> iterator = aList.iterator();
+				while (iterator.hasNext()) {
+					 list.add(convertSensorDataToSensorReading(iterator.next()));
+				}
+			  
+			
 			 Log.d(TAG, "List size = "+list.size());
 			 
-			 return qb.list();
+			 return;
 		case LibConstants.SENSOR_BATTERY:
 			 qb = battDao.queryBuilder();
 			 qb.where(BatteryDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-			return qb.list();
+			 return;
 		case LibConstants.SENSOR_DEVICE:
 			
 			//TODO
-			return null;	
+			return;	
 		case LibConstants.SENSOR_LOCATION:
 			qb = locDao.queryBuilder();
 			 qb.where(LocationDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-			return qb.list();		
+			return ;		
 		case LibConstants.SENSOR_BLEBEACON:
 			//TODO
-			return null;
+			return ;
 		case LibConstants.SENSOR_CONNECTIVITY:
 			qb = connDao.queryBuilder();
 			 qb.where(ConnectivityDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-			return qb.list();
+			return;
 		case LibConstants.SENSOR_GYROSCOPE:
 			qb = gyroDao.queryBuilder();
 			 qb.where(GyroDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-			return qb.list();
+			return;
 		case LibConstants.SENSOR_HUMIDITY:
 			//TODO
-			return null;
+			return;
 		case LibConstants.SENSOR_LIGHT:
 			qb = lightDao.queryBuilder();
 			qb.where(LightDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-			return qb.list();
+			return;
 		case LibConstants.SENSOR_MAGNETIC:
 			//TODO
-			return null;
+			return;
 		case LibConstants.SENSOR_NOISE:
 			qb = noiseDao.queryBuilder();
 			 qb.where(NoiseDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-			return qb.list();
+			return;
 		case LibConstants.SENSOR_PRESSURE:
 			qb = pressureDao.queryBuilder();
 			 qb.where(PressureDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-			return qb.list();
+			return;
 		case LibConstants.SENSOR_PROXIMITY:
 				//TODO
-			return null;
+			return;
 		case LibConstants.SENSOR_TEMPERATURE:
 				//TODO
-			return null;
+			return;
 			
 		}
-		return null;
 		
 	}
 

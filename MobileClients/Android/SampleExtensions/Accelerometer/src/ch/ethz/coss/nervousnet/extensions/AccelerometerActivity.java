@@ -1,5 +1,6 @@
 package ch.ethz.coss.nervousnet.extensions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -178,15 +179,15 @@ public class AccelerometerActivity extends Activity {
 				Log.d("AccelerometerActivity", "onServiceConnected");
 
 				mService = NervousnetRemote.Stub.asInterface(service);
-//				try {
+				try {
+					ArrayList list = new ArrayList();
 //				Used for testing getReadings method
-//					List list = mService.getReadings(LibConstants.SENSOR_ACCELEROMETER, System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS), System.currentTimeMillis());
-//					Thread.sleep(1000);
-//					Log.d("AccelerometerActivity", "List size retrived is "+list.size());
-//				} catch (RemoteException | InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+					mService.getReadings(LibConstants.SENSOR_ACCELEROMETER, System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS), System.currentTimeMillis(), list);
+					Log.d("AccelerometerActivity", "list size = "+list.size());
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 					startRepeatingTask();
 				Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
 						.show();
@@ -258,4 +259,5 @@ public class AccelerometerActivity extends Activity {
 		Log.d("AccelerometerActivity ", "doUnbindService successfull");
 	}
 	/*********END OF STEP3********/
+
 }
