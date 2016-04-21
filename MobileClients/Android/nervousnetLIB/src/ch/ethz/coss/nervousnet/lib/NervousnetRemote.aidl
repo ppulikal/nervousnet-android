@@ -7,7 +7,6 @@ import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
-import ch.ethz.coss.nervousnet.lib.ReadingListCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 
 import java.util.List;
