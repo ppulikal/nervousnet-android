@@ -33,3 +33,9 @@ interface NervousnetRemote
 	       
 	   
 	}
+	/*Methods to be added
+	getAverage, getCorrelation, getEntropy, getKMeans,
+	 getLargest, getMaxValue, getMeanSquare, getMedian,
+	getMinValue, getRankLargest, getRankSmallest, getRms,
+	 getRmsError, getSensorDescriptorList, getSmallest, getSum,
+	  getSumSquare, getTimeRange, sd, var*/
