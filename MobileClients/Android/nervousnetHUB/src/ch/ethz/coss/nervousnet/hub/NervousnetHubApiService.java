@@ -554,33 +554,46 @@ public class NervousnetHubApiService extends Service implements SensorEventListe
 		
 		switch (sensorType) {
 		case LibConstants.SENSOR_ACCELEROMETER:
+			if(accReading != null) 
 			return accReading;
+			return new ErrorReading(new String[] {"101", " Reading object is null"});
 			
 		case LibConstants.SENSOR_BATTERY:
+			if(batteryReading != null) 
 			return batteryReading;
 
+			return new ErrorReading(new String[] {"101", " Reading object is null"});
+			
 		case LibConstants.SENSOR_GYROSCOPE:
+			if(gyroReading != null) 
 			return gyroReading;
+			
+			return new ErrorReading(new String[] {"101", " Reading object is null"});
 
 		case LibConstants.SENSOR_CONNECTIVITY:
+			if(connReading != null) 
 			return connReading;
+			
+			return new ErrorReading(new String[] {"101", " Reading object is null"});
 
 		case LibConstants.SENSOR_LIGHT:
-			if(lightReading != null) {
-				
-				System.out.println("Light not null");
+			if(lightReading != null) 
 				return lightReading;
-				
-			}
-			else{
-				System.out.println("Light is null");
-				return new ErrorReading(new String[] {"101", "Light Reading object is null"});
-
-			}
-		
+			
+				return new ErrorReading(new String[] {"101", " Reading object is null"});
+	
 		case LibConstants.SENSOR_LOCATION:
+			if(locReading != null) 
 			return locReading;
-
+			
+			return new ErrorReading(new String[] {"101", "Light Reading object is null"});
+			
+		case LibConstants.SENSOR_NOISE:
+			if(noiseReading != null) 
+			return noiseReading;
+			
+			return new ErrorReading(new String[] {"101", " Reading object is null"});
+			
 		default:
 			return null;
 		}
