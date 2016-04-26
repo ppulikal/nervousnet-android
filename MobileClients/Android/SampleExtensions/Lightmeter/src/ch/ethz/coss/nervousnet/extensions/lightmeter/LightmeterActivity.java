@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.Utils;
@@ -191,10 +192,18 @@ public class LightmeterActivity extends Activity {
 		if (mService != null) {
 			LightReading lReading = null;
 			try {
-				lReading = mService.getLightReading();
-				lux.setText("" + lReading.getLuxValue());
-				reading.setVisibility(View.VISIBLE);
-				error.setVisibility(View.INVISIBLE);
+				lReading = (LightReading) mService.getReading(LibConstants.SENSOR_LIGHT);
+				if(lReading != null) {
+
+					lux.setText("" + lReading.getLuxValue());
+					reading.setVisibility(View.VISIBLE);
+					error.setVisibility(View.INVISIBLE);
+				}else  {
+					lux.setText("Light object is null");
+					reading.setVisibility(View.INVISIBLE);
+					error.setVisibility(View.VISIBLE);
+				}
+					
 			} catch (DeadObjectException doe) {
 				// TODO Auto-generated catch block
 				doe.printStackTrace();
