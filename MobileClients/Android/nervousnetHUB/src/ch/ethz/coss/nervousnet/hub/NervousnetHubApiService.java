@@ -48,6 +48,7 @@ import android.widget.Toast;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.BatteryReading;
 import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
@@ -191,57 +192,22 @@ public class NervousnetHubApiService extends Service implements SensorEventListe
 
 	private final NervousnetRemote.Stub mBinder = new NervousnetRemote.Stub() {
 
-		@Override
-		public LightReading getLightReading() throws RemoteException {
-			Log.d(LOG_TAG, "Light reading requested ");
-			return lightReading;
-		}
+	
 
 		@Override
-		public BatteryReading getBatteryReading() throws RemoteException {
-			Log.d(LOG_TAG, "Battery reading requested ");
-			return batteryReading;
+		public SensorReading getReading(int sensorType) throws RemoteException {
+			Log.d(LOG_TAG, "Sensor getReading() of Type = "+sensorType+" requested ");
+			return getLatestReading(sensorType);
 		}
-
+		
 		@Override
-		public LocationReading getLocationReading() throws RemoteException {
-			Log.d(LOG_TAG, "Location reading requested ");
-			return locReading;
-		}
-
-		@Override
-		public AccelerometerReading getAccelerometerReading() throws RemoteException {
-			Log.d(LOG_TAG, "Accelerometer reading requested ");
-			return accReading;
-		}
-
-		@Override
-		public GyroReading getGyroReading() throws RemoteException {
-			Log.d(LOG_TAG, "Gyroscope reading requested ");
-			return gyroReading;
-		}
-
-		@Override
-		public ConnectivityReading getConnectivityReading() throws RemoteException {
-			Log.d(LOG_TAG, "Connectivity reading requested ");
-			return connReading;
-		}
-
-		@Override
-		public NoiseReading getNoiseReading() throws RemoteException {
-			Log.d(LOG_TAG, "Noise reading requested ");
-			return noiseReading;
-		}
-
-		@Override
-		public void getReadings(int type, long startTime, long endTime, List list) {
-			Log.d(LOG_TAG, "getReadings of Type = "+type+" requested ");
-			 ((Application) getApplicationContext()).readSensorData(type, startTime, endTime, (ArrayList)list);
+		public void getReadings(int sensorType, long startTime, long endTime, List list) {
+			Log.d(LOG_TAG, "getReadings of Type = "+sensorType+" requested ");
+			 ((Application) getApplicationContext()).readSensorData(sensorType, startTime, endTime, (ArrayList)list);
 			
 		}
 		
 
-	
 	};
 
 
@@ -578,6 +544,45 @@ public class NervousnetHubApiService extends Service implements SensorEventListe
 		default:
 			return null;
 
+		}
+	}
+	
+	
+	public SensorReading getLatestReading(int sensorType) {
+		Log.d(LOG_TAG, "getLatestReading of Type = "+sensorType+" requested ");
+
+		
+		switch (sensorType) {
+		case LibConstants.SENSOR_ACCELEROMETER:
+			return accReading;
+			
+		case LibConstants.SENSOR_BATTERY:
+			return batteryReading;
+
+		case LibConstants.SENSOR_GYROSCOPE:
+			return gyroReading;
+
+		case LibConstants.SENSOR_CONNECTIVITY:
+			return connReading;
+
+		case LibConstants.SENSOR_LIGHT:
+			if(lightReading != null) {
+				
+				System.out.println("Light not null");
+				return lightReading;
+				
+			}
+			else{
+				System.out.println("Light is null");
+				return new ErrorReading(new String[] {"101", "Light Reading object is null"});
+
+			}
+		
+		case LibConstants.SENSOR_LOCATION:
+			return locReading;
+
+		default:
+			return null;
 		}
 	}
 
