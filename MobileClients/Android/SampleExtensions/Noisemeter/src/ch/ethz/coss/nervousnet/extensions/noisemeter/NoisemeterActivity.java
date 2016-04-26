@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
@@ -192,11 +193,17 @@ public class NoisemeterActivity extends Activity {
 	protected void update() throws RemoteException {
 
 		if (mService != null) {
-			NoiseReading nReading = mService.getNoiseReading();
+			NoiseReading nReading = (NoiseReading) mService.getReading(LibConstants.SENSOR_NOISE);
+			if(nReading != null) {
 
-			decibel.setText(nReading.getdbValue() + " dB");
-			reading.setVisibility(View.VISIBLE);
-			error.setVisibility(View.INVISIBLE);
+				decibel.setText(nReading.getdbValue() + " dB");
+				reading.setVisibility(View.VISIBLE);
+				error.setVisibility(View.INVISIBLE);
+			}else  {
+				decibel.setText("Noise Reading is null");
+				reading.setVisibility(View.INVISIBLE);
+				error.setVisibility(View.VISIBLE);
+			}
 		} else {
 			error.setVisibility(View.VISIBLE);
 			reading.setVisibility(View.INVISIBLE);
