@@ -86,6 +86,7 @@ public class GyroReading extends SensorReading {
 	 */
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
+		 out.writeString(getClass().getName());
 		out.writeLong(timestamp);
 		out.writeFloatArray(values);
 

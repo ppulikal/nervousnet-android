@@ -13,23 +13,23 @@ import java.util.List;
 
 interface NervousnetRemote
 	{
-		AccelerometerReading getAccelerometerReading();
-		
-		BatteryReading getBatteryReading();
+	
+		/*
+	 	* Returns latest Sensor values.
+	    * sensorType = type of Sensor. Check LibConstants for types.
+	    * startTime = from time , endTime = to time
+	    * returns SensorReading object
+	    */
+	    SensorReading getReading(int sensorType);
 	    
-	    ConnectivityReading getConnectivityReading();
-	    
-	    GyroReading getGyroReading();
-	 
-	    LocationReading getLocationReading();
-	    
-	    LightReading getLightReading();
-	    
-	    NoiseReading getNoiseReading();
-	    
+	    /*
+	 	* Returns Sensor values in a List of SensorReading Objects.
+	    * sensorType = type of Sensors. Check LibConstants for types.
+	    * startTime = from time , endTime = to time
+	    * list = list that will contain the returned objects of SensorReadings
+	    */
 	    void getReadings(int sensorType, long startTime, long endTime, out List list);
 	    
-
 	       
 	   
 	}

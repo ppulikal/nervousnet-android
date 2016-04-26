@@ -78,6 +78,35 @@ public abstract class SensorReading implements Parcelable {
 	
 	public abstract void readFromParcel(Parcel in);
 	
-	public static Parcelable.Creator<SensorReading> CREATOR;
+	public static Parcelable.Creator<SensorReading> CREATOR = new Parcelable.Creator<SensorReading>() {
+	     public SensorReading createFromParcel(Parcel in) {
+	         String className = in.readString();
+	         if (className.equals(AccelerometerReading.class.getName())) {
+	             return new AccelerometerReading(in);
+	         } else if (className.equals(BatteryReading.class.getName())) {
+	             return new BatteryReading(in);
+	         } else if (className.equals(ConnectivityReading.class.getName())) {
+	             return new ConnectivityReading(in);
+	         } else if (className.equals(DeviceReading.class.getName())) {
+	             return new DeviceReading(in);
+	         } else if (className.equals(GyroReading.class.getName())) {
+	             return new GyroReading(in);
+	         } else if (className.equals(LightReading.class.getName())) {
+	             return new LightReading(in);
+	         } else if (className.equals(LocationReading.class.getName())) {
+	             return new LocationReading(in);
+	         } else if (className.equals(NoiseReading.class.getName())) {
+	             return new NoiseReading(in);
+	         } else if (className.equals(ProximityReading.class.getName())) {
+	             return new ProximityReading(in);
+	         } else
+	        	 return new ErrorReading(new String[]{"100", "Sensor not found"});
+	     }
+
+	     public SensorReading[] newArray(int size) {
+	         return new SensorReading[size];
+	     }
+	};
+
 	
 }

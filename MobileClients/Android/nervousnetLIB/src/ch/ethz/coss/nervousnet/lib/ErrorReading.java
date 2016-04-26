@@ -26,25 +26,76 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.lib;
 
-public class LibConstants {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-	public static final int ERROR= 0;
-	public static final int SENSOR_DEVICE= 1;
-	public static final int SENSOR_LOCATION = 2;
-	public static final int SENSOR_ACCELEROMETER = 3;
-	public static final int SENSOR_BATTERY = 4;
-	public static final int SENSOR_BLEBEACON = 5;
-	public static final int SENSOR_CONNECTIVITY = 6;
-	public static final int SENSOR_GYROSCOPE = 7;
-	public static final int SENSOR_HUMIDITY = 8;
-	public static final int SENSOR_LIGHT = 9;
-	public static final int SENSOR_MAGNETIC = 10;
-	public static final int SENSOR_NOISE = 11;
-	public static final int SENSOR_PRESSURE = 12;
-	public static final int SENSOR_PROXIMITY = 13;
-	public static final int SENSOR_TEMPERATURE = 14;
+/**
+ * @author prasad
+ */
+public class ErrorReading extends SensorReading {
+
 	
+	private String[] errorValues = new String[3];
+
+	public ErrorReading(String[] values) {
+		this.type = LibConstants.ERROR;
+		this.errorValues = values;
+	}
+
+	/**
+	 * @param in
+	 */
+	public ErrorReading(Parcel in) {
+		readFromParcel(in);
+	}
+
+	public int getErrorCode() {
+		return Integer.parseInt(errorValues[0]);
+	}
 	
+	public String getErrorString() {
+		return errorValues[1];
+	}
+
 	
+
+	public void readFromParcel(Parcel in) {
+
+		in.readStringArray(errorValues);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.os.Parcelable#describeContents()
+	 */
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.os.Parcelable#writeToParcel(android.os.Parcel, int)
+	 */
+	@Override
+	public void writeToParcel(Parcel out, int flags) {
+		out.writeString(getClass().getName());
+		out.writeStringArray(errorValues);
+	}
+
+	public static final Parcelable.Creator<ErrorReading> CREATOR = new Parcelable.Creator<ErrorReading>() {
+		@Override
+		public ErrorReading createFromParcel(Parcel in) {
+			return new ErrorReading(in);
+		}
+
+		@Override
+		public ErrorReading[] newArray(int size) {
+			return new ErrorReading[size];
+		}
+	};
 
 }

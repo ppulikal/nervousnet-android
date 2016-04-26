@@ -180,6 +180,7 @@ public class ConnectivityReading extends SensorReading {
 	 */
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
+		out.writeString(getClass().getName());
 		out.writeLong(timestamp);
 		out.writeByte(isConnected ? (byte) 1 : (byte) 0);
 		out.writeInt(networkType);
