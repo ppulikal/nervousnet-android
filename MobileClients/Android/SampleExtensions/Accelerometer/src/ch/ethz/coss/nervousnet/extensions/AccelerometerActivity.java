@@ -227,7 +227,7 @@ public class AccelerometerActivity extends Activity {
 		if (mService != null) {
 			AccelerometerReading aReading = null;
 			try {	
-			aReading = mService.getAccelerometerReading();
+			aReading = (AccelerometerReading) mService.getReading(LibConstants.SENSOR_ACCELEROMETER);
 
 			accel_X.setText("" + aReading.getX());
 			accel_Y.setText("" + aReading.getY());
