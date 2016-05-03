@@ -11,7 +11,7 @@ E. Pournaras, I. Moise and D. Helbing,<br>
 <b><i>Privacy-preserving Ubiquitous Social Mining via Modular and Compositional Virtual Sensors </b></i><br>
 in the proceedings of the 29th IEEE International Conference on Advanced Information Networking and Applications-AINA-2015, pages 332-338, Gwangju, South Korea, March 2015. © IEEE<br>
 
-https://github.com/nervousnet/nervousnet-android/blob/master/Documents/Architecture/Research_Paper_nervousnet.pdf
+https://github.com/nervousnet/nervousnet-android/blob/master/Documents/Research_Paper_nervousnet.pdf
 
 
 
