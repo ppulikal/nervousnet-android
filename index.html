@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>nervousnet by nervousnet</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>nervousnet</h1>
+        <h2>The planetary nervous system is enabled by Internet of Things technologies and aims at seamlessly interconnecting a large number of different pervasive devices, e.g. mobile phones, smart sensors, etc. http://www.nervousnet.info </h2>
+        <a href="https://github.com/nervousnet/nervousnet-android" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h3>
+<a id="welcome-to-nervousnet-github-page" class="anchor" href="#welcome-to-nervousnet-github-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to Nervousnet GitHub Page.</h3>
+
+<p>The planetary nervous system is a large-scale distributed research platform that provides real-time social sensing services as a public good. Existing Big Data systems threaten social cohesion as they are designed to be closed, proprietary, privacy-intrusive and discriminatory. In contrast, the Planetary Nervous System is an open, privacy-preserving and participatory platform designed to be collectively built by citizens and for citizens.</p>
+
+<p>The planetary nervous system is enabled by Internet of Things technologies and aims at seamlessly interconnecting a large number of different pervasive devices, e.g. mobile phones, smart sensors, etc. For this purpose, several universal state-of-the-art protocols and communication means are introduced. A novel social sensing paradigm shift is engineered: Users are provided with freedom and incentives to share, collect and, at the same time, protect data of their digital environment in real-time. In this way, social sensing turns into a knowledge extraction service of public good.</p>
+
+<p>The social sensing services of the planetary nervous system can be publicly used for building novel innovative applications. Whether you would like to detect an earthquake, perform a secure evacuation or discover the hot spots of a visited city, the Planetary Nervous system makes this possible by collectively sensing social activity of participatory citizens.</p>
+
+<h3>
+<a id="research" class="anchor" href="#research" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Research<br>
+</h3>
+
+<p>The nervousnet project and related services is based on the research mentioned below:<br>
+E. Pournaras, I. Moise and D. Helbing,<br>
+<b><i>Privacy-preserving Ubiquitous Social Mining via Modular and Compositional Virtual Sensors </i></b><br>
+in the proceedings of the 29th IEEE International Conference on Advanced Information Networking and Applications-AINA-2015, pages 332-338, Gwangju, South Korea, March 2015. © IEEE<br></p>
+
+<p><a href="https://github.com/nervousnet/nervousnet-android/blob/master/Documents/Architecture/Research_Paper_nervousnet.pdf">https://github.com/nervousnet/nervousnet-android/blob/master/Documents/Architecture/Research_Paper_nervousnet.pdf</a></p>
+
+<h3>
+<a id="architecture" class="anchor" href="#architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Architecture<br>
+</h3>
+
+<p>The Android nervousnet mobile application is based on the concept of Bound Services and Android Interface Definition
+Language (AIDL).<br>
+<i>“A Service is an application component that can perform long-running operations in the background and does not provide a user
+interface. Another application component can start a service and it will continue to run in the background even if the user switches to
+another application. Additionally, a component can bind to a service to interact with it and even perform interprocess communication
+(IPC).” </i><br>
+<a href="https://developer.android.com/guide/components/services.html">https://developer.android.com/guide/components/services.html</a><br><br>
+<i>“A bound service offers a client-server interface that allows components to interact with the service, send requests, get results, and even do so across processes with inter-process communication (IPC).”</i><br>
+<a href="https://developer.android.com/guide/components/bound-services.html">https://developer.android.com/guide/components/bound-services.html</a><br><br>
+<i>“ AIDL allows you to define the programming interface that both the client and service agree upon in order to communicate with each
+other using interprocess communication (IPC). On Android, one process cannot normally access the memory of another process. So to
+talk, they need to decompose their objects into primitives that the operating system can understand, and marshall the objects across that
+boundary for you. The code to do that marshalling is tedious to write, so Android handles it for you with AIDL.”</i><br>
+<a href="https://developer.android.com/guide/components/aidl.html">https://developer.android.com/guide/components/aidl.html</a><br><br></p>
+
+<p><img src="https://github.com/nervousnet/nervousnet-android/blob/master/Resources/Images/Others/ppt_screens/Slide3.jpg" alt="alt tag">
+<br></p>
+
+<h4>
+<a id="terminology" class="anchor" href="#terminology" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Terminology</h4>
+
+<h5>
+<a id="mobile-app---native-mobile-application-built-for-android-and-ios-platforms-" class="anchor" href="#mobile-app---native-mobile-application-built-for-android-and-ios-platforms-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mobile App - Native Mobile Application built for Android and iOS platforms. <br>
+</h5>
+
+<p>         - Allows users to view and share various Sensor related Data<br>
+         - Required to be installed for running external apps (Axons) built using nervousnet PlatformAPI’s.<br>
+         - Acts like a connectivity hub for external products like smartwatches, beacons and external sensors that want to share sensor data with the nervousnet platform.<br>
+         - Android version uses background Services to enable third party apps and extensions to connect and share data with the Nervousnet platform.<br>
+         - iOS version uses WebViews and allows for external Axons to run inside a WebView container.<br><br></p>
+
+<h5>
+<a id="axons-native--native-android-apps-smart-devices-beacons-that-can-connect-to-the-nervousnet-hub-mobile-app" class="anchor" href="#axons-native--native-android-apps-smart-devices-beacons-that-can-connect-to-the-nervousnet-hub-mobile-app" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Axons (Native)- Native Android apps, Smart devices, beacons that can connect to the nervousnet HUB mobile app.<br>
+</h5>
+
+<p>         - Uses the nervousnet Platform API's to receive and share sensor data.<br>
+         - Works only in Android devices.<br>
+         - Uses the Android background services feature.<br>
+         - Possibility of using Bluetooth, Wi-Fi Direct to do connect to the nervousnet mobile app.<br><br></p>
+
+<h5>
+<a id="axons---html-javascript-and-css-applications-that-run-inside-webview-containers-inside-the-nervousnet-apps-" class="anchor" href="#axons---html-javascript-and-css-applications-that-run-inside-webview-containers-inside-the-nervousnet-apps-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Axons - HTML, JavaScript and CSS applications that run inside WebView containers inside the nervousnet apps. <br>
+</h5>
+
+<p>         - Currently supported on the iOS platform.<br>
+         - Android Platform support in the next phase.<br><br></p>
+
+<h5>
+<a id="nervousnet-core--distributed-and-decentralized-set-of-servers-" class="anchor" href="#nervousnet-core--distributed-and-decentralized-set-of-servers-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>nervousnet CORE – Distributed and Decentralized set of Servers <br>
+</h5>
+
+<p>         - Used to store and collect Data shared by Clients (Mobile &amp; Web), IOT Hardware sensors and devices, partner platforms and more.<br>
+         - Individual Servers are called nervousnet Nodes.<br>
+         - Mobile Clients will have the option of selecting a server from a list.<br><br></p>
+
+<p><img src="https://github.com/nervousnet/nervousnet-android/blob/master/Resources/Images/Others/ppt_screens/Slide5.jpg" alt="alt tag">
+<br></p>
+
+<h3>
+<a id="github-structure" class="anchor" href="#github-structure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GitHub structure</h3>
+
+<p>
+Root <br>
+ |<br>
+   -- <b>Deliverables</b> <i>( Contains installables, apk files for nervousnet mobile app.)</i><br>
+ |<br>
+   -- <b>Documents</b> <i>(Contains all documentation related to nervousnet and the Android Project)</i><br>
+ |<br>
+   -- <b>Mobile Clients</b> <i>( Contains nervousnet mobile app Android Project)</i><br>
+             |<br> 
+            -- <b>Android</b><br>
+                      |<br> 
+                     -- <b>Sample Extensionss</b> <i>( Contains native Axon App projects)</i><br>
+                      |<br> 
+                      -- <b>nervousnetHUB</b> <i>( Main nervousnet Android Mobile App Project)</i><br>
+                      |<br> 
+                     -- <b>nervousnetLIB</b> <i>( nervousnet Library Project. Native Axon App projects should include into their project)</i><br>
+                      |<br> 
+                     -- <b>nervousnetVM</b> <i>( nervousnet Virtual Machine, required by the main project)</i><br>
+    |<br> 
+   -- <b>Resources</b> <i>( Contains all resource, raw images and final images that are used for the nervousnet Android Project)</i><br>
+</p>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>For more information or support check out our website <a href="http://www.nervousnet.info">http://www.nervousnet.info</a></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/nervousnet/nervousnet-android/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/nervousnet/nervousnet-android/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/nervousnet/nervousnet-android"></a> is maintained by <a href="https://github.com/nervousnet">nervousnet</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
