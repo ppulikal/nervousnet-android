@@ -10,6 +10,7 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
 import de.greenrobot.dao.internal.DaoConfig;
 
 import ch.ethz.coss.nervousnet.vm.model.Config;
+import ch.ethz.coss.nervousnet.vm.model.SensorConfig;
 import ch.ethz.coss.nervousnet.vm.model.Authentication;
 import ch.ethz.coss.nervousnet.vm.model.LocationData;
 import ch.ethz.coss.nervousnet.vm.model.AccelData;
@@ -27,6 +28,7 @@ import ch.ethz.coss.nervousnet.vm.model.TemperatureData;
 import ch.ethz.coss.nervousnet.vm.model.Packet;
 
 import ch.ethz.coss.nervousnet.vm.model.ConfigDao;
+import ch.ethz.coss.nervousnet.vm.model.SensorConfigDao;
 import ch.ethz.coss.nervousnet.vm.model.AuthenticationDao;
 import ch.ethz.coss.nervousnet.vm.model.LocationDataDao;
 import ch.ethz.coss.nervousnet.vm.model.AccelDataDao;
@@ -53,6 +55,7 @@ import ch.ethz.coss.nervousnet.vm.model.PacketDao;
 public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig configDaoConfig;
+    private final DaoConfig sensorConfigDaoConfig;
     private final DaoConfig authenticationDaoConfig;
     private final DaoConfig locationDataDaoConfig;
     private final DaoConfig accelDataDaoConfig;
@@ -70,6 +73,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig packetDaoConfig;
 
     private final ConfigDao configDao;
+    private final SensorConfigDao sensorConfigDao;
     private final AuthenticationDao authenticationDao;
     private final LocationDataDao locationDataDao;
     private final AccelDataDao accelDataDao;
@@ -92,6 +96,9 @@ public class DaoSession extends AbstractDaoSession {
 
         configDaoConfig = daoConfigMap.get(ConfigDao.class).clone();
         configDaoConfig.initIdentityScope(type);
+
+        sensorConfigDaoConfig = daoConfigMap.get(SensorConfigDao.class).clone();
+        sensorConfigDaoConfig.initIdentityScope(type);
 
         authenticationDaoConfig = daoConfigMap.get(AuthenticationDao.class).clone();
         authenticationDaoConfig.initIdentityScope(type);
@@ -139,6 +146,7 @@ public class DaoSession extends AbstractDaoSession {
         packetDaoConfig.initIdentityScope(type);
 
         configDao = new ConfigDao(configDaoConfig, this);
+        sensorConfigDao = new SensorConfigDao(sensorConfigDaoConfig, this);
         authenticationDao = new AuthenticationDao(authenticationDaoConfig, this);
         locationDataDao = new LocationDataDao(locationDataDaoConfig, this);
         accelDataDao = new AccelDataDao(accelDataDaoConfig, this);
@@ -156,6 +164,7 @@ public class DaoSession extends AbstractDaoSession {
         packetDao = new PacketDao(packetDaoConfig, this);
 
         registerDao(Config.class, configDao);
+        registerDao(SensorConfig.class, sensorConfigDao);
         registerDao(Authentication.class, authenticationDao);
         registerDao(LocationData.class, locationDataDao);
         registerDao(AccelData.class, accelDataDao);
@@ -175,6 +184,7 @@ public class DaoSession extends AbstractDaoSession {
     
     public void clear() {
         configDaoConfig.getIdentityScope().clear();
+        sensorConfigDaoConfig.getIdentityScope().clear();
         authenticationDaoConfig.getIdentityScope().clear();
         locationDataDaoConfig.getIdentityScope().clear();
         accelDataDaoConfig.getIdentityScope().clear();
@@ -194,6 +204,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public ConfigDao getConfigDao() {
         return configDao;
+    }
+
+    public SensorConfigDao getSensorConfigDao() {
+        return sensorConfigDao;
     }
 
     public AuthenticationDao getAuthenticationDao() {

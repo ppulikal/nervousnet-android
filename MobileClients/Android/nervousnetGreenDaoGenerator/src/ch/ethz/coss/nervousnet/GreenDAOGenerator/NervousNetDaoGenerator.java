@@ -41,6 +41,7 @@ public class NervousNetDaoGenerator {
         Schema schema = new Schema(3, "ch.ethz.coss.nervousnet.vm.model");
         schema.enableKeepSectionsByDefault();
         addConfig(schema);
+        addSensorConfig(schema);
         addAuthentication(schema);
         addSensors(schema);
         new DaoGenerator().generateAll(schema, OUTPUT_FOLDER);
@@ -57,6 +58,16 @@ public class NervousNetDaoGenerator {
         config.addLongProperty("LastSyncTime");
         
     }
+    
+    
+    private static void addSensorConfig(Schema schema) {
+    	Entity config = schema.addEntity("SensorConfig");
+        config.addLongProperty("ID");
+        config.addStringProperty("Name");
+        config.addBooleanProperty("State");
+    	
+    }
+    
     
     private static void addAuthentication(Schema schema) {
         Entity config = schema.addEntity("Authentication");
