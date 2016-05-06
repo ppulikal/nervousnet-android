@@ -4,9 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
@@ -18,6 +25,12 @@ import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.LocationReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.storage.SensorConfigDao;
+import ch.ethz.coss.nervousnet.vm.sensors.AccelerometerSensor;
+import ch.ethz.coss.nervousnet.vm.sensors.BatterySensor;
+import ch.ethz.coss.nervousnet.vm.sensors.ConnectivitySensor;
+import ch.ethz.coss.nervousnet.vm.sensors.LocationSensor;
+import ch.ethz.coss.nervousnet.vm.sensors.NoiseSensor;
 import ch.ethz.coss.nervousnet.vm.storage.AccelData;
 import ch.ethz.coss.nervousnet.vm.storage.AccelDataDao;
 import ch.ethz.coss.nervousnet.vm.storage.BatteryData;
@@ -38,6 +51,7 @@ import ch.ethz.coss.nervousnet.vm.storage.NoiseData;
 import ch.ethz.coss.nervousnet.vm.storage.NoiseDataDao;
 import ch.ethz.coss.nervousnet.vm.storage.PressureData;
 import ch.ethz.coss.nervousnet.vm.storage.PressureDataDao;
+import ch.ethz.coss.nervousnet.vm.storage.SensorConfig;
 import ch.ethz.coss.nervousnet.vm.storage.SensorDataImpl;
 import de.greenrobot.dao.query.QueryBuilder;
 import ch.ethz.coss.nervousnet.vm.storage.DaoMaster.DevOpenHelper;
@@ -45,8 +59,19 @@ import ch.ethz.coss.nervousnet.vm.storage.DaoMaster.DevOpenHelper;
 
 public class NervousnetVM {
 
-	private static String TAG = "NERVOUS_VM";
-	private static String DB_NAME = "NN-DB";
+
+	private static final String LOG_TAG = NervousnetVM.class.getSimpleName();
+	private static final String DB_NAME = "NN-DB";
+	
+	private SensorManager sensorManager = null;
+	
+	private Lock storeMutex;
+
+	private AccelerometerSensor sensorAccelerometer = null;
+	private BatterySensor sensorBattery = null;
+	private ConnectivitySensor sensorConnectivity = null;
+	private NoiseSensor sensorNoise = null;
+	private LocationSensor sensorLocation = null;
 	
 	private byte state = NervousnetConstants.STATE_PAUSED;
 	private UUID uuid;
@@ -55,6 +80,7 @@ public class NervousnetVM {
 	DaoSession daoSession;
 	SQLiteDatabase sqlDB;
 	ConfigDao configDao;
+	SensorConfigDao sensorConfigDao;
 	AccelDataDao accDao;
 	BatteryDataDao battDao;
 	LightDataDao lightDao;
@@ -65,105 +91,85 @@ public class NervousnetVM {
 	PressureDataDao pressureDao;
 
 	public NervousnetVM(Context context) {
-		Log.d(TAG, "Inside constructor");
+		initDao();
+		initSensors(context);
+		
+		
+	}
+
+	private void initSensors(Context context) {
+		storeMutex = new ReentrantLock();
+				// Initialize sensor manager
+		sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+		LocationManager locManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+		PackageManager manager = context.getPackageManager();
+		
+	
+		// Get references to android default sensors
+		sensorAccelerometer = new AccelerometerSensor(1, sensorManager,  manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER));
+		
+//		sensorLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+//		sensorMagnet = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+//		sensorProximity = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+//		sensorGyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+//		sensorTemperature = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+//		sensorHumidity = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
+//		sensorPressure = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
+//	
+		
+		// Custom sensors
+//		sensorBattery = BatterySensor.getInstance(getApplicationContext());
+//		sensorConnectivity = ConnectivitySensor.getInstance(getApplicationContext());
+//		sensorNoise = NoiseSensor.getInstance();
+//		sensorLocation = LocationSensor.getInstance(getApplicationContext());
+
+//		// Schedule all sensors (initially)
+//		scheduleSensor(LibConstants.SENSOR_LOCATION);
+//		scheduleSensor(LibConstants.SENSOR_ACCELEROMETER);
+//		scheduleSensor(LibConstants.SENSOR_BATTERY);
+//		scheduleSensor(LibConstants.SENSOR_LIGHT);
+//		// scheduleSensor(LibConstants.SENSOR_MAGNETIC);
+//		// scheduleSensor(LibConstants.SENSOR_PROXIMITY);
+//		scheduleSensor(LibConstants.SENSOR_GYROSCOPE);
+//		// scheduleSensor(LibConstants.SENSOR_TEMPERATURE);
+//		scheduleSensor(LibConstants.SENSOR_HUMIDITY);
+//		scheduleSensor(LibConstants.SENSOR_PRESSURE);
+//		scheduleSensor(LibConstants.SENSOR_NOISE);
+//		// scheduleSensor(LibConstants.SENSOR_BLEBEACON);
+//		scheduleSensor(LibConstants.SENSOR_CONNECTIVITY);
+	}
+
+	private void initDao(){
+		Log.d(LOG_TAG, "Inside constructor");
 		 try {
 			DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, DB_NAME, null);
-			
-			 Log.d(TAG, "Inside constructor1");
-			 sqlDB = helper.getWritableDatabase();
+			sqlDB = helper.getWritableDatabase();
 		} catch (Exception e) {
-			Log.e(TAG, "Inside constructor and creating DB = "+DB_NAME, e);
+			Log.e(LOG_TAG, "Inside constructor and creating DB = "+DB_NAME, e);
 		}
-		 Log.d(TAG, "Inside constructor2");
 		 daoMaster = new DaoMaster(sqlDB);
-		 Log.d(TAG, "Inside constructor3");
 		 daoSession = daoMaster.newSession();
-		 Log.d(TAG, "Inside constructor4");
 		 configDao = daoSession.getConfigDao();
-		 
 		 accDao = daoSession.getAccelDataDao();
-		 
 		 locDao = daoSession.getLocationDataDao();
-		 
 		 connDao = daoSession.getConnectivityDataDao();
-		 
 		 gyroDao = daoSession.getGyroDataDao();
-		 
 		 lightDao = daoSession.getLightDataDao();
-		 
 		 noiseDao = daoSession.getNoiseDataDao();
-		 
 		 pressureDao = daoSession.getPressureDataDao();
+		 
+		 
+		populateSensorConfig();
 	    boolean hasVMConfig = loadVMConfig();
 		if (!hasVMConfig) {
-			Log.d(TAG, "Inside Constructure after loadVMConfig() no config found. Create a new config.");
+			Log.d(LOG_TAG, "Inside Constructure after loadVMConfig() no config found. Create a new config.");
 			uuid = UUID.randomUUID();
 			 
 			storeVMConfig();
 		}
-		
 	}
-
-//	private synchronized boolean removeOldPages(long sensorID, long currentPage, long maxPages) {
-//		boolean stmHasChanged = false;
-//		boolean success = true;
-//		TreeMap<PageInterval, PageInterval> treeMap = sensorTreeMap.get(sensorID);
-//		if (treeMap != null) {
-//			for (long i = currentPage - maxPages; i >= 0; i--) {
-//				PageInterval pi = treeMap.get(new PageInterval(new Interval(0, 0), i));
-//				if (pi == null) {
-//					break;
-//				}
-//				treeMap.remove(pi);
-//				SensorStorePage stp = new SensorStorePage(dir, sensorID, pi.getPageNumber());
-//				boolean successEvict = stp.evict();
-//				success = success && successEvict;
-//			}
-//			if (maxPages == 0) {
-//				// All removed, delete sensor as a whole
-//				sensorTreeMap.remove(sensorID);
-//				stmHasChanged = true;
-//			} else {
-//				PageInterval pi = treeMap.get(new PageInterval(new Interval(0, 0), currentPage - maxPages + 1));
-//				// Correct so that the time interval is always from 0 to MAX_LONG in the tree
-//				if (pi != null) {
-//					treeMap.remove(pi);
-//					pi.getInterval().setLower(0);
-//					treeMap.put(pi, pi);
-//				}
-//			}
-//		}
-//		if(stmHasChanged) {
-//			writeSTM();
-//		}
-//		return success;
-//	}
-
-//	public synchronized List<SensorReading> retrieve(long sensorID, long fromTimestamp, long toTimestamp) {
-//		TreeMap<PageInterval, PageInterval> treeMap = sensorTreeMap.get(sensorID);
-//		if (treeMap != null) {
-//			PageInterval lower = treeMap.get(new PageInterval(new Interval(fromTimestamp, fromTimestamp), -1));
-//			PageInterval upper = treeMap.get(new PageInterval(new Interval(toTimestamp, toTimestamp), -1));
-//			ArrayList<SensorReading> sensorData = new ArrayList<SensorReading>();
-//			for (long i = lower.getPageNumber(); i <= upper.getPageNumber(); i++) {
-//				SensorStorePage stp = new SensorStorePage(dir, sensorID, i);
-//				List<SensorReading> sensorDataFromPage = stp.retrieve(fromTimestamp, toTimestamp);
-//				if (sensorDataFromPage != null) {
-//					sensorData.addAll(sensorDataFromPage);
-//				}
-//			}
-//			return sensorData;
-//		} else {
-//			return null;
-//		}
-//	}
-
-//	public synchronized void markLastUploaded(long sensorID, long lastUploaded) {
-//		SensorStoreConfig ssc = new SensorStoreConfig(dir, sensorID);
-//		ssc.setLastUploadedTimestamp(lastUploaded);
-//		ssc.store();
-//	}
-
+	
 	public synchronized UUID getUUID() {
 		return uuid;
 	}
@@ -172,19 +178,32 @@ public class NervousnetVM {
 		uuid = UUID.randomUUID();
 		storeVMConfig();
 	}
+	
+	private synchronized void populateSensorConfig() {
+		Log.d(LOG_TAG, "Inside populateSensorConfig");
+		boolean success = true;
+		SensorConfig sensorconfig = null;
+		
+		Log.d(LOG_TAG, "sensorConfigDao - count = "+sensorConfigDao.queryBuilder().count());
+		if(sensorConfigDao.queryBuilder().count() == 0){
+			
+			for(int i = 0; i < NervousnetConstants.sensor_ids.length; i++)
+			sensorConfigDao.insert(new SensorConfig(NervousnetConstants.sensor_ids[i], NervousnetConstants.sensor_labels[i], false));
+		}
+	}
 
 	private synchronized boolean loadVMConfig() {
-		Log.d(TAG, "Inside loadVMConfig");
+		Log.d(LOG_TAG, "Inside loadVMConfig");
 		boolean success = true;
 		Config config = null;
 		
-		Log.d(TAG, "Config - count = "+configDao.queryBuilder().count());
+		Log.d(LOG_TAG, "Config - count = "+configDao.queryBuilder().count());
 		if(configDao.queryBuilder().count() != 0){
 			config = configDao.queryBuilder().unique();
 			state = config.getState();
 			uuid = UUID.fromString(config.getUUID());
-			Log.d(TAG, "Config - UUID = "+uuid);
-			Log.d(TAG, "Config - state = "+state);
+			Log.d(LOG_TAG, "Config - UUID = "+uuid);
+			Log.d(LOG_TAG, "Config - state = "+state);
 		}else 
 			success = false;
 		
@@ -192,24 +211,24 @@ public class NervousnetVM {
 	}
 
 	private synchronized void storeVMConfig() {
-		Log.d(TAG, "Inside storeVMConfig");
+		Log.d(LOG_TAG, "Inside storeVMConfig");
 		Config config = null;
 		
 		if(configDao.queryBuilder().count() == 0){
 
-			Log.d(TAG, "Config DB Is empty.");
+			Log.d(LOG_TAG, "Config DB Is empty.");
 			config = new Config(state, uuid.toString(), Build.MANUFACTURER, Build.MODEL, "Android", Build.VERSION.RELEASE, System.currentTimeMillis()); 
 			configDao.insert(config);
 		} else if(configDao.queryBuilder().count() == 1){ 
-			Log.d(TAG, "Config DB exists.");
+			Log.d(LOG_TAG, "Config DB exists.");
 			config = configDao.queryBuilder().unique();
 			configDao.deleteAll();
 			config.setState(state);
 		    configDao.insert(config);
 			config = configDao.queryBuilder().unique();
-			Log.d(TAG, "state = "+config.getState());
+			Log.d(LOG_TAG, "state = "+config.getState());
 		} else
-			Log.e(TAG, "Config DB count is more than 1. There is something wrong.");
+			Log.e(LOG_TAG, "Config DB count is more than 1. There is something wrong.");
 		
 	}
 	
@@ -219,7 +238,7 @@ public class NervousnetVM {
 		try {
 			storeVMConfig();
 		} catch (Exception e) {
-			Log.d(TAG, "Exception while calling storeVMConfig ");
+			Log.d(LOG_TAG, "Exception while calling storeVMConfig ");
 			e.printStackTrace();
 		}
 		
@@ -231,7 +250,7 @@ public class NervousnetVM {
 	
 
 	private synchronized SensorReading convertSensorDataToSensorReading(SensorDataImpl data) {
-		Log.d(TAG, "convertSensorDataToSensorReading reading Type = " + data.getType());
+		Log.d(LOG_TAG, "convertSensorDataToSensorReading reading Type = " + data.getType());
 		SensorReading reading = null;
 
 		switch (data.getType()) {
@@ -285,7 +304,7 @@ public class NervousnetVM {
 				}
 			  
 			
-			 Log.d(TAG, "List size = "+list.size());
+			 Log.d(LOG_TAG, "List size = "+list.size());
 			 
 			 return;
 		case LibConstants.SENSOR_BATTERY:
@@ -348,13 +367,13 @@ public class NervousnetVM {
 	}
 
 	public synchronized boolean storeSensor(SensorDataImpl sensorData) {
-		Log.d(TAG, "Inside storeSensor ");
+		Log.d(LOG_TAG, "Inside storeSensor ");
 		
 		if(sensorData == null) {
-			Log.e(TAG, "SensorData is null. please check it");
+			Log.e(LOG_TAG, "SensorData is null. please check it");
 			return false;
 		}else {
-			Log.d(TAG, "SensorData Type = (Type = "+sensorData.getType()+")"); //, Timestamp = "+sensorData.getTimeStamp()+", Volatility = "+sensorData.getVolatility());
+			Log.d(LOG_TAG, "SensorData Type = (Type = "+sensorData.getType()+")"); //, Timestamp = "+sensorData.getTimeStamp()+", Volatility = "+sensorData.getVolatility());
 		}
 		
 		
@@ -362,18 +381,18 @@ public class NervousnetVM {
 		case LibConstants.SENSOR_ACCELEROMETER:
 			
 			AccelData accelData = (AccelData) sensorData;
-			Log.d(TAG, "ACCEL_DATA table count = "+accDao.count());
-			Log.d(TAG, "Inside Switch, AccelData Type = (Type = "+accelData.getType()+", Timestamp = "+accelData.getTimeStamp()+", Volatility = "+accelData.getVolatility());
-			Log.d(TAG, "Inside Switch, AccelData Type = (X = "+accelData.getX()+", Y = "+accelData.getY()+", Z = "+accelData.getZ());
+			Log.d(LOG_TAG, "ACCEL_DATA table count = "+accDao.count());
+			Log.d(LOG_TAG, "Inside Switch, AccelData Type = (Type = "+accelData.getType()+", Timestamp = "+accelData.getTimeStamp()+", Volatility = "+accelData.getVolatility());
+			Log.d(LOG_TAG, "Inside Switch, AccelData Type = (X = "+accelData.getX()+", Y = "+accelData.getY()+", Z = "+accelData.getZ());
 			
 			accDao.insert(accelData);
 			return true;
 			
 		case LibConstants.SENSOR_BATTERY:
 			BatteryData battData = (BatteryData) sensorData;
-			Log.d(TAG, "BATTERY_DATA table count = "+battDao.count());
-			Log.d(TAG, "Inside Switch, BatteryData Type = (Type = "+battData.getType()+", Timestamp = "+battData.getTimeStamp()+", Volatility = "+battData.getVolatility());
-			Log.d(TAG, "Inside Switch, BatteryData Type = (Percent = "+battData.getPercent()+"%, Health = "+battData.getHealth());
+			Log.d(LOG_TAG, "BATTERY_DATA table count = "+battDao.count());
+			Log.d(LOG_TAG, "Inside Switch, BatteryData Type = (Type = "+battData.getType()+", Timestamp = "+battData.getTimeStamp()+", Volatility = "+battData.getVolatility());
+			Log.d(LOG_TAG, "Inside Switch, BatteryData Type = (Percent = "+battData.getPercent()+"%, Health = "+battData.getHealth());
 			battDao.insert(battData);
 			return true;
 			
@@ -382,9 +401,9 @@ public class NervousnetVM {
 			
 		case LibConstants.SENSOR_LOCATION:
 			LocationData locData = (LocationData) sensorData;
-			Log.d(TAG, "LOCATION_DATA table count = "+locDao.count());
-			Log.d(TAG, "Inside Switch, LocationData Type = (Type = "+locData.getType()+", Timestamp = "+locData.getTimeStamp()+", Volatility = "+locData.getVolatility());
-			Log.d(TAG, "Inside Switch, LocationData Type = (Latitude = "+locData.getLatitude()+", Longitude = "+locData.getLongitude()+", ALtitude = "+locData.getAltitude());
+			Log.d(LOG_TAG, "LOCATION_DATA table count = "+locDao.count());
+			Log.d(LOG_TAG, "Inside Switch, LocationData Type = (Type = "+locData.getType()+", Timestamp = "+locData.getTimeStamp()+", Volatility = "+locData.getVolatility());
+			Log.d(LOG_TAG, "Inside Switch, LocationData Type = (Latitude = "+locData.getLatitude()+", Longitude = "+locData.getLongitude()+", ALtitude = "+locData.getAltitude());
 			
 			locDao.insert(locData);
 			return true;
@@ -394,23 +413,23 @@ public class NervousnetVM {
 			
 		case LibConstants.SENSOR_CONNECTIVITY:
 			ConnectivityData connData = (ConnectivityData) sensorData;
-			Log.d(TAG, "Connectivity_DATA table count = "+connDao.count());
-			Log.d(TAG, "Inside Switch, ConnectivityData Type = (Type = "+connData.getType()+", Timestamp = "+connData.getTimeStamp()+", Volatility = "+connData.getVolatility());
+			Log.d(LOG_TAG, "Connectivity_DATA table count = "+connDao.count());
+			Log.d(LOG_TAG, "Inside Switch, ConnectivityData Type = (Type = "+connData.getType()+", Timestamp = "+connData.getTimeStamp()+", Volatility = "+connData.getVolatility());
 			
 			connDao.insert(connData);
 			return true;
 		case LibConstants.SENSOR_GYROSCOPE:
 			GyroData gyroData = (GyroData) sensorData;
-			Log.d(TAG, "GYRO_DATA table count = "+gyroDao.count());
-			Log.d(TAG, "Inside Switch, GyroData Type = (Type = "+gyroData.getType()+", Timestamp = "+gyroData.getTimeStamp()+", Volatility = "+gyroData.getVolatility());
+			Log.d(LOG_TAG, "GYRO_DATA table count = "+gyroDao.count());
+			Log.d(LOG_TAG, "Inside Switch, GyroData Type = (Type = "+gyroData.getType()+", Timestamp = "+gyroData.getTimeStamp()+", Volatility = "+gyroData.getVolatility());
 			gyroDao.insert(gyroData);
 			return true;
 		case LibConstants.SENSOR_HUMIDITY:
 			return true;
 		case LibConstants.SENSOR_LIGHT:
 			LightData lightData = (LightData) sensorData;
-			Log.d(TAG, "LIGHT_DATA table count = "+lightDao.count());
-			Log.d(TAG, "Inside Switch, LightData Type = (Type = "+lightData.getType()+", Timestamp = "+lightData.getTimeStamp()+", Volatility = "+lightData.getVolatility());
+			Log.d(LOG_TAG, "LIGHT_DATA table count = "+lightDao.count());
+			Log.d(LOG_TAG, "Inside Switch, LightData Type = (Type = "+lightData.getType()+", Timestamp = "+lightData.getTimeStamp()+", Volatility = "+lightData.getVolatility());
 			lightDao.insert(lightData);
 			return true;
 			
@@ -418,14 +437,14 @@ public class NervousnetVM {
 			return true;
 		case LibConstants.SENSOR_NOISE:
 			NoiseData noiseData = (NoiseData) sensorData;
-			Log.d(TAG, "NoiseData table count = "+noiseDao.count());
-			Log.d(TAG, "Inside Switch, noiseData Type = (Type = "+noiseData.getType()+", Timestamp = "+noiseData.getTimeStamp()+", Volatility = "+noiseData.getVolatility());
+			Log.d(LOG_TAG, "NoiseData table count = "+noiseDao.count());
+			Log.d(LOG_TAG, "Inside Switch, noiseData Type = (Type = "+noiseData.getType()+", Timestamp = "+noiseData.getTimeStamp()+", Volatility = "+noiseData.getVolatility());
 			noiseDao.insert(noiseData);
 			return true;
 		case LibConstants.SENSOR_PRESSURE:
 			PressureData pressureData = (PressureData) sensorData;
-			Log.d(TAG, "PressureData table count = "+pressureDao.count());
-			Log.d(TAG, "Inside Switch, pressureData Type = (Type = "+pressureData.getType()+", Timestamp = "+pressureData.getTimeStamp()+", Volatility = "+pressureData.getVolatility());
+			Log.d(LOG_TAG, "PressureData table count = "+pressureDao.count());
+			Log.d(LOG_TAG, "Inside Switch, pressureData Type = (Type = "+pressureData.getType()+", Timestamp = "+pressureData.getTimeStamp()+", Volatility = "+pressureData.getVolatility());
 			pressureDao.insert(pressureData);
 			return true;
 		case LibConstants.SENSOR_PROXIMITY:
