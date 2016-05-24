@@ -41,19 +41,19 @@ https://developer.android.com/guide/components/aidl.html<br><br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Android version uses background Services to enable third party apps and extensions to connect and share data with the Nervousnet platform.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- iOS version uses WebViews and allows for external Axons to run inside a WebView container.<br><br>
 
-#####Axons (Native)- Native Android apps, Smart devices, beacons that can connect to the nervousnet HUB mobile app.<br>
+#####Axons (Native) - Native Android apps, Smart devices, beacons that can connect to the nervousnet HUB mobile app.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Uses the nervousnet Platform API's to receive and share sensor data.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Works only in Android devices.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Uses the Android background services feature.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Possibility of using Bluetooth, Wi-Fi Direct to do connect to the nervousnet mobile app.<br><br>
 
-#####Axons - HTML, JavaScript and CSS applications that run inside WebView containers inside the nervousnet apps. <br>
+#####Axons (Hybrid) - HTML, JavaScript and CSS applications that run inside WebView containers inside the nervousnet apps. <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Currently supported on the iOS platform.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Android Platform support in the next phase.<br><br>
 
 #####nervousnet CORE – Distributed and Decentralized set of Servers <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Used to store and collect Data shared by Clients (Mobile & Web), IOT Hardware sensors and devices, partner platforms and more.<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Individual Servers are called nervousnet Nodes.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Individual Servers are called <b>nervousnet Nodes</b>.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Mobile Clients will have the option of selecting a server from a list.<br><br>
 
 
