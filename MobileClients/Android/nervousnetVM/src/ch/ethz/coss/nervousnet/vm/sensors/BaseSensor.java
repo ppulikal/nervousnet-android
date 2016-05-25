@@ -84,7 +84,7 @@ public abstract class BaseSensor {
 
 		if (reading == null) {
 			Log.d(LOG_TAG, "Error 104 : Sensor reading object is null");
-			return new ErrorReading(new String[] { "104", "Sensor not working correctly." });
+			return new ErrorReading(new String[] { "104", "Sensor object is null." });
 		}
 		return reading;
 

@@ -48,7 +48,6 @@ public class BatterySensor extends BaseSensor {
 	private static final String LOG_TAG = BatterySensor.class.getSimpleName();
 
 	private Context context;
-	private BatteryReading reading;
 
 	public BatterySensor(Context context, byte sensorState) {
 		this.context = context;
@@ -73,7 +72,7 @@ public class BatterySensor extends BaseSensor {
 		public void onReceive(Context context, Intent batteryStatus) {
 			reading = extractBatteryData(batteryStatus);
 			dataReady(reading);
-			Log.d(LOG_TAG, "Received braoadcast - " + (reading.getPercent()));
+			Log.d(LOG_TAG, "Received broadcast - " + (((BatteryReading)reading).getPercent()));
 			Log.d(LOG_TAG, "level is " + level + "/" + scale + ", temp is " + temp + ", voltage is " + voltage);
 		}
 
@@ -96,7 +95,7 @@ public class BatterySensor extends BaseSensor {
 
 		reading = new BatteryReading(System.currentTimeMillis(), batteryPct, isCharging, usbCharge, acCharge, temp,
 				volt, health, technology);
-		return reading;
+		return (BatteryReading) reading;
 	}
 
 

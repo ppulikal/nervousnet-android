@@ -68,7 +68,6 @@ public class ConnectivitySensor extends BaseSensor {
 	private static final String LOG_TAG = ConnectivitySensor.class.getSimpleName();
 
 	private Context context;
-	private ConnectivityReading reading;
 	private HandlerThread hthread;
 	private Handler handler;
 
@@ -83,99 +82,6 @@ public class ConnectivitySensor extends BaseSensor {
 	}
 
 
-	public void runConnectivitySensor() {
-		Log.d(LOG_TAG, "Inside runConnectivitySensor");
-		
-//		CHECK THIS PIECE OF CODE, if required in new phones
-//		if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(context,
-//				android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//			return;
-//		}
-		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-		boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-		int networkType = -1;
-		boolean isRoaming = false;
-		if (isConnected) {
-			networkType = activeNetwork.getType();
-			isRoaming = activeNetwork.isRoaming();
-		}
-
-		String wifiHashId = "";
-		int wifiStrength = Integer.MIN_VALUE;
-
-		if (networkType == ConnectivityManager.TYPE_WIFI) {
-			WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-			WifiInfo wi = wm.getConnectionInfo();
-			StringBuilder wifiInfoBuilder = new StringBuilder();
-			wifiInfoBuilder.append(wi.getBSSID());
-			wifiInfoBuilder.append(wi.getSSID());
-			try {
-				MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-				messageDigest.update(wifiInfoBuilder.toString().getBytes());
-				wifiHashId = new String(messageDigest.digest());
-			} catch (NoSuchAlgorithmException e) {
-			}
-			wifiStrength = wi.getRssi();
-		}
-
-		byte[] cdmaHashId = new byte[32];
-		byte[] lteHashId = new byte[32];
-		byte[] gsmHashId = new byte[32];
-		byte[] wcdmaHashId = new byte[32];
-
-		TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-
-		List<CellInfo> cis = tm.getAllCellInfo();
-		if (cis != null) {
-			// New method
-			for (CellInfo ci : cis) {
-				if (ci.isRegistered()) {
-					if (ci instanceof CellInfoCdma) {
-						CellInfoCdma cic = (CellInfoCdma) ci;
-						cdmaHashId = generateMobileDigestId(cic.getCellIdentity().getSystemId(),
-								cic.getCellIdentity().getNetworkId(), cic.getCellIdentity().getBasestationId());
-					}
-					if (ci instanceof CellInfoGsm) {
-						CellInfoGsm cic = (CellInfoGsm) ci;
-						gsmHashId = generateMobileDigestId(cic.getCellIdentity().getMcc(),
-								cic.getCellIdentity().getMnc(), cic.getCellIdentity().getCid());
-					}
-					if (ci instanceof CellInfoLte) {
-						CellInfoLte cic = (CellInfoLte) ci;
-						lteHashId = generateMobileDigestId(cic.getCellIdentity().getMcc(),
-								cic.getCellIdentity().getMnc(), cic.getCellIdentity().getCi());
-					}
-					if (ci instanceof CellInfoWcdma) {
-						CellInfoWcdma cic = (CellInfoWcdma) ci;
-						wcdmaHashId = generateMobileDigestId(cic.getCellIdentity().getMcc(),
-								cic.getCellIdentity().getMnc(), cic.getCellIdentity().getCid());
-					}
-				}
-			}
-		} else {
-			// Legacy method
-			CellLocation cl = tm.getCellLocation();
-			if (cl instanceof CdmaCellLocation) {
-				CdmaCellLocation cic = (CdmaCellLocation) cl;
-				cdmaHashId = generateMobileDigestId(cic.getSystemId(), cic.getNetworkId(), cic.getBaseStationId());
-			}
-			if (cl instanceof GsmCellLocation) {
-				GsmCellLocation cic = (GsmCellLocation) cl;
-				gsmHashId = generateMobileDigestId(cic.getLac(), 0, cic.getCid());
-			}
-		}
-
-		StringBuilder mobileHashBuilder = new StringBuilder();
-		mobileHashBuilder.append(new String(cdmaHashId));
-		mobileHashBuilder.append(new String(lteHashId));
-		mobileHashBuilder.append(new String(gsmHashId));
-		mobileHashBuilder.append(new String(wcdmaHashId));
-
-		dataReady(new ConnectivityReading(System.currentTimeMillis(), isConnected, networkType, isRoaming, wifiHashId,
-				wifiStrength, mobileHashBuilder.toString()));
-
-	}
 
 	public class ConnectivityTask extends AsyncTask<Void, Void, Void> {
 		@Override
@@ -260,9 +166,11 @@ public class ConnectivitySensor extends BaseSensor {
 			mobileHashBuilder.append(new String(lteHashId));
 			mobileHashBuilder.append(new String(gsmHashId));
 			mobileHashBuilder.append(new String(wcdmaHashId));
-
-			dataReady(new ConnectivityReading(System.currentTimeMillis() / 1000, isConnected, networkType, isRoaming,
-					wifiHashId, wifiStrength, mobileHashBuilder.toString()));
+			reading = new ConnectivityReading(System.currentTimeMillis(), isConnected, networkType, isRoaming, wifiHashId,
+					wifiStrength, mobileHashBuilder.toString());
+				
+			Log.d(LOG_TAG, "reading collected - "+((ConnectivityReading) reading).getNetworkType());
+			dataReady(reading);
 			return null;
 
 		}
@@ -307,9 +215,8 @@ public class ConnectivitySensor extends BaseSensor {
 		final Runnable run = new Runnable() {
 			@Override
 			public void run() {
-				runConnectivitySensor();
-				// new ConnectivityTask().execute();
-				handler.postDelayed(this, 5000);
+				new ConnectivityTask().execute();
+				handler.postDelayed(this, NervousnetVMConstants.sensor_freq_constants[3][sensorState - 1]); // TODO: test this
 			}
 
 		};
