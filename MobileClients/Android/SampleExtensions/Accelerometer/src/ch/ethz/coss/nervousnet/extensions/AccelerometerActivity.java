@@ -23,8 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
+import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
 
 
@@ -41,7 +43,7 @@ public class AccelerometerActivity extends Activity {
 	Runnable m_statusChecker;
 
 	TextView accel_X, accel_Y, accel_Z, errorView;
-	LinearLayout reading, error;
+	LinearLayout readingLayout, errorLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +68,8 @@ public class AccelerometerActivity extends Activity {
 			}
 		});
 
-		reading = (LinearLayout) findViewById(R.id.reading);
-		error = (LinearLayout) findViewById(R.id.error);
+		readingLayout = (LinearLayout) findViewById(R.id.reading);
+		errorLayout = (LinearLayout) findViewById(R.id.error);
 		accel_X = (TextView) findViewById(R.id.accel_x);
 		accel_Y = (TextView) findViewById(R.id.accel_y);
 		accel_Z = (TextView) findViewById(R.id.accel_z);
@@ -225,24 +227,37 @@ public class AccelerometerActivity extends Activity {
 	protected void update() throws RemoteException {
 
 		if (mService != null) {
-			AccelerometerReading aReading = null;
+			SensorReading aReading = null;
 			try {	
-			aReading = (AccelerometerReading) mService.getReading(LibConstants.SENSOR_ACCELEROMETER);
+			aReading = mService.getReading(LibConstants.SENSOR_ACCELEROMETER);
+			if (aReading instanceof ErrorReading) {
 
-			accel_X.setText("" + aReading.getX());
-			accel_Y.setText("" + aReading.getY());
-			accel_Z.setText("" + aReading.getZ());
-			reading.setVisibility(View.VISIBLE);
-			error.setVisibility(View.INVISIBLE);
+				Log.d("AccelerometerActivity", "Inside updateReadings - ErrorReading");
+				handleError((ErrorReading) aReading);
+			} else {
+			accel_X.setText("" + ((AccelerometerReading)aReading).getX());
+			accel_Y.setText("" +  ((AccelerometerReading)aReading).getY());
+			accel_Z.setText("" +  ((AccelerometerReading)aReading).getZ());
+			readingLayout.setVisibility(View.VISIBLE);
+			errorLayout.setVisibility(View.INVISIBLE);
+			}
 			} catch (DeadObjectException doe) {
 				// TODO Auto-generated catch block
 				doe.printStackTrace();
 			} 
 		} else {
-			error.setVisibility(View.VISIBLE);
-			reading.setVisibility(View.INVISIBLE);
+			errorLayout.setVisibility(View.VISIBLE);
+			readingLayout.setVisibility(View.INVISIBLE);
 		}
 
+	}
+	
+	public void handleError(ErrorReading eReading) {
+		Log.d("AccelerometerActivity", "handleError called");
+		TextView status = (TextView) findViewById(R.id.error_tv);
+		status.setText("Error: code = " + eReading.getErrorCode() + ", message = " + eReading.getErrorString());
+		readingLayout.setVisibility(View.INVISIBLE);
+		errorLayout.setVisibility(View.VISIBLE);
 	}
 
 	protected void doBindService() {
