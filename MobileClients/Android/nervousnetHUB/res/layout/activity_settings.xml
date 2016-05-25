@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Settings"
         android:textColor="@color/gray" />
@@ -39,8 +39,8 @@
 
                 <ImageView
                     android:id="@+id/coll_rate_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center|center_horizontal"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_sensors" >
@@ -63,8 +63,8 @@
 
                 <ImageView
                     android:id="@+id/sharing_nodes_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center|center_horizontal"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_nodes" >
@@ -87,8 +87,8 @@
 
                 <ImageView
                     android:id="@+id/sensor_perm_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center|center_horizontal"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_perm" >

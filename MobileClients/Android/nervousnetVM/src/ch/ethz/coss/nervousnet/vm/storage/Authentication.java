@@ -9,57 +9,57 @@ package ch.ethz.coss.nervousnet.vm.storage;
  */
 public class Authentication {
 
-    private String AppName;
-    private Byte Authorized;
-    private String AccessRights;
-    private Long LastVerifiedTime;
+	private String AppName;
+	private Byte Authorized;
+	private String AccessRights;
+	private Long LastVerifiedTime;
 
-    // KEEP FIELDS - put your custom fields here
-    // KEEP FIELDS END
+	// KEEP FIELDS - put your custom fields here
+	// KEEP FIELDS END
 
-    public Authentication() {
-    }
+	public Authentication() {
+	}
 
-    public Authentication(String AppName, Byte Authorized, String AccessRights, Long LastVerifiedTime) {
-        this.AppName = AppName;
-        this.Authorized = Authorized;
-        this.AccessRights = AccessRights;
-        this.LastVerifiedTime = LastVerifiedTime;
-    }
+	public Authentication(String AppName, Byte Authorized, String AccessRights, Long LastVerifiedTime) {
+		this.AppName = AppName;
+		this.Authorized = Authorized;
+		this.AccessRights = AccessRights;
+		this.LastVerifiedTime = LastVerifiedTime;
+	}
 
-    public String getAppName() {
-        return AppName;
-    }
+	public String getAppName() {
+		return AppName;
+	}
 
-    public void setAppName(String AppName) {
-        this.AppName = AppName;
-    }
+	public void setAppName(String AppName) {
+		this.AppName = AppName;
+	}
 
-    public Byte getAuthorized() {
-        return Authorized;
-    }
+	public Byte getAuthorized() {
+		return Authorized;
+	}
 
-    public void setAuthorized(Byte Authorized) {
-        this.Authorized = Authorized;
-    }
+	public void setAuthorized(Byte Authorized) {
+		this.Authorized = Authorized;
+	}
 
-    public String getAccessRights() {
-        return AccessRights;
-    }
+	public String getAccessRights() {
+		return AccessRights;
+	}
 
-    public void setAccessRights(String AccessRights) {
-        this.AccessRights = AccessRights;
-    }
+	public void setAccessRights(String AccessRights) {
+		this.AccessRights = AccessRights;
+	}
 
-    public Long getLastVerifiedTime() {
-        return LastVerifiedTime;
-    }
+	public Long getLastVerifiedTime() {
+		return LastVerifiedTime;
+	}
 
-    public void setLastVerifiedTime(Long LastVerifiedTime) {
-        this.LastVerifiedTime = LastVerifiedTime;
-    }
+	public void setLastVerifiedTime(Long LastVerifiedTime) {
+		this.LastVerifiedTime = LastVerifiedTime;
+	}
 
-    // KEEP METHODS - put your custom methods here
-    // KEEP METHODS END
+	// KEEP METHODS - put your custom methods here
+	// KEEP METHODS END
 
 }

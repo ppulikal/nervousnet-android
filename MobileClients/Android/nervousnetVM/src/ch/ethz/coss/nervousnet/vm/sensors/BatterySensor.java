@@ -36,64 +36,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.BatteryManager;
 import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.BatteryReading;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
-public class BatterySensor implements SensorStatusImplementation {
-
-	public static BatterySensor _instance;
+public class BatterySensor extends BaseSensor {
+	private static final String LOG_TAG = BatterySensor.class.getSimpleName();
 
 	private Context context;
-
 	private BatteryReading reading;
 
-	private BatterySensor(Context context) {
+	public BatterySensor(Context context, byte sensorState) {
 		this.context = context;
-	}
-
-	public static BatterySensor getInstance(Context context) {
-
-		if (_instance == null)
-			_instance = new BatterySensor(context);
-
-		return _instance;
-	}
-
-	private List<BatterySensorListener> listenerList = new ArrayList<BatterySensorListener>();
-	private Lock listenerMutex = new ReentrantLock();
-
-	public interface BatterySensorListener extends SensorEventListener {
-		public void batterySensorDataReady(BatteryReading reading);
-	}
-
-	public void addListener(BatterySensorListener listener) {
-		System.out.println("Adding listener " + listener.toString());
-		listenerMutex.lock();
-		listenerList.add(listener);
-		listenerMutex.unlock();
-
-		readBattery();
-	}
-
-	public void removeListener(BatterySensorListener listener) {
-		listenerMutex.lock();
-		listenerList.remove(listener);
-		listenerMutex.unlock();
-	}
-
-	public void clearListeners() {
-		listenerMutex.lock();
-		listenerList.clear();
-		listenerMutex.unlock();
+		this.sensorState = sensorState;
 	}
 
 	public void readBattery() {
 		IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 		Intent batteryStatus = context.registerReceiver(null, ifilter);
 		reading = extractBatteryData(batteryStatus);
-		dataReady();
+		dataReady(reading);
 
 	}
 
@@ -106,9 +72,9 @@ public class BatterySensor implements SensorStatusImplementation {
 		@Override
 		public void onReceive(Context context, Intent batteryStatus) {
 			reading = extractBatteryData(batteryStatus);
-			dataReady();
-			Log.d("BatterySensor", "Received braoadcast - " + (reading.getPercent()));
-			Log.d("BatterySensor", "level is " + level + "/" + scale + ", temp is " + temp + ", voltage is " + voltage);
+			dataReady(reading);
+			Log.d(LOG_TAG, "Received braoadcast - " + (reading.getPercent()));
+			Log.d(LOG_TAG, "level is " + level + "/" + scale + ", temp is " + temp + ", voltage is " + voltage);
 		}
 
 	};
@@ -128,55 +94,84 @@ public class BatterySensor implements SensorStatusImplementation {
 		float batteryPct = level / (float) scale;
 		String technology = batteryStatus.getExtras().getString(BatteryManager.EXTRA_TECHNOLOGY);
 
-		reading = new BatteryReading(System.currentTimeMillis(), batteryPct, isCharging, usbCharge,
-				acCharge, temp, volt, health, technology);
+		reading = new BatteryReading(System.currentTimeMillis(), batteryPct, isCharging, usbCharge, acCharge, temp,
+				volt, health, technology);
 		return reading;
 	}
 
-	/**
-	 * @param batteryReading
-	 */
-	private void dataReady() {
-		Log.d("BatterySensor", "Data Ready called - " + reading.toString());
 
-		listenerMutex.lock();
-		for (BatterySensorListener listener : listenerList) {
-			listener.batterySensorDataReady(reading);
+
+
+
+	@Override
+	public boolean start(SensorManager sensorManager) {
+		
+		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled Starting Battery sensor as Sensor is not available.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled Starting Battery sensor as permission denied by user.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			Log.d(LOG_TAG, "Cancelled starting Battery sensor as Sensor state is switched off.");
+			return false;
+		} 
+		
+		Log.d(LOG_TAG, "Starting accelerometer sensor with state = " + sensorState);
+		IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+		Intent batteryStatus = context.registerReceiver(batteryReceiver, ifilter);
+		reading = extractBatteryData(batteryStatus);
+		dataReady(reading);
+		
+		return true;
+	}
+
+	@Override
+	public boolean updateAndRestart(SensorManager sensorManager, byte state) {
+		if(state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled Starting battery sensor as Sensor is not available.");
+			return false;
+		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled Starting battery sensor as permission denied by user.");
+			return false;
+		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			setSensorState(state);
+			Log.d(LOG_TAG, "Cancelled starting battery sensor as Sensor state is switched off.");
+			return false;
+		} 
+		
+
+		stop(sensorManager);
+		setSensorState(state);
+		Log.d(LOG_TAG, "Restarting battery sensor with state = " + sensorState);
+		start(sensorManager);
+		return true;
+	}
+
+	@Override
+	public boolean stop(SensorManager sensorManager) {
+		
+		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is not available ");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled stop accelerometer sensor as permission denied by user.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			Log.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is switched off ");
+			return false;
+		} 
+		
+		try {
+			context.unregisterReceiver(batteryReceiver);
+		} catch (IllegalArgumentException e) {
+			Log.d(LOG_TAG, "Exception trying to close battery sensor");
+			e.printStackTrace();
 		}
-		listenerMutex.unlock();
-	}
-
-	public void start() {
-
-		// readBattery(); // read initial values
-
-		// Register to listen.
-		IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-		context.registerReceiver(batteryReceiver, filter);
-
-	}
-
-	void stop() {
-		context.unregisterReceiver(batteryReceiver);
-	}
-
-	@Override
-	public void doCollect() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void doShare() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public SensorReading getReading() {
-
-		return reading;
-
+		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
+		this.reading = null;
+		
+		return true;
 	}
 
 }

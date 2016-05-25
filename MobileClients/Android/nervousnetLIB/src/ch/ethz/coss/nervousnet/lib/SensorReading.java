@@ -37,7 +37,7 @@ import android.os.Parcelable;
  *
  */
 public abstract class SensorReading implements Parcelable {
-	public int type = 0; 
+	public int type = 0;
 	public long timestamp;
 	public String uuid;
 
@@ -53,60 +53,58 @@ public abstract class SensorReading implements Parcelable {
 
 	public boolean isCollect;
 	public boolean isShare;
-	
+
 	/*
-	 * This variable contains the errorcode, if any.
-	 * 0 - no error;
-	 * 1 - Sensor Collection turned OFF at Global Settings level;
-	 * 2 - Sensor Collection turned OFF at Sensors Settings Level;
+	 * This variable contains the errorcode, if any. 0 - no error; 1 - Sensor
+	 * Collection turned OFF at Global Settings level; 2 - Sensor Collection
+	 * turned OFF at Sensors Settings Level;
 	 * 
 	 */
 	public short errorCode = 0;
-
 
 	public SensorReading() {
 	}
 
 	public SensorReading(boolean isCollect) {
 	}
+
 	/**
 	 * @param in
 	 */
 	public SensorReading(Parcel in) {
 		readFromParcel(in);
 	}
-	
-	public abstract void readFromParcel(Parcel in);
-	
-	public static Parcelable.Creator<SensorReading> CREATOR = new Parcelable.Creator<SensorReading>() {
-	     public SensorReading createFromParcel(Parcel in) {
-	         String className = in.readString();
-	         if (className.equals(AccelerometerReading.class.getName())) {
-	             return new AccelerometerReading(in);
-	         } else if (className.equals(BatteryReading.class.getName())) {
-	             return new BatteryReading(in);
-	         } else if (className.equals(ConnectivityReading.class.getName())) {
-	             return new ConnectivityReading(in);
-	         } else if (className.equals(DeviceReading.class.getName())) {
-	             return new DeviceReading(in);
-	         } else if (className.equals(GyroReading.class.getName())) {
-	             return new GyroReading(in);
-	         } else if (className.equals(LightReading.class.getName())) {
-	             return new LightReading(in);
-	         } else if (className.equals(LocationReading.class.getName())) {
-	             return new LocationReading(in);
-	         } else if (className.equals(NoiseReading.class.getName())) {
-	             return new NoiseReading(in);
-	         } else if (className.equals(ProximityReading.class.getName())) {
-	             return new ProximityReading(in);
-	         } else
-	        	 return new ErrorReading(new String[]{"100", "Sensor not found"});
-	     }
 
-	     public SensorReading[] newArray(int size) {
-	         return new SensorReading[size];
-	     }
+	public abstract void readFromParcel(Parcel in);
+
+	public static Parcelable.Creator<SensorReading> CREATOR = new Parcelable.Creator<SensorReading>() {
+		public SensorReading createFromParcel(Parcel in) {
+			String className = in.readString();
+			if (className.equals(AccelerometerReading.class.getName())) {
+				return new AccelerometerReading(in);
+			} else if (className.equals(BatteryReading.class.getName())) {
+				return new BatteryReading(in);
+			} else if (className.equals(ConnectivityReading.class.getName())) {
+				return new ConnectivityReading(in);
+			} else if (className.equals(DeviceReading.class.getName())) {
+				return new DeviceReading(in);
+			} else if (className.equals(GyroReading.class.getName())) {
+				return new GyroReading(in);
+			} else if (className.equals(LightReading.class.getName())) {
+				return new LightReading(in);
+			} else if (className.equals(LocationReading.class.getName())) {
+				return new LocationReading(in);
+			} else if (className.equals(NoiseReading.class.getName())) {
+				return new NoiseReading(in);
+			} else if (className.equals(ProximityReading.class.getName())) {
+				return new ProximityReading(in);
+			} else
+				return new ErrorReading(new String[] { "100", "Sensor not found" });
+		}
+
+		public SensorReading[] newArray(int size) {
+			return new SensorReading[size];
+		}
 	};
 
-	
 }

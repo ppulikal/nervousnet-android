@@ -35,7 +35,7 @@ public final class Constants {
 	public final static int VIBRATION_DURATION = 50;
 
 	public static Integer[] icons_main_screen = { R.drawable.ic_sensors, R.drawable.ic_analytics, R.drawable.ic_apps,
-			R.drawable.ic_settings, R.drawable.ic_help, R.drawable.ic_about };
+			R.drawable.ic_settings, R.drawable.ic_help, R.drawable.ic_about, R.drawable.ic_about };
 
 	public static Integer[] icon_array_sensors = { R.drawable.ic_accel, R.drawable.ic_batt, R.drawable.ic_beacons,
 			R.drawable.ic_conn, R.drawable.ic_gyro, R.drawable.ic_humid, R.drawable.ic_loc, R.drawable.ic_light,

@@ -34,8 +34,6 @@ import android.os.Parcelable;
  */
 public class AccelerometerReading extends SensorReading {
 
-	
-	
 	private float[] values = new float[3];
 
 	public AccelerometerReading(long timestamp, float[] values) {
@@ -88,7 +86,7 @@ public class AccelerometerReading extends SensorReading {
 	 */
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
-		 out.writeString(getClass().getName());
+		out.writeString(getClass().getName());
 		out.writeLong(timestamp);
 		out.writeFloatArray(values);
 	}

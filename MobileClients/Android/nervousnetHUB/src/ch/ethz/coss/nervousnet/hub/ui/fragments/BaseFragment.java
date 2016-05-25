@@ -33,6 +33,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 
 public abstract class BaseFragment extends Fragment {
@@ -51,11 +52,7 @@ public abstract class BaseFragment extends Fragment {
 
 	public abstract void updateReadings(SensorReading reading);
 
-	public void handleError(String message) {
-		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status);
-		status.setText(message);
-
-	}
+	public abstract void handleError(ErrorReading reading);
 
 	@Override
 	public void onResume() {

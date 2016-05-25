@@ -99,6 +99,8 @@ public abstract class BaseActivity extends Activity implements ActionBarImplemen
 		}
 
 		((Application) getApplication()).setState(this, on ? (byte) 1 : (byte) 0);
+		finish();
+		startActivity(getIntent());
 	}
 
 	protected void startNextActivity(Intent intent) {

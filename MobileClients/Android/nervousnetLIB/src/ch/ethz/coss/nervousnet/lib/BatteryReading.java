@@ -102,7 +102,7 @@ public class BatteryReading extends SensorReading {
 	 */
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
-		 out.writeString(getClass().getName());
+		out.writeString(getClass().getName());
 		out.writeLong(timestamp);
 		out.writeFloat(percent);
 		out.writeBooleanArray(new boolean[] { isCharging });
@@ -167,7 +167,7 @@ public class BatteryReading extends SensorReading {
 	public byte getHealth() {
 		return health;
 	}
-	
+
 	/**
 	 * @return the technology String
 	 */

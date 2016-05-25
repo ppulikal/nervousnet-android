@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.BatteryReading;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 
 public class BatteryFragment extends BaseFragment {
@@ -65,7 +66,11 @@ public class BatteryFragment extends BaseFragment {
 	@Override
 	public void updateReadings(SensorReading reading) {
 		Log.d("BatteryFragment", "Inside updateReadings");
+		if (reading instanceof ErrorReading) {
 
+			Log.d("BatteryFragment", "Inside updateReadings - ErrorReading");
+			handleError((ErrorReading) reading);
+		} else {
 		TextView percent = (TextView) getActivity().findViewById(R.id.battery_percent);
 		percent.setText("" + ((BatteryReading) reading).getPercent() * 100 + " %");
 
@@ -77,7 +82,14 @@ public class BatteryFragment extends BaseFragment {
 
 		TextView AC_charging = (TextView) getActivity().findViewById(R.id.battery_isAC);
 		AC_charging.setText(((BatteryReading) reading).getCharging_type() == 0 ? "YES" : "NO");
+		}
+	}
 
+	@Override
+	public void handleError(ErrorReading reading) {
+		Log.d("BatteryFragment", "handleError called");
+		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_batt);
+		status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
 	}
 
 }

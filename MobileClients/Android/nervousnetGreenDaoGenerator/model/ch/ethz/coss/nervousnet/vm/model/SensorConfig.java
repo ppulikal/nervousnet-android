@@ -11,7 +11,7 @@ public class SensorConfig {
 
     private Long ID;
     private String Name;
-    private Boolean State;
+    private Byte State;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -19,7 +19,7 @@ public class SensorConfig {
     public SensorConfig() {
     }
 
-    public SensorConfig(Long ID, String Name, Boolean State) {
+    public SensorConfig(Long ID, String Name, Byte State) {
         this.ID = ID;
         this.Name = Name;
         this.State = State;
@@ -41,11 +41,11 @@ public class SensorConfig {
         this.Name = Name;
     }
 
-    public Boolean getState() {
+    public Byte getState() {
         return State;
     }
 
-    public void setState(Boolean State) {
+    public void setState(Byte State) {
         this.State = State;
     }
 

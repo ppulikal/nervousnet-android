@@ -65,11 +65,13 @@ import ch.ethz.coss.nervousnet.hub.ui.fragments.HumidFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.LightFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.LocationFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.NoiseFragment;
+import ch.ethz.coss.nervousnet.hub.ui.fragments.PressureFragment;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
-import ch.ethz.coss.nervousnet.vm.NervousnetConstants;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class SensorDisplayActivity extends FragmentActivity implements ActionBarImplementation {
 	protected NervousnetRemote mService;
@@ -291,6 +293,9 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 			case 9:
 				fragment = new NoiseFragment(9);
 				break;
+			case 10:
+				fragment = new PressureFragment(10);
+				break;
 			default:
 				fragment = new DummyFragment(-1);
 				break;
@@ -300,12 +305,12 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
 		@Override
 		public int getCount() {
-			return NervousnetConstants.sensor_labels.length;
+			return NervousnetVMConstants.sensor_labels.length;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return NervousnetConstants.sensor_labels[position];
+			return NervousnetVMConstants.sensor_labels[position];
 		}
 
 		@SuppressWarnings("unchecked")
@@ -327,12 +332,18 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 	protected void updateStatus(SensorReading reading, int index) {
 
 		BaseFragment fragment = (BaseFragment) sapAdapter.getFragment(index);
-		Log.d("SensorDisplayActivity", "Inside updateStatus " + fragment.type);
+		Log.d("SensorDisplayActivity", "Inside updateStatus, index =  " + index);
 
-		if (reading != null)
-			fragment.updateReadings(reading);
-		else
-			fragment.handleError("Reading is null");
+		if (reading != null) {
+			if (reading instanceof ErrorReading)
+				fragment.handleError((ErrorReading) reading);
+			else
+				fragment.updateReadings(reading);
+		}
+
+		// else
+		// fragment.handleError(new ErrorReading(new String[]{"100", "Reading is
+		// null", ""}));
 	}
 
 	@Override
@@ -420,21 +431,21 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 				updateStatus(mService.getReading(LibConstants.SENSOR_NOISE), index);
 				break;
 			case 10:
-				//Pressure
-//				updateStatus(mService.getReading(LibConstants.SENSOR_NOISE), index);
+				// Pressure
+				updateStatus(mService.getReading(LibConstants.SENSOR_PRESSURE), index);
 				break;
 
 			case 11:
-				//Proximity
+				// Proximity
 				break;
 			}
 
 			viewPager.getAdapter().notifyDataSetChanged();
 
-//		} 
-//		catch (RemoteException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			// }
+			// catch (RemoteException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

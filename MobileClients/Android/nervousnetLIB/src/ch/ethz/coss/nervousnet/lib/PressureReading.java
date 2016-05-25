@@ -33,39 +33,31 @@ import android.os.Parcelable;
 /**
  * @author prasad
  */
-public class GyroReading extends SensorReading {
+public class PressureReading extends SensorReading {
 
-	private float[] values = new float[3];
+	private float pressureValue;
 
-	public GyroReading(long timestamp, float[] values) {
-		this.type = LibConstants.SENSOR_GYROSCOPE;
+	public PressureReading(long timestamp, float value) {
+		this.type = LibConstants.SENSOR_PRESSURE;
 		this.timestamp = timestamp;
-		this.values = values;
+		this.pressureValue = value;
 	}
 
 	/**
 	 * @param in
 	 */
-	public GyroReading(Parcel in) {
+	public PressureReading(Parcel in) {
 		readFromParcel(in);
 	}
 
 	public void readFromParcel(Parcel in) {
 
 		timestamp = in.readLong();
-		in.readFloatArray(values);
+		pressureValue = in.readFloat();
 	}
 
-	public float getGyroX() {
-		return values[0];
-	}
-
-	public float getGyroY() {
-		return values[1];
-	}
-
-	public float getGyroZ() {
-		return values[2];
+	public float getPressureValue() {
+		return pressureValue;
 	}
 
 	/*
@@ -88,19 +80,18 @@ public class GyroReading extends SensorReading {
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeString(getClass().getName());
 		out.writeLong(timestamp);
-		out.writeFloatArray(values);
-
+		out.writeFloat(pressureValue);
 	}
 
-	public static final Parcelable.Creator<GyroReading> CREATOR = new Parcelable.Creator<GyroReading>() {
+	public static final Parcelable.Creator<PressureReading> CREATOR = new Parcelable.Creator<PressureReading>() {
 		@Override
-		public GyroReading createFromParcel(Parcel in) {
-			return new GyroReading(in);
+		public PressureReading createFromParcel(Parcel in) {
+			return new PressureReading(in);
 		}
 
 		@Override
-		public GyroReading[] newArray(int size) {
-			return new GyroReading[size];
+		public PressureReading[] newArray(int size) {
+			return new PressureReading[size];
 		}
 	};
 

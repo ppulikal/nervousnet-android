@@ -25,7 +25,7 @@ public class SensorConfigDao extends AbstractDao<SensorConfig, Void> {
     public static class Properties {
         public final static Property ID = new Property(0, Long.class, "ID", false, "ID");
         public final static Property Name = new Property(1, String.class, "Name", false, "NAME");
-        public final static Property State = new Property(2, Boolean.class, "State", false, "STATE");
+        public final static Property State = new Property(2, Byte.class, "State", false, "STATE");
     };
 
 
@@ -67,9 +67,9 @@ public class SensorConfigDao extends AbstractDao<SensorConfig, Void> {
             stmt.bindString(2, Name);
         }
  
-        Boolean State = entity.getState();
+        Byte State = entity.getState();
         if (State != null) {
-            stmt.bindLong(3, State ? 1L: 0L);
+            stmt.bindLong(3, State);
         }
     }
 
@@ -85,7 +85,7 @@ public class SensorConfigDao extends AbstractDao<SensorConfig, Void> {
         SensorConfig entity = new SensorConfig( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // ID
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // Name
-            cursor.isNull(offset + 2) ? null : cursor.getShort(offset + 2) != 0 // State
+            cursor.isNull(offset + 2) ? null : (byte) cursor.getShort(offset + 2) // State
         );
         return entity;
     }
@@ -95,7 +95,7 @@ public class SensorConfigDao extends AbstractDao<SensorConfig, Void> {
     public void readEntity(Cursor cursor, SensorConfig entity, int offset) {
         entity.setID(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setState(cursor.isNull(offset + 2) ? null : cursor.getShort(offset + 2) != 0);
+        entity.setState(cursor.isNull(offset + 2) ? null : (byte) cursor.getShort(offset + 2));
      }
     
     /** @inheritdoc */

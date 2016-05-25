@@ -18,8 +18,8 @@
         android:layout_height="@dimen/action_bar_logo_height"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:paddingTop="5dp"
         android:paddingLeft="5dp"
+        android:paddingTop="5dp"
         android:src="@drawable/logo" />
 
     <Switch

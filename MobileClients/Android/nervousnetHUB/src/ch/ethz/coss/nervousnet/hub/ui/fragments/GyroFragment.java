@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 
@@ -77,6 +78,12 @@ public class GyroFragment extends BaseFragment {
 		x_value.setText("" + ((GyroReading) reading).getGyroX());
 		y_value.setText("" + ((GyroReading) reading).getGyroY());
 		z_value.setText("" + ((GyroReading) reading).getGyroZ());
+
+	}
+
+	@Override
+	public void handleError(ErrorReading reading) {
+		// TODO Auto-generated method stub
 
 	}
 

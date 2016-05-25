@@ -9,87 +9,88 @@ package ch.ethz.coss.nervousnet.vm.storage;
  */
 public class Config {
 
-    private Byte State;
-    private String UUID;
-    private String DeviceBrand;
-    private String DeviceModel;
-    private String DeviceOS;
-    private String DeviceOSversion;
-    private Long LastSyncTime;
+	private Byte State;
+	private String UUID;
+	private String DeviceBrand;
+	private String DeviceModel;
+	private String DeviceOS;
+	private String DeviceOSversion;
+	private Long LastSyncTime;
 
-    // KEEP FIELDS - put your custom fields here
-    // KEEP FIELDS END
+	// KEEP FIELDS - put your custom fields here
+	// KEEP FIELDS END
 
-    public Config() {
-    }
+	public Config() {
+	}
 
-    public Config(Byte State, String UUID, String DeviceBrand, String DeviceModel, String DeviceOS, String DeviceOSversion, Long LastSyncTime) {
-        this.State = State;
-        this.UUID = UUID;
-        this.DeviceBrand = DeviceBrand;
-        this.DeviceModel = DeviceModel;
-        this.DeviceOS = DeviceOS;
-        this.DeviceOSversion = DeviceOSversion;
-        this.LastSyncTime = LastSyncTime;
-    }
+	public Config(Byte State, String UUID, String DeviceBrand, String DeviceModel, String DeviceOS,
+			String DeviceOSversion, Long LastSyncTime) {
+		this.State = State;
+		this.UUID = UUID;
+		this.DeviceBrand = DeviceBrand;
+		this.DeviceModel = DeviceModel;
+		this.DeviceOS = DeviceOS;
+		this.DeviceOSversion = DeviceOSversion;
+		this.LastSyncTime = LastSyncTime;
+	}
 
-    public Byte getState() {
-        return State;
-    }
+	public Byte getState() {
+		return State;
+	}
 
-    public void setState(Byte State) {
-        this.State = State;
-    }
+	public void setState(Byte State) {
+		this.State = State;
+	}
 
-    public String getUUID() {
-        return UUID;
-    }
+	public String getUUID() {
+		return UUID;
+	}
 
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
-    }
+	public void setUUID(String UUID) {
+		this.UUID = UUID;
+	}
 
-    public String getDeviceBrand() {
-        return DeviceBrand;
-    }
+	public String getDeviceBrand() {
+		return DeviceBrand;
+	}
 
-    public void setDeviceBrand(String DeviceBrand) {
-        this.DeviceBrand = DeviceBrand;
-    }
+	public void setDeviceBrand(String DeviceBrand) {
+		this.DeviceBrand = DeviceBrand;
+	}
 
-    public String getDeviceModel() {
-        return DeviceModel;
-    }
+	public String getDeviceModel() {
+		return DeviceModel;
+	}
 
-    public void setDeviceModel(String DeviceModel) {
-        this.DeviceModel = DeviceModel;
-    }
+	public void setDeviceModel(String DeviceModel) {
+		this.DeviceModel = DeviceModel;
+	}
 
-    public String getDeviceOS() {
-        return DeviceOS;
-    }
+	public String getDeviceOS() {
+		return DeviceOS;
+	}
 
-    public void setDeviceOS(String DeviceOS) {
-        this.DeviceOS = DeviceOS;
-    }
+	public void setDeviceOS(String DeviceOS) {
+		this.DeviceOS = DeviceOS;
+	}
 
-    public String getDeviceOSversion() {
-        return DeviceOSversion;
-    }
+	public String getDeviceOSversion() {
+		return DeviceOSversion;
+	}
 
-    public void setDeviceOSversion(String DeviceOSversion) {
-        this.DeviceOSversion = DeviceOSversion;
-    }
+	public void setDeviceOSversion(String DeviceOSversion) {
+		this.DeviceOSversion = DeviceOSversion;
+	}
 
-    public Long getLastSyncTime() {
-        return LastSyncTime;
-    }
+	public Long getLastSyncTime() {
+		return LastSyncTime;
+	}
 
-    public void setLastSyncTime(Long LastSyncTime) {
-        this.LastSyncTime = LastSyncTime;
-    }
+	public void setLastSyncTime(Long LastSyncTime) {
+		this.LastSyncTime = LastSyncTime;
+	}
 
-    // KEEP METHODS - put your custom methods here
-    // KEEP METHODS END
+	// KEEP METHODS - put your custom methods here
+	// KEEP METHODS END
 
 }

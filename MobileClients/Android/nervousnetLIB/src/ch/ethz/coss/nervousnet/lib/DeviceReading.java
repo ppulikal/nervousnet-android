@@ -34,9 +34,8 @@ import android.os.Parcelable;
  */
 public class DeviceReading extends SensorReading {
 
-
 	public DeviceReading(long timestamp, float[] values) {
-		this.type = LibConstants.SENSOR_DEVICE;
+		this.type = LibConstants.DEVICE_INFO;
 		this.timestamp = timestamp;
 	}
 
@@ -46,8 +45,6 @@ public class DeviceReading extends SensorReading {
 	public DeviceReading(Parcel in) {
 		readFromParcel(in);
 	}
-
-	
 
 	public void readFromParcel(Parcel in) {
 
@@ -73,7 +70,7 @@ public class DeviceReading extends SensorReading {
 	 */
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
-		 out.writeString(getClass().getName());
+		out.writeString(getClass().getName());
 		out.writeLong(timestamp);
 	}
 

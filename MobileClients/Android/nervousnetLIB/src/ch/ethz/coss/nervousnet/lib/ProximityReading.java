@@ -53,7 +53,6 @@ public class ProximityReading extends SensorReading {
 		return proximity;
 	}
 
-
 	public void readFromParcel(Parcel in) {
 
 		timestamp = in.readLong();
@@ -79,7 +78,7 @@ public class ProximityReading extends SensorReading {
 	 */
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
-		 out.writeString(getClass().getName());
+		out.writeString(getClass().getName());
 		out.writeLong(timestamp);
 		out.writeFloat(proximity);
 	}

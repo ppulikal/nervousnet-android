@@ -26,7 +26,6 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,15 +39,16 @@ import android.util.Log;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.hub.ui.StartUpActivity;
 import ch.ethz.coss.nervousnet.vm.NervousnetVM;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.storage.SensorDataImpl;
 
 public class Application extends android.app.Application {
-	
+
 	private static String LOG_TAG = Application.class.getSimpleName();
 	private static int NOTIFICATION = R.string.local_service_started;
-    
+
 	private static NotificationManager mNM;
-	private NervousnetVM nn_VM;
+	public NervousnetVM nn_VM;
 
 	public Application() {
 	}
@@ -73,9 +73,10 @@ public class Application extends android.app.Application {
 	 */
 	private void init() {
 		Log.d(LOG_TAG, "Inside Application init()");
-		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		nn_VM = new NervousnetVM(getApplicationContext());
+		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		
+			
 	}
 
 	private void handleUncaughtException(Thread thread, Throwable e) {
@@ -103,6 +104,7 @@ public class Application extends android.app.Application {
 	public void stopService(Context context) {
 		Log.d(LOG_TAG, "inside stopService");
 		Toast.makeText(context, "Service Stopped", Toast.LENGTH_SHORT).show();
+		nn_VM.stopSensors();
 		Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
 		context.stopService(sensorIntent);
 		removeNotification();
@@ -151,12 +153,12 @@ public class Application extends android.app.Application {
 		return useWhiteIcon ? R.drawable.ic_logo_white : R.drawable.ic_logo;
 	}
 
-	public void storeSensor(SensorDataImpl sensorData) {
-		nn_VM.storeSensorAsync(sensorData);
-	}
+//	public void storeSensor(SensorDataImpl sensorData) {
+//		nn_VM.storeSensorAsync(sensorData);
+//	}
 
 	@SuppressWarnings("rawtypes")
 	public void readSensorData(int type, long startTime, long endTime, ArrayList list) {
-		 nn_VM.getSensorReadings(type, startTime, endTime, list);
+		nn_VM.getSensorReadings(type, startTime, endTime, list);
 	}
 }

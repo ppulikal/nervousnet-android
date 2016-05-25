@@ -34,7 +34,6 @@ import android.os.Parcelable;
  */
 public class ErrorReading extends SensorReading {
 
-	
 	private String[] errorValues = new String[3];
 
 	public ErrorReading(String[] values) {
@@ -52,12 +51,10 @@ public class ErrorReading extends SensorReading {
 	public int getErrorCode() {
 		return Integer.parseInt(errorValues[0]);
 	}
-	
+
 	public String getErrorString() {
 		return errorValues[1];
 	}
-
-	
 
 	public void readFromParcel(Parcel in) {
 

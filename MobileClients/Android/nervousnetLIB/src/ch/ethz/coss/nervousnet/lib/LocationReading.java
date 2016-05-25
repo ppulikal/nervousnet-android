@@ -42,8 +42,6 @@ public class LocationReading extends SensorReading {
 		this.altitude = altitude;
 	}
 
-
-
 	/**
 	 * @param in
 	 */
@@ -97,7 +95,7 @@ public class LocationReading extends SensorReading {
 	 */
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
-		 out.writeString(getClass().getName());
+		out.writeString(getClass().getName());
 		out.writeLong(timestamp);
 		out.writeDoubleArray(latnLong);
 		out.writeDouble(altitude);

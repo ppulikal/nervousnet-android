@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 
 public class AccelFragment extends BaseFragment {
@@ -57,16 +58,29 @@ public class AccelFragment extends BaseFragment {
 
 	@Override
 	public void updateReadings(SensorReading reading) {
-		Log.d("AccelFragment", "Inside updateReadings, X = " + ((AccelerometerReading) reading).getX());
+		Log.d("AccelFragment", "Inside updateReadings ");
 
-		TextView x_value = (TextView) getActivity().findViewById(R.id.accel_x);
-		TextView y_value = (TextView) getActivity().findViewById(R.id.accel_y);
-		TextView z_value = (TextView) getActivity().findViewById(R.id.accel_z);
+		if (reading instanceof ErrorReading) {
 
-		x_value.setText("" + ((AccelerometerReading) reading).getX());
-		y_value.setText("" + ((AccelerometerReading) reading).getY());
-		z_value.setText("" + ((AccelerometerReading) reading).getZ());
+			Log.d("AccelFragment", "Inside updateReadings - ErrorReading");
+			handleError((ErrorReading) reading);
+		} else {
+			TextView x_value = (TextView) getActivity().findViewById(R.id.accel_x);
+			TextView y_value = (TextView) getActivity().findViewById(R.id.accel_y);
+			TextView z_value = (TextView) getActivity().findViewById(R.id.accel_z);
 
+			x_value.setText("" + ((AccelerometerReading) reading).getX());
+			y_value.setText("" + ((AccelerometerReading) reading).getY());
+			z_value.setText("" + ((AccelerometerReading) reading).getZ());
+		}
+
+	}
+
+	@Override
+	public void handleError(ErrorReading reading) {
+		Log.d("AccelFragment", "handleError called");
+		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_accel);
+		status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
 	}
 
 }

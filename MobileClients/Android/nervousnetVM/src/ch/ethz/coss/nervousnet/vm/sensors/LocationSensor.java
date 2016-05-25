@@ -107,17 +107,18 @@ public class LocationSensor implements SensorStatusImplementation, LocationListe
 		listenerMutex.unlock();
 	}
 
-	
 	@TargetApi(23)
 	public void startLocationCollection() {
 		Log.d(LOG_TAG, "startLocationCollection ");
-		
-		if ( Build.VERSION.SDK_INT >= 23 &&
-	             ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-	             ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-	            return  ;
-	        }
-		
+
+		if (Build.VERSION.SDK_INT >= 23
+				&& ContextCompat.checkSelfPermission(mContext,
+						android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+				&& ContextCompat.checkSelfPermission(mContext,
+						android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			return;
+		}
+
 		if (locationManager == null)
 			return;
 		Log.d(LOG_TAG, "startLocationCollection2");
@@ -160,7 +161,7 @@ public class LocationSensor implements SensorStatusImplementation, LocationListe
 					if (locationManager != null) {
 						location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 						if (location != null) {
-							reading = new LocationReading(System.currentTimeMillis() ,
+							reading = new LocationReading(System.currentTimeMillis(),
 									new double[] { location.getLatitude(), location.getLongitude() },
 									location.getAltitude());
 						}

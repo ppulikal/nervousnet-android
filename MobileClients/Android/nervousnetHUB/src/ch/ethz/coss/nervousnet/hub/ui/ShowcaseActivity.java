@@ -55,43 +55,40 @@ public class ShowcaseActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showcase);
-		
+
 		GridView gridview = (GridView) findViewById(R.id.space_grid);
-		
-		
-		 ArrayList<HashMap<String, String>> formList = new ArrayList<HashMap<String, String>>();
-	        try {
-	            String spaceJson = parseJSONFile("res/raw/space.json" , getApplicationContext());
-	            JSONObject formArray = (new JSONObject(spaceJson)).getJSONObject("apps");
-	            String app = formArray.getString("app");
-	            String packageName = formArray.getString("package");
-	            System.out.println("App - "+app+", Package - "+packageName);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } catch (JSONException e) {
-	            e.printStackTrace();
-	        }
-	        
-	        
-	        
+
+		ArrayList<HashMap<String, String>> formList = new ArrayList<HashMap<String, String>>();
+		try {
+			String spaceJson = parseJSONFile("res/raw/space.json", getApplicationContext());
+			JSONObject formArray = (new JSONObject(spaceJson)).getJSONObject("apps");
+			String app = formArray.getString("app");
+			String packageName = formArray.getString("package");
+			System.out.println("App - " + app + ", Package - " + packageName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
 		gridview.setAdapter(new ImageAdapter(ShowcaseActivity.this, getResources().getStringArray(R.array.main_grid),
 				Constants.icons_main_screen));
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				
+
 			}
 		});
 	}
-	
-	 public static String parseJSONFile (String res, Context context) throws IOException {
-	        AssetManager manager = context.getAssets();
-	        InputStream file = manager.open(res);
-	        byte[] formArray = new byte[file.available()];
-	        file.read(formArray);
-	        file.close();
 
-	        return new String(formArray);
-	    }
+	public static String parseJSONFile(String res, Context context) throws IOException {
+		AssetManager manager = context.getAssets();
+		InputStream file = manager.open(res);
+		byte[] formArray = new byte[file.available()];
+		file.read(formArray);
+		file.close();
+
+		return new String(formArray);
+	}
 
 }

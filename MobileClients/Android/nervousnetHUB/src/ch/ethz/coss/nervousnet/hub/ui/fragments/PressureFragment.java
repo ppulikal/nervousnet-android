@@ -37,21 +37,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
-import ch.ethz.coss.nervousnet.lib.LightReading;
+import ch.ethz.coss.nervousnet.lib.NoiseReading;
+import ch.ethz.coss.nervousnet.lib.PressureReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 
-public class LightFragment extends BaseFragment {
+public class PressureFragment extends BaseFragment {
 
-	public LightFragment() {
+	public PressureFragment() {
 	}
 
-	public LightFragment(int type) {
+	public PressureFragment(int type) {
 		super(type);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_light, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_pressure, container, false);
 
 		return rootView;
 	}
@@ -66,10 +67,14 @@ public class LightFragment extends BaseFragment {
 	@Override
 	public void updateReadings(SensorReading reading) {
 
-		Log.d("LightFragment", "Inside updateReadings");
-		TextView lux = (TextView) getActivity().findViewById(R.id.lux);
-		lux.setText("" + ((LightReading) reading).getLuxValue());
+		Log.d("PressureFragment", "Inside updateReadings");
 
+		if (reading instanceof ErrorReading) {
+			handleError((ErrorReading) reading);
+			return;
+		}
+		TextView pressureTV = (TextView) getActivity().findViewById(R.id.pressureValue);
+		pressureTV.setText("" + ((PressureReading) reading).getPressureValue());
 	}
 
 	@Override

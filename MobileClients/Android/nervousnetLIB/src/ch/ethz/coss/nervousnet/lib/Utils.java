@@ -28,20 +28,19 @@ public class Utils {
 		// show it
 		alertDialog.show();
 	}
-	
-	
+
 	public static String getConnectivityTypeString(int networkType) {
-		
-		switch(networkType) {
-		case ConnectivityManager.TYPE_MOBILE :
+
+		switch (networkType) {
+		case ConnectivityManager.TYPE_MOBILE:
 			return "Mobile";
-		case ConnectivityManager.TYPE_WIFI :
+		case ConnectivityManager.TYPE_WIFI:
 			return "WiFi";
-		case ConnectivityManager.TYPE_BLUETOOTH :
+		case ConnectivityManager.TYPE_BLUETOOTH:
 			return "Bluetooth";
-		 default :
+		default:
 			return "Other";
-	}
-		
+		}
+
 	}
 }

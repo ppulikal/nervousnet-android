@@ -22,11 +22,11 @@ public class SensorConfiguration {
 	}
 
 	public SensorCollectStatus getInitialSensorCollectStatus(int sensorType) {
-		SharedPreferences settings = context.getSharedPreferences(NervousnetConstants.SENSOR_PREFS, 0);
+		SharedPreferences settings = context.getSharedPreferences(NervousnetVMConstants.SENSOR_PREFS, 0);
 		boolean doMeasure = settings.getBoolean(sensorType + "_doMeasure", true);
 		boolean doShare = settings.getBoolean(sensorType + "_doShare", true);
 
-		int measureInterval = (int) context.getSharedPreferences(NervousnetConstants.SENSOR_FREQ, 0)
+		int measureInterval = (int) context.getSharedPreferences(NervousnetVMConstants.SENSOR_FREQ, 0)
 				.getInt(sensorType + "_freqValue", 2) * 2000;
 
 		Log.d("SensorConfiguration", "MeasureInterval = " + measureInterval);

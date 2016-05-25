@@ -34,7 +34,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -55,53 +58,39 @@ import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.utils.ValueFormatter;
 
-public class ConnectivitySensor {
+public class ConnectivitySensor extends BaseSensor {
 
 	private static final String LOG_TAG = ConnectivitySensor.class.getSimpleName();
 
 	private Context context;
 	private ConnectivityReading reading;
+	private HandlerThread hthread;
+	private Handler handler;
 
-	private List<ConnectivitySensorListener> listenerList = new ArrayList<ConnectivitySensorListener>();
-	private Lock listenerMutex = new ReentrantLock();
 
-	public void addListener(ConnectivitySensorListener listener) {
-		listenerMutex.lock();
-		listenerList.add(listener);
-		listenerMutex.unlock();
+
+	public ConnectivitySensor(Context context, byte sensorState) {
+		this.context = context;
+		this.sensorState = sensorState;
+		
+		hthread = new HandlerThread("HandlerThread");
+		hthread.start();
 	}
 
-	public void removeListener(ConnectivitySensorListener listener) {
-		listenerMutex.lock();
-		listenerList.remove(listener);
-		listenerMutex.unlock();
-	}
-
-	public void clearListeners() {
-		listenerMutex.lock();
-		listenerList.clear();
-		listenerMutex.unlock();
-	}
-
-	public interface ConnectivitySensorListener {
-		public void connectivitySensorDataReady(ConnectivityReading reading);
-	}
-
-	public void dataReady(ConnectivityReading reading) {
-		listenerMutex.lock();
-		for (ConnectivitySensorListener listener : listenerList) {
-			listener.connectivitySensorDataReady(reading);
-		}
-		listenerMutex.unlock();
-	}
 
 	public void runConnectivitySensor() {
 		Log.d(LOG_TAG, "Inside runConnectivitySensor");
-		if ( Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-	            return  ;
-	        }
+		
+//		CHECK THIS PIECE OF CODE, if required in new phones
+//		if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(context,
+//				android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//			return;
+//		}
 		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 		boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
@@ -183,8 +172,8 @@ public class ConnectivitySensor {
 		mobileHashBuilder.append(new String(gsmHashId));
 		mobileHashBuilder.append(new String(wcdmaHashId));
 
-		dataReady(new ConnectivityReading(System.currentTimeMillis(), isConnected, networkType, isRoaming,
-				wifiHashId, wifiStrength, mobileHashBuilder.toString()));
+		dataReady(new ConnectivityReading(System.currentTimeMillis(), isConnected, networkType, isRoaming, wifiHashId,
+				wifiStrength, mobileHashBuilder.toString()));
 
 	}
 
@@ -272,8 +261,8 @@ public class ConnectivitySensor {
 			mobileHashBuilder.append(new String(gsmHashId));
 			mobileHashBuilder.append(new String(wcdmaHashId));
 
-			dataReady(new ConnectivityReading(System.currentTimeMillis() / 1000, isConnected, networkType,
-					isRoaming, wifiHashId, wifiStrength, mobileHashBuilder.toString()));
+			dataReady(new ConnectivityReading(System.currentTimeMillis() / 1000, isConnected, networkType, isRoaming,
+					wifiHashId, wifiStrength, mobileHashBuilder.toString()));
 			return null;
 
 		}
@@ -294,7 +283,26 @@ public class ConnectivitySensor {
 		return new byte[16];
 	}
 
-	public void start() {
+
+	
+
+
+	@Override
+	public boolean start(SensorManager sensorManager) {
+		
+		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled Starting Connectivity sensor as Sensor is not available.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled Starting Connectivity sensor as permission denied by user.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			Log.d(LOG_TAG, "Cancelled starting Connectivity sensor as Sensor state is switched off.");
+			return false;
+		}  
+		
+		Log.d(LOG_TAG, "Starting Connectivity sensor with state = " + sensorState);
+		
 		handler = new Handler(hthread.getLooper());
 		final Runnable run = new Runnable() {
 			@Override
@@ -307,26 +315,51 @@ public class ConnectivitySensor {
 		};
 
 		boolean flag = handler.postDelayed(run, 0);
+		
+		return true;
 	}
 
-	HandlerThread hthread;
-	Handler handler;
+	@Override
+	public boolean updateAndRestart(SensorManager sensorManager, byte state) {
+		if(state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled Connectivity battery sensor as Sensor is not available.");
+			return false;
+		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled Connectivity battery sensor as permission denied by user.");
+			return false;
+		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			setSensorState(state);
+			Log.d(LOG_TAG, "Cancelled Connectivity battery sensor as Sensor state is switched off.");
+			return false;
+		} 
 
-	private ConnectivitySensor(Context context) {
-		this.context = context;
-
-		hthread = new HandlerThread("HandlerThread");
-		hthread.start();
+		stop(sensorManager);
+		setSensorState(state);
+		Log.d(LOG_TAG, "Restarting Connectivity sensor with state = " + sensorState);
+		start(sensorManager);
+		return true;
 	}
 
-	public static ConnectivitySensor getInstance(Context context) {
-
-		if (_instance == null)
-			_instance = new ConnectivitySensor(context);
-
-		return _instance;
+	@Override
+	public boolean stop(SensorManager sensorManager) {
+		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled stop Connectivity sensor as Sensor state is not available ");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled stop Connectivity sensor as permission denied by user.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			Log.d(LOG_TAG, "Cancelled stop Connectivity sensor as Sensor state is switched off ");
+			return false;
+		} 
+		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
+		this.reading = null;
+		
+		return true;
 	}
 
-	public static ConnectivitySensor _instance;
+
+
+
 
 }

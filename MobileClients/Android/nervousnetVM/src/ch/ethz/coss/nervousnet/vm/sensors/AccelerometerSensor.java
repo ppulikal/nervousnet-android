@@ -32,118 +32,151 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import android.location.Location;
 import android.location.LocationListener;
 
-public class AccelerometerSensor implements SensorStatusImplementation {
+public class AccelerometerSensor extends BaseSensor implements SensorEventListener {
 
-	public static AccelerometerSensor _instance = null;
+	private static final String LOG_TAG = AccelerometerSensor.class.getSimpleName();
 
-	private List<AccelerometerSensorListener> listenerList = new ArrayList<AccelerometerSensorListener>();
-	private Lock listenerMutex = new ReentrantLock();
 
-	private AccelerometerReading reading;
-
-	private AccelerometerSensor() {
+	public AccelerometerSensor(byte sensorState) {
+		this.sensorState = sensorState;
 	}
 
-	public static AccelerometerSensor getInstance() {
-		Log.d("AccelerometerSensor", "getInstance called ");
 
-		if (_instance == null) {
-			Log.d("AccelerometerSensor", "instance is null ");
-			_instance = new AccelerometerSensor();
-		}
-
-		return _instance;
+	@Override
+	public boolean start(SensorManager sensorManager) {
+		
+		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled Starting accelerometer sensor as Sensor is not available.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled Starting accelerometer sensor as permission denied by user.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			Log.d(LOG_TAG, "Cancelled starting accelerometer sensor as Sensor state is switched off.");
+			return false;
+		} 
+		
+		Log.d(LOG_TAG, "Starting accelerometer sensor with state = " + sensorState);
+		
+		sensorManager.registerListener(AccelerometerSensor.this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+				NervousnetVMConstants.sensor_freq_constants[0][sensorState - 1]);
+		
+		return true;
 	}
 
-	public interface AccelerometerSensorListener {
-		public void accelSensorDataReady(AccelerometerReading reading);
+	@Override
+	public boolean updateAndRestart(SensorManager sensorManager, byte state) {
+		
+		if(state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled Starting accelerometer sensor as Sensor is not available.");
+			return false;
+		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled Starting accelerometer sensor as permission denied by user.");
+			return false;
+		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			setSensorState(state);
+			Log.d(LOG_TAG, "Cancelled starting accelerometer sensor as Sensor state is switched off.");
+			return false;
+		} 
+		
+
+		stop(sensorManager);
+		
+		setSensorState(state);
+		Log.d(LOG_TAG, "Restarting accelerometer sensor with state = " + sensorState);
+		
+		start(sensorManager);
+		return true;
 	}
 
-	public void addListener(AccelerometerSensorListener listener) {
-
-		listenerMutex.lock();
-		listenerList.add(listener);
-		listenerMutex.unlock();
-		// Log.d("AccelerometerSensor", "Listener added "+listenerList.size());
-	}
-
-	public void removeListener(AccelerometerSensorListener listener) {
-		// Log.d("AccelerometerSensor", "Listener remove "+listenerList.size());
-
-		listenerMutex.lock();
-		listenerList.remove(listener);
-		listenerMutex.unlock();
-	}
-
-	public void clearListeners() {
-		listenerMutex.lock();
-		listenerList.clear();
-		listenerMutex.unlock();
-	}
-
-	public void start() {
-	}
-
-	public void stop() {
+	@Override
+	public boolean stop(SensorManager sensorManager) {
+		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is not available ");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled stop accelerometer sensor as permission denied by user.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			Log.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is switched off ");
+			return false;
+		} 
+		sensorManager.unregisterListener(AccelerometerSensor.this);
+		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
+		this.reading = null;
+		return true;
 	}
 
 	/**
 	 * @param batteryReading
 	 */
 	public void dataReady(AccelerometerReading reading) {
-		// Log.d("AccelerometerSensor", "dataReady called
+		// Log.d(LOG_TAG, "dataReady called
 		// "+listenerList.size());
 
 		this.reading = reading;
 		listenerMutex.lock();
 
-		for (AccelerometerSensorListener listener : listenerList) {
-			// Log.d("AccelerometerSensor", "listener.accelSensorDataReady
+		for (BaseSensorListener listener : listenerList) {
+			// Log.d(LOG_TAG, "listener.accelSensorDataReady
 			// calling ");
 
-			listener.accelSensorDataReady(reading);
+			listener.sensorDataReady(reading);
 		}
 		listenerMutex.unlock();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.ethz.coss.nervousnet.sensors.SensorStatusImplementation#doCollect()
-	 */
-	@Override
-	public void doCollect() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void doShare() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.ethz.coss.nervousnet.sensors.SensorStatusImplementation#getReading()
-	 */
 	@Override
 	public SensorReading getReading() {
+		Log.d(LOG_TAG, "getReading called ");
+		
+		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Error 101 : Sensor not available.");
+			return new ErrorReading(new String[] { "101", "Sensor not available on phone." });
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			Log.d(LOG_TAG, "Error 102 : Sensor available but switched off");
+			return new ErrorReading(new String[] { "102", "Sensor is switched off." });
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Error 103 : Sensor available but Permission Denied");
+			return new ErrorReading(new String[] { "103", "Sensor permission denied by user." });
+		}
+
+		if (reading == null) {
+			Log.d(LOG_TAG, "Error 104 : Sensor reading object is null");
+			return new ErrorReading(new String[] { "104", "Sensor not working correctly." });
+		}
 
 		return reading;
+
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		Log.d(LOG_TAG, "X = " + event.values[0]);
+		reading = new AccelerometerReading(event.timestamp, event.values);
+//		store(reading);
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
 	}
 
 }

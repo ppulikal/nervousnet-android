@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 
@@ -70,4 +71,9 @@ public class NoiseFragment extends BaseFragment {
 		db.setText("" + ((NoiseReading) reading).getdbValue());
 	}
 
+	@Override
+	public void handleError(ErrorReading reading) {
+		// TODO Auto-generated method stub
+
+	}
 }

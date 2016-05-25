@@ -32,7 +32,7 @@ import android.widget.ListView;
 import ch.ethz.coss.nervousnet.hub.Constants;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.CollectionRateSettingItemAdapter;
-import ch.ethz.coss.nervousnet.vm.NervousnetConstants;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 /**
  * @author prasad
@@ -47,7 +47,7 @@ public class CollectionRateSettingsActivity extends BaseActivity {
 		setContentView(R.layout.activity_collection_rate);
 		final ListView listview = (ListView) findViewById(R.id.coll_rate_listview);
 		final CollectionRateSettingItemAdapter adapter = new CollectionRateSettingItemAdapter(
-				CollectionRateSettingsActivity.this, NervousnetConstants.sensor_labels, Constants.icon_array_sensors);
+				CollectionRateSettingsActivity.this, NervousnetVMConstants.sensor_labels, Constants.icon_array_sensors);
 		listview.setAdapter(adapter);
 	}
 

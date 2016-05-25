@@ -9,72 +9,72 @@ package ch.ethz.coss.nervousnet.vm.storage;
  */
 public class HumidityData implements SensorDataImpl {
 
-    private Long id;
-    private Long TimeStamp;
-    private Float Humidity;
-    private long Volatility;
-    private Boolean ShareFlag;
+	private Long id;
+	private Long TimeStamp;
+	private Float Humidity;
+	private long Volatility;
+	private Boolean ShareFlag;
 
-    // KEEP FIELDS - put your custom fields here
-    private int type;
-    // KEEP FIELDS END
+	// KEEP FIELDS - put your custom fields here
+	private int type;
+	// KEEP FIELDS END
 
-    public HumidityData() {
-    }
+	public HumidityData() {
+	}
 
-    public HumidityData(Long id) {
-        this.id = id;
-    }
+	public HumidityData(Long id) {
+		this.id = id;
+	}
 
-    public HumidityData(Long id, Long TimeStamp, Float Humidity, long Volatility, Boolean ShareFlag) {
-        this.id = id;
-        this.TimeStamp = TimeStamp;
-        this.Humidity = Humidity;
-        this.Volatility = Volatility;
-        this.ShareFlag = ShareFlag;
-    }
+	public HumidityData(Long id, Long TimeStamp, Float Humidity, long Volatility, Boolean ShareFlag) {
+		this.id = id;
+		this.TimeStamp = TimeStamp;
+		this.Humidity = Humidity;
+		this.Volatility = Volatility;
+		this.ShareFlag = ShareFlag;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Long getTimeStamp() {
-        return TimeStamp;
-    }
+	public Long getTimeStamp() {
+		return TimeStamp;
+	}
 
-    public void setTimeStamp(Long TimeStamp) {
-        this.TimeStamp = TimeStamp;
-    }
+	public void setTimeStamp(Long TimeStamp) {
+		this.TimeStamp = TimeStamp;
+	}
 
-    public Float getHumidity() {
-        return Humidity;
-    }
+	public Float getHumidity() {
+		return Humidity;
+	}
 
-    public void setHumidity(Float Humidity) {
-        this.Humidity = Humidity;
-    }
+	public void setHumidity(Float Humidity) {
+		this.Humidity = Humidity;
+	}
 
-    public long getVolatility() {
-        return Volatility;
-    }
+	public long getVolatility() {
+		return Volatility;
+	}
 
-    public void setVolatility(long Volatility) {
-        this.Volatility = Volatility;
-    }
+	public void setVolatility(long Volatility) {
+		this.Volatility = Volatility;
+	}
 
-    public Boolean getShareFlag() {
-        return ShareFlag;
-    }
+	public Boolean getShareFlag() {
+		return ShareFlag;
+	}
 
-    public void setShareFlag(Boolean ShareFlag) {
-        this.ShareFlag = ShareFlag;
-    }
+	public void setShareFlag(Boolean ShareFlag) {
+		this.ShareFlag = ShareFlag;
+	}
 
-    // KEEP METHODS - put your custom methods here
+	// KEEP METHODS - put your custom methods here
 	@Override
 	public Integer getType() {
 		// TODO Auto-generated method stub
@@ -86,6 +86,6 @@ public class HumidityData implements SensorDataImpl {
 		// TODO Auto-generated method stub
 		this.type = type;
 	}
-    // KEEP METHODS END
+	// KEEP METHODS END
 
 }

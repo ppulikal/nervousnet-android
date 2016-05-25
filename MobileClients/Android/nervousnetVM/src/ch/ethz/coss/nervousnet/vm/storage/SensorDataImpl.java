@@ -27,7 +27,8 @@
 package ch.ethz.coss.nervousnet.vm.storage;
 
 public interface SensorDataImpl {
-	
+
 	public Integer getType();
+
 	public void setType(Integer type);
 }
