@@ -124,31 +124,13 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 		return true;
 	}
 
-	/**
-	 * @param batteryReading
-	 */
-	public void dataReady(AccelerometerReading reading) {
-		// Log.d(LOG_TAG, "dataReady called
-		// "+listenerList.size());
-
-		this.reading = reading;
-		listenerMutex.lock();
-
-		for (BaseSensorListener listener : listenerList) {
-			// Log.d(LOG_TAG, "listener.accelSensorDataReady
-			// calling ");
-
-			listener.sensorDataReady(reading);
-		}
-		listenerMutex.unlock();
-	}
 
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		Log.d(LOG_TAG, "X = " + event.values[0]);
 		reading = new AccelerometerReading(event.timestamp, event.values);
-//		store(reading);
+		dataReady(reading);
 	}
 
 	@Override

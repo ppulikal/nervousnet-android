@@ -45,6 +45,7 @@ public abstract class BaseSensor {
 	}
 	
 	public void dataReady(SensorReading reading) {
+		this.reading = reading;
 		listenerMutex.lock();
 		for (BaseSensorListener listener : listenerList) {
 			listener.sensorDataReady(reading);

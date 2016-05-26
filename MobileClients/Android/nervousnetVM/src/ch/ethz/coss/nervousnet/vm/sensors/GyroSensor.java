@@ -110,25 +110,12 @@ public class GyroSensor extends BaseSensor implements SensorEventListener {
 		return true;
 	}
 
-	/**
-	 * @param batteryReading
-	 */
-	public void dataReady(GyroReading reading) {
-		this.reading = reading;
-		listenerMutex.lock();
-
-		for (BaseSensorListener listener : listenerList) {
-
-			listener.sensorDataReady(reading);
-		}
-		listenerMutex.unlock();
-	}
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		Log.d(LOG_TAG, "X = " + event.values[0]);
 		reading = new GyroReading(event.timestamp, event.values);
-		// store(reading);
+		dataReady(reading);
 	}
 
 	@Override

@@ -11,16 +11,22 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
+import ch.ethz.coss.nervousnet.lib.BatteryReading;
+import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
+import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
+import ch.ethz.coss.nervousnet.lib.LightReading;
+import ch.ethz.coss.nervousnet.lib.LocationReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NervousnetVM;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
+import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor.BaseSensorListener;
 import ch.ethz.coss.nervousnet.vm.storage.DaoMaster.DevOpenHelper;
 import de.greenrobot.dao.query.QueryBuilder;
 
-public class SQLHelper {
+public class SQLHelper implements BaseSensorListener{
 	
-	private static final String LOG_TAG = NervousnetVM.class.getSimpleName();
+	private static final String LOG_TAG = SQLHelper.class.getSimpleName();
 	
 	Config config = null;
 	
@@ -140,6 +146,7 @@ public class SQLHelper {
 			if (params != null && params.length > 0) {
 
 				for (int i = 0; i < params.length; i++) {
+					Log.d(LOG_TAG, "doInBackground (params[i] = " + params[i] + ")");
 					storeSensor(params[i]);
 				}
 			}
@@ -155,7 +162,7 @@ public class SQLHelper {
 			Log.e(LOG_TAG, "SensorData is null. please check it");
 			return false;
 		} 
-			Log.d(LOG_TAG, "SensorData Type = (Type = " + sensorData.getType() + ")"); // ,
+			Log.d(LOG_TAG, "SensorData (Type = " + sensorData.getType() + ")"); // ,
 																						// Timestamp
 																						// =
 																						// "+sensorData.getTimeStamp()+",
@@ -174,16 +181,17 @@ public class SQLHelper {
 					+ ", Z = " + accelData.getZ());
 
 			accDao.insert(accelData);
+			
 			return true;
 
 		case LibConstants.SENSOR_BATTERY:
-			BatteryData battData = (BatteryData) sensorData;
-			Log.d(LOG_TAG, "BATTERY_DATA table count = " + battDao.count());
-			Log.d(LOG_TAG, "Inside Switch, BatteryData Type = (Type = " + battData.getType() + ", Timestamp = "
-					+ battData.getTimeStamp() + ", Volatility = " + battData.getVolatility());
-			Log.d(LOG_TAG, "Inside Switch, BatteryData Type = (Percent = " + battData.getPercent() + "%, Health = "
-					+ battData.getHealth());
-			battDao.insert(battData);
+//			BatteryData battData = (BatteryData) sensorData;
+//			Log.d(LOG_TAG, "BATTERY_DATA table count = " + battDao.count());
+//			Log.d(LOG_TAG, "Inside Switch, BatteryData Type = (Type = " + battData.getType() + ", Timestamp = "
+//					+ battData.getTimeStamp() + ", Volatility = " + battData.getVolatility());
+//			Log.d(LOG_TAG, "Inside Switch, BatteryData Type = (Percent = " + battData.getPercent() + "%, Health = "
+//					+ battData.getHealth());
+//			battDao.insert(battData);
 			return true;
 
 		case LibConstants.DEVICE_INFO:
@@ -373,5 +381,68 @@ public class SQLHelper {
 
 		}
 	}
+	
+
+	@Override
+	public void sensorDataReady(SensorReading reading) {
+			storeSensorAsync(convertSensorReadingToSensorData(reading));
+	}
+	
+	
+	private synchronized SensorDataImpl convertSensorReadingToSensorData(SensorReading reading) {
+		Log.d(LOG_TAG, "convertSensorReadingToSensorData reading Type = " + reading.type);
+		SensorDataImpl sensorData;
+
+		switch (reading.type) {
+		case LibConstants.SENSOR_ACCELEROMETER:
+			AccelerometerReading areading = (AccelerometerReading) reading;
+			sensorData = new AccelData(null, reading.timestamp, areading.getX(), areading.getY(), areading.getZ(), 0l,
+					true);
+			sensorData.setType(LibConstants.SENSOR_ACCELEROMETER);
+			return sensorData;
+			
+		case LibConstants.SENSOR_BATTERY:
+			BatteryReading breading = (BatteryReading) reading;
+			sensorData = new BatteryData(null, breading.timestamp, breading.getPercent(), breading.getCharging_type(), breading.getHealth(), breading.getTemp(), breading.getVolt(), breading.volatility, breading.isShare);
+			sensorData.setType(LibConstants.SENSOR_BATTERY);
+			return sensorData;
+			
+
+		case LibConstants.SENSOR_GYROSCOPE:
+			GyroReading greading = (GyroReading) reading;
+			sensorData = new GyroData(null, reading.timestamp, greading.getGyroX(), greading.getGyroY(),
+					greading.getGyroZ(), 0l, true);
+			sensorData.setType(LibConstants.SENSOR_GYROSCOPE);
+			return sensorData;
+
+		case LibConstants.SENSOR_CONNECTIVITY:
+			ConnectivityReading connReading = (ConnectivityReading) reading;
+			sensorData = new ConnectivityData(null, connReading.timestamp, connReading.isConnected(),
+					connReading.getNetworkType(), connReading.isRoaming(), connReading.getWifiHashId(),
+					connReading.getWifiStrength(), connReading.getMobileHashId(), connReading.volatility,
+					connReading.isShare);
+			sensorData.setType(LibConstants.SENSOR_CONNECTIVITY);
+			return sensorData;
+
+		case LibConstants.SENSOR_LIGHT:
+			LightReading lreading = (LightReading) reading;
+			sensorData = new LightData(null, lreading.timestamp, lreading.getLuxValue(), lreading.volatility,
+					lreading.isShare);
+			sensorData.setType(LibConstants.SENSOR_LIGHT);
+			return sensorData;
+
+		case LibConstants.SENSOR_LOCATION:
+			LocationReading locReading = (LocationReading) reading;
+			sensorData = new LocationData(null, reading.timestamp, locReading.getLatnLong()[0],
+					locReading.getLatnLong()[1], locReading.getAltitude(), 0l, true);
+			sensorData.setType(LibConstants.SENSOR_LOCATION);
+			return sensorData;
+
+		default:
+			return null;
+
+		}
+	}
+
 
 }

@@ -261,7 +261,6 @@ public class ConnectivitySensor extends BaseSensor {
 		} 
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 		this.reading = null;
-		
 		return true;
 	}
 

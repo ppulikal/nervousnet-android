@@ -18,11 +18,12 @@ import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.BatterySensor;
 import ch.ethz.coss.nervousnet.vm.sensors.ConnectivitySensor;
 import ch.ethz.coss.nervousnet.vm.sensors.GyroSensor;
+import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor.BaseSensorListener;
 import ch.ethz.coss.nervousnet.vm.storage.Config;
 import ch.ethz.coss.nervousnet.vm.storage.SQLHelper;
 import ch.ethz.coss.nervousnet.vm.storage.SensorConfig;
 
-public class NervousnetVM {
+public class NervousnetVM{
 
 	private static final String LOG_TAG = NervousnetVM.class.getSimpleName();
 	private static final String DB_NAME = "NN-DB";
@@ -59,7 +60,7 @@ public class NervousnetVM {
 		}
 
 		initSensors();
-
+		startSensors();
 	}
 
 	private void initSensors() {
@@ -154,8 +155,11 @@ public class NervousnetVM {
 			// ? sensorConfig.getState() :
 			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
 			// }
-			if (sensor != null)
+			if (sensor != null){
+				sensor.addListener(sqlHelper);
 				hSensors.put(sensorConfig.getID(), sensor);
+				
+			}
 
 		}
 
