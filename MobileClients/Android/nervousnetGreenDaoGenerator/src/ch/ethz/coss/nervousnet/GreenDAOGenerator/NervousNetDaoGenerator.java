@@ -60,7 +60,7 @@ public class NervousNetDaoGenerator {
 
 	private static void addSensorConfig(Schema schema) {
 		Entity config = schema.addEntity("SensorConfig");
-		config.addLongProperty("ID");
+		config.addLongProperty("ID").unique();
 		config.addStringProperty("Name");
 		config.addByteProperty("State");
 
