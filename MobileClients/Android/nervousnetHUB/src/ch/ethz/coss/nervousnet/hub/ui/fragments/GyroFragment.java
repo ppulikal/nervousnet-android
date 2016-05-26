@@ -71,20 +71,28 @@ public class GyroFragment extends BaseFragment {
 	public void updateReadings(SensorReading reading) {
 		Log.d("GyroFragment", "Inside updateReadings, X = " + ((GyroReading) reading).getGyroX());
 
-		TextView x_value = (TextView) getActivity().findViewById(R.id.gyro_x);
-		TextView y_value = (TextView) getActivity().findViewById(R.id.gyro_y);
-		TextView z_value = (TextView) getActivity().findViewById(R.id.gyro_z);
+		if (reading instanceof ErrorReading) {
 
-		x_value.setText("" + ((GyroReading) reading).getGyroX());
-		y_value.setText("" + ((GyroReading) reading).getGyroY());
-		z_value.setText("" + ((GyroReading) reading).getGyroZ());
+			Log.d("GyroFragment", "Inside updateReadings - ErrorReading");
+			handleError((ErrorReading) reading);
+		} else {
+
+			TextView x_value = (TextView) getActivity().findViewById(R.id.gyro_x);
+			TextView y_value = (TextView) getActivity().findViewById(R.id.gyro_y);
+			TextView z_value = (TextView) getActivity().findViewById(R.id.gyro_z);
+
+			x_value.setText("" + ((GyroReading) reading).getGyroX());
+			y_value.setText("" + ((GyroReading) reading).getGyroY());
+			z_value.setText("" + ((GyroReading) reading).getGyroZ());
+		}
 
 	}
 
 	@Override
 	public void handleError(ErrorReading reading) {
-		// TODO Auto-generated method stub
-
+		Log.d("GyroFragment", "handleError called");
+		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_gyro);
+		status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
 	}
 
 }

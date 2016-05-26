@@ -26,121 +26,113 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.vm.sensors;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.location.LocationManager;
-import android.os.Bundle;
+import android.hardware.SensorManager;
 import android.util.Log;
-import android.widget.Toast;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
-import ch.ethz.coss.nervousnet.lib.SensorReading;
-import android.location.Location;
-import android.location.LocationListener;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
-public class GyroSensor implements SensorStatusImplementation {
+public class GyroSensor extends BaseSensor implements SensorEventListener {
 
-	public static GyroSensor _instance = null;
+	private static final String LOG_TAG = GyroSensor.class.getSimpleName();
 
-	private List<GyroSensorListener> listenerList = new ArrayList<GyroSensorListener>();
-	private Lock listenerMutex = new ReentrantLock();
-
-	private GyroReading reading;
-
-	private GyroSensor() {
+	public GyroSensor(byte sensorState) {
+		this.sensorState = sensorState;
 	}
 
-	public static GyroSensor getInstance() {
-		Log.d("GyroSensor", "getInstance called ");
+	@Override
+	public boolean start(SensorManager sensorManager) {
 
-		if (_instance == null) {
-			Log.d("GyroSensor", "instance is null ");
-			_instance = new GyroSensor();
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as Sensor is not available.");
+			return false;
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as permission denied by user.");
+			return false;
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			Log.d(LOG_TAG, "Cancelled starting Gyroscope sensor as Sensor state is switched off.");
+			return false;
 		}
 
-		return _instance;
+		Log.d(LOG_TAG, "Starting Gyroscope sensor with state = " + sensorState);
+
+		boolean flag = sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_FASTEST);
+//				NervousnetVMConstants.sensor_freq_constants[4][sensorState -1]);
+
+		Log.d(LOG_TAG, "Started Gyroscope sensor with successflag = " + flag);
+		return true;
 	}
 
-	public interface GyroSensorListener {
-		public void gyroSensorDataReady(GyroReading reading);
+	@Override
+	public boolean updateAndRestart(SensorManager sensorManager, byte state) {
+
+		if (state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as Sensor is not available.");
+			return false;
+		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as permission denied by user.");
+			return false;
+		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			setSensorState(state);
+			Log.d(LOG_TAG, "Cancelled starting Gyroscope sensor as Sensor state is switched off.");
+			return false;
+		}
+
+		stop(sensorManager);
+
+		setSensorState(state);
+		Log.d(LOG_TAG, "Restarting Gyroscope sensor with state = " + sensorState);
+
+		start(sensorManager);
+		return true;
 	}
 
-	public void addListener(GyroSensorListener listener) {
+	@Override
+	public boolean stop(SensorManager sensorManager) {
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			Log.d(LOG_TAG, "Cancelled stop Gyroscope sensor as Sensor state is not available ");
+			return false;
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			Log.d(LOG_TAG, "Cancelled stop Gyroscope sensor as permission denied by user.");
+			return false;
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			Log.d(LOG_TAG, "Cancelled stop Gyroscope sensor as Sensor state is switched off ");
+			return false;
+		}
+		sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
+		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 
-		listenerMutex.lock();
-		listenerList.add(listener);
-		listenerMutex.unlock();
-		// Log.d("AccelerometerSensor", "Listener added "+listenerList.size());
-	}
-
-	public void removeListener(GyroSensorListener listener) {
-		// Log.d("AccelerometerSensor", "Listener remove "+listenerList.size());
-
-		listenerMutex.lock();
-		listenerList.remove(listener);
-		listenerMutex.unlock();
-	}
-
-	public void clearListeners() {
-		listenerMutex.lock();
-		listenerList.clear();
-		listenerMutex.unlock();
-	}
-
-	public void start() {
-	}
-
-	public void stop() {
+		Log.d(LOG_TAG, "Stopped Gyroscope sensor with state = " + sensorState);
+		
+		this.reading = null;
+		return true;
 	}
 
 	/**
 	 * @param batteryReading
 	 */
 	public void dataReady(GyroReading reading) {
-		Log.d("GyroSensor", "dataReady called " + listenerList.size());
-		//
 		this.reading = reading;
 		listenerMutex.lock();
-		for (GyroSensorListener listener : listenerList) {
-			// Log.d("AccelerometerSensor", "listener.accelSensorDataReady
-			// calling ");
-			listener.gyroSensorDataReady(reading);
+
+		for (BaseSensorListener listener : listenerList) {
+
+			listener.sensorDataReady(reading);
 		}
 		listenerMutex.unlock();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.ethz.coss.nervousnet.sensors.SensorStatusImplementation#doCollect()
-	 */
 	@Override
-	public void doCollect() {
-		// TODO Auto-generated method stub
-
+	public void onSensorChanged(SensorEvent event) {
+		Log.d(LOG_TAG, "X = " + event.values[0]);
+		reading = new GyroReading(event.timestamp, event.values);
+		// store(reading);
 	}
 
 	@Override
-	public void doShare() {
-		// TODO Auto-generated method stub
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.ethz.coss.nervousnet.sensors.SensorStatusImplementation#getReading()
-	 */
-	@Override
-	public SensorReading getReading() {
-
-		return reading;
-	}
-
 }

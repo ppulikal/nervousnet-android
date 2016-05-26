@@ -30,7 +30,7 @@
                     android:hint="Status" />
 
                 <TextView
-                    android:id="@+id/sensor_status"
+                    android:id="@+id/sensor_status_gyro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Sensor Status comes here" />

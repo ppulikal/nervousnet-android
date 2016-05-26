@@ -74,7 +74,7 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 		
 		Log.d(LOG_TAG, "Starting accelerometer sensor with state = " + sensorState);
 		
-		sensorManager.registerListener(AccelerometerSensor.this,
+		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				NervousnetVMConstants.sensor_freq_constants[0][sensorState - 1]);
 		
@@ -118,7 +118,7 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 			Log.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is switched off ");
 			return false;
 		} 
-		sensorManager.unregisterListener(AccelerometerSensor.this);
+		sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 		this.reading = null;
 		return true;
@@ -143,29 +143,6 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 		listenerMutex.unlock();
 	}
 
-	@Override
-	public SensorReading getReading() {
-		Log.d(LOG_TAG, "getReading called ");
-		
-		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-			Log.d(LOG_TAG, "Error 101 : Sensor not available.");
-			return new ErrorReading(new String[] { "101", "Sensor not available on phone." });
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-			Log.d(LOG_TAG, "Error 102 : Sensor available but switched off");
-			return new ErrorReading(new String[] { "102", "Sensor is switched off." });
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-			Log.d(LOG_TAG, "Error 103 : Sensor available but Permission Denied");
-			return new ErrorReading(new String[] { "103", "Sensor permission denied by user." });
-		}
-
-		if (reading == null) {
-			Log.d(LOG_TAG, "Error 104 : Sensor reading object is null");
-			return new ErrorReading(new String[] { "104", "Sensor not working correctly." });
-		}
-
-		return reading;
-
-	}
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
