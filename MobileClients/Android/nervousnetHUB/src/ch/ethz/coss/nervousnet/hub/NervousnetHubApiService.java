@@ -39,6 +39,7 @@ import android.util.Log;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVM;
 
 public class NervousnetHubApiService extends Service {
@@ -80,13 +81,13 @@ public class NervousnetHubApiService extends Service {
 
 		@Override
 		public SensorReading getReading(int sensorType) throws RemoteException {
-			Log.d(LOG_TAG, "Sensor getReading() of Type = " + sensorType + " requested ");
+			NNLog.d(LOG_TAG, "Sensor getReading() of Type = " + sensorType + " requested ");
 			return ((Application) getApplication()).nn_VM.getLatestReading(sensorType);
 		}
 
 		@Override
 		public void getReadings(int sensorType, long startTime, long endTime, List list) {
-			Log.d(LOG_TAG, "getReadings of Type = " + sensorType + " requested ");
+			NNLog.d(LOG_TAG, "getReadings of Type = " + sensorType + " requested ");
 			((Application) getApplicationContext()).nn_VM.getSensorReadings(sensorType, startTime, endTime,
 					(ArrayList) list);
 
@@ -96,7 +97,7 @@ public class NervousnetHubApiService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.d(LOG_TAG, "Service execution started");
+		NNLog.d(LOG_TAG, "Service execution started");
 		Toast.makeText(NervousnetHubApiService.this, "Service Started", Toast.LENGTH_SHORT).show();
 		((Application) getApplicationContext()).nn_VM.startSensors();
 		return START_STICKY;
@@ -104,7 +105,7 @@ public class NervousnetHubApiService extends Service {
 
 	@Override
 	public void onDestroy() {
-		Log.d(LOG_TAG, "SERVICE Destroyed ");
+		NNLog.d(LOG_TAG, "SERVICE Destroyed ");
 
 		((Application) getApplicationContext()).nn_VM.stopSensors();
 		((Application) getApplication()).removeNotification();

@@ -31,14 +31,17 @@ package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.LocationReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class LocationFragment extends BaseFragment {
 
@@ -65,6 +68,15 @@ public class LocationFragment extends BaseFragment {
 	 */
 	@Override
 	public void updateReadings(SensorReading reading) {
+		
+		NNLog.d("LocationFragment", "Inside updateReadings");
+
+		if (reading instanceof ErrorReading) {
+
+			NNLog.d("LocationFragment", "Inside updateReadings - ErrorReading");
+			handleError((ErrorReading) reading);
+		} else {
+
 		double[] location = ((LocationReading) reading).getLatnLong();
 		FragmentActivity fragAct = getActivity();
 		if (fragAct == null)
@@ -75,15 +87,14 @@ public class LocationFragment extends BaseFragment {
 
 		TextView longitude = (TextView) getActivity().findViewById(R.id.longitude);
 		longitude.setText("" + location[1]);
-
-		TextView altitude = (TextView) getActivity().findViewById(R.id.alti);
-		altitude.setText("" + ((LocationReading) reading).getAltitude());
+		}
 
 	}
-
 	@Override
 	public void handleError(ErrorReading reading) {
-		// TODO Auto-generated method stub
-
+		NNLog.d("LocationFragment", "handleError called");
+		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_loc);
+		status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
 	}
+
 }

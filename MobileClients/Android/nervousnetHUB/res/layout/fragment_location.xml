@@ -30,7 +30,7 @@
                     android:hint="Status" />
 
                 <TextView
-                    android:id="@+id/sensor_status"
+                    android:id="@+id/sensor_status_loc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Sensor Status comes here" />
@@ -75,22 +75,6 @@
                     android:hint=" Longitude value comes here" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Altitude : " />
-
-                <TextView
-                    android:id="@+id/alti"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Altitude value comes here" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

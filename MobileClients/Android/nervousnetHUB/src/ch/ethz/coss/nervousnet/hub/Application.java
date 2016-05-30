@@ -38,6 +38,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.hub.ui.StartUpActivity;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVM;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.storage.SensorDataImpl;
@@ -72,7 +73,7 @@ public class Application extends android.app.Application {
 	 * 
 	 */
 	private void init() {
-		Log.d(LOG_TAG, "Inside Application init()");
+		NNLog.d(LOG_TAG, "Inside Application init()");
 		nn_VM = new NervousnetVM(getApplicationContext());
 		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		
@@ -95,14 +96,14 @@ public class Application extends android.app.Application {
 	}
 
 	public void startService(Context context) {
-		Log.d(LOG_TAG, "inside startService");
+		NNLog.d(LOG_TAG, "inside startService");
 		Toast.makeText(context, "Service Started", Toast.LENGTH_SHORT).show();
 		Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
 		context.startService(sensorIntent);
 	}
 
 	public void stopService(Context context) {
-		Log.d(LOG_TAG, "inside stopService");
+		NNLog.d(LOG_TAG, "inside stopService");
 		Toast.makeText(context, "Service Stopped", Toast.LENGTH_SHORT).show();
 		nn_VM.stopSensors();
 		Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);

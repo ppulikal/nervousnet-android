@@ -40,6 +40,7 @@ import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 
 /**
  * @author prasad
@@ -71,11 +72,11 @@ public class ConnectivityFragment extends BaseFragment {
 	@Override
 	public void updateReadings(SensorReading reading) {
 
-		Log.d("ConnectivityFragment", "Inside updateReadings");
+		NNLog.d("ConnectivityFragment", "Inside updateReadings");
 
 		if (reading instanceof ErrorReading) {
 
-			Log.d("ConnectivityFragment", "Inside updateReadings - ErrorReading");
+			NNLog.d("ConnectivityFragment", "Inside updateReadings - ErrorReading");
 			handleError((ErrorReading) reading);
 		} else {
 		TextView isConnectedTV = (TextView) getActivity().findViewById(R.id.isConnectedTV);
@@ -90,7 +91,7 @@ public class ConnectivityFragment extends BaseFragment {
 
 	@Override
 	public void handleError(ErrorReading reading) {
-		Log.d("ConnectivityFragment", "handleError called");
+		NNLog.d("ConnectivityFragment", "handleError called");
 		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_conn);
 		status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
 	}

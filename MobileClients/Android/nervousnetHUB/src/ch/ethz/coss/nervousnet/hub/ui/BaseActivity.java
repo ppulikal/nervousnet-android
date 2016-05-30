@@ -41,6 +41,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 
 /**
  * @author prasad
@@ -79,7 +80,7 @@ public abstract class BaseActivity extends Activity implements ActionBarImplemen
 		mainSwitch = (Switch) findViewById(R.id.mainSwitch);
 
 		byte state = ((Application) getApplication()).getState(this);
-		Log.d("BaseActivity", "state = " + state);
+		NNLog.d("BaseActivity", "state = " + state);
 		mainSwitch.setChecked(state == 0 ? false : true);
 
 		mainSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

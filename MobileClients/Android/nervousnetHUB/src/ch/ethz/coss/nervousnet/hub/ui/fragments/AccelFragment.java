@@ -39,6 +39,7 @@ import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class AccelFragment extends BaseFragment {
 
@@ -58,11 +59,11 @@ public class AccelFragment extends BaseFragment {
 
 	@Override
 	public void updateReadings(SensorReading reading) {
-		Log.d("AccelFragment", "Inside updateReadings ");
+		NNLog.d("AccelFragment", "Inside updateReadings ");
 
 		if (reading instanceof ErrorReading) {
 
-			Log.d("AccelFragment", "Inside updateReadings - ErrorReading");
+			NNLog.d("AccelFragment", "Inside updateReadings - ErrorReading");
 			handleError((ErrorReading) reading);
 		} else {
 			TextView x_value = (TextView) getActivity().findViewById(R.id.accel_x);
@@ -78,7 +79,7 @@ public class AccelFragment extends BaseFragment {
 
 	@Override
 	public void handleError(ErrorReading reading) {
-		Log.d("AccelFragment", "handleError called");
+		NNLog.d("AccelFragment", "handleError called");
 		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_accel);
 		status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
 	}

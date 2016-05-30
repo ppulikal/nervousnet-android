@@ -35,6 +35,7 @@ import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -56,13 +57,13 @@ public abstract class BaseFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		Log.d("BaseFragment", "onResume of BaseFragment");
+		NNLog.d("BaseFragment", "onResume of BaseFragment");
 		super.onResume();
 	}
 
 	@Override
 	public void onPause() {
-		Log.d("BaseFragment", "OnPause of BaseFragment");
+		NNLog.d("BaseFragment", "OnPause of BaseFragment");
 		super.onPause();
 	}
 

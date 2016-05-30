@@ -71,6 +71,7 @@ import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class SensorDisplayActivity extends FragmentActivity implements ActionBarImplementation {
@@ -104,7 +105,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 			try {
 
 				doBindService();
-				Log.d("SensorDisplayActivity", bindFlag.toString()); // will
+				NNLog.d("SensorDisplayActivity", bindFlag.toString()); // will
 																		// return
 																		// "true"
 				//
@@ -148,32 +149,32 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
 	void initConnection() {
 
-		Log.d("SensorDisplayActivity", "Inside initConnection");
+		NNLog.d("SensorDisplayActivity", "Inside initConnection");
 		mServiceConnection = new ServiceConnection() {
 
 			@Override
 			public void onServiceDisconnected(ComponentName name) {
-				Log.d("SensorDisplayActivity", "Inside onServiceDisconnected 2");
+				NNLog.d("SensorDisplayActivity", "Inside onServiceDisconnected 2");
 				System.out.println("onServiceDisconnected");
 				// TODO Auto-generated method stub
 				mService = null;
 				mServiceConnection = null;
 				Toast.makeText(getApplicationContext(), "NervousnetRemote Service not connected", Toast.LENGTH_SHORT)
 						.show();
-				Log.d("SensorDisplayActivity", "Binding - Service disconnected");
+				NNLog.d("SensorDisplayActivity", "Binding - Service disconnected");
 			}
 
 			@Override
 			public void onServiceConnected(ComponentName name, IBinder service) {
-				Log.d("SensorDisplayActivity", "onServiceConnected");
-				Log.d("SensorDisplayActivity", "Inside onServiceConnected 2");
+				NNLog.d("SensorDisplayActivity", "onServiceConnected");
+				NNLog.d("SensorDisplayActivity", "Inside onServiceConnected 2");
 
 				mService = NervousnetRemote.Stub.asInterface(service);
 
 				startRepeatingTask();
 				Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
 						.show();
-				Log.d("SensorDisplayActivity", "Binding is done - Service connected");
+				NNLog.d("SensorDisplayActivity", "Binding is done - Service connected");
 			}
 		};
 
@@ -200,7 +201,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 		mainSwitch = (Switch) findViewById(R.id.mainSwitch);
 
 		byte state = ((Application) getApplication()).getState(this);
-		Log.d("SensorDisplayActivity", "state = " + state);
+		NNLog.d("SensorDisplayActivity", "state = " + state);
 		mainSwitch.setChecked(state == 0 ? false : true);
 
 		mainSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -332,7 +333,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 	protected void updateStatus(SensorReading reading, int index) {
 
 		BaseFragment fragment = (BaseFragment) sapAdapter.getFragment(index);
-		Log.d("SensorDisplayActivity", "Inside updateStatus, index =  " + index);
+		NNLog.d("SensorDisplayActivity", "Inside updateStatus, index =  " + index);
 
 		if (reading != null) {
 			if (reading instanceof ErrorReading)
@@ -357,11 +358,11 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 			@Override
 			public void run() {
 
-				Log.d("SensorDisplayActivity", "before updating");
+				NNLog.d("SensorDisplayActivity", "before updating");
 				if (mService != null)
 					update(); // this function can change value of m_interval.
 				else {
-					Log.d("SensorDisplayActivity", "mService is null");
+					NNLog.d("SensorDisplayActivity", "mService is null");
 
 					Utils.displayAlert(SensorDisplayActivity.this, "Alert",
 							"Please switch on the data collection option to access this feature.", "Switch On",
@@ -397,7 +398,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 	protected void update() {
 		try {
 			int index = viewPager.getCurrentItem();
-			Log.d("SensorDisplayActivity", "Inside update : index  = " + index);
+			NNLog.d("SensorDisplayActivity", "Inside update : index  = " + index);
 
 			switch (index) {
 			case 0:
@@ -453,7 +454,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 	}
 
 	protected void doBindService() {
-		Log.d("SensorDisplayActivity", "doBindService successfull");
+		NNLog.d("SensorDisplayActivity", "doBindService successfull");
 
 		Intent it = new Intent();
 		it.setClassName("ch.ethz.coss.nervousnet.hub", "ch.ethz.coss.nervousnet.hub.NervousnetHubApiService");
@@ -464,6 +465,6 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 	protected void doUnbindService() {
 		getApplicationContext().unbindService(mServiceConnection);
 		bindFlag = false;
-		Log.d("SensorDisplayActivity ", "doUnbindService successfull");
+		NNLog.d("SensorDisplayActivity ", "doUnbindService successfull");
 	}
 }

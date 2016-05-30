@@ -39,6 +39,7 @@ import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class LightFragment extends BaseFragment {
 
@@ -65,11 +66,16 @@ public class LightFragment extends BaseFragment {
 	 */
 	@Override
 	public void updateReadings(SensorReading reading) {
+		NNLog.d("LightFragment", "Inside updateReadings");
 
-		Log.d("LightFragment", "Inside updateReadings");
-		TextView lux = (TextView) getActivity().findViewById(R.id.lux);
-		lux.setText("" + ((LightReading) reading).getLuxValue());
+		if (reading instanceof ErrorReading) {
 
+			NNLog.d("LightFragment", "Inside updateReadings - ErrorReading");
+			handleError((ErrorReading) reading);
+		} else {
+			TextView lux = (TextView) getActivity().findViewById(R.id.lux);
+			lux.setText("" + ((LightReading) reading).getLuxValue());
+		}
 	}
 
 	@Override

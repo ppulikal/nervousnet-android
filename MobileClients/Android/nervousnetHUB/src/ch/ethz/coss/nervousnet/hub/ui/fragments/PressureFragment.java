@@ -40,6 +40,7 @@ import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.lib.PressureReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class PressureFragment extends BaseFragment {
 
@@ -67,7 +68,7 @@ public class PressureFragment extends BaseFragment {
 	@Override
 	public void updateReadings(SensorReading reading) {
 
-		Log.d("PressureFragment", "Inside updateReadings");
+		NNLog.d("PressureFragment", "Inside updateReadings");
 
 		if (reading instanceof ErrorReading) {
 			handleError((ErrorReading) reading);

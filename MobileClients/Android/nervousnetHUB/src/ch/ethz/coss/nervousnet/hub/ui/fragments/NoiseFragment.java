@@ -39,6 +39,7 @@ import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class NoiseFragment extends BaseFragment {
 
@@ -66,7 +67,7 @@ public class NoiseFragment extends BaseFragment {
 	@Override
 	public void updateReadings(SensorReading reading) {
 
-		Log.d("NoiseFragment", "Inside updateReadings");
+		NNLog.d("NoiseFragment", "Inside updateReadings");
 		TextView db = (TextView) getActivity().findViewById(R.id.dbValue);
 		db.setText("" + ((NoiseReading) reading).getdbValue());
 	}

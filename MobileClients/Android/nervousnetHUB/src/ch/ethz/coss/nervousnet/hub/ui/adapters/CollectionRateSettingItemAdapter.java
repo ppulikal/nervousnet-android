@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class CollectionRateSettingItemAdapter extends ArrayAdapter<String> {
@@ -54,7 +55,7 @@ public class CollectionRateSettingItemAdapter extends ArrayAdapter<String> {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.d("CollectionRateSettingItemAdapter", "button on click");
+				NNLog.d("CollectionRateSettingItemAdapter", "button on click");
 				createDialog(position).show();
 			}
 		});

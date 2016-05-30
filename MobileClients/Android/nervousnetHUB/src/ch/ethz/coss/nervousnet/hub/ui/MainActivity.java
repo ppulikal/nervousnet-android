@@ -39,6 +39,7 @@ import android.widget.Toast;
 import ch.ethz.coss.nervousnet.hub.Constants;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.ImageAdapter;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class MainActivity extends BaseActivity {
 	ServiceConnection mServiceConnection;
@@ -106,13 +107,13 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		Log.d("MainActivity", "onRestoreInstanceState");
+		NNLog.d("MainActivity", "onRestoreInstanceState");
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		Log.d("MainActivity", "onSaveInstanceState");
+		NNLog.d("MainActivity", "onSaveInstanceState");
 	}
 
 }
