@@ -60,6 +60,7 @@ import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.utils.ValueFormatter;
 
@@ -169,7 +170,7 @@ public class ConnectivitySensor extends BaseSensor {
 			reading = new ConnectivityReading(System.currentTimeMillis(), isConnected, networkType, isRoaming, wifiHashId,
 					wifiStrength, mobileHashBuilder.toString());
 				
-			Log.d(LOG_TAG, "reading collected - "+((ConnectivityReading) reading).getNetworkType());
+			NNLog.d(LOG_TAG, "reading collected - "+((ConnectivityReading) reading).getNetworkType());
 			dataReady(reading);
 			return null;
 
@@ -196,27 +197,27 @@ public class ConnectivitySensor extends BaseSensor {
 
 
 	@Override
-	public boolean start(SensorManager sensorManager) {
+	public boolean start() {
 		
 		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-			Log.d(LOG_TAG, "Cancelled Starting Connectivity sensor as Sensor is not available.");
+			NNLog.d(LOG_TAG, "Cancelled Starting Connectivity sensor as Sensor is not available.");
 			return false;
 		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-			Log.d(LOG_TAG, "Cancelled Starting Connectivity sensor as permission denied by user.");
+			NNLog.d(LOG_TAG, "Cancelled Starting Connectivity sensor as permission denied by user.");
 			return false;
 		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-			Log.d(LOG_TAG, "Cancelled starting Connectivity sensor as Sensor state is switched off.");
+			NNLog.d(LOG_TAG, "Cancelled starting Connectivity sensor as Sensor state is switched off.");
 			return false;
 		}  
 		
-		Log.d(LOG_TAG, "Starting Connectivity sensor with state = " + sensorState);
+		NNLog.d(LOG_TAG, "Starting Connectivity sensor with state = " + sensorState);
 		
 		handler = new Handler(hthread.getLooper());
 		final Runnable run = new Runnable() {
 			@Override
 			public void run() {
 				new ConnectivityTask().execute();
-				handler.postDelayed(this, NervousnetVMConstants.sensor_freq_constants[3][sensorState - 1]); // TODO: test this
+				handler.postDelayed(this, 5000);//NervousnetVMConstants.sensor_freq_constants[3][sensorState - 1]); // TODO: test this
 			}
 
 		};
@@ -227,36 +228,36 @@ public class ConnectivitySensor extends BaseSensor {
 	}
 
 	@Override
-	public boolean updateAndRestart(SensorManager sensorManager, byte state) {
+	public boolean updateAndRestart(byte state) {
 		if(state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-			Log.d(LOG_TAG, "Cancelled Connectivity battery sensor as Sensor is not available.");
+			NNLog.d(LOG_TAG, "Cancelled Connectivity battery sensor as Sensor is not available.");
 			return false;
 		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-			Log.d(LOG_TAG, "Cancelled Connectivity battery sensor as permission denied by user.");
+			NNLog.d(LOG_TAG, "Cancelled Connectivity battery sensor as permission denied by user.");
 			return false;
 		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			setSensorState(state);
-			Log.d(LOG_TAG, "Cancelled Connectivity battery sensor as Sensor state is switched off.");
+			NNLog.d(LOG_TAG, "Cancelled Connectivity battery sensor as Sensor state is switched off.");
 			return false;
 		} 
 
-		stop(sensorManager);
+		stop();
 		setSensorState(state);
-		Log.d(LOG_TAG, "Restarting Connectivity sensor with state = " + sensorState);
-		start(sensorManager);
+		NNLog.d(LOG_TAG, "Restarting Connectivity sensor with state = " + sensorState);
+		start();
 		return true;
 	}
 
 	@Override
-	public boolean stop(SensorManager sensorManager) {
+	public boolean stop() {
 		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-			Log.d(LOG_TAG, "Cancelled stop Connectivity sensor as Sensor state is not available ");
+			NNLog.d(LOG_TAG, "Cancelled stop Connectivity sensor as Sensor state is not available ");
 			return false;
 		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-			Log.d(LOG_TAG, "Cancelled stop Connectivity sensor as permission denied by user.");
+			NNLog.d(LOG_TAG, "Cancelled stop Connectivity sensor as permission denied by user.");
 			return false;
 		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-			Log.d(LOG_TAG, "Cancelled stop Connectivity sensor as Sensor state is switched off ");
+			NNLog.d(LOG_TAG, "Cancelled stop Connectivity sensor as Sensor state is switched off ");
 			return false;
 		} 
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);

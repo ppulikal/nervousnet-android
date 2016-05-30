@@ -32,79 +32,82 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class GyroSensor extends BaseSensor implements SensorEventListener {
 
 	private static final String LOG_TAG = GyroSensor.class.getSimpleName();
+	private SensorManager sensorManager;
 
-	public GyroSensor(byte sensorState) {
+	public GyroSensor(SensorManager sensorManager, byte sensorState) {
 		this.sensorState = sensorState;
+		this.sensorManager = sensorManager;
 	}
 
 	@Override
-	public boolean start(SensorManager sensorManager) {
+	public boolean start() {
 
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-			Log.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as Sensor is not available.");
+			NNLog.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as Sensor is not available.");
 			return false;
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-			Log.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as permission denied by user.");
+			NNLog.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as permission denied by user.");
 			return false;
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-			Log.d(LOG_TAG, "Cancelled starting Gyroscope sensor as Sensor state is switched off.");
+			NNLog.d(LOG_TAG, "Cancelled starting Gyroscope sensor as Sensor state is switched off.");
 			return false;
 		}
 
-		Log.d(LOG_TAG, "Starting Gyroscope sensor with state = " + sensorState);
+		NNLog.d(LOG_TAG, "Starting Gyroscope sensor with state = " + sensorState);
 
 		boolean flag = sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_FASTEST);
 //				NervousnetVMConstants.sensor_freq_constants[4][sensorState -1]);
 
-		Log.d(LOG_TAG, "Started Gyroscope sensor with successflag = " + flag);
+		NNLog.d(LOG_TAG, "Started Gyroscope sensor with successflag = " + flag);
 		return true;
 	}
 
 	@Override
-	public boolean updateAndRestart(SensorManager sensorManager, byte state) {
+	public boolean updateAndRestart(byte state) {
 
 		if (state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-			Log.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as Sensor is not available.");
+			NNLog.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as Sensor is not available.");
 			return false;
 		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-			Log.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as permission denied by user.");
+			NNLog.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as permission denied by user.");
 			return false;
 		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			setSensorState(state);
-			Log.d(LOG_TAG, "Cancelled starting Gyroscope sensor as Sensor state is switched off.");
+			NNLog.d(LOG_TAG, "Cancelled starting Gyroscope sensor as Sensor state is switched off.");
 			return false;
 		}
 
-		stop(sensorManager);
+		stop();
 
 		setSensorState(state);
-		Log.d(LOG_TAG, "Restarting Gyroscope sensor with state = " + sensorState);
+		NNLog.d(LOG_TAG, "Restarting Gyroscope sensor with state = " + sensorState);
 
-		start(sensorManager);
+		start();
 		return true;
 	}
 
 	@Override
-	public boolean stop(SensorManager sensorManager) {
+	public boolean stop() {
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-			Log.d(LOG_TAG, "Cancelled stop Gyroscope sensor as Sensor state is not available ");
+			NNLog.d(LOG_TAG, "Cancelled stop Gyroscope sensor as Sensor state is not available ");
 			return false;
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-			Log.d(LOG_TAG, "Cancelled stop Gyroscope sensor as permission denied by user.");
+			NNLog.d(LOG_TAG, "Cancelled stop Gyroscope sensor as permission denied by user.");
 			return false;
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-			Log.d(LOG_TAG, "Cancelled stop Gyroscope sensor as Sensor state is switched off ");
+			NNLog.d(LOG_TAG, "Cancelled stop Gyroscope sensor as Sensor state is switched off ");
 			return false;
 		}
 		sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 
-		Log.d(LOG_TAG, "Stopped Gyroscope sensor with state = " + sensorState);
+		NNLog.d(LOG_TAG, "Stopped Gyroscope sensor with state = " + sensorState);
 		
 		this.reading = null;
 		return true;
@@ -113,7 +116,7 @@ public class GyroSensor extends BaseSensor implements SensorEventListener {
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		Log.d(LOG_TAG, "X = " + event.values[0]);
+		NNLog.d(LOG_TAG, "X = " + event.values[0]);
 		reading = new GyroReading(event.timestamp, event.values);
 		dataReady(reading);
 	}

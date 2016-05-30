@@ -10,6 +10,7 @@ import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public abstract class BaseSensor {
@@ -62,29 +63,29 @@ public abstract class BaseSensor {
 	}
 	
 	
-	public abstract boolean start(SensorManager sensorManager);
+	public abstract boolean start();
 	
-	public abstract boolean updateAndRestart(SensorManager sensorManager, byte state);
+	public abstract boolean updateAndRestart(byte state);
 	
-	public abstract boolean stop(SensorManager sensorManager);
+	public abstract boolean stop();
 	
 	
 	public SensorReading getReading() {
-		Log.d(LOG_TAG, "getReading called ");
+		NNLog.d(LOG_TAG, "getReading called ");
 		
 		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-			Log.d(LOG_TAG, "Error 101 : Sensor not available.");
+			NNLog.d(LOG_TAG, "Error 101 : Sensor not available.");
 			return new ErrorReading(new String[] { "101", "Sensor not available on phone." });
 		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-			Log.d(LOG_TAG, "Error 102 : Sensor available but switched off");
+			NNLog.d(LOG_TAG, "Error 102 : Sensor available but switched off");
 			return new ErrorReading(new String[] { "102", "Sensor is switched off." });
 		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-			Log.d(LOG_TAG, "Error 103 : Sensor available but Permission Denied");
+			NNLog.d(LOG_TAG, "Error 103 : Sensor available but Permission Denied");
 			return new ErrorReading(new String[] { "103", "Sensor permission denied by user." });
 		}
 
 		if (reading == null) {
-			Log.d(LOG_TAG, "Error 104 : Sensor reading object is null");
+			NNLog.d(LOG_TAG, "Error 104 : Sensor reading object is null");
 			return new ErrorReading(new String[] { "104", "Sensor object is null." });
 		}
 		return reading;

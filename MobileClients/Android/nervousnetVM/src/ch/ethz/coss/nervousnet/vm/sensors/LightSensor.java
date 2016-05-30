@@ -26,119 +26,97 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.vm.sensors;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
+import android.hardware.SensorManager;
 import ch.ethz.coss.nervousnet.lib.LightReading;
-import ch.ethz.coss.nervousnet.lib.SensorReading;
-import android.location.Location;
-import android.location.LocationListener;
+import ch.ethz.coss.nervousnet.vm.NNLog;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
-public class LightSensor implements SensorStatusImplementation {
+public class LightSensor extends BaseSensor implements SensorEventListener {
 
-	public static LightSensor _instance = null;
+	private static final String LOG_TAG = LightSensor.class.getSimpleName();
+	private SensorManager sensorManager;
 
-	private List<LightSensorListener> listenerList = new ArrayList<LightSensorListener>();
-	private Lock listenerMutex = new ReentrantLock();
-
-	private LightReading reading;
-
-	private LightSensor() {
+	public LightSensor(SensorManager sensorManager, byte sensorState) {
+		this.sensorState = sensorState;
+		this.sensorManager = sensorManager;
 	}
 
-	public static LightSensor getInstance() {
-		Log.d("LightSensor", "getInstance called ");
+	@Override
+	public boolean start() {
 
-		if (_instance == null) {
-			Log.d("LightSensor", "instance is null ");
-			_instance = new LightSensor();
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			NNLog.d(LOG_TAG, "Cancelled Starting Light sensor as Sensor is not available.");
+			return false;
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			NNLog.d(LOG_TAG, "Cancelled Starting Light sensor as permission denied by user.");
+			return false;
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			NNLog.d(LOG_TAG, "Cancelled starting Light sensor as Sensor state is switched off.");
+			return false;
 		}
 
-		return _instance;
+		NNLog.d(LOG_TAG, "Starting Light sensor with state = " + sensorState);
+
+		sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT), 0);
+
+		return true;
 	}
 
-	public interface LightSensorListener {
-		public void lightSensorDataReady(LightReading reading);
-	}
+	@Override
+	public boolean updateAndRestart(byte state) {
 
-	public void addListener(LightSensorListener listener) {
-
-		listenerMutex.lock();
-		listenerList.add(listener);
-		listenerMutex.unlock();
-	}
-
-	public void removeListener(LightSensorListener listener) {
-		listenerMutex.lock();
-		listenerList.remove(listener);
-		listenerMutex.unlock();
-	}
-
-	public void clearListeners() {
-		listenerMutex.lock();
-		listenerList.clear();
-		listenerMutex.unlock();
-	}
-
-	public void start() {
-	}
-
-	public void stop() {
-	}
-
-	/**
-	 * @param batteryReading
-	 */
-	public void dataReady(LightReading reading) {
-		// Log.d("AccelerometerSensor", "dataReady called
-		// "+listenerList.size());
-		//
-		this.reading = reading;
-		listenerMutex.lock();
-		for (LightSensorListener listener : listenerList) {
-			// Log.d("AccelerometerSensor", "listener.accelSensorDataReady
-			// calling ");
-			listener.lightSensorDataReady(reading);
+		if (state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			NNLog.d(LOG_TAG, "Cancelled Starting Light sensor as Sensor is not available.");
+			return false;
+		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			NNLog.d(LOG_TAG, "Cancelled Starting Light sensor as permission denied by user.");
+			return false;
+		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			setSensorState(state);
+			NNLog.d(LOG_TAG, "Cancelled starting Light sensor as Sensor state is switched off.");
+			return false;
 		}
-		listenerMutex.unlock();
-	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.ethz.coss.nervousnet.sensors.SensorStatusImplementation#doCollect()
-	 */
-	@Override
-	public void doCollect() {
-		// TODO Auto-generated method stub
+		stop();
 
+		setSensorState(state);
+		NNLog.d(LOG_TAG, "Restarting Light sensor with state = " + sensorState);
+
+		start();
+		return true;
 	}
 
 	@Override
-	public void doShare() {
-		// TODO Auto-generated method stub
-
+	public boolean stop() {
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			NNLog.d(LOG_TAG, "Cancelled stop Light sensor as Sensor state is not available ");
+			return false;
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			NNLog.d(LOG_TAG, "Cancelled stop Light sensor as permission denied by user.");
+			return false;
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			NNLog.d(LOG_TAG, "Cancelled stop Light sensor as Sensor state is switched off ");
+			return false;
+		}
+		sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
+		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
+		this.reading = null;
+		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.ethz.coss.nervousnet.sensors.SensorStatusImplementation#getReading()
-	 */
 	@Override
-	public SensorReading getReading() {
+	public void onSensorChanged(SensorEvent event) {
+		NNLog.d(LOG_TAG, "X = " + event.values[0]);
+		reading = new LightReading(event.timestamp, event.values[0]);
+		dataReady(reading);
+	}
 
-		return reading;
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
 	}
 
 }

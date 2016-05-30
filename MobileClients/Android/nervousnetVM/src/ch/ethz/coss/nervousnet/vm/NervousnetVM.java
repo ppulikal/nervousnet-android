@@ -18,12 +18,14 @@ import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.BatterySensor;
 import ch.ethz.coss.nervousnet.vm.sensors.ConnectivitySensor;
 import ch.ethz.coss.nervousnet.vm.sensors.GyroSensor;
+import ch.ethz.coss.nervousnet.vm.sensors.LightSensor;
+import ch.ethz.coss.nervousnet.vm.sensors.LocationSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor.BaseSensorListener;
 import ch.ethz.coss.nervousnet.vm.storage.Config;
 import ch.ethz.coss.nervousnet.vm.storage.SQLHelper;
 import ch.ethz.coss.nervousnet.vm.storage.SensorConfig;
 
-public class NervousnetVM{
+public class NervousnetVM {
 
 	private static final String LOG_TAG = NervousnetVM.class.getSimpleName();
 	private static final String DB_NAME = "NN-DB";
@@ -41,7 +43,7 @@ public class NervousnetVM{
 	private SensorManager sensorManager;
 
 	public NervousnetVM(Context context) {
-		Log.d(LOG_TAG, "Inside constructor");
+		NNLog.d(LOG_TAG, "Inside constructor");
 		this.context = context;
 
 		sqlHelper = new SQLHelper(context, DB_NAME);
@@ -51,10 +53,10 @@ public class NervousnetVM{
 		if (config != null) {
 			state = config.getState();
 			uuid = UUID.fromString(config.getUUID());
-			Log.d(LOG_TAG, "Config - UUID = " + uuid);
-			Log.d(LOG_TAG, "Config - state = " + state);
+			NNLog.d(LOG_TAG, "Config - UUID = " + uuid);
+			NNLog.d(LOG_TAG, "Config - state = " + state);
 		} else {
-			Log.d(LOG_TAG, "Inside Constructure after loadVMConfig() no config found. Create a new config.");
+			NNLog.d(LOG_TAG, "Inside Constructure after loadVMConfig() no config found. Create a new config.");
 			uuid = UUID.randomUUID();
 			sqlHelper.storeVMConfig(state, uuid);
 		}
@@ -64,7 +66,7 @@ public class NervousnetVM{
 	}
 
 	private void initSensors() {
-		Log.d(LOG_TAG, "Inside initSensors");
+		NNLog.d(LOG_TAG, "Inside initSensors");
 		storeMutex = new ReentrantLock();
 		// Initialize sensor manager
 		sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -83,7 +85,7 @@ public class NervousnetVM{
 			SensorConfig sensorConfig = hSensorConfig.get(NervousnetVMConstants.sensor_ids[count++]);
 			BaseSensor sensor = null;
 			if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[0]) { // Accelerometer
-				sensor = new AccelerometerSensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)
+				sensor = new AccelerometerSensor(sensorManager, manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)
 						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
 			} else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[1]) { // Battery
 				sensor = new BatterySensor(context, sensorConfig.getState());
@@ -103,7 +105,7 @@ public class NervousnetVM{
 								|| manager.hasSystemFeature(PackageManager.FEATURE_WIFI)) ? sensorConfig.getState()
 										: NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
 			} else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[4]) { // Gyroscope
-				sensor = new GyroSensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE)
+				sensor = new GyroSensor(sensorManager, manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE)
 						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
 			}
 			// else if(sensorConfig.getID() ==
@@ -112,19 +114,22 @@ public class NervousnetVM{
 			// HumiditySensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_RELATIVE_HUMIDITY)
 			// ? sensorConfig.getState() :
 			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// } else if(sensorConfig.getID() ==
-			// NervousnetVMConstants.sensor_ids[6]) { //Location
-			// sensor = new
-			// LocationSensor(manager.hasSystemFeature(PackageManager.FEATURE_LOCATION)
-			// ? sensorConfig.getState() :
-			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// } else if(sensorConfig.getID() ==
-			// NervousnetVMConstants.sensor_ids[7]) { //Light
-			// sensor = new
-			// LightSensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT)
-			// ? sensorConfig.getState() :
-			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// } else if(sensorConfig.getID() ==
+//			 }
+		else if(sensorConfig.getID() ==
+			 NervousnetVMConstants.sensor_ids[6]) { //Location
+			 sensor = new
+			 LocationSensor(manager.hasSystemFeature(PackageManager.FEATURE_LOCATION)
+			 ? sensorConfig.getState() :
+			 NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE, locManager, context);
+			 }
+			 else if(sensorConfig.getID() ==
+			 NervousnetVMConstants.sensor_ids[7]) { //Light
+			 sensor = new
+			 LightSensor(sensorManager, manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT)
+			 ? sensorConfig.getState() :
+			 NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
+		}
+			// else if(sensorConfig.getID() ==
 			// NervousnetVMConstants.sensor_ids[8]) { //Magnetic
 			// sensor = new
 			// MagneticSensor(manager.hasSystemFeature(PackageManager.) ?
@@ -166,13 +171,13 @@ public class NervousnetVM{
 	}
 
 	public void startSensors() {
-		Log.d(LOG_TAG, "Inside startSensors");
+		NNLog.d(LOG_TAG, "Inside startSensors");
 		int count = 0;
 		for (Long key : hSensors.keySet()) {
-			Log.d(LOG_TAG, "Inside startSensors Sensor ID = " + key);
+			NNLog.d(LOG_TAG, "Inside startSensors Sensor ID = " + key);
 			BaseSensor sensor = hSensors.get(NervousnetVMConstants.sensor_ids[count++]);
 			if (sensor != null)
-				sensor.start(sensorManager);
+				sensor.start();
 		}
 
 	}
@@ -183,7 +188,7 @@ public class NervousnetVM{
 		for (Long key : hSensors.keySet()) {
 			BaseSensor sensor = hSensors.get(NervousnetVMConstants.sensor_ids[count++]);
 			if (sensor != null)
-				sensor.stop(sensorManager);
+				sensor.stop();
 		}
 	}
 
@@ -201,14 +206,14 @@ public class NervousnetVM{
 		try {
 			sqlHelper.storeVMConfig(state, uuid);
 		} catch (Exception e) {
-			Log.d(LOG_TAG, "Exception while calling storeVMConfig ");
+			NNLog.d(LOG_TAG, "Exception while calling storeVMConfig ");
 			e.printStackTrace();
 		}
 
 	}
 
 	public synchronized void updateSensorConfig(long id, byte state) {
-		Log.d(LOG_TAG, "UpdateSensorConfig called with state = " + state);
+		NNLog.d(LOG_TAG, "UpdateSensorConfig called with state = " + state);
 		SensorConfig sensorConfig = hSensorConfig.get(id);
 
 		sensorConfig.setState(state);
@@ -216,24 +221,24 @@ public class NervousnetVM{
 			sqlHelper.updateSensorConfig(sensorConfig);
 			hSensorConfig.put(id, sensorConfig);
 		} catch (Exception e) {
-			Log.d(LOG_TAG, "Exception while calling updateSensorConfig ");
+			NNLog.d(LOG_TAG, "Exception while calling updateSensorConfig ");
 			e.printStackTrace();
 		}
 
 		reInitSensor(id);
 
 		BaseSensor sensor = hSensors.get(sensorConfig.getID());
-		sensor.updateAndRestart(sensorManager, state);
+		sensor.updateAndRestart(state);
 
 	}
 
 	private void reInitSensor(long id) {
-		Log.d(LOG_TAG, "reInitSensor sensor after settings changed ");
+		NNLog.d(LOG_TAG, "reInitSensor sensor after settings changed ");
 		SensorConfig sensorConfig = hSensorConfig.get(id);
 		BaseSensor sensor = hSensors.get(sensorConfig.getID());
-		sensor.stop(sensorManager);
+		sensor.stop();
 		sensor.setSensorState(sensorConfig.getState());
-		sensor.start(sensorManager);
+		sensor.start();
 
 	}
 
@@ -242,10 +247,10 @@ public class NervousnetVM{
 	}
 
 	public synchronized SensorReading getLatestReading(long sensorID) {
-		Log.d(LOG_TAG, "getLatestReading of ID = " + sensorID + " requested ");
+		NNLog.d(LOG_TAG, "getLatestReading of ID = " + sensorID + " requested ");
 
 		if (state == NervousnetVMConstants.STATE_PAUSED) {
-			Log.d(LOG_TAG, "Error 001 : nervousnet is paused.");
+			NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
 			return new ErrorReading(new String[] { "001", "nervousnet is paused." });
 		}
 		return hSensors.get(sensorID).getReading();

@@ -38,6 +38,7 @@ import android.media.MediaRecorder.AudioSource;
 import android.os.AsyncTask;
 import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.utils.FFT;
 
 public class NoiseSensor {
@@ -240,7 +241,7 @@ public class NoiseSensor {
 					for (short channelConfig : new short[] { AudioFormat.CHANNEL_IN_MONO,
 							AudioFormat.CHANNEL_IN_STEREO }) {
 						try {
-							Log.d("NoiseSensor", "Attempting rate " + rate + "Hz, bits: " + audioFormat + ", channel: "
+							NNLog.d("NoiseSensor", "Attempting rate " + rate + "Hz, bits: " + audioFormat + ", channel: "
 									+ channelConfig);
 							int bufferSize = AudioRecord.getMinBufferSize(rate, channelConfig, audioFormat);
 
