@@ -35,11 +35,10 @@ import android.os.Parcelable;
  */
 public class LocationReading extends SensorReading {
 
-	public LocationReading(long timestamp, double[] latnLong, double altitude) {
+	public LocationReading(long timestamp, double[] latnLong) {
 		this.type = LibConstants.SENSOR_LOCATION;
 		this.timestamp = timestamp;
 		this.latnLong = latnLong;
-		this.altitude = altitude;
 	}
 
 	/**
@@ -56,12 +55,6 @@ public class LocationReading extends SensorReading {
 		return latnLong;
 	}
 
-	/**
-	 * @return the latnLong
-	 */
-	public double getAltitude() {
-		return altitude;
-	}
 
 	/**
 	 * @param latnLong
@@ -74,7 +67,6 @@ public class LocationReading extends SensorReading {
 	public void readFromParcel(Parcel in) {
 		timestamp = in.readLong();
 		latnLong = in.createDoubleArray();
-		altitude = in.readDouble();
 	}
 
 	/*
@@ -98,7 +90,6 @@ public class LocationReading extends SensorReading {
 		out.writeString(getClass().getName());
 		out.writeLong(timestamp);
 		out.writeDoubleArray(latnLong);
-		out.writeDouble(altitude);
 
 	}
 
@@ -117,10 +108,9 @@ public class LocationReading extends SensorReading {
 	public String toString() {
 		if (latnLong == null)
 			return new String("Location not set");
-		return new String("Latitude = " + latnLong[0] + ", Longitude = " + latnLong[1] + ", Altitude = " + altitude);
+		return new String("Latitude = " + latnLong[0] + ", Longitude = " + latnLong[1] );
 	}
 
 	private double[] latnLong;
-	private double altitude;
 
 }
