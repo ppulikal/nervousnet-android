@@ -30,17 +30,19 @@
         android:label="@string/app_name"
         android:theme="@style/nn_Theme" >
         <!-- android:debuggable="false" -->
-        
-        <activity
-            android:name="ch.ethz.coss.nervousnet.hub.ui.StartUpActivity"
+ 		<activity
+            android:name="ch.ethz.coss.nervousnet.hub.ui.SplashActivity"
+            android:configChanges="orientation"
             android:label="@string/app_name" >
+      
+                  
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
         </activity>
-
         <service
             android:name="ch.ethz.coss.nervousnet.hub.NervousnetHubApiService"
             android:enabled="true"
@@ -49,7 +51,6 @@
                 <action android:name="ch.ethz.coss.nervousnet.hub" />
             </intent-filter>
         </service>
-
         <activity
             android:name="ch.ethz.coss.nervousnet.hub.ui.BaseActivity"
             android:configChanges="orientation"
@@ -58,6 +59,7 @@
         <activity
             android:name="ch.ethz.coss.nervousnet.hub.ui.MainActivity"
             android:label="@string/app_name" >
+            
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.ethz.coss.nervousnet.ui.BaseActivity" />

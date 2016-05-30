@@ -24,44 +24,56 @@
  *  * 	Contributors:
  *  * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
-
 package ch.ethz.coss.nervousnet.hub.ui;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Window;
+import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.TermsOfUse;
-
 /**
- * StartUpActivity is the main activity within the Nervousnet app. This activity
- * starts when the app is launched. If the TERMS_ENABLED flag is true it shows
- * the "Terms Of Use" Dialog and if this flag is not enabled it launches the
- * MainActivity
+ * SplashActivity is the main starting point activity within the Nervousnet app. This activity
+ * starts when the app is launched. If the TERMS_ENABLED flag is true it shows the "Terms Of Use"
+ * Dialog and if this flag is not enabled it launches the MainActivity.
  */
-public class StartUpActivity extends Activity {
-
-	public static boolean TERMS_ENABLED = true;
-
-	public StartUpActivity() {
-	}
+public class SplashActivity extends Activity {
+	// Splash screen timer
+	private static int SPLASH_TIME_OUT = 3000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().hide();
 
-		if (TERMS_ENABLED)
-			new TermsOfUse(StartUpActivity.this).showTerms();
-		else
-			skipTermsScreen();
-
+		setContentView(R.layout.activity_splash);
+		
+		new TermsOfUse(SplashActivity.this).showTerms();
 	}
+	
+	public void startThread(){
+		new Handler().postDelayed(new Runnable() {
 
-	public void skipTermsScreen() {
-		Intent intent = new Intent(StartUpActivity.this, MainActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-		startActivity(intent);
-		finish();
+			/*
+			 * Showing splash screen with a timer. Nervousnet branding
+			 */
 
+			@Override
+			public void run() {
+			
+					// Start and intent for the logged out activity
+					startActivity(new Intent(SplashActivity.this,
+							MainActivity.class));
+					overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+				
+				finish();
+				
+				
+			}
+		}, SPLASH_TIME_OUT);
 	}
 
 }

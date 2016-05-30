@@ -102,11 +102,13 @@ public abstract class BaseActivity extends Activity implements ActionBarImplemen
 		((Application) getApplication()).setState(this, on ? (byte) 1 : (byte) 0);
 		finish();
 		startActivity(getIntent());
+		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
 
 	protected void startNextActivity(Intent intent) {
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		startActivity(intent);
+		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
 
 	@Override

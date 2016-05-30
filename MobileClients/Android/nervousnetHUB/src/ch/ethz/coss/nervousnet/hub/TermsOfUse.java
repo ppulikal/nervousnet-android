@@ -39,7 +39,7 @@ import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.ui.MainActivity;
-import ch.ethz.coss.nervousnet.hub.ui.StartUpActivity;
+import ch.ethz.coss.nervousnet.hub.ui.SplashActivity;
 
 /**
  * This class allows the app to display the Terms of Use Dialog. Conditions for
@@ -91,10 +91,11 @@ public class TermsOfUse {
 							editor.putBoolean(versionKey, true);
 							editor.commit();
 							dialogInterface.dismiss();
-							Intent intent = new Intent(mActivity, MainActivity.class);
-							intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-
-							mActivity.startActivity(intent);
+//							Intent intent = new Intent(mActivity, SplashActivity.class);
+//							intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//
+//							mActivity.startActivity(intent);
+							((SplashActivity)mActivity).startThread();
 
 						}
 					}).setNegativeButton(android.R.string.cancel, new Dialog.OnClickListener() {
@@ -102,7 +103,7 @@ public class TermsOfUse {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// Close the activity as they have declined the EULA
-							((StartUpActivity) mActivity).finish();
+							((SplashActivity) mActivity).finish();
 
 						}
 
@@ -117,11 +118,13 @@ public class TermsOfUse {
 			TextView textView = (TextView) alert.findViewById(android.R.id.message);
 			textView.setTextSize(12);
 		} else {
-			Intent intent = new Intent(mActivity, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-
-			mActivity.startActivity(intent);
-			mActivity.finish();
+//			Intent intent = new Intent(mActivity, MainActivity.class);
+//			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//
+//			mActivity.startActivity(intent);
+//			mActivity.finish();
+			
+			((SplashActivity)mActivity).startThread();
 
 		}
 

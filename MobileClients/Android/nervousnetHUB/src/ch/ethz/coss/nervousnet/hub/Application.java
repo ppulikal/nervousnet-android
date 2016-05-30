@@ -37,7 +37,7 @@ import android.content.Intent;
 
 import android.util.Log;
 import android.widget.Toast;
-import ch.ethz.coss.nervousnet.hub.ui.StartUpActivity;
+import ch.ethz.coss.nervousnet.hub.ui.MainActivity;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVM;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
@@ -100,6 +100,7 @@ public class Application extends android.app.Application {
 		Toast.makeText(context, "Service Started", Toast.LENGTH_SHORT).show();
 		Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
 		context.startService(sensorIntent);
+		
 	}
 
 	public void stopService(Context context) {
@@ -122,7 +123,7 @@ public class Application extends android.app.Application {
 
 		// The PendingIntent to launch our activity if the user selects this
 		// notification
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, StartUpActivity.class), 0);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
 		// Set the info for the views that show in the notification panel.
 		Notification notification = new Notification.Builder(this).setSmallIcon(getNotificationIcon()) // the
