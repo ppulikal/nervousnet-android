@@ -35,13 +35,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.hub.ui.views.DecibelMeterView;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class NoiseFragment extends BaseFragment {
-
+	private DecibelMeterView noiseView;
+	private float db;
+	private float newDb;
 	public NoiseFragment() {
 	}
 
@@ -52,7 +55,7 @@ public class NoiseFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_noise, container, false);
-
+		noiseView = (DecibelMeterView)rootView.findViewById(R.id.noiseVizView);
 		return rootView;
 	}
 
@@ -67,8 +70,18 @@ public class NoiseFragment extends BaseFragment {
 	public void updateReadings(SensorReading reading) {
 
 		NNLog.d("NoiseFragment", "Inside updateReadings");
-		TextView db = (TextView) getActivity().findViewById(R.id.dbValue);
-		db.setText("" + ((NoiseReading) reading).getdbValue());
+		db = ((NoiseReading) reading).getdbValue();
+		TextView dbTV = (TextView) getActivity().findViewById(R.id.dbValue);
+		
+		if(newDb < Math.round(db) )
+			newDb++;
+		else if(newDb > Math.round(db))
+			newDb--;
+		else 
+			newDb = db;
+			
+		dbTV.setText("" + Math.round(db));
+		noiseView.setDecibleValue(newDb);
 	}
 
 	@Override

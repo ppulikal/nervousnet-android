@@ -58,7 +58,12 @@
                     android:layout_height="wrap_content"
                     android:hint="DB value comes here" />
             </LinearLayout>
+             <ch.ethz.coss.nervousnet.hub.ui.views.DecibelMeterView
+			        android:id="@+id/noiseVizView"
+			        android:layout_width="300dp"
+			        android:layout_height="300dp" />
         </LinearLayout>
+        
     </ScrollView>
 
 </LinearLayout>
