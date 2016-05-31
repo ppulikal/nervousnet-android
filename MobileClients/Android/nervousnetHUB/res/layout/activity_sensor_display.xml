@@ -3,12 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <android.support.v4.view.PagerTitleStrip
+  <!--   <android.support.v4.view.PagerTitleStrip
         android:id="@+id/pager_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="@color/orange_nervous"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:textColor="#fff" /> -->
+    
+    <android.support.v4.view.PagerTabStrip
+        android:id="@+id/pts_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:textAlignment="center"
+        android:background="@color/orange_nervous"      
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
         android:textColor="#fff" />

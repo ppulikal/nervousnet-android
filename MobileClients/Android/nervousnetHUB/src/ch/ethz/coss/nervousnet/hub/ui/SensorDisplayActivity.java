@@ -35,6 +35,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -44,6 +46,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ClickableSpan;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,6 +60,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.hub.Application;
+import ch.ethz.coss.nervousnet.hub.Constants;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.AccelFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.BaseFragment;
@@ -92,7 +100,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 		updateActionBar();
 		setContentView(R.layout.activity_sensor_display);
 
-		sapAdapter = new SensorDisplayPagerAdapter(getSupportFragmentManager());
+		sapAdapter = new SensorDisplayPagerAdapter(getApplicationContext(), getSupportFragmentManager());
 
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(sapAdapter);
@@ -258,9 +266,10 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 	}
 
 	public static class SensorDisplayPagerAdapter extends FragmentStatePagerAdapter {
-
-		public SensorDisplayPagerAdapter(FragmentManager fm) {
+		Context context;
+		public SensorDisplayPagerAdapter(Context context, FragmentManager fm) {
 			super(fm);
+			this.context = context;
 		}
 
 		@Override
@@ -311,7 +320,25 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return NervousnetVMConstants.sensor_labels[position];
+			Drawable drawable;
+		    ImageSpan span;
+			SpannableStringBuilder sb;
+			sb = new SpannableStringBuilder("  "+NervousnetVMConstants.sensor_labels[position]); 
+
+			drawable = context.getResources().getDrawable(Constants.icon_array_sensors[position]);
+		    drawable.setBounds(0, 0, 40, 40);
+		        span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
+		        sb.setSpan(span, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//		    	sb.setSpan(new BackgroundColorSpan(Color.YELLOW), 2, sb.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+//				
+//		        sb.setSpan(new ClickableSpan() {
+//	                @Override
+//	                public void onClick(View widget) {
+//	                    Toast.makeText(context, "Clicked Span", Toast.LENGTH_LONG).show();
+//	                }
+//	            }, 0, 1,
+//	                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		        return sb;
 		}
 
 		@SuppressWarnings("unchecked")
