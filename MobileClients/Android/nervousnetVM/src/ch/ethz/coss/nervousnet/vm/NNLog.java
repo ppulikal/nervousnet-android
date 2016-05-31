@@ -5,10 +5,10 @@ import android.util.Log;
 public class NNLog {
 
 	public static boolean debug_flag = false;
-	
-	public static void d(String tag, String message){
-		if(debug_flag)
+
+	public static void d(String tag, String message) {
+		if (debug_flag)
 			Log.d(tag, message);
 	}
-	
+
 }

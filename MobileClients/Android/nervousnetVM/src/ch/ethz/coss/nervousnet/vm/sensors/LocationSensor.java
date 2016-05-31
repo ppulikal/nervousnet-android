@@ -26,17 +26,11 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.vm.sensors;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,11 +38,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.lib.LocationReading;
-import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
-import android.location.Location;
-import android.location.LocationListener;
 
 public class LocationSensor extends BaseSensor implements LocationListener {
 
@@ -56,9 +46,9 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 
 	private LocationManager locationManager;
 	private float MIN_UPDATE_DISTANCE = 1; // Minimum Distance between
-													// updates in meters
+											// updates in meters
 	private long MIN_TIME_BW_UPDATES = 100; // Minimum Time between
-													// updates in milliseconds.
+											// updates in milliseconds.
 
 	private boolean isGPSEnabled = false;
 	private boolean isNetworkEnabled = false;
@@ -75,70 +65,67 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 		mContext = context;
 	}
 
-
-
 	@Override
 	public boolean start() {
-		
-		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			Log.d(LOG_TAG, "Cancelled Starting Location sensor as Sensor is not available.");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			Log.d(LOG_TAG, "Cancelled Starting Location sensor as permission denied by user.");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			Log.d(LOG_TAG, "Cancelled starting Location sensor as Sensor state is switched off.");
 			return false;
-		} 
-		
+		}
+
 		Log.d(LOG_TAG, "Starting Location sensor with state = " + sensorState);
-		
+
 		MIN_TIME_BW_UPDATES = NervousnetVMConstants.sensor_freq_constants[0][sensorState - 1];
 		startLocationCollection();
-//		sensorManager.registerListener(this,
-//				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-//				NervousnetVMConstants.sensor_freq_constants[0][sensorState - 1]);
-		
+		// sensorManager.registerListener(this,
+		// sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+		// NervousnetVMConstants.sensor_freq_constants[0][sensorState - 1]);
+
 		return true;
 	}
 
 	@Override
 	public boolean updateAndRestart(byte state) {
-		
-		if(state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+
+		if (state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			Log.d(LOG_TAG, "Cancelled Starting Location sensor as Sensor is not available.");
 			return false;
-		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			Log.d(LOG_TAG, "Cancelled Starting Location sensor as permission denied by user.");
 			return false;
-		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			setSensorState(state);
 			Log.d(LOG_TAG, "Cancelled starting Location sensor as Sensor state is switched off.");
 			return false;
-		} 
-		
+		}
 
 		stop();
-		
+
 		setSensorState(state);
 		Log.d(LOG_TAG, "Restarting Location sensor with state = " + sensorState);
-		
+
 		start();
 		return true;
 	}
 
 	@Override
 	public boolean stop() {
-		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			Log.d(LOG_TAG, "Cancelled stop Location sensor as Sensor state is not available ");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			Log.d(LOG_TAG, "Cancelled stop Location sensor as permission denied by user.");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			Log.d(LOG_TAG, "Cancelled stop Location sensor as Sensor state is switched off ");
 			return false;
-		} 
+		}
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 		this.reading = null;
 		locationManager.removeUpdates(LocationSensor.this);

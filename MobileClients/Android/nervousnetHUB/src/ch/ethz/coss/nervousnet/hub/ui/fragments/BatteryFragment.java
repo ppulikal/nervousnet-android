@@ -30,7 +30,6 @@
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,17 +71,17 @@ public class BatteryFragment extends BaseFragment {
 			NNLog.d("BatteryFragment", "Inside updateReadings - ErrorReading");
 			handleError((ErrorReading) reading);
 		} else {
-		TextView percent = (TextView) getActivity().findViewById(R.id.battery_percent);
-		percent.setText("" + ((BatteryReading) reading).getPercent() * 100 + " %");
+			TextView percent = (TextView) getActivity().findViewById(R.id.battery_percent);
+			percent.setText("" + ((BatteryReading) reading).getPercent() * 100 + " %");
 
-		TextView isCharging = (TextView) getActivity().findViewById(R.id.battery_isCharging);
-		isCharging.setText("" + ((BatteryReading) reading).isCharging());
+			TextView isCharging = (TextView) getActivity().findViewById(R.id.battery_isCharging);
+			isCharging.setText("" + ((BatteryReading) reading).isCharging());
 
-		TextView USB_Charging = (TextView) getActivity().findViewById(R.id.battery_isUSB);
-		USB_Charging.setText(((BatteryReading) reading).getCharging_type() == 1 ? "YES" : "NO");
+			TextView USB_Charging = (TextView) getActivity().findViewById(R.id.battery_isUSB);
+			USB_Charging.setText(((BatteryReading) reading).getCharging_type() == 1 ? "YES" : "NO");
 
-		TextView AC_charging = (TextView) getActivity().findViewById(R.id.battery_isAC);
-		AC_charging.setText(((BatteryReading) reading).getCharging_type() == 0 ? "YES" : "NO");
+			TextView AC_charging = (TextView) getActivity().findViewById(R.id.battery_isAC);
+			AC_charging.setText(((BatteryReading) reading).getCharging_type() == 0 ? "YES" : "NO");
 		}
 	}
 

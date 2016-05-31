@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
-import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.sensors.AccelerometerSensor;
@@ -21,7 +20,6 @@ import ch.ethz.coss.nervousnet.vm.sensors.GyroSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.LightSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.LocationSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.NoiseSensor;
-import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor.BaseSensorListener;
 import ch.ethz.coss.nervousnet.vm.storage.Config;
 import ch.ethz.coss.nervousnet.vm.storage.SQLHelper;
 import ch.ethz.coss.nervousnet.vm.storage.SensorConfig;
@@ -86,8 +84,9 @@ public class NervousnetVM {
 			SensorConfig sensorConfig = hSensorConfig.get(NervousnetVMConstants.sensor_ids[count++]);
 			BaseSensor sensor = null;
 			if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[0]) { // Accelerometer
-				sensor = new AccelerometerSensor(sensorManager, manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)
-						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
+				sensor = new AccelerometerSensor(sensorManager,
+						manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER) ? sensorConfig.getState()
+								: NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
 			} else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[1]) { // Battery
 				sensor = new BatterySensor(context, sensorConfig.getState());
 			}
@@ -115,21 +114,15 @@ public class NervousnetVM {
 			// HumiditySensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_RELATIVE_HUMIDITY)
 			// ? sensorConfig.getState() :
 			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-//			 }
-		else if(sensorConfig.getID() ==
-			 NervousnetVMConstants.sensor_ids[6]) { //Location
-			 sensor = new
-			 LocationSensor(manager.hasSystemFeature(PackageManager.FEATURE_LOCATION)
-			 ? sensorConfig.getState() :
-			 NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE, locManager, context);
-			 }
-			 else if(sensorConfig.getID() ==
-			 NervousnetVMConstants.sensor_ids[7]) { //Light
-			 sensor = new
-			 LightSensor(sensorManager, manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT)
-			 ? sensorConfig.getState() :
-			 NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-		}
+			// }
+			else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[6]) { // Location
+				sensor = new LocationSensor(manager.hasSystemFeature(PackageManager.FEATURE_LOCATION)
+						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE, locManager,
+						context);
+			} else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[7]) { // Light
+				sensor = new LightSensor(sensorManager, manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT)
+						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
+			}
 			// else if(sensorConfig.getID() ==
 			// NervousnetVMConstants.sensor_ids[8]) { //Magnetic
 			// sensor = new
@@ -137,14 +130,11 @@ public class NervousnetVM {
 			// sensorConfig.getState() :
 			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
 			// }
-			else if(sensorConfig.getID() ==
-			 NervousnetVMConstants.sensor_ids[9]) { //Noise
-			 sensor = new
-			 NoiseSensor(manager.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)
-			 ? sensorConfig.getState() :
-			 NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			 }
-//					else if(sensorConfig.getID() ==
+			else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[9]) { // Noise
+				sensor = new NoiseSensor(manager.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)
+						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
+			}
+			// else if(sensorConfig.getID() ==
 			// NervousnetVMConstants.sensor_ids[10]) { //Pressure
 			// sensor = new
 			// PressureSensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_BAROMETER)
@@ -163,10 +153,10 @@ public class NervousnetVM {
 			// ? sensorConfig.getState() :
 			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
 			// }
-			if (sensor != null){
+			if (sensor != null) {
 				sensor.addListener(sqlHelper);
 				hSensors.put(sensorConfig.getID(), sensor);
-				
+
 			}
 
 		}

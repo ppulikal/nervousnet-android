@@ -26,17 +26,9 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub.ui;
 
-import java.util.Calendar;
-
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -68,7 +60,6 @@ public class MainActivity extends BaseActivity {
 				showNextActivity(position);
 			}
 		});
-		
 
 	}
 
@@ -86,7 +77,7 @@ public class MainActivity extends BaseActivity {
 			startNextActivity(new Intent(MainActivity.this, ShowcaseActivity.class));
 			break;
 		case 3:
-			 startNextActivity(new Intent(MainActivity.this, SettingsActivity.class));
+			startNextActivity(new Intent(MainActivity.this, SettingsActivity.class));
 			break;
 		case 4:
 			// startNextActivity(new Intent(MainActivity.this,
@@ -123,10 +114,5 @@ public class MainActivity extends BaseActivity {
 		super.onSaveInstanceState(outState);
 		NNLog.d("MainActivity", "onSaveInstanceState");
 	}
-	
 
 }
-
-
-
-

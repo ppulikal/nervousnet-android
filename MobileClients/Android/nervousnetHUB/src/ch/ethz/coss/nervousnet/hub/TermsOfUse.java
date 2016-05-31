@@ -30,7 +30,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -38,7 +37,6 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
-import ch.ethz.coss.nervousnet.hub.ui.MainActivity;
 import ch.ethz.coss.nervousnet.hub.ui.SplashActivity;
 
 /**
@@ -91,11 +89,12 @@ public class TermsOfUse {
 							editor.putBoolean(versionKey, true);
 							editor.commit();
 							dialogInterface.dismiss();
-//							Intent intent = new Intent(mActivity, SplashActivity.class);
-//							intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//
-//							mActivity.startActivity(intent);
-							((SplashActivity)mActivity).startThread();
+							// Intent intent = new Intent(mActivity,
+							// SplashActivity.class);
+							// intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+							//
+							// mActivity.startActivity(intent);
+							((SplashActivity) mActivity).startThread();
 
 						}
 					}).setNegativeButton(android.R.string.cancel, new Dialog.OnClickListener() {
@@ -118,13 +117,13 @@ public class TermsOfUse {
 			TextView textView = (TextView) alert.findViewById(android.R.id.message);
 			textView.setTextSize(12);
 		} else {
-//			Intent intent = new Intent(mActivity, MainActivity.class);
-//			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//
-//			mActivity.startActivity(intent);
-//			mActivity.finish();
-			
-			((SplashActivity)mActivity).startThread();
+			// Intent intent = new Intent(mActivity, MainActivity.class);
+			// intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			//
+			// mActivity.startActivity(intent);
+			// mActivity.finish();
+
+			((SplashActivity) mActivity).startThread();
 
 		}
 

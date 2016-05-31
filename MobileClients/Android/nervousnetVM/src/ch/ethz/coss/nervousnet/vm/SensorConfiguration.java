@@ -2,7 +2,6 @@ package ch.ethz.coss.nervousnet.vm;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 public class SensorConfiguration {
 
@@ -26,7 +25,7 @@ public class SensorConfiguration {
 		boolean doMeasure = settings.getBoolean(sensorType + "_doMeasure", true);
 		boolean doShare = settings.getBoolean(sensorType + "_doShare", true);
 
-		int measureInterval = (int) context.getSharedPreferences(NervousnetVMConstants.SENSOR_FREQ, 0)
+		int measureInterval = context.getSharedPreferences(NervousnetVMConstants.SENSOR_FREQ, 0)
 				.getInt(sensorType + "_freqValue", 2) * 2000;
 
 		NNLog.d("SensorConfiguration", "MeasureInterval = " + measureInterval);

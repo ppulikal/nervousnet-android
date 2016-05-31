@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import android.hardware.SensorManager;
-import android.util.Log;
-import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -15,17 +12,16 @@ import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public abstract class BaseSensor {
 	private static final String LOG_TAG = BaseSensor.class.getSimpleName();
-	
+
 	protected SensorReading reading;
-	protected byte sensorState; 
-	
+	protected byte sensorState;
+
 	protected List<BaseSensorListener> listenerList = new ArrayList<BaseSensorListener>();
 	protected Lock listenerMutex = new ReentrantLock();
-	
+
 	public interface BaseSensorListener {
 		public void sensorDataReady(SensorReading reading);
 	}
-
 
 	public void addListener(BaseSensorListener listener) {
 		listenerMutex.lock();
@@ -44,7 +40,7 @@ public abstract class BaseSensor {
 		listenerList.clear();
 		listenerMutex.unlock();
 	}
-	
+
 	public void dataReady(SensorReading reading) {
 		this.reading = reading;
 		listenerMutex.lock();
@@ -61,25 +57,23 @@ public abstract class BaseSensor {
 	public void setSensorState(byte sensorState) {
 		this.sensorState = sensorState;
 	}
-	
-	
+
 	public abstract boolean start();
-	
+
 	public abstract boolean updateAndRestart(byte state);
-	
+
 	public abstract boolean stop();
-	
-	
+
 	public SensorReading getReading() {
 		NNLog.d(LOG_TAG, "getReading called ");
-		
-		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Error 101 : Sensor not available.");
 			return new ErrorReading(new String[] { "101", "Sensor not available on phone." });
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			NNLog.d(LOG_TAG, "Error 102 : Sensor available but switched off");
 			return new ErrorReading(new String[] { "102", "Sensor is switched off." });
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Error 103 : Sensor available but Permission Denied");
 			return new ErrorReading(new String[] { "103", "Sensor permission denied by user." });
 		}
@@ -91,6 +85,5 @@ public abstract class BaseSensor {
 		return reading;
 
 	}
-	
-	
+
 }

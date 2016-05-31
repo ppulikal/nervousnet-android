@@ -74,7 +74,6 @@
                     android:layout_height="wrap_content"
                     android:hint=" Longitude value comes here" />
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 

@@ -27,17 +27,18 @@
 package ch.ethz.coss.nervousnet.hub.ui;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.TermsOfUse;
+
 /**
- * SplashActivity is the main starting point activity within the Nervousnet app. This activity
- * starts when the app is launched. If the TERMS_ENABLED flag is true it shows the "Terms Of Use"
- * Dialog and if this flag is not enabled it launches the MainActivity.
+ * SplashActivity is the main starting point activity within the Nervousnet app.
+ * This activity starts when the app is launched. If the TERMS_ENABLED flag is
+ * true it shows the "Terms Of Use" Dialog and if this flag is not enabled it
+ * launches the MainActivity.
  */
 public class SplashActivity extends Activity {
 	// Splash screen timer
@@ -50,11 +51,11 @@ public class SplashActivity extends Activity {
 		getActionBar().hide();
 
 		setContentView(R.layout.activity_splash);
-		
+
 		new TermsOfUse(SplashActivity.this).showTerms();
 	}
-	
-	public void startThread(){
+
+	public void startThread() {
 		new Handler().postDelayed(new Runnable() {
 
 			/*
@@ -63,15 +64,13 @@ public class SplashActivity extends Activity {
 
 			@Override
 			public void run() {
-			
-					// Start and intent for the logged out activity
-					startActivity(new Intent(SplashActivity.this,
-							MainActivity.class));
-					overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-				
+
+				// Start and intent for the logged out activity
+				startActivity(new Intent(SplashActivity.this, MainActivity.class));
+				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
 				finish();
-				
-				
+
 			}
 		}, SPLASH_TIME_OUT);
 	}

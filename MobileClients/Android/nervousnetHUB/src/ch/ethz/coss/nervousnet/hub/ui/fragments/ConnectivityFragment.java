@@ -30,7 +30,6 @@
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,13 +78,13 @@ public class ConnectivityFragment extends BaseFragment {
 			NNLog.d("ConnectivityFragment", "Inside updateReadings - ErrorReading");
 			handleError((ErrorReading) reading);
 		} else {
-		TextView isConnectedTV = (TextView) getActivity().findViewById(R.id.isConnectedTV);
-		TextView netwType = (TextView) getActivity().findViewById(R.id.netwType);
-		TextView isRoaming = (TextView) getActivity().findViewById(R.id.isRoaming);
+			TextView isConnectedTV = (TextView) getActivity().findViewById(R.id.isConnectedTV);
+			TextView netwType = (TextView) getActivity().findViewById(R.id.netwType);
+			TextView isRoaming = (TextView) getActivity().findViewById(R.id.isRoaming);
 
-		isConnectedTV.setText("" + (((ConnectivityReading) reading).isConnected() ? "Yes" : "No"));
-		netwType.setText("" + Utils.getConnectivityTypeString(((ConnectivityReading) reading).getNetworkType()));
-		isRoaming.setText("" + ((((ConnectivityReading) reading).isRoaming()) ? "Yes" : "No"));
+			isConnectedTV.setText("" + (((ConnectivityReading) reading).isConnected() ? "Yes" : "No"));
+			netwType.setText("" + Utils.getConnectivityTypeString(((ConnectivityReading) reading).getNetworkType()));
+			isRoaming.setText("" + ((((ConnectivityReading) reading).isRoaming()) ? "Yes" : "No"));
 		}
 	}
 

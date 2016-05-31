@@ -71,7 +71,7 @@ public class NoisemeterActivity extends Activity {
 			try {
 
 				doBindService();
-				Log.d("NoisemeterActivity", bindFlag.toString()); // will
+				NNLog.d("NoisemeterActivity", bindFlag.toString()); // will
 																	// return
 																	// "true"
 				if (!bindFlag) {
@@ -116,22 +116,22 @@ public class NoisemeterActivity extends Activity {
 
 	void initConnection() {
 
-		Log.d("NoisemeterActivity", "Inside initConnection");
+		NNLog.d("NoisemeterActivity", "Inside initConnection");
 		mServiceConnection = new ServiceConnection() {
 
 			@Override
 			public void onServiceDisconnected(ComponentName name) {
-				Log.d("NoisemeterActivity", "Inside onServiceDisconnected 2");
+				NNLog.d("NoisemeterActivity", "Inside onServiceDisconnected 2");
 				mService = null;
 				mServiceConnection = null;
 				Toast.makeText(getApplicationContext(), "NervousnetRemote Service not connected", Toast.LENGTH_SHORT)
 						.show();
-				Log.d("NoisemeterActivity", "Binding - Service disconnected");
+				NNLog.d("NoisemeterActivity", "Binding - Service disconnected");
 			}
 
 			@Override
 			public void onServiceConnected(ComponentName name, IBinder service) {
-				Log.d("NoisemeterActivity", "onServiceConnected");
+				NNLog.d("NoisemeterActivity", "onServiceConnected");
 
 				mService = NervousnetRemote.Stub.asInterface(service);
 
@@ -159,7 +159,7 @@ public class NoisemeterActivity extends Activity {
 				startRepeatingTask();
 				Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
 						.show();
-				Log.d("NoisemeterActivity", "Binding is done - Service connected");
+				NNLog.d("NoisemeterActivity", "Binding is done - Service connected");
 			}
 		};
 
@@ -170,7 +170,7 @@ public class NoisemeterActivity extends Activity {
 			@Override
 			public void run() {
 
-				Log.d("NoisemeterActivity", "before updating");
+				NNLog.d("NoisemeterActivity", "before updating");
 
 				try {
 					update();
@@ -212,7 +212,7 @@ public class NoisemeterActivity extends Activity {
 	}
 
 	protected void doBindService() {
-		Log.d("NoisemeterActivity", "doBindService successfull");
+		NNLog.d("NoisemeterActivity", "doBindService successfull");
 		Intent it = new Intent();
 		it.setClassName("ch.ethz.coss.nervousnet.hub", "ch.ethz.coss.nervousnet.hub.NervousnetHubApiService");
 		bindFlag = getApplicationContext().bindService(it, mServiceConnection, 0);
@@ -222,7 +222,7 @@ public class NoisemeterActivity extends Activity {
 	protected void doUnbindService() {
 		getApplicationContext().unbindService(mServiceConnection);
 		bindFlag = false;
-		Log.d("NoisemeterActivity ", "doUnbindService successfull");
+		NNLog.d("NoisemeterActivity ", "doUnbindService successfull");
 	}
 
 }

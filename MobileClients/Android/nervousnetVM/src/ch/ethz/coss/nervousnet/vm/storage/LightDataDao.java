@@ -3,7 +3,6 @@ package ch.ethz.coss.nervousnet.vm.storage;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
-import ch.ethz.coss.nervousnet.vm.storage.LightData;
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.internal.DaoConfig;

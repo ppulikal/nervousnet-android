@@ -30,9 +30,6 @@
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.widget.TextView;
-import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;

@@ -27,21 +27,17 @@
 package ch.ethz.coss.nervousnet.hub;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-
 import android.util.Log;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.hub.ui.MainActivity;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVM;
-import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
-import ch.ethz.coss.nervousnet.vm.storage.SensorDataImpl;
 
 public class Application extends android.app.Application {
 
@@ -76,8 +72,7 @@ public class Application extends android.app.Application {
 		NNLog.d(LOG_TAG, "Inside Application init()");
 		nn_VM = new NervousnetVM(getApplicationContext());
 		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		
-			
+
 	}
 
 	private void handleUncaughtException(Thread thread, Throwable e) {
@@ -100,7 +95,7 @@ public class Application extends android.app.Application {
 		Toast.makeText(context, "Service Started", Toast.LENGTH_SHORT).show();
 		Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
 		context.startService(sensorIntent);
-		
+
 	}
 
 	public void stopService(Context context) {
@@ -155,9 +150,9 @@ public class Application extends android.app.Application {
 		return useWhiteIcon ? R.drawable.ic_logo_white : R.drawable.ic_logo;
 	}
 
-//	public void storeSensor(SensorDataImpl sensorData) {
-//		nn_VM.storeSensorAsync(sensorData);
-//	}
+	// public void storeSensor(SensorDataImpl sensorData) {
+	// nn_VM.storeSensorAsync(sensorData);
+	// }
 
 	@SuppressWarnings("rawtypes")
 	public void readSensorData(int type, long startTime, long endTime, ArrayList list) {

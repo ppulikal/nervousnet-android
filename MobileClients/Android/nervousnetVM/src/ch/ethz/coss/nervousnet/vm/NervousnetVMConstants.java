@@ -18,7 +18,7 @@ public class NervousnetVMConstants {
 	public static String[] sensor_labels = { "Accelerometer", "Battery", "Beacons", "Connectivity", "Gyroscope",
 			"Humidity", "Location", "Light", "Magnetic", "Noise", "Pressure", "Proximity", "Temperature" };
 
-	public static String[] sensor_freq_labels = {"Off", "High", "Medium", "Low" };
+	public static String[] sensor_freq_labels = { "Off", "High", "Medium", "Low" };
 
 	public static int[][] sensor_freq_constants = { { 0, 60000, 200000, -1 }, { 0, 300000, 1800000, -1 },
 			{ 0, 60000, 300000, -1 }, { 0, 300000, 1800000, -1 }, { 0, 10000, 30000, -1 }, { 0, 300000, 1800000, -1 },
@@ -32,6 +32,5 @@ public class NervousnetVMConstants {
 	public static byte SENSOR_STATE_AVAILABLE_DELAY_HIGH = 1;
 	public static byte SENSOR_STATE_AVAILABLE_DELAY_MED = 2;
 	public static byte SENSOR_STATE_AVAILABLE_DELAY_LOW = 3;
-	
-	
+
 }

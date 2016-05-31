@@ -84,7 +84,7 @@ public class AccelerometerActivity extends Activity {
 			try {
 
 				doBindService();
-				Log.d("AccelerometerActivity", bindFlag.toString()); // will
+				NNLog.d("AccelerometerActivity", bindFlag.toString()); // will
 																		// return
 																		// "true"
 				if (!bindFlag) {
@@ -161,31 +161,31 @@ public class AccelerometerActivity extends Activity {
 	/*********STEP3 for nervousnet HUB API's********/
 	void initConnection() {
 
-		Log.d("AccelerometerActivity", "Inside initConnection");
+		NNLog.d("AccelerometerActivity", "Inside initConnection");
 		mServiceConnection = new ServiceConnection() {
 
 			@Override
 			public void onServiceDisconnected(ComponentName name) {
-				Log.d("AccelerometerActivity", "Inside onServiceDisconnected 2");
+				NNLog.d("AccelerometerActivity", "Inside onServiceDisconnected 2");
 				System.out.println("onServiceDisconnected");
 				// TODO Auto-generated method stub
 				mService = null;
 				mServiceConnection = null;
 				Toast.makeText(getApplicationContext(), "NervousnetRemote Service not connected", Toast.LENGTH_SHORT)
 						.show();
-				Log.d("AccelerometerActivity", "Binding - Service disconnected");
+				NNLog.d("AccelerometerActivity", "Binding - Service disconnected");
 			}
 
 			@Override
 			public void onServiceConnected(ComponentName name, IBinder service) {
-				Log.d("AccelerometerActivity", "onServiceConnected");
+				NNLog.d("AccelerometerActivity", "onServiceConnected");
 
 				mService = NervousnetRemote.Stub.asInterface(service);
 //				try {
 //					ArrayList list = new ArrayList();
 //				Used for testing getReadings method
 //					mService.getReadings(LibConstants.SENSOR_ACCELEROMETER, System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS), System.currentTimeMillis(), list);
-//					Log.d("AccelerometerActivity", "list size = "+list.size());
+//					NNLog.d("AccelerometerActivity", "list size = "+list.size());
 //				} catch (RemoteException e) {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
@@ -193,7 +193,7 @@ public class AccelerometerActivity extends Activity {
 					startRepeatingTask();
 				Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
 						.show();
-				Log.d("AccelerometerActivity", "Binding is done - Service connected");
+				NNLog.d("AccelerometerActivity", "Binding is done - Service connected");
 			}
 		};
 
@@ -204,7 +204,7 @@ public class AccelerometerActivity extends Activity {
 			@Override
 			public void run() {
 
-				Log.d("AccelerometerActivity", "before updating");
+				NNLog.d("AccelerometerActivity", "before updating");
 
 				try {
 					update();
@@ -232,7 +232,7 @@ public class AccelerometerActivity extends Activity {
 			aReading = mService.getReading(LibConstants.SENSOR_ACCELEROMETER);
 			if (aReading instanceof ErrorReading) {
 
-				Log.d("AccelerometerActivity", "Inside updateReadings - ErrorReading");
+				NNLog.d("AccelerometerActivity", "Inside updateReadings - ErrorReading");
 				handleError((ErrorReading) aReading);
 			} else {
 			accel_X.setText("" + ((AccelerometerReading)aReading).getX());
@@ -253,7 +253,7 @@ public class AccelerometerActivity extends Activity {
 	}
 	
 	public void handleError(ErrorReading eReading) {
-		Log.d("AccelerometerActivity", "handleError called");
+		NNLog.d("AccelerometerActivity", "handleError called");
 		TextView status = (TextView) findViewById(R.id.error_tv);
 		status.setText("Error: code = " + eReading.getErrorCode() + ", message = " + eReading.getErrorString());
 		readingLayout.setVisibility(View.INVISIBLE);
@@ -261,7 +261,7 @@ public class AccelerometerActivity extends Activity {
 	}
 
 	protected void doBindService() {
-		Log.d("AccelerometerActivity", "doBindService successfull");
+		NNLog.d("AccelerometerActivity", "doBindService successfull");
 		Intent it = new Intent();
 		it.setClassName("ch.ethz.coss.nervousnet.hub", "ch.ethz.coss.nervousnet.hub.NervousnetHubApiService");
 		bindFlag = getApplicationContext().bindService(it, mServiceConnection, 0);
@@ -271,7 +271,7 @@ public class AccelerometerActivity extends Activity {
 	protected void doUnbindService() {
 		getApplicationContext().unbindService(mServiceConnection);
 		bindFlag = false;
-		Log.d("AccelerometerActivity ", "doUnbindService successfull");
+		NNLog.d("AccelerometerActivity ", "doUnbindService successfull");
 	}
 	/*********END OF STEP3********/
 

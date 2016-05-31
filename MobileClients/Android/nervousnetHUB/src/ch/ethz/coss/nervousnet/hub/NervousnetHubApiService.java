@@ -35,7 +35,6 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
-import android.util.Log;
 import android.widget.Toast;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
@@ -116,5 +115,4 @@ public class NervousnetHubApiService extends Service {
 		hthread.quit();
 	}
 
-	
 }

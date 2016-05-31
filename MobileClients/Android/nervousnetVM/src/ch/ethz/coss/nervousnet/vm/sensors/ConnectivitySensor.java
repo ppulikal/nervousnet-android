@@ -28,25 +28,16 @@ package ch.ethz.coss.nervousnet.vm.sensors;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.v4.content.ContextCompat;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
 import android.telephony.CellInfoGsm;
@@ -56,10 +47,7 @@ import android.telephony.CellLocation;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
-import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
-import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.utils.ValueFormatter;
@@ -72,17 +60,13 @@ public class ConnectivitySensor extends BaseSensor {
 	private HandlerThread hthread;
 	private Handler handler;
 
-
-
 	public ConnectivitySensor(Context context, byte sensorState) {
 		this.context = context;
 		this.sensorState = sensorState;
-		
+
 		hthread = new HandlerThread("HandlerThread");
 		hthread.start();
 	}
-
-
 
 	public class ConnectivityTask extends AsyncTask<Void, Void, Void> {
 		@Override
@@ -167,10 +151,10 @@ public class ConnectivitySensor extends BaseSensor {
 			mobileHashBuilder.append(new String(lteHashId));
 			mobileHashBuilder.append(new String(gsmHashId));
 			mobileHashBuilder.append(new String(wcdmaHashId));
-			reading = new ConnectivityReading(System.currentTimeMillis(), isConnected, networkType, isRoaming, wifiHashId,
-					wifiStrength, mobileHashBuilder.toString());
-				
-			NNLog.d(LOG_TAG, "reading collected - "+((ConnectivityReading) reading).getNetworkType());
+			reading = new ConnectivityReading(System.currentTimeMillis(), isConnected, networkType, isRoaming,
+					wifiHashId, wifiStrength, mobileHashBuilder.toString());
+
+			NNLog.d(LOG_TAG, "reading collected - " + ((ConnectivityReading) reading).getNetworkType());
 			dataReady(reading);
 			return null;
 
@@ -192,54 +176,51 @@ public class ConnectivitySensor extends BaseSensor {
 		return new byte[16];
 	}
 
-
-	
-
-
 	@Override
 	public boolean start() {
-		
-		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled Starting Connectivity sensor as Sensor is not available.");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Cancelled Starting Connectivity sensor as permission denied by user.");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			NNLog.d(LOG_TAG, "Cancelled starting Connectivity sensor as Sensor state is switched off.");
 			return false;
-		}  
-		
+		}
+
 		NNLog.d(LOG_TAG, "Starting Connectivity sensor with state = " + sensorState);
-		
+
 		handler = new Handler(hthread.getLooper());
 		final Runnable run = new Runnable() {
 			@Override
 			public void run() {
 				new ConnectivityTask().execute();
-				handler.postDelayed(this, 5000);//NervousnetVMConstants.sensor_freq_constants[3][sensorState - 1]); // TODO: test this
+				handler.postDelayed(this, 5000);// NervousnetVMConstants.sensor_freq_constants[3][sensorState
+												// - 1]); // TODO: test this
 			}
 
 		};
 
 		boolean flag = handler.postDelayed(run, 0);
-		
+
 		return true;
 	}
 
 	@Override
 	public boolean updateAndRestart(byte state) {
-		if(state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+		if (state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled Connectivity battery sensor as Sensor is not available.");
 			return false;
-		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Cancelled Connectivity battery sensor as permission denied by user.");
 			return false;
-		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			setSensorState(state);
 			NNLog.d(LOG_TAG, "Cancelled Connectivity battery sensor as Sensor state is switched off.");
 			return false;
-		} 
+		}
 
 		stop();
 		setSensorState(state);
@@ -250,23 +231,19 @@ public class ConnectivitySensor extends BaseSensor {
 
 	@Override
 	public boolean stop() {
-		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled stop Connectivity sensor as Sensor state is not available ");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Cancelled stop Connectivity sensor as permission denied by user.");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			NNLog.d(LOG_TAG, "Cancelled stop Connectivity sensor as Sensor state is switched off ");
 			return false;
-		} 
+		}
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 		this.reading = null;
 		return true;
 	}
-
-
-
-
 
 }

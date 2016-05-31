@@ -19,18 +19,17 @@ import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.LocationReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
-import ch.ethz.coss.nervousnet.vm.NervousnetVM;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor.BaseSensorListener;
 import ch.ethz.coss.nervousnet.vm.storage.DaoMaster.DevOpenHelper;
 import de.greenrobot.dao.query.QueryBuilder;
 
-public class SQLHelper implements BaseSensorListener{
-	
+public class SQLHelper implements BaseSensorListener {
+
 	private static final String LOG_TAG = SQLHelper.class.getSimpleName();
-	
+
 	Config config = null;
-	
+
 	DaoMaster daoMaster;
 	DaoSession daoSession;
 	SQLiteDatabase sqlDB;
@@ -44,11 +43,11 @@ public class SQLHelper implements BaseSensorListener{
 	ConnectivityDataDao connDao;
 	GyroDataDao gyroDao;
 	PressureDataDao pressureDao;
-	
+
 	public SQLHelper(Context context, String DB_NAME) {
-		initDao( context, DB_NAME);
+		initDao(context, DB_NAME);
 	}
-	
+
 	private void initDao(Context context, String DB_NAME) {
 		NNLog.d(LOG_TAG, "Inside initDao");
 		try {
@@ -57,8 +56,7 @@ public class SQLHelper implements BaseSensorListener{
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Inside constructor and creating DB = " + DB_NAME, e);
 		}
-		
-		
+
 		daoMaster = new DaoMaster(sqlDB);
 		daoSession = daoMaster.newSession();
 		configDao = daoSession.getConfigDao();
@@ -87,15 +85,14 @@ public class SQLHelper implements BaseSensorListener{
 						NervousnetVMConstants.sensor_labels[i], (byte) 0));
 		}
 	}
-	
-	
+
 	public synchronized Config loadVMConfig() {
 		NNLog.d(LOG_TAG, "Inside loadVMConfig");
 
 		NNLog.d(LOG_TAG, "Config - count = " + configDao.queryBuilder().count());
 		if (configDao.queryBuilder().count() != 0) {
 			config = configDao.queryBuilder().unique();
-		} 
+		}
 
 		return config;
 	}
@@ -121,19 +118,19 @@ public class SQLHelper implements BaseSensorListener{
 			Log.e(LOG_TAG, "Config DB count is more than 1. There is something wrong.");
 
 	}
-	
+
 	public synchronized void updateSensorConfig(SensorConfig config) throws Exception {
 
 		sensorConfigDao.insertOrReplace(config);
 	}
-	
+
 	public synchronized List<SensorConfig> getSensorConfigList() {
 		return sensorConfigDao.queryBuilder().list();
 	}
-	
+
 	public void storeSensorAsync(SensorDataImpl sensorData) {
 
-//		new StoreTask().execute(sensorData);
+		// new StoreTask().execute(sensorData);
 	}
 
 	class StoreTask extends AsyncTask<SensorDataImpl, Void, Void> {
@@ -146,31 +143,32 @@ public class SQLHelper implements BaseSensorListener{
 
 			if (params != null && params.length > 0) {
 
-//				for (int i = 0; i < params.length; i++) {
-//					Log.d(LOG_TAG, "doInBackground (params[i] = " + params[i] + ")");
-					storeSensor(params[0]);
-//				}
+				// for (int i = 0; i < params.length; i++) {
+				// Log.d(LOG_TAG, "doInBackground (params[i] = " + params[i] +
+				// ")");
+				storeSensor(params[0]);
+				// }
 			}
 			return null;
 		}
 
 	}
-	
+
 	public synchronized boolean storeSensor(SensorDataImpl sensorData) {
 		NNLog.d(LOG_TAG, "Inside storeSensor ");
 
 		if (sensorData == null) {
 			Log.e(LOG_TAG, "SensorData is null. please check it");
 			return false;
-		} 
-			NNLog.d(LOG_TAG, "SensorData (Type = " + sensorData.getType() + ")"); // ,
-																						// Timestamp
-																						// =
-																						// "+sensorData.getTimeStamp()+",
-																						// Volatility
-																						// =
-																						// "+sensorData.getVolatility());
-		
+		}
+		NNLog.d(LOG_TAG, "SensorData (Type = " + sensorData.getType() + ")"); // ,
+																				// Timestamp
+																				// =
+																				// "+sensorData.getTimeStamp()+",
+																				// Volatility
+																				// =
+																				// "+sensorData.getVolatility());
+
 		switch (sensorData.getType()) {
 		case LibConstants.SENSOR_ACCELEROMETER:
 
@@ -182,17 +180,21 @@ public class SQLHelper implements BaseSensorListener{
 					+ ", Z = " + accelData.getZ());
 
 			accDao.insert(accelData);
-			
+
 			return true;
 
 		case LibConstants.SENSOR_BATTERY:
-//			BatteryData battData = (BatteryData) sensorData;
-//			NNLog.d(LOG_TAG, "BATTERY_DATA table count = " + battDao.count());
-//			NNLog.d(LOG_TAG, "Inside Switch, BatteryData Type = (Type = " + battData.getType() + ", Timestamp = "
-//					+ battData.getTimeStamp() + ", Volatility = " + battData.getVolatility());
-//			NNLog.d(LOG_TAG, "Inside Switch, BatteryData Type = (Percent = " + battData.getPercent() + "%, Health = "
-//					+ battData.getHealth());
-//			battDao.insert(battData);
+			// BatteryData battData = (BatteryData) sensorData;
+			// NNLog.d(LOG_TAG, "BATTERY_DATA table count = " +
+			// battDao.count());
+			// NNLog.d(LOG_TAG, "Inside Switch, BatteryData Type = (Type = " +
+			// battData.getType() + ", Timestamp = "
+			// + battData.getTimeStamp() + ", Volatility = " +
+			// battData.getVolatility());
+			// NNLog.d(LOG_TAG, "Inside Switch, BatteryData Type = (Percent = "
+			// + battData.getPercent() + "%, Health = "
+			// + battData.getHealth());
+			// battDao.insert(battData);
 			return true;
 
 		case LibConstants.DEVICE_INFO:
@@ -203,8 +205,8 @@ public class SQLHelper implements BaseSensorListener{
 			NNLog.d(LOG_TAG, "LOCATION_DATA table count = " + locDao.count());
 			NNLog.d(LOG_TAG, "Inside Switch, LocationData Type = (Type = " + locData.getType() + ", Timestamp = "
 					+ locData.getTimeStamp() + ", Volatility = " + locData.getVolatility());
-			NNLog.d(LOG_TAG, "Inside Switch, LocationData Type = (Latitude = " + locData.getLatitude() + ", Longitude = "
-					+ locData.getLongitude() + ", ALtitude = " + locData.getAltitude());
+			NNLog.d(LOG_TAG, "Inside Switch, LocationData Type = (Latitude = " + locData.getLatitude()
+					+ ", Longitude = " + locData.getLongitude() + ", ALtitude = " + locData.getAltitude());
 
 			locDao.insert(locData);
 			return true;
@@ -261,8 +263,7 @@ public class SQLHelper implements BaseSensorListener{
 		}
 		return false;
 	}
-	
-	
+
 	public synchronized void getSensorReadings(int type, long startTime, long endTime, ArrayList<SensorReading> list) {
 		QueryBuilder qb = null;
 
@@ -276,7 +277,7 @@ public class SQLHelper implements BaseSensorListener{
 			while (iterator.hasNext()) {
 				list.add(convertSensorDataToSensorReading(iterator.next()));
 			}
-			
+
 			NNLog.d(LOG_TAG, "List size = " + list.size());
 
 			return;
@@ -338,7 +339,7 @@ public class SQLHelper implements BaseSensorListener{
 		}
 
 	}
-	
+
 	private synchronized SensorReading convertSensorDataToSensorReading(SensorDataImpl data) {
 		NNLog.d(LOG_TAG, "convertSensorDataToSensorReading reading Type = " + data.getType());
 		SensorReading reading = null;
@@ -382,14 +383,12 @@ public class SQLHelper implements BaseSensorListener{
 
 		}
 	}
-	
 
 	@Override
 	public void sensorDataReady(SensorReading reading) {
-			storeSensorAsync(convertSensorReadingToSensorData(reading));
+		storeSensorAsync(convertSensorReadingToSensorData(reading));
 	}
-	
-	
+
 	private synchronized SensorDataImpl convertSensorReadingToSensorData(SensorReading reading) {
 		NNLog.d(LOG_TAG, "convertSensorReadingToSensorData reading Type = " + reading.type);
 		SensorDataImpl sensorData;
@@ -401,13 +400,14 @@ public class SQLHelper implements BaseSensorListener{
 					true);
 			sensorData.setType(LibConstants.SENSOR_ACCELEROMETER);
 			return sensorData;
-			
+
 		case LibConstants.SENSOR_BATTERY:
 			BatteryReading breading = (BatteryReading) reading;
-			sensorData = new BatteryData(null, breading.timestamp, breading.getPercent(), breading.getCharging_type(), breading.getHealth(), breading.getTemp(), breading.getVolt(), breading.volatility, breading.isShare);
+			sensorData = new BatteryData(null, breading.timestamp, breading.getPercent(), breading.getCharging_type(),
+					breading.getHealth(), breading.getTemp(), breading.getVolt(), breading.volatility,
+					breading.isShare);
 			sensorData.setType(LibConstants.SENSOR_BATTERY);
 			return sensorData;
-			
 
 		case LibConstants.SENSOR_GYROSCOPE:
 			GyroReading greading = (GyroReading) reading;
@@ -444,6 +444,5 @@ public class SQLHelper implements BaseSensorListener{
 
 		}
 	}
-
 
 }

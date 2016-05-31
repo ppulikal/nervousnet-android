@@ -55,7 +55,6 @@ public class LocationReading extends SensorReading {
 		return latnLong;
 	}
 
-
 	/**
 	 * @param latnLong
 	 *            the latnLong to set
@@ -108,7 +107,7 @@ public class LocationReading extends SensorReading {
 	public String toString() {
 		if (latnLong == null)
 			return new String("Location not set");
-		return new String("Latitude = " + latnLong[0] + ", Longitude = " + latnLong[1] );
+		return new String("Latitude = " + latnLong[0] + ", Longitude = " + latnLong[1]);
 	}
 
 	private double[] latnLong;

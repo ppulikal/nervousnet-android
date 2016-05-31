@@ -30,7 +30,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
@@ -61,8 +60,9 @@ public class GyroSensor extends BaseSensor implements SensorEventListener {
 
 		NNLog.d(LOG_TAG, "Starting Gyroscope sensor with state = " + sensorState);
 
-		boolean flag = sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_FASTEST);
-//				NervousnetVMConstants.sensor_freq_constants[4][sensorState -1]);
+		boolean flag = sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+				SensorManager.SENSOR_DELAY_FASTEST);
+		// NervousnetVMConstants.sensor_freq_constants[4][sensorState -1]);
 
 		NNLog.d(LOG_TAG, "Started Gyroscope sensor with successflag = " + flag);
 		return true;
@@ -108,11 +108,10 @@ public class GyroSensor extends BaseSensor implements SensorEventListener {
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 
 		NNLog.d(LOG_TAG, "Stopped Gyroscope sensor with state = " + sensorState);
-		
+
 		this.reading = null;
 		return true;
 	}
-
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {

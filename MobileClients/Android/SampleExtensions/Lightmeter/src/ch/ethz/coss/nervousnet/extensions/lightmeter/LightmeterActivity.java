@@ -80,7 +80,7 @@ public class LightmeterActivity extends Activity {
 			try {
 
 				doBindService();
-				Log.d("LightmeterActivity", bindFlag.toString()); // will
+				NNLog.d("LightmeterActivity", bindFlag.toString()); // will
 																		// return
 																		// "true"
 				if (!bindFlag) {
@@ -133,30 +133,30 @@ public class LightmeterActivity extends Activity {
 
 	/*********STEP3 for nervousnet HUB API's********/
 	void initConnection() {
-		Log.d("LightmeterActivity", "Inside initConnection");
+		NNLog.d("LightmeterActivity", "Inside initConnection");
 		mServiceConnection = new ServiceConnection() {
 
 			@Override
 			public void onServiceDisconnected(ComponentName name) {
-				Log.d("LightmeterActivity", "Inside onServiceDisconnected 2");
+				NNLog.d("LightmeterActivity", "Inside onServiceDisconnected 2");
 				stopRepeatingTask();
 				mService = null;
 				mServiceConnection = null;
 				Toast.makeText(getApplicationContext(), "NervousnetRemote Service not connected", Toast.LENGTH_SHORT)
 						.show();
-				Log.d("LightmeterActivity", "Binding - Service disconnected");
+				NNLog.d("LightmeterActivity", "Binding - Service disconnected");
 			}
 
 			@Override
 			public void onServiceConnected(ComponentName name, IBinder service) {
-				Log.d("LightmeterActivity", "onServiceConnected");
+				NNLog.d("LightmeterActivity", "onServiceConnected");
 
 				mService = NervousnetRemote.Stub.asInterface(service);
 
 				startRepeatingTask();
 				Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
 						.show();
-				Log.d("LightmeterActivity", "Binding is done - Service connected");
+				NNLog.d("LightmeterActivity", "Binding is done - Service connected");
 			}
 		};
 
@@ -167,7 +167,7 @@ public class LightmeterActivity extends Activity {
 			@Override
 			public void run() {
 
-				Log.d("LightmeterActivity", "before updating");
+				NNLog.d("LightmeterActivity", "before updating");
 
 				try {
 					update();
@@ -216,7 +216,7 @@ public class LightmeterActivity extends Activity {
 	}
 
 	protected void doBindService() {
-		Log.d("LightmeterActivity", "doBindService successfull");
+		NNLog.d("LightmeterActivity", "doBindService successfull");
 		Intent it = new Intent();
 		it.setClassName("ch.ethz.coss.nervousnet.hub", "ch.ethz.coss.nervousnet.hub.NervousnetHubApiService");
 		bindFlag = bindService(it, mServiceConnection, 0);
@@ -226,7 +226,7 @@ public class LightmeterActivity extends Activity {
 	protected void doUnbindService() {
 		unbindService(mServiceConnection);
 		bindFlag = false;
-		Log.d("LightmeterActivity ", "doUnbindService successfull");
+		NNLog.d("LightmeterActivity ", "doUnbindService successfull");
 	}
 	/*********END OF STEP3********/
 }

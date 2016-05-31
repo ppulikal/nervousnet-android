@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +49,9 @@ public class CollectionRateSettingItemAdapter extends ArrayAdapter<String> {
 		textView.setText(labels[position]);
 		imageView.setImageResource(icons[position]);
 
-	    button = (Button) convertView.findViewById(R.id.sensor_level_button);
-	    button.setText(NervousnetVMConstants.sensor_freq_labels[((Application) context.getApplicationContext()).nn_VM.getSensorState(position)]);
+		button = (Button) convertView.findViewById(R.id.sensor_level_button);
+		button.setText(NervousnetVMConstants.sensor_freq_labels[((Application) context.getApplicationContext()).nn_VM
+				.getSensorState(position)]);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -60,14 +60,15 @@ public class CollectionRateSettingItemAdapter extends ArrayAdapter<String> {
 			}
 		});
 
-		if(((Application) context.getApplicationContext()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED || 
-				((Application) context.getApplicationContext()).nn_VM.getSensorState(position) == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE ||
-				((Application) context.getApplicationContext()).nn_VM.getSensorState(position) == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		if (((Application) context.getApplicationContext()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED
+				|| ((Application) context.getApplicationContext()).nn_VM
+						.getSensorState(position) == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE
+				|| ((Application) context.getApplicationContext()).nn_VM
+						.getSensorState(position) == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			button.setAlpha(.4f);
 			button.setClickable(false);
 		}
-		
-		
+
 		return convertView;
 	}
 
@@ -79,9 +80,10 @@ public class CollectionRateSettingItemAdapter extends ArrayAdapter<String> {
 			public void onClick(DialogInterface dialog, int itemClicked) {
 				String[] option_array = NervousnetVMConstants.sensor_freq_labels;
 				String optionSelected = option_array[itemClicked];
-				((Application) context.getApplicationContext()).nn_VM.updateSensorConfig((long)position, (byte)itemClicked);
-				((Activity)context).finish();
-				context.startActivity(((Activity)context).getIntent());
+				((Application) context.getApplicationContext()).nn_VM.updateSensorConfig((long) position,
+						(byte) itemClicked);
+				((Activity) context).finish();
+				context.startActivity(((Activity) context).getIntent());
 			}
 		});
 		return builder.create();

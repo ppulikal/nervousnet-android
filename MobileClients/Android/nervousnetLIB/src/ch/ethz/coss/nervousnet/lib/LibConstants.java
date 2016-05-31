@@ -41,7 +41,7 @@ public class LibConstants {
 	public static final int SENSOR_PRESSURE = 10;
 	public static final int SENSOR_PROXIMITY = 11;
 	public static final int SENSOR_TEMPERATURE = 12;
-	
+
 	public static final int DEVICE_INFO = 101;
 	public static final int ERROR = -1;
 

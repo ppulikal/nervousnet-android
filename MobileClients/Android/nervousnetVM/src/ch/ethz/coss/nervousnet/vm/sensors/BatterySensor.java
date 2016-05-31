@@ -26,22 +26,12 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.vm.sensors;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.BatteryManager;
-import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.BatteryReading;
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
-import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
@@ -73,7 +63,7 @@ public class BatterySensor extends BaseSensor {
 		public void onReceive(Context context, Intent batteryStatus) {
 			reading = extractBatteryData(batteryStatus);
 			dataReady(reading);
-			NNLog.d(LOG_TAG, "Received broadcast - " + (((BatteryReading)reading).getPercent()));
+			NNLog.d(LOG_TAG, "Received broadcast - " + (((BatteryReading) reading).getPercent()));
 			NNLog.d(LOG_TAG, "level is " + level + "/" + scale + ", temp is " + temp + ", voltage is " + voltage);
 		}
 
@@ -99,47 +89,42 @@ public class BatterySensor extends BaseSensor {
 		return (BatteryReading) reading;
 	}
 
-
-
-
-
 	@Override
 	public boolean start() {
-		
-		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled Starting Battery sensor as Sensor is not available.");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Cancelled Starting Battery sensor as permission denied by user.");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			NNLog.d(LOG_TAG, "Cancelled starting Battery sensor as Sensor state is switched off.");
 			return false;
-		} 
-		
+		}
+
 		NNLog.d(LOG_TAG, "Starting accelerometer sensor with state = " + sensorState);
 		IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 		Intent batteryStatus = context.registerReceiver(batteryReceiver, ifilter);
 		reading = extractBatteryData(batteryStatus);
 		dataReady(reading);
-		
+
 		return true;
 	}
 
 	@Override
 	public boolean updateAndRestart(byte state) {
-		if(state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+		if (state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled Starting battery sensor as Sensor is not available.");
 			return false;
-		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Cancelled Starting battery sensor as permission denied by user.");
 			return false;
-		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		} else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			setSensorState(state);
 			NNLog.d(LOG_TAG, "Cancelled starting battery sensor as Sensor state is switched off.");
 			return false;
-		} 
-		
+		}
 
 		stop();
 		setSensorState(state);
@@ -150,18 +135,18 @@ public class BatterySensor extends BaseSensor {
 
 	@Override
 	public boolean stop() {
-		
-		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+
+		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is not available ");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Cancelled stop accelerometer sensor as permission denied by user.");
 			return false;
-		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			NNLog.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is switched off ");
 			return false;
-		} 
-		
+		}
+
 		try {
 			context.unregisterReceiver(batteryReceiver);
 		} catch (IllegalArgumentException e) {
