@@ -36,14 +36,21 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.media.MediaRecorder.AudioSource;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
+import ch.ethz.coss.nervousnet.vm.sensors.ConnectivitySensor.ConnectivityTask;
 import ch.ethz.coss.nervousnet.vm.utils.FFT;
 
-public class NoiseSensor {
-
-	public static NoiseSensor _instance;
+public class NoiseSensor extends BaseSensor{
+	private static final String LOG_TAG = NoiseSensor.class.getSimpleName();
+	
+	private HandlerThread hthread;
+	private Handler handler;
+	
 	private NoiseReading reading;
 
 	public static final int BANDCOUNT = 12;
@@ -52,13 +59,7 @@ public class NoiseSensor {
 	public static final int NYQUIST = 4000; // Take this 4000Hz regardless of
 											// SAMPPERSEC
 	public static final float BANDLOGBASE = (float) Math.exp(Math.log(NYQUIST) / BANDCOUNT); // Get
-																								// the
 																								// basis
-																								// for
-																								// the
-																								// log
-																								// structured
-																								// frequency
 																								// bands
 	public static final int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 	public static final int CHANNEL = AudioFormat.CHANNEL_IN_MONO;
@@ -69,53 +70,15 @@ public class NoiseSensor {
 	private int fftlen;
 	private int buffersize;
 	private AudioRecord audioRecord;
-
-	private List<NoiseSensorListener> listenerList = new ArrayList<NoiseSensorListener>();
-	private Lock listenerMutex = new ReentrantLock();
-
-	private NoiseSensor() {
-
+	
+	public NoiseSensor(byte sensorState) {
+		this.sensorState = sensorState;
+		
+		hthread = new HandlerThread("HandlerThread");
+		hthread.start();
 	}
 
-	public static NoiseSensor getInstance() {
-
-		if (_instance == null) {
-			_instance = new NoiseSensor();
-		}
-
-		return _instance;
-	}
-
-	public interface NoiseSensorListener {
-		public void noiseSensorDataReady(NoiseReading reading);
-	}
-
-	public void addListener(NoiseSensorListener listener) {
-		listenerMutex.lock();
-		listenerList.add(listener);
-		listenerMutex.unlock();
-	}
-
-	public void removeListener(NoiseSensorListener listener) {
-		listenerMutex.lock();
-		listenerList.remove(listener);
-		listenerMutex.unlock();
-	}
-
-	public void clearListeners() {
-		listenerMutex.lock();
-		listenerList.clear();
-		listenerMutex.unlock();
-	}
-
-	public void dataReady(long recordTime, float rms, float spl, float[] bands) {
-		listenerMutex.lock();
-		for (NoiseSensorListener listener : listenerList) {
-			listener.noiseSensorDataReady(new NoiseReading(recordTime, spl));
-		}
-		listenerMutex.unlock();
-	}
-
+	
 	public class AudioTask extends AsyncTask<Long, Void, Void> {
 		private long recordTime;
 		private float rms;
@@ -226,10 +189,11 @@ public class NoiseSensor {
 
 			return null;
 		}
-
+		
+		
 		@Override
 		public void onPostExecute(Void params) {
-			dataReady(recordTime, rms, spl, bands);
+			dataReady(new NoiseReading(recordTime, spl));
 		}
 
 		private int[] mSampleRates = new int[] { 8000, 11025, 22050, 44100 };
@@ -289,4 +253,75 @@ public class NoiseSensor {
 		}
 		return log + (bits >>> 1);
 	}
+
+
+	@Override
+	public boolean start() {
+		
+		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			NNLog.d(LOG_TAG, "Cancelled NoiseSensor Connectivity sensor as Sensor is not available.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			NNLog.d(LOG_TAG, "Cancelled NoiseSensor Connectivity sensor as permission denied by user.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			NNLog.d(LOG_TAG, "Cancelled NoiseSensor Connectivity sensor as Sensor state is switched off.");
+			return false;
+		}  
+		
+		NNLog.d(LOG_TAG, "Starting NoiseSensor sensor with state = " + sensorState);
+		
+		handler = new Handler(hthread.getLooper());
+		final Runnable run = new Runnable() {
+			@Override
+			public void run() {
+				startRecording(500);
+				handler.postDelayed(this, 5000);//NervousnetVMConstants.sensor_freq_constants[3][sensorState - 1]); // TODO: test this
+			}
+
+		};
+
+		boolean flag = handler.postDelayed(run, 0);
+		
+		return true;
+	}
+
+	@Override
+	public boolean updateAndRestart(byte state) {
+		if(state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			NNLog.d(LOG_TAG, "Cancelled NoiseSensor sensor as Sensor is not available.");
+			return false;
+		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			NNLog.d(LOG_TAG, "Cancelled NoiseSensor sensor as permission denied by user.");
+			return false;
+		} else if(state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			setSensorState(state);
+			NNLog.d(LOG_TAG, "Cancelled NoiseSensor sensor as Sensor state is switched off.");
+			return false;
+		} 
+
+		stop();
+		setSensorState(state);
+		NNLog.d(LOG_TAG, "Restarting NoiseSensor with state = " + sensorState);
+		start();
+		return true;
+	}
+
+	@Override
+	public boolean stop() {
+		if(sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
+			NNLog.d(LOG_TAG, "Cancelled stop NoiseSensor sensor as Sensor state is not available ");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
+			NNLog.d(LOG_TAG, "Cancelled stop NoiseSensor sensor as permission denied by user.");
+			return false;
+		} else if(sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			NNLog.d(LOG_TAG, "Cancelled stop NoiseSensor sensor as Sensor state is switched off ");
+			return false;
+		} 
+		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
+		this.reading = null;
+		return true;
+	}
+
 }

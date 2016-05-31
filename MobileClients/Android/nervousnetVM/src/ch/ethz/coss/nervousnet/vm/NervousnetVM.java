@@ -20,6 +20,7 @@ import ch.ethz.coss.nervousnet.vm.sensors.ConnectivitySensor;
 import ch.ethz.coss.nervousnet.vm.sensors.GyroSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.LightSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.LocationSensor;
+import ch.ethz.coss.nervousnet.vm.sensors.NoiseSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor.BaseSensorListener;
 import ch.ethz.coss.nervousnet.vm.storage.Config;
 import ch.ethz.coss.nervousnet.vm.storage.SQLHelper;
@@ -135,13 +136,15 @@ public class NervousnetVM {
 			// MagneticSensor(manager.hasSystemFeature(PackageManager.) ?
 			// sensorConfig.getState() :
 			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// } else if(sensorConfig.getID() ==
-			// NervousnetVMConstants.sensor_ids[9]) { //Noise
-			// sensor = new
-			// NoiseSensor(manager.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)
-			// ? sensorConfig.getState() :
-			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// } else if(sensorConfig.getID() ==
+			// }
+			else if(sensorConfig.getID() ==
+			 NervousnetVMConstants.sensor_ids[9]) { //Noise
+			 sensor = new
+			 NoiseSensor(manager.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)
+			 ? sensorConfig.getState() :
+			 NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
+			 }
+//					else if(sensorConfig.getID() ==
 			// NervousnetVMConstants.sensor_ids[10]) { //Pressure
 			// sensor = new
 			// PressureSensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_BAROMETER)
@@ -179,13 +182,13 @@ public class NervousnetVM {
 			if (sensor != null)
 				sensor.start();
 		}
-
 	}
 
 	public void stopSensors() {
-
+		NNLog.d(LOG_TAG, "Inside stopSensors");
 		int count = 0;
 		for (Long key : hSensors.keySet()) {
+			NNLog.d(LOG_TAG, "Inside stopSensors Sensor ID = " + key);
 			BaseSensor sensor = hSensors.get(NervousnetVMConstants.sensor_ids[count++]);
 			if (sensor != null)
 				sensor.stop();
