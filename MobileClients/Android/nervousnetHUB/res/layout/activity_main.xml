@@ -10,15 +10,15 @@
         android:id="@+id/main_grid"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
         android:columnWidth="@dimen/griditem_size"
         android:gravity="center"
-        android:horizontalSpacing="10dp"
+        android:horizontalSpacing="2dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:textColor="@color/red"
-        android:verticalSpacing="10dp" >
+        android:verticalSpacing="0dp" >
     </GridView>
 
 </RelativeLayout>
