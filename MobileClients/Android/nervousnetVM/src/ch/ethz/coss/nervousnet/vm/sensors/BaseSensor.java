@@ -45,7 +45,11 @@ public abstract class BaseSensor {
 		this.reading = reading;
 		listenerMutex.lock();
 		for (BaseSensorListener listener : listenerList) {
-			listener.sensorDataReady(reading);
+			if(reading != null)
+				listener.sensorDataReady(reading);
+			else
+				NNLog.d(LOG_TAG, "reading object is null.");
+				
 		}
 		listenerMutex.unlock();
 	}

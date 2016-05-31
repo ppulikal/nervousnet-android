@@ -130,7 +130,7 @@ public class SQLHelper implements BaseSensorListener {
 
 	public void storeSensorAsync(SensorDataImpl sensorData) {
 
-		// new StoreTask().execute(sensorData);
+		 new StoreTask().execute(sensorData);
 	}
 
 	class StoreTask extends AsyncTask<SensorDataImpl, Void, Void> {
@@ -179,22 +179,17 @@ public class SQLHelper implements BaseSensorListener {
 			NNLog.d(LOG_TAG, "Inside Switch, AccelData Type = (X = " + accelData.getX() + ", Y = " + accelData.getY()
 					+ ", Z = " + accelData.getZ());
 
-			accDao.insert(accelData);
+			accDao.insertInTx(accelData);
 
 			return true;
 
 		case LibConstants.SENSOR_BATTERY:
-			// BatteryData battData = (BatteryData) sensorData;
-			// NNLog.d(LOG_TAG, "BATTERY_DATA table count = " +
-			// battDao.count());
-			// NNLog.d(LOG_TAG, "Inside Switch, BatteryData Type = (Type = " +
-			// battData.getType() + ", Timestamp = "
-			// + battData.getTimeStamp() + ", Volatility = " +
-			// battData.getVolatility());
-			// NNLog.d(LOG_TAG, "Inside Switch, BatteryData Type = (Percent = "
-			// + battData.getPercent() + "%, Health = "
-			// + battData.getHealth());
-			// battDao.insert(battData);
+			BatteryData batteryData = (BatteryData) sensorData;
+			NNLog.d(LOG_TAG, "BATT_DATA table count = " + accDao.count());
+			NNLog.d(LOG_TAG, "Inside Switch, BatteryData Type = (Type = " + batteryData.getType() + ", Timestamp = "
+					+ batteryData.getTimeStamp() + ", Volatility = " + batteryData.getVolatility());
+
+			battDao.insertInTx(batteryData);
 			return true;
 
 		case LibConstants.DEVICE_INFO:
@@ -208,7 +203,7 @@ public class SQLHelper implements BaseSensorListener {
 			NNLog.d(LOG_TAG, "Inside Switch, LocationData Type = (Latitude = " + locData.getLatitude()
 					+ ", Longitude = " + locData.getLongitude() + ", ALtitude = " + locData.getAltitude());
 
-			locDao.insert(locData);
+			locDao.insertInTx(locData);
 			return true;
 
 		case LibConstants.SENSOR_BLEBEACON:
@@ -227,7 +222,7 @@ public class SQLHelper implements BaseSensorListener {
 			NNLog.d(LOG_TAG, "GYRO_DATA table count = " + gyroDao.count());
 			NNLog.d(LOG_TAG, "Inside Switch, GyroData Type = (Type = " + gyroData.getType() + ", Timestamp = "
 					+ gyroData.getTimeStamp() + ", Volatility = " + gyroData.getVolatility());
-			gyroDao.insert(gyroData);
+			gyroDao.insertInTx(gyroData);
 			return true;
 		case LibConstants.SENSOR_HUMIDITY:
 			return true;
@@ -253,7 +248,7 @@ public class SQLHelper implements BaseSensorListener {
 			NNLog.d(LOG_TAG, "PressureData table count = " + pressureDao.count());
 			NNLog.d(LOG_TAG, "Inside Switch, pressureData Type = (Type = " + pressureData.getType() + ", Timestamp = "
 					+ pressureData.getTimeStamp() + ", Volatility = " + pressureData.getVolatility());
-			pressureDao.insert(pressureData);
+			pressureDao.insertInTx(pressureData);
 			return true;
 		case LibConstants.SENSOR_PROXIMITY:
 			return true;
