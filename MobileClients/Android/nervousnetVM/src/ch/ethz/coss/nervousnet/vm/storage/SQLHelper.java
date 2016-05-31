@@ -62,6 +62,7 @@ public class SQLHelper implements BaseSensorListener {
 		configDao = daoSession.getConfigDao();
 		sensorConfigDao = daoSession.getSensorConfigDao();
 		accDao = daoSession.getAccelDataDao();
+		battDao = daoSession.getBatteryDataDao();
 		locDao = daoSession.getLocationDataDao();
 		connDao = daoSession.getConnectivityDataDao();
 		gyroDao = daoSession.getGyroDataDao();
