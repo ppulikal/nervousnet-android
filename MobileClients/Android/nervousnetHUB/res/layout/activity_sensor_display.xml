@@ -19,9 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:textAlignment="center"
-        android:background="@color/orange_nervous"      
+        android:background="#fff"      
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
-        android:textColor="#fff" />
+        android:textColor="@color/orange_nervous" />
 
 </android.support.v4.view.ViewPager>

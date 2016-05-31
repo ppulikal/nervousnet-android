@@ -375,8 +375,8 @@ public final class R {
         public static final int menu_main=0x7f0e003e;
         public static final int netwType=0x7f0e002f;
         public static final int pager=0x7f0e000e;
-        public static final int pager_title=0x7f0e000f;
         public static final int pressureValue=0x7f0e003a;
+        public static final int pts_main=0x7f0e000f;
         public static final int rateButton=0x7f0e0006;
         public static final int sensorLabelHeader=0x7f0e0007;
         public static final int sensor_icon=0x7f0e0020;

@@ -329,14 +329,13 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 		    drawable.setBounds(0, 0, 40, 40);
 		        span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
 		        sb.setSpan(span, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//		    	sb.setSpan(new BackgroundColorSpan(Color.YELLOW), 2, sb.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-//				
+
 //		        sb.setSpan(new ClickableSpan() {
 //	                @Override
 //	                public void onClick(View widget) {
 //	                    Toast.makeText(context, "Clicked Span", Toast.LENGTH_LONG).show();
 //	                }
-//	            }, 0, 1,
+//	            }, 0, sb.length(),
 //	                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		        return sb;
 		}
