@@ -37,7 +37,7 @@ public class NervousNetDaoGenerator {
 	private static final String OUTPUT_FOLDER = "model";
 
 	public static void main(String[] args) throws Exception {
-		Schema schema = new Schema(3, "ch.ethz.coss.nervousnet.vm.model");
+		Schema schema = new Schema(3, "ch.ethz.coss.nervousnet.vm.storage");
 		schema.enableKeepSectionsByDefault();
 		addConfig(schema);
 		addSensorConfig(schema);
