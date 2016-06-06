@@ -10,7 +10,7 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:fillViewport="true" >
 
         <LinearLayout
@@ -91,7 +91,14 @@
                     android:layout_height="wrap_content"
                     android:hint="Accelerometer Z value comes here" />
             </LinearLayout>
+            
+            <ch.ethz.coss.nervousnet.hub.ui.views.AccelerometerSensorView
+			        android:id="@+id/accelVizView"
+			        android:layout_width="match_parent"
+			        android:layout_height="match_parent"
+			        />
         </LinearLayout>
+        
     </ScrollView>
 
 </LinearLayout>
