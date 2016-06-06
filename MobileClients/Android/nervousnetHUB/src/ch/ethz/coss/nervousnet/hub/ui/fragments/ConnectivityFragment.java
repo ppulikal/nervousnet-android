@@ -29,12 +29,14 @@
  */
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.hub.ui.views.ConnectivitySensorView;
 import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
@@ -46,6 +48,8 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
  *
  */
 public class ConnectivityFragment extends BaseFragment {
+	
+	private ConnectivitySensorView connectViz;
 
 	public ConnectivityFragment() {
 	}
@@ -57,7 +61,7 @@ public class ConnectivityFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_connectivity, container, false);
-
+		connectViz = (ConnectivitySensorView)rootView.findViewById(R.id.connectVizView);
 		return rootView;
 	}
 
@@ -85,6 +89,12 @@ public class ConnectivityFragment extends BaseFragment {
 			isConnectedTV.setText("" + (((ConnectivityReading) reading).isConnected() ? "Yes" : "No"));
 			netwType.setText("" + Utils.getConnectivityTypeString(((ConnectivityReading) reading).getNetworkType()));
 			isRoaming.setText("" + ((((ConnectivityReading) reading).isRoaming()) ? "Yes" : "No"));
+			
+			// boolean variables for wifi, data, roaming
+			boolean wifi = (((ConnectivityReading) reading).getNetworkType())==ConnectivityManager.TYPE_WIFI;
+			boolean data = (((ConnectivityReading) reading).getNetworkType())==ConnectivityManager.TYPE_MOBILE;
+			boolean roaming = (((ConnectivityReading) reading).isRoaming());
+			connectViz.setConnectivityValues(wifi, data, roaming);
 		}
 	}
 

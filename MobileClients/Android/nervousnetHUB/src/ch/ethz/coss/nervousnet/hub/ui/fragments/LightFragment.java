@@ -35,13 +35,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.hub.ui.views.LightSensorView;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class LightFragment extends BaseFragment {
-
+	private LightSensorView luxViz;
+	
 	public LightFragment() {
 	}
 
@@ -52,7 +54,7 @@ public class LightFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_light, container, false);
-
+		luxViz = (LightSensorView)rootView.findViewById(R.id.luxVizView);
 		return rootView;
 	}
 
@@ -74,6 +76,9 @@ public class LightFragment extends BaseFragment {
 		} else {
 			TextView lux = (TextView) getActivity().findViewById(R.id.lux);
 			lux.setText("" + ((LightReading) reading).getLuxValue());
+			
+			// check range of lux
+			luxViz.setLux((((LightReading) reading).getLuxValue()));
 		}
 	}
 

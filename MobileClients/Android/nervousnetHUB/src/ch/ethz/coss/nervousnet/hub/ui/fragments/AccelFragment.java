@@ -35,13 +35,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.hub.ui.views.AccelerometerSensorView;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class AccelFragment extends BaseFragment {
-
+	
+	AccelerometerSensorView accelView;
+	
 	public AccelFragment() {
 	}
 
@@ -52,7 +55,7 @@ public class AccelFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_accel, container, false);
-
+		accelView = (AccelerometerSensorView)rootView.findViewById(R.id.accelVizView);
 		return rootView;
 	}
 
@@ -72,6 +75,12 @@ public class AccelFragment extends BaseFragment {
 			x_value.setText("" + ((AccelerometerReading) reading).getX());
 			y_value.setText("" + ((AccelerometerReading) reading).getY());
 			z_value.setText("" + ((AccelerometerReading) reading).getZ());
+			
+			float []values= new float[3];
+			values[0] = ((AccelerometerReading) reading).getX();
+			values[1] = ((AccelerometerReading) reading).getY();
+			values[2] = ((AccelerometerReading) reading).getZ();
+			accelView.setAccelerometerValues(values);
 		}
 
 	}
