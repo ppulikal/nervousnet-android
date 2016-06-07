@@ -44,8 +44,6 @@ public class NoiseSensor extends BaseSensor {
 	private HandlerThread hthread;
 	private Handler handler;
 
-	private NoiseReading reading;
-
 	public static final int BANDCOUNT = 12;
 	public static final int SAMPPERSEC = 8000; // 8000Hz sampling rate, the
 												// minimum
@@ -67,8 +65,6 @@ public class NoiseSensor extends BaseSensor {
 	public NoiseSensor(byte sensorState) {
 		this.sensorState = sensorState;
 
-		hthread = new HandlerThread("HandlerThread");
-		hthread.start();
 	}
 
 	public class AudioTask extends AsyncTask<Long, Void, Void> {
@@ -184,7 +180,7 @@ public class NoiseSensor extends BaseSensor {
 
 		@Override
 		public void onPostExecute(Void params) {
-			dataReady(new NoiseReading(recordTime, spl));
+				dataReady(new NoiseReading(recordTime, spl));
 		}
 
 		private int[] mSampleRates = new int[] { 8000, 11025, 22050, 44100 };
@@ -249,30 +245,32 @@ public class NoiseSensor extends BaseSensor {
 	public boolean start() {
 
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-			NNLog.d(LOG_TAG, "Cancelled NoiseSensor Connectivity sensor as Sensor is not available.");
+			NNLog.d(LOG_TAG, "Cancelled NoiseSensor sensor as Sensor is not available.");
 			return false;
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-			NNLog.d(LOG_TAG, "Cancelled NoiseSensor Connectivity sensor as permission denied by user.");
+			NNLog.d(LOG_TAG, "Cancelled NoiseSensor sensor as permission denied by user.");
 			return false;
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-			NNLog.d(LOG_TAG, "Cancelled NoiseSensor Connectivity sensor as Sensor state is switched off.");
+			NNLog.d(LOG_TAG, "Cancelled NoiseSensor sensor as Sensor state is switched off.");
 			return false;
 		}
 
 		NNLog.d(LOG_TAG, "Starting NoiseSensor sensor with state = " + sensorState);
-
+		
+		hthread = new HandlerThread("HandlerThread");
+		hthread.start();
 		handler = new Handler(hthread.getLooper());
 		final Runnable run = new Runnable() {
 			@Override
 			public void run() {
 				startRecording(500);
-				handler.postDelayed(this, 5000);// NervousnetVMConstants.sensor_freq_constants[3][sensorState
+				handler.postDelayed(this, 1000);// NervousnetVMConstants.sensor_freq_constants[3][sensorState
 												// - 1]); // TODO: test this
 			}
 
 		};
 
-		boolean flag = handler.postDelayed(run, 0);
+		boolean flag = handler.postDelayed(run, 500);
 
 		return true;
 	}
@@ -311,7 +309,13 @@ public class NoiseSensor extends BaseSensor {
 			return false;
 		}
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
+		NNLog.d(LOG_TAG, "Stopped NoiseSensor with state = " + sensorState);
 		this.reading = null;
+		if(handler != null)
+			handler.removeCallbacks(hthread);
+			hthread = null;
+			handler = null;
+		
 		return true;
 	}
 

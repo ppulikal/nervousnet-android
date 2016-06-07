@@ -9,113 +9,112 @@ package ch.ethz.coss.nervousnet.vm.storage;
  */
 public class BatteryData implements SensorDataImpl {
 
-	private Long id;
-	private Long TimeStamp;
-	private Float Percent;
-	private Byte ChargingType;
-	private Byte Health;
-	private Float Temperature;
-	private Integer Volt;
-	private long Volatility;
-	private Boolean ShareFlag;
+    private Long id;
+    private Long TimeStamp;
+    private Float Percent;
+    private Byte ChargingType;
+    private Byte Health;
+    private Float Temperature;
+    private Integer Volt;
+    private long Volatility;
+    private Boolean ShareFlag;
 
-	// KEEP FIELDS - put your custom fields here
-	private int type;
-	// KEEP FIELDS END
+    // KEEP FIELDS - put your custom fields here
+    private int type;
+    // KEEP FIELDS END
 
-	public BatteryData() {
-	}
+    public BatteryData() {
+    }
 
-	public BatteryData(Long id) {
-		this.id = id;
-	}
+    public BatteryData(Long id) {
+        this.id = id;
+    }
 
-	public BatteryData(Long id, Long TimeStamp, Float Percent, Byte ChargingType, Byte Health, Float Temperature,
-			Integer Volt, long Volatility, Boolean ShareFlag) {
-		this.id = id;
-		this.TimeStamp = TimeStamp;
-		this.Percent = Percent;
-		this.ChargingType = ChargingType;
-		this.Health = Health;
-		this.Temperature = Temperature;
-		this.Volt = Volt;
-		this.Volatility = Volatility;
-		this.ShareFlag = ShareFlag;
-	}
+    public BatteryData(Long id, Long TimeStamp, Float Percent, Byte ChargingType, Byte Health, Float Temperature, Integer Volt, long Volatility, Boolean ShareFlag) {
+        this.id = id;
+        this.TimeStamp = TimeStamp;
+        this.Percent = Percent;
+        this.ChargingType = ChargingType;
+        this.Health = Health;
+        this.Temperature = Temperature;
+        this.Volt = Volt;
+        this.Volatility = Volatility;
+        this.ShareFlag = ShareFlag;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Long getTimeStamp() {
-		return TimeStamp;
-	}
+    public Long getTimeStamp() {
+        return TimeStamp;
+    }
 
-	public void setTimeStamp(Long TimeStamp) {
-		this.TimeStamp = TimeStamp;
-	}
+    public void setTimeStamp(Long TimeStamp) {
+        this.TimeStamp = TimeStamp;
+    }
 
-	public Float getPercent() {
-		return Percent;
-	}
+    public Float getPercent() {
+        return Percent;
+    }
 
-	public void setPercent(Float Percent) {
-		this.Percent = Percent;
-	}
+    public void setPercent(Float Percent) {
+        this.Percent = Percent;
+    }
 
-	public Byte getChargingType() {
-		return ChargingType;
-	}
+    public Byte getChargingType() {
+        return ChargingType;
+    }
 
-	public void setChargingType(Byte ChargingType) {
-		this.ChargingType = ChargingType;
-	}
+    public void setChargingType(Byte ChargingType) {
+        this.ChargingType = ChargingType;
+    }
 
-	public Byte getHealth() {
-		return Health;
-	}
+    public Byte getHealth() {
+        return Health;
+    }
 
-	public void setHealth(Byte Health) {
-		this.Health = Health;
-	}
+    public void setHealth(Byte Health) {
+        this.Health = Health;
+    }
 
-	public Float getTemperature() {
-		return Temperature;
-	}
+    public Float getTemperature() {
+        return Temperature;
+    }
 
-	public void setTemperature(Float Temperature) {
-		this.Temperature = Temperature;
-	}
+    public void setTemperature(Float Temperature) {
+        this.Temperature = Temperature;
+    }
 
-	public Integer getVolt() {
-		return Volt;
-	}
+    public Integer getVolt() {
+        return Volt;
+    }
 
-	public void setVolt(Integer Volt) {
-		this.Volt = Volt;
-	}
+    public void setVolt(Integer Volt) {
+        this.Volt = Volt;
+    }
 
-	public long getVolatility() {
-		return Volatility;
-	}
+    public long getVolatility() {
+        return Volatility;
+    }
 
-	public void setVolatility(long Volatility) {
-		this.Volatility = Volatility;
-	}
+    public void setVolatility(long Volatility) {
+        this.Volatility = Volatility;
+    }
 
-	public Boolean getShareFlag() {
-		return ShareFlag;
-	}
+    public Boolean getShareFlag() {
+        return ShareFlag;
+    }
 
-	public void setShareFlag(Boolean ShareFlag) {
-		this.ShareFlag = ShareFlag;
-	}
+    public void setShareFlag(Boolean ShareFlag) {
+        this.ShareFlag = ShareFlag;
+    }
 
-	// KEEP METHODS - put your custom methods here
+    // KEEP METHODS - put your custom methods here
 	@Override
 	public Integer getType() {
 		// TODO Auto-generated method stub
@@ -127,6 +126,6 @@ public class BatteryData implements SensorDataImpl {
 		// TODO Auto-generated method stub
 		this.type = type;
 	}
-	// KEEP METHODS END
+    // KEEP METHODS END
 
 }

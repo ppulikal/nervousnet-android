@@ -9,154 +9,152 @@ package ch.ethz.coss.nervousnet.vm.storage;
  */
 public class BeaconData implements SensorDataImpl {
 
-	private Long id;
-	private Long TimeStamp;
-	private Integer rssi;
-	private Long mac;
-	private Long advertisementMSB;
-	private Long advertisementLSB;
-	private Long bleuuidMSB;
-	private Long bleuuidLSB;
-	private Integer major;
-	private Integer minor;
-	private Integer txpower;
-	private long Volatility;
-	private Boolean ShareFlag;
+    private Long id;
+    private Long TimeStamp;
+    private Integer rssi;
+    private Long mac;
+    private Long advertisementMSB;
+    private Long advertisementLSB;
+    private Long bleuuidMSB;
+    private Long bleuuidLSB;
+    private Integer major;
+    private Integer minor;
+    private Integer txpower;
+    private long Volatility;
+    private Boolean ShareFlag;
 
-	// KEEP FIELDS - put your custom fields here
-	private int type;
-	// KEEP FIELDS END
+    // KEEP FIELDS - put your custom fields here
+    private int type;
+    // KEEP FIELDS END
 
-	public BeaconData() {
-	}
+    public BeaconData() {
+    }
 
-	public BeaconData(Long id) {
-		this.id = id;
-	}
+    public BeaconData(Long id) {
+        this.id = id;
+    }
 
-	public BeaconData(Long id, Long TimeStamp, Integer rssi, Long mac, Long advertisementMSB, Long advertisementLSB,
-			Long bleuuidMSB, Long bleuuidLSB, Integer major, Integer minor, Integer txpower, long Volatility,
-			Boolean ShareFlag) {
-		this.id = id;
-		this.TimeStamp = TimeStamp;
-		this.rssi = rssi;
-		this.mac = mac;
-		this.advertisementMSB = advertisementMSB;
-		this.advertisementLSB = advertisementLSB;
-		this.bleuuidMSB = bleuuidMSB;
-		this.bleuuidLSB = bleuuidLSB;
-		this.major = major;
-		this.minor = minor;
-		this.txpower = txpower;
-		this.Volatility = Volatility;
-		this.ShareFlag = ShareFlag;
-	}
+    public BeaconData(Long id, Long TimeStamp, Integer rssi, Long mac, Long advertisementMSB, Long advertisementLSB, Long bleuuidMSB, Long bleuuidLSB, Integer major, Integer minor, Integer txpower, long Volatility, Boolean ShareFlag) {
+        this.id = id;
+        this.TimeStamp = TimeStamp;
+        this.rssi = rssi;
+        this.mac = mac;
+        this.advertisementMSB = advertisementMSB;
+        this.advertisementLSB = advertisementLSB;
+        this.bleuuidMSB = bleuuidMSB;
+        this.bleuuidLSB = bleuuidLSB;
+        this.major = major;
+        this.minor = minor;
+        this.txpower = txpower;
+        this.Volatility = Volatility;
+        this.ShareFlag = ShareFlag;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Long getTimeStamp() {
-		return TimeStamp;
-	}
+    public Long getTimeStamp() {
+        return TimeStamp;
+    }
 
-	public void setTimeStamp(Long TimeStamp) {
-		this.TimeStamp = TimeStamp;
-	}
+    public void setTimeStamp(Long TimeStamp) {
+        this.TimeStamp = TimeStamp;
+    }
 
-	public Integer getRssi() {
-		return rssi;
-	}
+    public Integer getRssi() {
+        return rssi;
+    }
 
-	public void setRssi(Integer rssi) {
-		this.rssi = rssi;
-	}
+    public void setRssi(Integer rssi) {
+        this.rssi = rssi;
+    }
 
-	public Long getMac() {
-		return mac;
-	}
+    public Long getMac() {
+        return mac;
+    }
 
-	public void setMac(Long mac) {
-		this.mac = mac;
-	}
+    public void setMac(Long mac) {
+        this.mac = mac;
+    }
 
-	public Long getAdvertisementMSB() {
-		return advertisementMSB;
-	}
+    public Long getAdvertisementMSB() {
+        return advertisementMSB;
+    }
 
-	public void setAdvertisementMSB(Long advertisementMSB) {
-		this.advertisementMSB = advertisementMSB;
-	}
+    public void setAdvertisementMSB(Long advertisementMSB) {
+        this.advertisementMSB = advertisementMSB;
+    }
 
-	public Long getAdvertisementLSB() {
-		return advertisementLSB;
-	}
+    public Long getAdvertisementLSB() {
+        return advertisementLSB;
+    }
 
-	public void setAdvertisementLSB(Long advertisementLSB) {
-		this.advertisementLSB = advertisementLSB;
-	}
+    public void setAdvertisementLSB(Long advertisementLSB) {
+        this.advertisementLSB = advertisementLSB;
+    }
 
-	public Long getBleuuidMSB() {
-		return bleuuidMSB;
-	}
+    public Long getBleuuidMSB() {
+        return bleuuidMSB;
+    }
 
-	public void setBleuuidMSB(Long bleuuidMSB) {
-		this.bleuuidMSB = bleuuidMSB;
-	}
+    public void setBleuuidMSB(Long bleuuidMSB) {
+        this.bleuuidMSB = bleuuidMSB;
+    }
 
-	public Long getBleuuidLSB() {
-		return bleuuidLSB;
-	}
+    public Long getBleuuidLSB() {
+        return bleuuidLSB;
+    }
 
-	public void setBleuuidLSB(Long bleuuidLSB) {
-		this.bleuuidLSB = bleuuidLSB;
-	}
+    public void setBleuuidLSB(Long bleuuidLSB) {
+        this.bleuuidLSB = bleuuidLSB;
+    }
 
-	public Integer getMajor() {
-		return major;
-	}
+    public Integer getMajor() {
+        return major;
+    }
 
-	public void setMajor(Integer major) {
-		this.major = major;
-	}
+    public void setMajor(Integer major) {
+        this.major = major;
+    }
 
-	public Integer getMinor() {
-		return minor;
-	}
+    public Integer getMinor() {
+        return minor;
+    }
 
-	public void setMinor(Integer minor) {
-		this.minor = minor;
-	}
+    public void setMinor(Integer minor) {
+        this.minor = minor;
+    }
 
-	public Integer getTxpower() {
-		return txpower;
-	}
+    public Integer getTxpower() {
+        return txpower;
+    }
 
-	public void setTxpower(Integer txpower) {
-		this.txpower = txpower;
-	}
+    public void setTxpower(Integer txpower) {
+        this.txpower = txpower;
+    }
 
-	public long getVolatility() {
-		return Volatility;
-	}
+    public long getVolatility() {
+        return Volatility;
+    }
 
-	public void setVolatility(long Volatility) {
-		this.Volatility = Volatility;
-	}
+    public void setVolatility(long Volatility) {
+        this.Volatility = Volatility;
+    }
 
-	public Boolean getShareFlag() {
-		return ShareFlag;
-	}
+    public Boolean getShareFlag() {
+        return ShareFlag;
+    }
 
-	public void setShareFlag(Boolean ShareFlag) {
-		this.ShareFlag = ShareFlag;
-	}
+    public void setShareFlag(Boolean ShareFlag) {
+        this.ShareFlag = ShareFlag;
+    }
 
-	// KEEP METHODS - put your custom methods here
+    // KEEP METHODS - put your custom methods here
 	@Override
 	public Integer getType() {
 		// TODO Auto-generated method stub
@@ -168,6 +166,6 @@ public class BeaconData implements SensorDataImpl {
 		// TODO Auto-generated method stub
 		this.type = type;
 	}
-	// KEEP METHODS END
+    // KEEP METHODS END
 
 }

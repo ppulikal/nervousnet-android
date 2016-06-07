@@ -52,7 +52,7 @@
                     android:hint="Latitude : " />
 
                 <TextView
-                    android:id="@+id/lat"
+                    android:id="@+id/latitude"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Latitude value comes here" />

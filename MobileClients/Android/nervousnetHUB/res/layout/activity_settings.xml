@@ -6,16 +6,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/white" 
     tools:context="ch.ethz.coss.nervousnet.hub.ui.AccSensorActivity" >
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
         android:text="Settings"
         android:textColor="@color/gray" />
 
@@ -29,18 +27,24 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            
+                android:background="@color/gray"  >
 
             <LinearLayout
                 android:id="@+id/coll_rate_item"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:background="@color/white" 
+                android:layout_marginTop="@dimen/activity_settings_margin"
+            	android:layout_marginBottom="@dimen/activity_settings_margin">
 
                 <ImageView
                     android:id="@+id/coll_rate_icon"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                     android:layout_weight="0.5" 
                     android:layout_gravity="center|center_horizontal"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_sensors" >
@@ -48,23 +52,27 @@
 
                 <TextView
                     android:id="@+id/coll_rate_TV"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:text="Collection Rate"
-                    android:textColor="@color/gray" />
-            </LinearLayout>
+                    android:textColor="@color/black" />
 
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/sharing_nodes_item"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal" 
+                android:background="@color/white"
+                android:layout_marginBottom="@dimen/activity_settings_margin">
 
                 <ImageView
                     android:id="@+id/sharing_nodes_icon"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                     android:layout_width="0dp"
+                    android:layout_height="75dp"
+                     android:layout_weight="0.5" 
                     android:layout_gravity="center|center_horizontal"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_nodes" >
@@ -72,23 +80,28 @@
 
                 <TextView
                     android:id="@+id/sharing_nodes_TV"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:text="Sharing Nodes"
-                    android:textColor="@color/gray" />
+                    android:textColor="@color/black" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/sensor_perm_item"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal" 
+                android:background="@color/white"
+         		android:layout_marginBottom="@dimen/activity_settings_margin">
 
                 <ImageView
                     android:id="@+id/sensor_perm_icon"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                      android:layout_width="0dp"
+                    android:layout_height="80dp"
+                     android:layout_weight="0.5" 
                     android:layout_gravity="center|center_horizontal"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_perm" >
@@ -96,11 +109,13 @@
 
                 <TextView
                     android:id="@+id/sensor_perm_TV"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:text="Sensor Permissions"
-                    android:textColor="@color/gray" />
+                    android:textColor="@color/black" />
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

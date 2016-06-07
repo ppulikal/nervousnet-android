@@ -210,7 +210,8 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 		reading = new LocationReading(System.currentTimeMillis(),
 				new double[] { location.getLatitude(), location.getLongitude() });
 
-		dataReady(reading);
+		if(reading != null)
+			dataReady(reading);
 	}
 
 	/*

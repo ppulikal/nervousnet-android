@@ -15,7 +15,7 @@
         android:layout_height="@dimen/griditem_image_height"
         android:layout_gravity="center|center_horizontal"
         android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:src="@drawable/ic_about" >

@@ -80,7 +80,7 @@ public class LocationFragment extends BaseFragment {
 			if (fragAct == null)
 				System.out.println("FragmentAcvitivity is null");
 
-			TextView latitude = (TextView) fragAct.findViewById(R.id.lat);
+			TextView latitude = (TextView) fragAct.findViewById(R.id.latitude);
 			latitude.setText("" + location[0]);
 
 			TextView longitude = (TextView) getActivity().findViewById(R.id.longitude);

@@ -49,7 +49,8 @@ public class BatterySensor extends BaseSensor {
 		IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 		Intent batteryStatus = context.registerReceiver(null, ifilter);
 		reading = extractBatteryData(batteryStatus);
-		dataReady(reading);
+		if(reading != null)
+			dataReady(reading);
 
 	}
 

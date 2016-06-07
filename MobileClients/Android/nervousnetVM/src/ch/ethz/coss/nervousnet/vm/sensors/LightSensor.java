@@ -60,7 +60,7 @@ public class LightSensor extends BaseSensor implements SensorEventListener {
 
 		NNLog.d(LOG_TAG, "Starting Light sensor with state = " + sensorState);
 
-		sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT), 0);
+		sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT), sensorManager.SENSOR_DELAY_FASTEST);
 
 		return true;
 	}
@@ -111,7 +111,8 @@ public class LightSensor extends BaseSensor implements SensorEventListener {
 	public void onSensorChanged(SensorEvent event) {
 		NNLog.d(LOG_TAG, "X = " + event.values[0]);
 		reading = new LightReading(event.timestamp, event.values[0]);
-		dataReady(reading);
+		if(reading != null)
+			dataReady(reading);
 	}
 
 	@Override

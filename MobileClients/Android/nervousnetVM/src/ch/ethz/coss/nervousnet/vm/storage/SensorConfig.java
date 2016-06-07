@@ -9,47 +9,47 @@ package ch.ethz.coss.nervousnet.vm.storage;
  */
 public class SensorConfig {
 
-	private Long ID;
-	private String Name;
-	private Byte State;
+    private Long ID;
+    private String Name;
+    private Byte State;
 
-	// KEEP FIELDS - put your custom fields here
-	// KEEP FIELDS END
+    // KEEP FIELDS - put your custom fields here
+    // KEEP FIELDS END
 
-	public SensorConfig() {
-	}
+    public SensorConfig() {
+    }
 
-	public SensorConfig(Long ID, String Name, Byte State) {
-		this.ID = ID;
-		this.Name = Name;
-		this.State = State;
-	}
+    public SensorConfig(Long ID, String Name, Byte State) {
+        this.ID = ID;
+        this.Name = Name;
+        this.State = State;
+    }
 
-	public Long getID() {
-		return ID;
-	}
+    public Long getID() {
+        return ID;
+    }
 
-	public void setID(Long ID) {
-		this.ID = ID;
-	}
+    public void setID(Long ID) {
+        this.ID = ID;
+    }
 
-	public String getName() {
-		return Name;
-	}
+    public String getName() {
+        return Name;
+    }
 
-	public void setName(String Name) {
-		this.Name = Name;
-	}
+    public void setName(String Name) {
+        this.Name = Name;
+    }
 
-	public Byte getState() {
-		return State;
-	}
+    public Byte getState() {
+        return State;
+    }
 
-	public void setState(Byte State) {
-		this.State = State;
-	}
+    public void setState(Byte State) {
+        this.State = State;
+    }
 
-	// KEEP METHODS - put your custom methods here
-	// KEEP METHODS END
+    // KEEP METHODS - put your custom methods here
+    // KEEP METHODS END
 
 }

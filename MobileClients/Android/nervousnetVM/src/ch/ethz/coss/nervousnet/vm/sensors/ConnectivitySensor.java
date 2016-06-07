@@ -155,7 +155,8 @@ public class ConnectivitySensor extends BaseSensor {
 					wifiHashId, wifiStrength, mobileHashBuilder.toString());
 
 			NNLog.d(LOG_TAG, "reading collected - " + ((ConnectivityReading) reading).getNetworkType());
-			dataReady(reading);
+			if(reading != null)
+				dataReady(reading);
 			return null;
 
 		}
