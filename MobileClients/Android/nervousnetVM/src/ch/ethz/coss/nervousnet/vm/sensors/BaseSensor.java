@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import android.os.Handler;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -18,6 +19,7 @@ public abstract class BaseSensor {
 
 	protected List<BaseSensorListener> listenerList = new ArrayList<BaseSensorListener>();
 	protected Lock listenerMutex = new ReentrantLock();
+
 
 	public interface BaseSensorListener {
 		public void sensorDataReady(SensorReading reading);
@@ -67,7 +69,7 @@ public abstract class BaseSensor {
 
 	public abstract boolean updateAndRestart(byte state);
 
-	public abstract boolean stop();
+	public abstract boolean stop(boolean changeStateFlag) ;
 
 	public SensorReading getReading() {
 		NNLog.d(LOG_TAG, "getReading called ");

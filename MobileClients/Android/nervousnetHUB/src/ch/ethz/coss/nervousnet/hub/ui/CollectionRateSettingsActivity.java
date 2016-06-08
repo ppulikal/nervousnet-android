@@ -27,11 +27,20 @@
 
 package ch.ethz.coss.nervousnet.hub.ui;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.Constants;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.CollectionRateSettingItemAdapter;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 /**
@@ -41,6 +50,7 @@ import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class CollectionRateSettingsActivity extends BaseActivity {
 
+	ImageButton globalButton;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,6 +59,36 @@ public class CollectionRateSettingsActivity extends BaseActivity {
 		final CollectionRateSettingItemAdapter adapter = new CollectionRateSettingItemAdapter(
 				CollectionRateSettingsActivity.this, NervousnetVMConstants.sensor_labels, Constants.icon_array_sensors);
 		listview.setAdapter(adapter);
+		
+		globalButton = (ImageButton) findViewById(R.id.globalOptionsButton);
+		globalButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				NNLog.d("CollectionRateSettingsActivity", "Global collection rate Options button clicked");
+				createDialog().show();
+			}
+		});
+		
+		if (((Application) getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED) {
+			globalButton.setAlpha(.4f);
+			globalButton.setClickable(false);
+		}
+		
 	}
 
+	public Dialog createDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setItems(Constants.collection_rate_global_options, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int itemClicked) {
+				String[] option_array = Constants.collection_rate_global_options;
+				String optionSelected = option_array[itemClicked];
+				((Application)getApplication()).nn_VM.updateAllSensorConfig(
+						(byte) itemClicked);
+				finish();
+				startActivity(getIntent());
+			}
+		});
+		return builder.create();
+	}
 }

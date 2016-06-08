@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
+import android.os.Handler;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.sensors.AccelerometerSensor;
@@ -61,6 +62,8 @@ public class NervousnetVM {
 		}
 
 		initSensors();
+		
+		if(state == NervousnetVMConstants.STATE_RUNNING)
 		startSensors();
 	}
 
@@ -172,6 +175,9 @@ public class NervousnetVM {
 			if (sensor != null)
 				sensor.start();
 		}
+		
+
+		dataCollectionHandler.postDelayed(runnable, 1000);
 	}
 
 	public void stopSensors() {
@@ -181,8 +187,10 @@ public class NervousnetVM {
 			NNLog.d(LOG_TAG, "Inside stopSensors Sensor ID = " + key);
 			BaseSensor sensor = hSensors.get(NervousnetVMConstants.sensor_ids[count++]);
 			if (sensor != null)
-				sensor.stop();
+				sensor.stop(false);
 		}
+
+		dataCollectionHandler.removeCallbacks(runnable);
 	}
 
 	public synchronized UUID getUUID() {
@@ -224,12 +232,40 @@ public class NervousnetVM {
 		sensor.updateAndRestart(state);
 
 	}
+	
+	
+	public synchronized void updateAllSensorConfig(byte state) {
+		NNLog.d(LOG_TAG, "UpdateSensorConfig called with state = " + state);
+		int count = 0;
+		for (Long key : hSensorConfig.keySet()) {
+			SensorConfig sensorConfig = hSensorConfig.get(NervousnetVMConstants.sensor_ids[count++]);
+			sensorConfig.setState(state);
+			try {
+				sqlHelper.updateSensorConfig(sensorConfig);
+				hSensorConfig.put(sensorConfig.getID(), sensorConfig);
+			} catch (Exception e) {
+				NNLog.d(LOG_TAG, "Exception while calling updateSensorConfig ");
+				e.printStackTrace();
+			}
+			
+			reInitSensor(sensorConfig.getID());
+
+			BaseSensor sensor = hSensors.get(sensorConfig.getID());
+			sensor.updateAndRestart(state);
+
+		}
+		
+		
+		
+	
+
+	}
 
 	private void reInitSensor(long id) {
 		NNLog.d(LOG_TAG, "reInitSensor sensor after settings changed ");
 		SensorConfig sensorConfig = hSensorConfig.get(id);
 		BaseSensor sensor = hSensors.get(sensorConfig.getID());
-		sensor.stop();
+		sensor.stop(false);
 		sensor.setSensorState(sensorConfig.getState());
 		sensor.start();
 
@@ -256,5 +292,17 @@ public class NervousnetVM {
 	public byte getSensorState(long id) {
 		return hSensorConfig.get(id).getState();
 	}
+
+	
+	
+	private Handler dataCollectionHandler = new Handler();
+	
+	private Runnable runnable = new Runnable() {
+		   @Override
+		   public void run() {
+			   NNLog.d(LOG_TAG, "Collect data now. "+this.hashCode()+", "+dataCollectionHandler.hashCode());
+		      dataCollectionHandler.postDelayed(this, 1000);
+		   }
+		};
 
 }

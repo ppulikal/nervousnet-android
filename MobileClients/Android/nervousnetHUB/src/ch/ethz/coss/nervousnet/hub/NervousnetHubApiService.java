@@ -40,12 +40,11 @@ import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVM;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class NervousnetHubApiService extends Service {
 
 	private static final String LOG_TAG = NervousnetHubApiService.class.getSimpleName();
-
-	public NervousnetVM nn_VM;
 
 	private PowerManager.WakeLock wakeLock;
 	private HandlerThread hthread;
@@ -54,21 +53,28 @@ public class NervousnetHubApiService extends Service {
 
 	@Override
 	public void onCreate() {
-		// Prepare the wakelock
-		PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
-		wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, LOG_TAG);
-		hthread = new HandlerThread("HandlerThread");
-		hthread.start();
-		// Acquire wakelock, some sensors on some phones need this
-		if (!wakeLock.isHeld()) {
-			wakeLock.acquire();
+		if(((Application) getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_RUNNING) {
+			NNLog.d("SERVICE", "Starting Sensor Service");
+			// Prepare the wakelock
+			PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+			wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, LOG_TAG);
+			hthread = new HandlerThread("HandlerThread");
+			hthread.start();
+			// Acquire wakelock, some sensors on some phones need this
+			if (!wakeLock.isHeld()) {
+				wakeLock.acquire();
+			}
+
+			// Display a notification about us starting. We put an icon in the
+			// status bar.
+			((Application) getApplication()).showNotification();
+//			if(((Application) getApplication()).nn_VM == null)
+//			((Application) getApplication()).nn_VM = new NervousnetVM(getApplicationContext());
+		} else {
+			NNLog.d("SERVICE", "Stopping Sensor Service as nervousnet is not running");
+			stopSelf();
 		}
-
-		// Display a notification about us starting. We put an icon in the
-		// status bar.
-		((Application) getApplication()).showNotification();
-
-		nn_VM = new NervousnetVM(getApplicationContext());
+		
 	}
 
 	@Override
@@ -97,8 +103,10 @@ public class NervousnetHubApiService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		NNLog.d(LOG_TAG, "Service execution started");
-		Toast.makeText(NervousnetHubApiService.this, "Service Started", Toast.LENGTH_SHORT).show();
-		((Application) getApplicationContext()).nn_VM.startSensors();
+		if(((Application) getApplicationContext()).nn_VM.getState() == NervousnetVMConstants.STATE_RUNNING) {
+			Toast.makeText(NervousnetHubApiService.this, "Service Started", Toast.LENGTH_SHORT).show();
+			((Application) getApplicationContext()).nn_VM.startSensors();
+		}
 		return START_STICKY;
 	}
 

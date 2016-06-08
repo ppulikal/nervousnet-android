@@ -80,7 +80,7 @@ public class LightSensor extends BaseSensor implements SensorEventListener {
 			return false;
 		}
 
-		stop();
+		stop(false);
 
 		setSensorState(state);
 		NNLog.d(LOG_TAG, "Restarting Light sensor with state = " + sensorState);
@@ -90,7 +90,7 @@ public class LightSensor extends BaseSensor implements SensorEventListener {
 	}
 
 	@Override
-	public boolean stop() {
+	public boolean stop(boolean changeStateFlag)  {
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled stop Light sensor as Sensor state is not available ");
 			return false;

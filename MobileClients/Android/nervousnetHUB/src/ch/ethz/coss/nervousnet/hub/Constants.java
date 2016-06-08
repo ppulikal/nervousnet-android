@@ -41,5 +41,8 @@ public final class Constants {
 			R.drawable.ic_conn, R.drawable.ic_gyro, R.drawable.ic_humid, R.drawable.ic_loc, R.drawable.ic_light,
 			R.drawable.ic_magnetic, R.drawable.ic_noise, R.drawable.ic_pressure, R.drawable.ic_proxim,
 			R.drawable.ic_temp };
+	
+	
+	public static String[] collection_rate_global_options= {"Switch off all Sensors", "Set all Sensors to High", "Set all Sensors to Medium", "Set all Sensors to low" };
 
 }

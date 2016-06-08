@@ -127,7 +127,7 @@ public class BatterySensor extends BaseSensor {
 			return false;
 		}
 
-		stop();
+		stop(false);
 		setSensorState(state);
 		NNLog.d(LOG_TAG, "Restarting battery sensor with state = " + sensorState);
 		start();
@@ -135,7 +135,7 @@ public class BatterySensor extends BaseSensor {
 	}
 
 	@Override
-	public boolean stop() {
+	public boolean stop(boolean changeStateFlag)  {
 
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is not available ");

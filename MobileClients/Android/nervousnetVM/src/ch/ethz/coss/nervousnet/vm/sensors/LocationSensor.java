@@ -105,7 +105,7 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 			return false;
 		}
 
-		stop();
+		stop(false);
 
 		setSensorState(state);
 		Log.d(LOG_TAG, "Restarting Location sensor with state = " + sensorState);
@@ -115,7 +115,7 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 	}
 
 	@Override
-	public boolean stop() {
+	public boolean stop(boolean changeStateFlag)  {
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			Log.d(LOG_TAG, "Cancelled stop Location sensor as Sensor state is not available ");
 			return false;

@@ -81,7 +81,7 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 			return false;
 		}
 
-		stop();
+		stop(false);
 
 		setSensorState(state);
 		NNLog.d(LOG_TAG, "Restarting accelerometer sensor with state = " + sensorState);
@@ -91,7 +91,7 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 	}
 
 	@Override
-	public boolean stop() {
+	public boolean stop(boolean changeStateFlag) {
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is not available ");
 			return false;
@@ -103,6 +103,7 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 			return false;
 		}
 		sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+		if(changeStateFlag)
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 		this.reading = null;
 		return true;

@@ -57,15 +57,13 @@ public class ConnectivitySensor extends BaseSensor {
 	private static final String LOG_TAG = ConnectivitySensor.class.getSimpleName();
 
 	private Context context;
-	private HandlerThread hthread;
 	private Handler handler;
+	private Runnable runnable;
 
 	public ConnectivitySensor(Context context, byte sensorState) {
 		this.context = context;
 		this.sensorState = sensorState;
 
-		hthread = new HandlerThread("HandlerThread");
-		hthread.start();
 	}
 
 	public class ConnectivityTask extends AsyncTask<Void, Void, Void> {
@@ -193,8 +191,8 @@ public class ConnectivitySensor extends BaseSensor {
 
 		NNLog.d(LOG_TAG, "Starting Connectivity sensor with state = " + sensorState);
 
-		handler = new Handler(hthread.getLooper());
-		final Runnable run = new Runnable() {
+		handler = new Handler();
+		runnable = new Runnable() {
 			@Override
 			public void run() {
 				new ConnectivityTask().execute();
@@ -204,7 +202,7 @@ public class ConnectivitySensor extends BaseSensor {
 
 		};
 
-		boolean flag = handler.postDelayed(run, 0);
+		boolean flag = handler.postDelayed(runnable, 0);
 
 		return true;
 	}
@@ -223,7 +221,7 @@ public class ConnectivitySensor extends BaseSensor {
 			return false;
 		}
 
-		stop();
+		stop(false);
 		setSensorState(state);
 		NNLog.d(LOG_TAG, "Restarting Connectivity sensor with state = " + sensorState);
 		start();
@@ -231,7 +229,7 @@ public class ConnectivitySensor extends BaseSensor {
 	}
 
 	@Override
-	public boolean stop() {
+	public boolean stop(boolean changeStateFlag) {
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled stop Connectivity sensor as Sensor state is not available ");
 			return false;
@@ -244,6 +242,9 @@ public class ConnectivitySensor extends BaseSensor {
 		}
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 		this.reading = null;
+		handler.removeCallbacks(runnable);
+		runnable = null;
+		handler = null;
 		return true;
 	}
 

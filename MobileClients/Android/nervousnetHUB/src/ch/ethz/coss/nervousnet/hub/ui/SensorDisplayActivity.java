@@ -171,7 +171,6 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 			@Override
 			public void onServiceConnected(ComponentName name, IBinder service) {
 				NNLog.d("SensorDisplayActivity", "onServiceConnected");
-				NNLog.d("SensorDisplayActivity", "Inside onServiceConnected 2");
 
 				mService = NervousnetRemote.Stub.asInterface(service);
 

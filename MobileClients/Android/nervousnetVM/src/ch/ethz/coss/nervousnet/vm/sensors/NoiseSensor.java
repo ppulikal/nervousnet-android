@@ -289,7 +289,7 @@ public class NoiseSensor extends BaseSensor {
 			return false;
 		}
 
-		stop();
+		stop(false);
 		setSensorState(state);
 		NNLog.d(LOG_TAG, "Restarting NoiseSensor with state = " + sensorState);
 		start();
@@ -297,7 +297,7 @@ public class NoiseSensor extends BaseSensor {
 	}
 
 	@Override
-	public boolean stop() {
+	public boolean stop(boolean changeStateFlag) {
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			NNLog.d(LOG_TAG, "Cancelled stop NoiseSensor sensor as Sensor state is not available ");
 			return false;
