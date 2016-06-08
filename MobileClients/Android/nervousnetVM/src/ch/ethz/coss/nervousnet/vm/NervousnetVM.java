@@ -226,7 +226,7 @@ public class NervousnetVM {
 			e.printStackTrace();
 		}
 
-		reInitSensor(id);
+//		reInitSensor(id);
 
 		BaseSensor sensor = hSensors.get(sensorConfig.getID());
 		sensor.updateAndRestart(state);
@@ -240,22 +240,25 @@ public class NervousnetVM {
 		for (Long key : hSensorConfig.keySet()) {
 			SensorConfig sensorConfig = hSensorConfig.get(NervousnetVMConstants.sensor_ids[count++]);
 			sensorConfig.setState(state);
-			try {
-				sqlHelper.updateSensorConfig(sensorConfig);
-				hSensorConfig.put(sensorConfig.getID(), sensorConfig);
-			} catch (Exception e) {
-				NNLog.d(LOG_TAG, "Exception while calling updateSensorConfig ");
-				e.printStackTrace();
-			}
-			
-			reInitSensor(sensorConfig.getID());
-
-			BaseSensor sensor = hSensors.get(sensorConfig.getID());
-			sensor.updateAndRestart(state);
-
+			hSensorConfig.put(sensorConfig.getID(), sensorConfig);
 		}
 		
+		try {
+			sqlHelper.updateAllSensorConfig(hSensorConfig.values());
+			
+		} catch (Exception e) {
+			NNLog.d(LOG_TAG, "Exception while calling updateSensorConfig ");
+			e.printStackTrace();
+		}
 		
+//		reInitSensor(sensorConfig.getID());
+
+//		BaseSensor sensor = hSensors.get(sensorConfig.getID());
+//		sensor.updateAndRestart(state);
+		
+		if(state != NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+			startSensors();
+		}
 		
 	
 

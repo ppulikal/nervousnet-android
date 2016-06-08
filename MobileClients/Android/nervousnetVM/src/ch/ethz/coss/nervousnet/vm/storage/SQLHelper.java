@@ -2,6 +2,7 @@ package ch.ethz.coss.nervousnet.vm.storage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -135,6 +136,17 @@ public class SQLHelper implements BaseSensorListener {
 		sensorConfigDao.insertOrReplace(config);
 	}
 
+	public synchronized void updateAllSensorConfig(SensorConfig... entities) throws Exception {
+
+		sensorConfigDao.insertOrReplaceInTx(entities);
+	}
+
+	public synchronized void updateAllSensorConfig(Iterable entities) throws Exception {
+
+		sensorConfigDao.insertOrReplaceInTx(entities);
+	}
+
+	
 	public synchronized List<SensorConfig> getSensorConfigList() {
 		return sensorConfigDao.queryBuilder().list();
 	}
