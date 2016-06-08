@@ -26,7 +26,6 @@ Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
         <item>Settings</item>
         <item>Help</item>
         <item>About</item>
-        <item>About</item>
     </string-array>
     <string-array name="sensors_list">
         <item>Accelerometer</item>
@@ -168,5 +167,6 @@ Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
     <string name="title_activity_base_sensor">BaseSensorActivity</string>
     <string name="title_activity_acc_sensor">AccSensorActivity</string>
     <string name="title_activity_loc_sensor">LocSensorActivity</string>
+    <string name="title_activity_space">SpaceActivity</string>
 
 </resources>

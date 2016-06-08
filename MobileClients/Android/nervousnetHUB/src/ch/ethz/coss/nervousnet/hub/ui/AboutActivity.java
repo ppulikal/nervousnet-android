@@ -27,8 +27,18 @@
 
 package ch.ethz.coss.nervousnet.hub.ui;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 
 /**
  * @author prasad
@@ -40,6 +50,36 @@ public class AboutActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
+		TextView versionTV = (TextView) findViewById(R.id.version);
+		
+		PackageInfo pInfo = null;
+		try {
+			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+
+			String version = pInfo.versionName;
+			int verCode = pInfo.versionCode;
+			versionTV.setText(version +", "+ verCode);
+			
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		Button rateButton = (Button) findViewById(R.id.rateButton);
+		rateButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW,
+							Uri.parse("market://details?id=ch.ethz.coss.nervousnet.hub")));
+				} catch (android.content.ActivityNotFoundException anfe) {
+					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
+							"https://play.google.com/store/apps/details?id=ch.ethz.coss.nervousnet.hub")));
+				}
+			}
+		});
+	
 
 	}
 
