@@ -365,12 +365,10 @@ public class SQLHelper implements BaseSensorListener {
 		case LibConstants.SENSOR_CONNECTIVITY:
 
 			return reading;
-
 		case LibConstants.SENSOR_LIGHT:
 			return reading;
 
 		case LibConstants.SENSOR_LOCATION:
-
 			return reading;
 
 		default:
@@ -403,7 +401,6 @@ public class SQLHelper implements BaseSensorListener {
 			}
 			
 			break;
-
 		case LibConstants.SENSOR_BATTERY:
 			BatteryReading breading = (BatteryReading) reading;
 			sensorData = new BatteryData(null, reading.timestamp, breading.getPercent(), breading.getCharging_type(),
@@ -417,9 +414,7 @@ public class SQLHelper implements BaseSensorListener {
 				storeSensorAsync(LibConstants.SENSOR_BATTERY,  new ArrayList<SensorDataImpl>(battDataArrList));
 				battDataArrList.clear();
 			}
-			
 			break;
-
 		case LibConstants.SENSOR_GYROSCOPE:
 			GyroReading greading = (GyroReading) reading;
 			sensorData = new GyroData(null, reading.timestamp, greading.getGyroX(), greading.getGyroY(),
@@ -432,7 +427,6 @@ public class SQLHelper implements BaseSensorListener {
 				gyroDataArrList.clear();
 			}
 			break;
-
 		case LibConstants.SENSOR_CONNECTIVITY:
 			ConnectivityReading connReading = (ConnectivityReading) reading;
 			sensorData = new ConnectivityData(null, reading.timestamp, connReading.isConnected(),
@@ -460,7 +454,6 @@ public class SQLHelper implements BaseSensorListener {
 				lightDataArrList.clear();
 			}
 			break;
-
 		case LibConstants.SENSOR_LOCATION:
 			LocationReading locReading = (LocationReading) reading;
 			sensorData = new LocationData(null, reading.timestamp, locReading.getLatnLong()[0],
@@ -468,23 +461,23 @@ public class SQLHelper implements BaseSensorListener {
 			sensorData.setType(LibConstants.SENSOR_LOCATION);
 			locDataArrList.add((SensorDataImpl)sensorData);
 			if(locDataArrList.size() > 100){
-				storeSensorAsync(LibConstants.SENSOR_LIGHT, new ArrayList<SensorDataImpl>(locDataArrList));
+				storeSensorAsync(LibConstants.SENSOR_LOCATION, new ArrayList<SensorDataImpl>(locDataArrList));
 				locDataArrList.clear();
 			}
 			
 			break;
-
 		case LibConstants.SENSOR_NOISE:
 			NoiseReading noiseReading = (NoiseReading) reading;
 			sensorData = new NoiseData( null, reading.timestamp, noiseReading.getdbValue(), 0l, true);
-			sensorData.setType(LibConstants.SENSOR_LOCATION);
+			sensorData.setType(LibConstants.SENSOR_NOISE);
 			noiseDataArrList.add((SensorDataImpl)sensorData);
 			if(noiseDataArrList.size() > 100){
-				storeSensorAsync(LibConstants.SENSOR_LIGHT, new ArrayList<SensorDataImpl>(locDataArrList));
-				locDataArrList.clear();
+				storeSensorAsync(LibConstants.SENSOR_NOISE, new ArrayList<SensorDataImpl>(noiseDataArrList));
+				noiseDataArrList.clear();
 			}
 			
 			break;
+			
 		default:
 			break;
 
