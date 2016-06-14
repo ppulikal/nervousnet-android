@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="armeabi-v7a,armeabi"
+    api-level="22"
+    density="xhdpi"
+    format="7"
+    timestamp="91924029794867"
+    token="-4610553581269501697" >
+
+    <task
+        name="javac"
+        duration="1745" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="499" />
+    <task
+        name="verifier"
+        duration="91" />
+
+    <artifact
+        location="/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/outputs/apk/nervousnetHUB-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="91924029794867" >
+        <artifact
+            location="/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/outputs/apk/nervousnetHUB-debug.apk"
+            type="MAIN" />
+    </build>
+
+</instant-run>

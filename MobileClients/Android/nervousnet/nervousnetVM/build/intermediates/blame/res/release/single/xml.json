@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/build/intermediates/res/merged/release/xml/config.xml",
+        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/src/main/res/xml/config.xml"
+    },
+    {
+        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/xml/config.xml",
+        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/src/main/res/xml/config.xml"
+    },
+    {
+        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetVM/build/intermediates/res/merged/release/xml/config.xml",
+        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetVM/src/main/res/xml/config.xml"
+    }
+]
