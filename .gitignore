@@ -43,10 +43,18 @@ MobileClients/Android/nervousnetLIB/.DS_Store
 *.lock
 
 *.iml
-.gradle
+
+/.gradle
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
 /build
 /captures
+
+*.lock
+
+MobileClients/Android/.DS_Store
+MobileClients/Android/nervousnet/nervousnetHUB/build
+MobileClients/Android/nervousnet/nervousnetLIB/build
+MobileClients/Android/nervousnet/nervousnetVM/build

@@ -8,6 +8,10 @@
         "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetLIB/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_launcher.png"
     },
     {
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetLIB/build/intermediates/res/merged/androidTest/debug/drawable-mdpi-v4/ic_launcher.png",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetLIB/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_launcher.png"
+    },
+    {
         "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetLIB/build/intermediates/res/merged/androidTest/debug/drawable-mdpi-v4/ic_launcher.png",
         "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetLIB/build/intermediates/bundles/debug/res/drawable-mdpi-v4/ic_launcher.png"
     }

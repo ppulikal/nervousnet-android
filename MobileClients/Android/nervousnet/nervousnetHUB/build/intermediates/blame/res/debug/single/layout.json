@@ -1,418 +1,210 @@
 [
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_about.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_about.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_help.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_help.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_menu_item_layout.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sharing_nodes.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_sharing_nodes.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sensor_permissions.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_sensor_permissions.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_space.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_space.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view_include.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_activity_chooser_view_include.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_gyro.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_gyro.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_menu_layout.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view_include.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_activity_chooser_view_include.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_icon.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_icon.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_connectivity.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_connectivity.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_dummy.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_dummy.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/ab_nn.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/ab_nn.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_radio.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_radio.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/nn_theme_tab_indicator_holo.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/nn_theme_tab_indicator_holo.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_help.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_help.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_showcase.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_showcase.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sharing_nodes.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_sharing_nodes.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_location.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_location.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_collection_rate.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_collection_rate.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_bar_up_container.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_bar_up_container.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_about.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_about.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_screen_simple_overlay_action_mode.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_screen_simple_overlay_action_mode.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_pressure.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_pressure.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_beacons.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_beacons.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_analytics.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_analytics.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_noise.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_noise.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/category_grid_item.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/category_grid_item.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_menu_layout.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view_list_item.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_activity_chooser_view_list_item.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_light.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_light.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_expanded_menu_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_expanded_menu_layout.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_analytics.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_analytics.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_noise.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_noise.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_mode_close_item_material.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_mode_close_item_material.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_beacons.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_beacons.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_checkbox.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sensor_permissions.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_sensor_permissions.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_battery.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_battery.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_expanded_menu_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_expanded_menu_layout.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_activity_chooser_view.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_search_view.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_search_view.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_settings.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_settings.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_main.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_main.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_search_view.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_search_view.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_bar_up_container.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_bar_up_container.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_pressure.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_pressure.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_radio.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_radio.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_humid.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_humid.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sharing_nodes.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_sharing_nodes.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_collection_rate.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_collection_rate.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view_include.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_activity_chooser_view_include.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/category_grid_item.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/category_grid_item.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_show_sensor_list.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_show_sensor_list.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_simple_dropdown_hint.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_simple_dropdown_hint.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sensors.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_sensors.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_bar_view_list_nav_layout.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_gyro.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_gyro.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_about.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_about.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_screen_simple.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_main.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_main.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_beacons.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_beacons.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_screen_toolbar.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_screen_toolbar.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_noise.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_noise.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_show_sensor_list.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_show_sensor_list.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_humid.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_humid.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_layout.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_layout.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/collection_rate_item.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/collection_rate_item.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/support_simple_spinner_dropdown_item.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/support_simple_spinner_dropdown_item.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_analytics.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_analytics.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_search_dropdown_item_icons_2line.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_search_dropdown_item_icons_2line.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_menu_layout.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_screen_simple.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/nn_theme_tab_indicator_holo.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/nn_theme_tab_indicator_holo.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_menu_item_layout.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_connectivity.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_connectivity.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/collection_rate_item.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/collection_rate_item.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_checkbox.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_icon.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_icon.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_humid.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_humid.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_splash.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_splash.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_help.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_help.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sensors.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_sensors.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_connectivity.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_connectivity.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_popup_menu_item_layout.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_popup_menu_item_layout.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_accel.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_accel.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view_list_item.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_activity_chooser_view_list_item.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_splash.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_splash.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_dummy.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_dummy.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_splash.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_splash.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_radio.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_radio.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_search_dropdown_item_icons_2line.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_search_dropdown_item_icons_2line.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sensor_display.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_sensor_display.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_light.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_light.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_bar_title_item.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_bar_title_item.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_space.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_space.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_expanded_menu_layout.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_expanded_menu_layout.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_location.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_location.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_mode_bar.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_mode_bar.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_accel.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_accel.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_menu_item_layout.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/support_simple_spinner_dropdown_item.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/support_simple_spinner_dropdown_item.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_screen_toolbar.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_screen_toolbar.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_battery.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_battery.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_dummy.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_dummy.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_bar_title_item.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_bar_title_item.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_bar_view_list_nav_layout.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sensors.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_sensors.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_light.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_light.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_search_dropdown_item_icons_2line.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_search_dropdown_item_icons_2line.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_screen_simple_overlay_action_mode.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_screen_simple_overlay_action_mode.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sensor_display.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_sensor_display.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/support_simple_spinner_dropdown_item.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/support_simple_spinner_dropdown_item.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_accel.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_accel.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_mode_close_item_material.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_mode_close_item_material.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/ab_nn.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/ab_nn.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/category_grid_item.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/category_grid_item.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_screen_simple.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_layout.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_space.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_space.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_main.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_main.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_checkbox.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_simple_dropdown_hint.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_simple_dropdown_hint.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_bar_title_item.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_bar_title_item.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_bar_up_container.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_bar_up_container.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_search_view.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_search_view.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_gyro.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_gyro.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_settings.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_settings.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_battery.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_battery.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_layout.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_pressure.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/fragment_pressure.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_showcase.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/layout/activity_showcase.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_popup_menu_item_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_popup_menu_item_layout.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view_list_item.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_activity_chooser_view_list_item.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_popup_menu_item_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_popup_menu_item_layout.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/collection_rate_item.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/collection_rate_item.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_settings.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_settings.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_showcase.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_showcase.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_activity_chooser_view.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_mode_bar.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/nn_theme_tab_indicator_holo.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/nn_theme_tab_indicator_holo.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_bar_view_list_nav_layout.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_show_sensor_list.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_show_sensor_list.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_activity_chooser_view.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_collection_rate.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_collection_rate.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_list_menu_item_icon.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_list_menu_item_icon.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_screen_simple_overlay_action_mode.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_screen_simple_overlay_action_mode.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/fragment_location.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/fragment_location.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sensor_display.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_sensor_display.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_screen_toolbar.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_screen_toolbar.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_action_mode_close_item_material.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_action_mode_close_item_material.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/ab_nn.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/ab_nn.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/abc_simple_dropdown_hint.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/layout/abc_simple_dropdown_hint.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/layout/activity_sensor_permissions.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/layout/activity_sensor_permissions.xml"
     }
 ]

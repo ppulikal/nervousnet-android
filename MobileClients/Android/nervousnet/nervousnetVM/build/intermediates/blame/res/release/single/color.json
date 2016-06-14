@@ -1,15 +1,27 @@
 [
     {
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_background_cache_hint_selector_material_dark.xml"
+    },
+    {
         "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetVM/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
         "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/build/intermediates/res/merged/release/color/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_background_cache_hint_selector_material_light.xml"
     },
     {
         "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
         "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_secondary_text_material_light.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/build/intermediates/res/merged/release/color/abc_background_cache_hint_selector_material_light.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_background_cache_hint_selector_material_light.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_primary_text_material_dark.xml"
     },
     {
         "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/build/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
@@ -22,6 +34,10 @@
     {
         "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_background_cache_hint_selector_material_light.xml",
         "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_dark.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_primary_text_disable_only_material_dark.xml"
     },
     {
         "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
@@ -60,6 +76,18 @@
         "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_secondary_text_material_dark.xml"
     },
     {
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_light.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_search_url_text.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_search_url_text.xml"
+    },
+    {
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_secondary_text_material_dark.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_secondary_text_material_dark.xml"
+    },
+    {
         "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
         "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_secondary_text_material_light.xml"
     },
@@ -88,8 +116,16 @@
         "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_primary_text_disable_only_material_light.xml"
     },
     {
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_primary_text_material_light.xml"
+    },
+    {
         "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_secondary_text_material_dark.xml",
         "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/color/abc_secondary_text_material_light.xml"
     },
     {
         "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetVM/build/intermediates/res/merged/release/color/abc_background_cache_hint_selector_material_light.xml",

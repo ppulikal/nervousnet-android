@@ -1,74 +1,38 @@
 [
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/ccc_menu.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/ccc_menu.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/main_apps.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/main_apps.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/menu/ccc_menu.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/menu/ccc_menu.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/sensor_frequency.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/sensor_frequency.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/sensor_frequency.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/sensor_frequency.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/base_sensor.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/base_sensor.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/menu/server_details.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/menu/server_details.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/sensors.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/sensors.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/menu/acc_sensor.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/menu/acc_sensor.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/server_details.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/server_details.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/main.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/main.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/space.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/space.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/menu/main_apps.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/menu/main_apps.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/main.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/main.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/space.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/space.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/acc_sensor.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/acc_sensor.xml"
     },
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/menu/sensors.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/menu/sensors.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/menu/space.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/menu/space.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/menu/base_sensor.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/menu/base_sensor.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/server_details.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/server_details.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/menu/main.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/menu/main.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/build/intermediates/res/merged/debug/menu/sensor_frequency.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetHUB/src/main/res/menu/sensor_frequency.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/acc_sensor.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/acc_sensor.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/sensors.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/sensors.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/base_sensor.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/base_sensor.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/main_apps.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/main_apps.xml"
+        "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/res/merged/debug/menu/ccc_menu.xml",
+        "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/src/main/res/menu/ccc_menu.xml"
     }
 ]

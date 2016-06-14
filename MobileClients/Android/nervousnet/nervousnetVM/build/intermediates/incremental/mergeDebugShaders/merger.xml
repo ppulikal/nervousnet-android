@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/src/debug/shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/src/debug/shaders"/></dataSet></merger>

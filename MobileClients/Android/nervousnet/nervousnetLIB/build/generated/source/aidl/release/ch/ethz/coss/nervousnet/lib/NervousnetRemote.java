@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetLIB/src/main/aidl/ch/ethz/coss/nervousnet/lib/NervousnetRemote.aidl
+ * Original file: /Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetLIB/src/main/aidl/ch/ethz/coss/nervousnet/lib/NervousnetRemote.aidl
  */
 package ch.ethz.coss.nervousnet.lib;
 public interface NervousnetRemote extends android.os.IInterface
