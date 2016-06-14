@@ -35,3 +35,18 @@ Documents/Technical/Android/.DS_Store
 .DS_Store
 
 MobileClients/Android/nervousnetLIB/.DS_Store
+
+*.class
+
+*.bin
+
+*.lock
+
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
