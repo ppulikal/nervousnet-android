@@ -61,3 +61,7 @@ MobileClients/Android/nervousnet/nervousnetVM/build
 
 
 *.class
+
+*.lock
+
+*.bin
