@@ -104,11 +104,12 @@ public class BatterySensor extends BaseSensor {
 			return false;
 		}
 
-		NNLog.d(LOG_TAG, "Starting accelerometer sensor with state = " + sensorState);
+		NNLog.d(LOG_TAG, "Starting Battery sensor with state = " + sensorState);
 		IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 		Intent batteryStatus = context.registerReceiver(batteryReceiver, ifilter);
 		reading = extractBatteryData(batteryStatus);
 		dataReady(reading);
+		NNLog.d(LOG_TAG, "Stopped Battery sensor ");
 
 		return true;
 	}
@@ -138,13 +139,13 @@ public class BatterySensor extends BaseSensor {
 	public boolean stop(boolean changeStateFlag)  {
 
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-			NNLog.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is not available ");
+			NNLog.d(LOG_TAG, "Cancelled stop battery sensor as Sensor state is not available ");
 			return false;
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-			NNLog.d(LOG_TAG, "Cancelled stop accelerometer sensor as permission denied by user.");
+			NNLog.d(LOG_TAG, "Cancelled stop battery sensor as permission denied by user.");
 			return false;
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-			NNLog.d(LOG_TAG, "Cancelled stop accelerometer sensor as Sensor state is switched off ");
+			NNLog.d(LOG_TAG, "Cancelled stop battery sensor as Sensor state is switched off ");
 			return false;
 		}
 

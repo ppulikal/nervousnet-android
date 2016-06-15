@@ -106,14 +106,18 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 		if(changeStateFlag)
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 		this.reading = null;
+
+		NNLog.d(LOG_TAG, "Stopped Accelerometer sensor ");
 		return true;
 	}
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		NNLog.d(LOG_TAG, "X = " + event.values[0]);
+//		NNLog.d(LOG_TAG, "onSensorChanged - X = "+event.values[0]);
+		if(event == null)
+			return;
+
 		reading = new AccelerometerReading(event.timestamp, event.values);
-		if(reading != null)
 			dataReady(reading);
 	}
 
