@@ -30,7 +30,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -38,6 +40,7 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.support.v4.content.ContextCompat;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
 import android.telephony.CellInfoGsm;
@@ -104,7 +107,29 @@ public class ConnectivitySensor extends BaseSensor {
 
 			TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
-			List<CellInfo> cis = tm.getAllCellInfo();
+			int permissionCheck = ContextCompat.checkSelfPermission(context,
+					Manifest.permission.ACCESS_COARSE_LOCATION);
+
+			List<CellInfo> cis = null;
+
+
+			if(permissionCheck != PackageManager.PERMISSION_GRANTED){
+
+                cis = tm.getAllCellInfo();
+
+//TODO: for android 23 and greater run time permissions.
+//                    ActivityCompat.requestPermissions(thisActivity,
+//                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                            MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+
+                    // MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+
+            }
+
+
+
 			if (cis != null) {
 				// New method
 				for (CellInfo ci : cis) {
@@ -132,6 +157,15 @@ public class ConnectivitySensor extends BaseSensor {
 					}
 				}
 			} else {
+
+                 permissionCheck = ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.ACCESS_COARSE_LOCATION);
+
+
+
+
+                if(permissionCheck == PackageManager.PERMISSION_GRANTED)
+                    cis = tm.getAllCellInfo();
 				// Legacy method
 				CellLocation cl = tm.getCellLocation();
 				if (cl instanceof CdmaCellLocation) {
@@ -242,6 +276,7 @@ public class ConnectivitySensor extends BaseSensor {
 		}
 		setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
 		this.reading = null;
+		if(handler != null)
 		handler.removeCallbacks(runnable);
 		runnable = null;
 		handler = null;
