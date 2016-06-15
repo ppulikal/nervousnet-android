@@ -59,3 +59,5 @@ MobileClients/Android/nervousnet/nervousnetHUB/build
 MobileClients/Android/nervousnet/nervousnetLIB/build
 MobileClients/Android/nervousnet/nervousnetVM/build
 
+
+*.class
