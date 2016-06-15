@@ -45,6 +45,8 @@ public class Application extends android.app.Application {
 	private static int NOTIFICATION = R.string.local_service_started;
 
 	private static NotificationManager mNM;
+	private Notification notification;
+
 	public NervousnetVM nn_VM;
 
 	public Application() {
@@ -73,6 +75,7 @@ public class Application extends android.app.Application {
 		nn_VM = new NervousnetVM(getApplicationContext());
 		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
+		initNotification();
 	}
 
 	private void handleUncaughtException(Thread thread, Throwable e) {
@@ -95,7 +98,7 @@ public class Application extends android.app.Application {
 		Toast.makeText(context, "Service Started", Toast.LENGTH_SHORT).show();
 		Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
 		context.startService(sensorIntent);
-
+		showNotification();
 	}
 
 	public void stopService(Context context) {
@@ -111,7 +114,9 @@ public class Application extends android.app.Application {
 	/**
 	 * Show a notification while this service is running.
 	 */
-	public void showNotification() {
+	public void initNotification() {
+		if(notification != null)
+			return;
 		// In this sample, we'll use the same text for the ticker and the
 		// expanded notification
 		CharSequence text = getText(R.string.local_service_started);
@@ -121,7 +126,7 @@ public class Application extends android.app.Application {
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
 		// Set the info for the views that show in the notification panel.
-		Notification notification = new Notification.Builder(this).setSmallIcon(getNotificationIcon()) // the
+		notification = new Notification.Builder(this).setSmallIcon(getNotificationIcon()) // the
 																										// status
 																										// icon
 				.setTicker(text) // the status text
@@ -136,6 +141,9 @@ public class Application extends android.app.Application {
 													// entry is clicked
 				.build();
 
+	}
+
+	public void showNotification() {
 		if (mNM != null)
 			mNM.notify(NOTIFICATION, notification);
 	}

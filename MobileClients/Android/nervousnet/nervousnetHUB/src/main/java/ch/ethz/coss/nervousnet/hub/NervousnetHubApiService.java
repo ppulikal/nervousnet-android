@@ -54,7 +54,7 @@ public class NervousnetHubApiService extends Service {
 	@Override
 	public void onCreate() {
 		if(((Application) getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_RUNNING) {
-			NNLog.d("SERVICE", "Starting Sensor Service");
+			NNLog.d(LOG_TAG, "Starting Sensor Service");
 			// Prepare the wakelock
 			PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
 			wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, LOG_TAG);
@@ -67,11 +67,11 @@ public class NervousnetHubApiService extends Service {
 
 			// Display a notification about us starting. We put an icon in the
 			// status bar.
-			((Application) getApplication()).showNotification();
+			((Application) getApplication()).initNotification();
 //			if(((Application) getApplication()).nn_VM == null)
 //			((Application) getApplication()).nn_VM = new NervousnetVM(getApplicationContext());
 		} else {
-			NNLog.d("SERVICE", "Stopping Sensor Service as nervousnet is not running");
+			NNLog.d(LOG_TAG, "Stopping Sensor Service as nervousnet is not running");
 			stopSelf();
 		}
 		
