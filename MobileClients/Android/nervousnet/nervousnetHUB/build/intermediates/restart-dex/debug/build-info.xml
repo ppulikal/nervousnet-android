@@ -4,27 +4,27 @@
     api-level="22"
     density="xhdpi"
     format="7"
-    timestamp="94931576632135"
+    timestamp="131492106454341"
     token="-1217343947581965164" >
 
     <task
         name="javac"
-        duration="1835" />
+        duration="0" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="697" />
+        duration="0" />
     <task
         name="verifier"
-        duration="89" />
+        duration="0" />
 
     <artifact
         location="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/outputs/apk/nervousnetHUB-debug.apk"
         type="MAIN" />
 
-    <build timestamp="94931576632135" >
+    <build timestamp="131492106454341" >
         <artifact
             location="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/outputs/apk/nervousnetHUB-debug.apk"
             type="MAIN" />

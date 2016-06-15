@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a8e3efe516bbb44881c6d849c9bd46c273420de6">
+        <dex dex="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_f88b745312c3d1efa49416facbd7f5010d58c277/classes.dex" />
+    </item>
+
+</items>

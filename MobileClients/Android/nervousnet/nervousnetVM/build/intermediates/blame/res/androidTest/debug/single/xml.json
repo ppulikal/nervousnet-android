@@ -1,17 +1,5 @@
 [
     {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetVM/build/intermediates/res/merged/androidTest/debug/xml/config.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnetHUB/nervousnetVM/build/intermediates/bundles/debug/res/xml/config.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/build/intermediates/res/merged/androidTest/debug/xml/config.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnetHUB/nervousnetVM/build/intermediates/bundles/debug/res/xml/config.xml"
-    },
-    {
-        "merged": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/androidTest/debug/xml/config.xml",
-        "source": "/Users/prasad/Root/4_Development/TeamGithub/nervousnet/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/bundles/debug/res/xml/config.xml"
-    },
-    {
         "merged": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/res/merged/androidTest/debug/xml/config.xml",
         "source": "/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetVM/build/intermediates/bundles/debug/res/xml/config.xml"
     }
