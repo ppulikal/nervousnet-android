@@ -1,6 +1,0 @@
-{ "apps" : [
-    {"app" : "Accelerometer", "package" : "ch.ethz.coss.nervousnet.extensions", "description" : "The Accelerometer app is a nervousnet extension app used to show the usage of Accelerometer values using the nervousnet HUB API's." },
-    {"app" : "Lightmeter", "package" : "ch.ethz.coss.nervousnet.extensions.lightmeter", "description" : "The Lightmeter app is a nervousnet extension app used to show the usage of Light Sensor values using the nervousnet HUB API's."},
-    {"app" : "Noisemeter", "package" : "ch.ethz.coss.nervousnet.extensions.noisemeter", "description" : "The Noisemeter app is a nervousnet extension app used to show the usage of Noise Sensor values using the nervousnet HUB API's."}
-]
-}

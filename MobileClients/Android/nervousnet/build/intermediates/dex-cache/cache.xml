@@ -2,11 +2,60 @@
 <items version="2" >
 
     <item
+        jar="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.2.1_c740eeb6ad806bd8abbbd20cea0514cdc1faa939/classes.dex" />
+    </item>
+    <item
+        jar="/Users/prasad/Root/4_Development/SDK&apos;s/Android/extras/android/m2repository/com/android/support/support-annotations/23.2.1/support-annotations-23.2.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.2.1_fd1b164309820e4d54c7d20ddc10297c1eec836d/classes.dex" />
+    </item>
+    <item
+        jar="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/nervousnet/nervousnetVM/unspecified/jars/libs/greendao-2.1.0-2.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="2998901e877ce04463e34582d3ece9bdf16305f9">
+        <dex dex="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/transforms/dex/debug/folders/1000/8/greendao-2.1.0-2_383559368961574279b5e20f63e353601779aca8/classes.dex" />
+    </item>
+    <item
         jar="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.2"
-        sha1="a8e3efe516bbb44881c6d849c9bd46c273420de6">
+        sha1="ffa8635318b76e4be8137b727414b54ccff16884">
         <dex dex="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_f88b745312c3d1efa49416facbd7f5010d58c277/classes.dex" />
+    </item>
+    <item
+        jar="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-21.0.3_4c4ded6b60454addb84c196c4f46c0618bb6a9ae/classes.dex" />
+    </item>
+    <item
+        jar="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/libs/internal_impl-23.2.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.2.1_149a3daee5298666afc5e8a36b8dbcdaf1f17dc1/classes.dex" />
+    </item>
+    <item
+        jar="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="dc964ddd98183a3c01b7f4fdaadfb413b369cb25">
+        <dex dex="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_9da1481136c5fb5b0a16e15698ac965b840f8df1/classes.dex" />
+    </item>
+    <item
+        jar="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/libs/android-support-v13.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="636f0fc2e3ad660ba46e0632d44891ae1a616c81">
+        <dex dex="/Users/prasad/Root/4_Development/Github/nervousnet-android/MobileClients/Android/nervousnet/nervousnetHUB/build/intermediates/transforms/dex/debug/folders/1000/2/android-support-v13_3aecf226f2362bee8d4d4a33f3903a71ae08d7ee/classes.dex" />
     </item>
 
 </items>
