@@ -28,6 +28,9 @@
 package ch.ethz.coss.nervousnet.hub.ui;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import ch.ethz.coss.nervousnet.hub.R;
 
 /**
@@ -41,5 +44,11 @@ public class AnalyticsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_analytics);
 
+
+		ListView sensList = (ListView) findViewById(R.id.sensors_list_SensStatChart);
+
+		String[] sensorArr = {"Accelerometer","Light","Noise","Gyro","Gravity"};
+		ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, sensorArr);
+		sensList.setAdapter(modeAdapter);
 	}
 }
