@@ -27,9 +27,17 @@
 
 package ch.ethz.coss.nervousnet.hub.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.TabHost;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import ch.ethz.coss.nervousnet.hub.R;
 
@@ -51,4 +59,48 @@ public class AnalyticsActivity extends BaseActivity {
 		ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, sensorArr);
 		sensList.setAdapter(modeAdapter);
 	}
+
+
+	public void onButtonTimeRangePlotClick(View v){
+
+        /* Show a dialog to make user select from/to dates and times */
+        LayoutInflater inflater = getLayoutInflater();
+        View dialoglayout = inflater.inflate(R.layout.time_range_plots_input,null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialoglayout);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(AnalyticsActivity.this, "Clicked OK", Toast.LENGTH_SHORT).show();
+            }
+        })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //Do nothing
+                    }
+                });
+
+        TimePicker fromTimePicker = ((TimePicker) dialoglayout.findViewById(R.id.fromTimePicker));
+        TimePicker toTimePicker = ((TimePicker) dialoglayout.findViewById(R.id.toTimePicker));
+        DatePicker fromDatePicker = ((DatePicker) dialoglayout.findViewById(R.id.fromDatePicker));
+        DatePicker toDatePicker = ((DatePicker) dialoglayout.findViewById(R.id.toDatePicker));
+
+        fromTimePicker.setIs24HourView(true);
+        toTimePicker.setIs24HourView(true);
+
+        TabHost tabHost = (TabHost)dialoglayout.findViewById(R.id.tabHost);
+        tabHost.setup();
+
+        TabHost.TabSpec tab1 = tabHost.newTabSpec("From");
+        TabHost.TabSpec tab2 = tabHost.newTabSpec("To");
+
+        tab1.setIndicator("From");
+        tab1.setContent(R.id.From);
+        tab2.setIndicator("To");
+        tab2.setContent(R.id.To);
+
+        tabHost.addTab(tab1);
+        tabHost.addTab(tab2);
+
+        builder.show();
+    }
 }

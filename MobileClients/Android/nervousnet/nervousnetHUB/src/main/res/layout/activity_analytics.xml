@@ -80,7 +80,9 @@
             android:src="@drawable/ic_analytics"
             android:layout_toRightOf="@id/strut"
             android:layout_above="@id/txt_TimeRange"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+
+            android:onClick="onButtonTimeRangePlotClick"/>
 
     </RelativeLayout>
 
