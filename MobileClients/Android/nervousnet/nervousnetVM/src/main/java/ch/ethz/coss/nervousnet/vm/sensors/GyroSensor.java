@@ -53,7 +53,8 @@ public class GyroSensor extends BaseSensor implements SensorEventListener {
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Cancelled Starting Gyroscope sensor as permission denied by user.");
 			return false;
-		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		}
+		else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			NNLog.d(LOG_TAG, "Cancelled starting Gyroscope sensor as Sensor state is switched off.");
 			return false;
 		}

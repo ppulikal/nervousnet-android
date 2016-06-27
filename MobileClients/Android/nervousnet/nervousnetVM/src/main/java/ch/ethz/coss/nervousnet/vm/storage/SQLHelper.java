@@ -1,9 +1,6 @@
 package ch.ethz.coss.nervousnet.vm.storage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +12,6 @@ import android.os.Build;
 import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.BatteryReading;
-import ch.ethz.coss.nervousnet.lib.ConnectivityReading;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
@@ -43,9 +39,9 @@ public class SQLHelper implements BaseSensorListener {
 	LocationDataDao locDao;
 	ConnectivityDataDao connDao;
 	GyroDataDao gyroDao;
-	PressureDataDao pressureDao;
+	ProximityDataDao proximityDao;
 	
-	ArrayList<SensorDataImpl> accelDataArrList, battDataArrList,connDataArrList,gyroDataArrList,lightDataArrList,locDataArrList, noiseDataArrList; 
+	ArrayList<SensorDataImpl> accelDataArrList, battDataArrList,gyroDataArrList,lightDataArrList,locDataArrList, noiseDataArrList;
 
 	public SQLHelper(Context context, String DB_NAME) {
 		initDao(context, DB_NAME);
@@ -71,16 +67,14 @@ public class SQLHelper implements BaseSensorListener {
 		gyroDao = daoSession.getGyroDataDao();
 		lightDao = daoSession.getLightDataDao();
 		noiseDao = daoSession.getNoiseDataDao();
-		pressureDao = daoSession.getPressureDataDao();
 
 		populateSensorConfig();
-		 accelDataArrList = new ArrayList<SensorDataImpl>(); 
-				 battDataArrList = new ArrayList<SensorDataImpl>(); 
-				 connDataArrList = new ArrayList<SensorDataImpl>(); 
-				 gyroDataArrList = new ArrayList<SensorDataImpl>(); 
-				 lightDataArrList = new ArrayList<SensorDataImpl>(); 
-				 locDataArrList = new ArrayList<SensorDataImpl>(); 
-				 noiseDataArrList = new ArrayList<SensorDataImpl>(); 
+		accelDataArrList = new ArrayList<SensorDataImpl>();
+		battDataArrList = new ArrayList<SensorDataImpl>();
+		gyroDataArrList = new ArrayList<SensorDataImpl>();
+		lightDataArrList = new ArrayList<SensorDataImpl>();
+		locDataArrList = new ArrayList<SensorDataImpl>();
+		noiseDataArrList = new ArrayList<SensorDataImpl>();
 		
 	}
 
@@ -221,38 +215,20 @@ public class SQLHelper implements BaseSensorListener {
 			locDao.insertInTx(sensorDataList);
 			return true;
 
-		case LibConstants.SENSOR_BLEBEACON:
-			return true;
-
-		case LibConstants.SENSOR_CONNECTIVITY:
-			NNLog.d(LOG_TAG, "Connectivity_DATA table count = " + connDao.count());
-
-			connDao.insertInTx(sensorDataList);
-			return true;
 		case LibConstants.SENSOR_GYROSCOPE:
 			NNLog.d(LOG_TAG, "GYRO_DATA table count = " + gyroDao.count());
 			gyroDao.insertInTx(sensorDataList);
-			return true;
-		case LibConstants.SENSOR_HUMIDITY:
 			return true;
 		case LibConstants.SENSOR_LIGHT:
 			NNLog.d(LOG_TAG, "LIGHT_DATA table count = " + lightDao.count());
 			lightDao.insertInTx(sensorDataList);
 			return true;
 
-		case LibConstants.SENSOR_MAGNETIC:
-			return true;
 		case LibConstants.SENSOR_NOISE:
 			NNLog.d(LOG_TAG, "NoiseData table count = " + noiseDao.count());
 			noiseDao.insertInTx(sensorDataList);
 			return true;
-		case LibConstants.SENSOR_PRESSURE:
-			NNLog.d(LOG_TAG, "PressureData table count = " + pressureDao.count());
-			pressureDao.insertInTx(sensorDataList);
-			return true;
 		case LibConstants.SENSOR_PROXIMITY:
-			return true;
-		case LibConstants.SENSOR_TEMPERATURE:
 			return true;
 
 		}
@@ -290,46 +266,29 @@ public class SQLHelper implements BaseSensorListener {
 			qb.where(LocationDataDao.Properties.TimeStamp.between(startTime, endTime));
 
 			return;
-		case LibConstants.SENSOR_BLEBEACON:
-			// TODO
-			return;
-		case LibConstants.SENSOR_CONNECTIVITY:
-			qb = connDao.queryBuilder();
-			qb.where(ConnectivityDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-			return;
 		case LibConstants.SENSOR_GYROSCOPE:
 			qb = gyroDao.queryBuilder();
 			qb.where(GyroDataDao.Properties.TimeStamp.between(startTime, endTime));
 
 			return;
-		case LibConstants.SENSOR_HUMIDITY:
-			// TODO
-			return;
+
 		case LibConstants.SENSOR_LIGHT:
 			qb = lightDao.queryBuilder();
 			qb.where(LightDataDao.Properties.TimeStamp.between(startTime, endTime));
 
 			return;
-		case LibConstants.SENSOR_MAGNETIC:
-			// TODO
-			return;
+
 		case LibConstants.SENSOR_NOISE:
 			qb = noiseDao.queryBuilder();
 			qb.where(NoiseDataDao.Properties.TimeStamp.between(startTime, endTime));
 
 			return;
-		case LibConstants.SENSOR_PRESSURE:
-			qb = pressureDao.queryBuilder();
-			qb.where(PressureDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-			return;
 		case LibConstants.SENSOR_PROXIMITY:
 			// TODO
 			return;
-		case LibConstants.SENSOR_TEMPERATURE:
-			// TODO
-			return;
+
 
 		}
 
@@ -349,28 +308,44 @@ public class SQLHelper implements BaseSensorListener {
 			return reading;
 
 		case LibConstants.SENSOR_BATTERY:
-
-			// BatteryData bdata = (BatteryData) data;
-			// reading = new BatteryReading(bdata.getTimeStamp(),
-			// bdata.getPercent(), false, false, false, state, state, state,
-			// null});
-			// reading.type = LibConstants.SENSOR_BATTERY;
+			//TODO
+			 BatteryData bdata = (BatteryData) data;
+			 reading = new BatteryReading(bdata.getTimeStamp(),
+			 bdata.getPercent(), false, false, false, 0f, 0, (byte)0,
+			 null);
+			 reading.type = LibConstants.SENSOR_BATTERY;
 
 			return reading;
 
 		case LibConstants.SENSOR_GYROSCOPE:
+		GyroData gdata = (GyroData) data;
+		reading = new GyroReading(gdata.getTimeStamp(),
+				new float[] { gdata.getGyroX(), gdata.getGyroY(), gdata.getGyroZ() });
 
+		reading.type = LibConstants.SENSOR_GYROSCOPE;
 			return reading;
 
-		case LibConstants.SENSOR_CONNECTIVITY:
-
-			return reading;
 		case LibConstants.SENSOR_LIGHT:
+			LightData ldata = (LightData) data;
+			reading = new LightReading(ldata.getTimeStamp(), ldata.getLux());
+			reading.type = LibConstants.SENSOR_LIGHT;
 			return reading;
 
 		case LibConstants.SENSOR_LOCATION:
+			LocationData locdata = (LocationData) data;
+			reading = new LocationReading(locdata.getTimeStamp(), new double[]{locdata.getLatitude(), locdata.getLongitude()});
+			reading.type = LibConstants.SENSOR_LOCATION;
 			return reading;
 
+			case LibConstants.SENSOR_NOISE:
+				NoiseData ndata = (NoiseData) data;
+				reading = new NoiseReading(ndata.getTimeStamp(), ndata.getDecibel());
+				reading.type = LibConstants.SENSOR_NOISE;
+				return reading;
+
+			case LibConstants.SENSOR_PROXIMITY:
+				// TODO
+				return null;
 		default:
 			return null;
 
@@ -425,20 +400,6 @@ public class SQLHelper implements BaseSensorListener {
 			if(gyroDataArrList.size() > 100){
 				storeSensorAsync(LibConstants.SENSOR_GYROSCOPE, new ArrayList<SensorDataImpl>(gyroDataArrList));
 				gyroDataArrList.clear();
-			}
-			break;
-		case LibConstants.SENSOR_CONNECTIVITY:
-			ConnectivityReading connReading = (ConnectivityReading) reading;
-			sensorData = new ConnectivityData(null, reading.timestamp, connReading.isConnected(),
-					connReading.getNetworkType(), connReading.isRoaming(), connReading.getWifiHashId(),
-					connReading.getWifiStrength(), connReading.getMobileHashId(), connReading.volatility,
-					connReading.isShare);
-			sensorData.setType(LibConstants.SENSOR_CONNECTIVITY);
-			connDataArrList.add((SensorDataImpl)sensorData);
-			
-			if(connDataArrList.size() > 10){
-				storeSensorAsync(LibConstants.SENSOR_CONNECTIVITY, new ArrayList<SensorDataImpl>(connDataArrList));
-				connDataArrList.clear();
 			}
 			break;
 

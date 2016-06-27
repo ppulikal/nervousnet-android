@@ -74,7 +74,8 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			Log.d(LOG_TAG, "Cancelled Starting Location sensor as permission denied by user.");
 			return false;
-		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		}
+		else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			Log.d(LOG_TAG, "Cancelled starting Location sensor as Sensor state is switched off.");
 			return false;
 		}

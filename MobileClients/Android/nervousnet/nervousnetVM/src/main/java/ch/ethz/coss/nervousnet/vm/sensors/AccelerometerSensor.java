@@ -53,7 +53,8 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Cancelled Starting accelerometer sensor as permission denied by user.");
 			return false;
-		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		}
+		else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			NNLog.d(LOG_TAG, "Cancelled starting accelerometer sensor as Sensor state is switched off.");
 			return false;
 		}
@@ -61,7 +62,7 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 		NNLog.d(LOG_TAG, "Starting accelerometer sensor with state = " + sensorState);
 
 		sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-				NervousnetVMConstants.sensor_freq_constants[0][sensorState - 1]);
+				NervousnetVMConstants.sensor_freq_constants[0][sensorState]);
 
 		return true;
 	}

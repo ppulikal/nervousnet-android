@@ -250,7 +250,8 @@ public class NoiseSensor extends BaseSensor {
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Cancelled NoiseSensor sensor as permission denied by user.");
 			return false;
-		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		}
+		else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			NNLog.d(LOG_TAG, "Cancelled NoiseSensor sensor as Sensor state is switched off.");
 			return false;
 		}
@@ -264,6 +265,7 @@ public class NoiseSensor extends BaseSensor {
 			@Override
 			public void run() {
 				startRecording(500);
+				if(handler != null)
 				handler.postDelayed(this, 1000);// NervousnetVMConstants.sensor_freq_constants[3][sensorState
 												// - 1]); // TODO: test this
 			}

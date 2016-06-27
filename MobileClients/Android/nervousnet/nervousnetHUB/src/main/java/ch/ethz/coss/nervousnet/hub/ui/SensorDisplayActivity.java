@@ -61,15 +61,12 @@ import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.AccelFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.BaseFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.BatteryFragment;
-import ch.ethz.coss.nervousnet.hub.ui.fragments.BeaconsFragment;
-import ch.ethz.coss.nervousnet.hub.ui.fragments.ConnectivityFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.DummyFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.GyroFragment;
-import ch.ethz.coss.nervousnet.hub.ui.fragments.HumidFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.LightFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.LocationFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.NoiseFragment;
-import ch.ethz.coss.nervousnet.hub.ui.fragments.PressureFragment;
+import ch.ethz.coss.nervousnet.hub.ui.fragments.ProximityFragment;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
@@ -279,28 +276,19 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 				fragment = new BatteryFragment(1);
 				break;
 			case 2:
-				fragment = new BeaconsFragment(2);
+				fragment = new GyroFragment(2);
 				break;
 			case 3:
-				fragment = new ConnectivityFragment(3);
+				fragment = new LocationFragment(3);
 				break;
 			case 4:
-				fragment = new GyroFragment(4);
+				fragment = new LightFragment(4);
 				break;
 			case 5:
-				fragment = new HumidFragment(5);
+				fragment = new NoiseFragment(5);
 				break;
 			case 6:
-				fragment = new LocationFragment(6);
-				break;
-			case 7:
-				fragment = new LightFragment(7);
-				break;
-			case 9:
-				fragment = new NoiseFragment(9);
-				break;
-			case 10:
-				fragment = new PressureFragment(10);
+				fragment = new ProximityFragment(6);
 				break;
 			default:
 				fragment = new DummyFragment(-1);
@@ -431,32 +419,20 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 				updateStatus(mService.getReading(LibConstants.SENSOR_BATTERY), index);
 				break;
 			case 2:
-				// beacons
-				break;
-			case 3:
-				updateStatus(mService.getReading(LibConstants.SENSOR_CONNECTIVITY), index);
-				break;
-			case 4:
 				updateStatus(mService.getReading(LibConstants.SENSOR_GYROSCOPE), index);
 				break;
-			case 5:
-				// HUmidity
-				break;
-			case 6:
+			case 3:
 				updateStatus(mService.getReading(LibConstants.SENSOR_LOCATION), index);
 				break;
-			case 7:
+			case 4:
 				updateStatus(mService.getReading(LibConstants.SENSOR_LIGHT), index);
 				break;
-			case 8:
-				// Magnetic
-				break;
-			case 9:
+			case 5:
 				updateStatus(mService.getReading(LibConstants.SENSOR_NOISE), index);
 				break;
-			case 10:
+			case 6:
 				// Pressure
-				updateStatus(mService.getReading(LibConstants.SENSOR_PRESSURE), index);
+				updateStatus(mService.getReading(LibConstants.SENSOR_PROXIMITY), index);
 				break;
 
 			case 11:

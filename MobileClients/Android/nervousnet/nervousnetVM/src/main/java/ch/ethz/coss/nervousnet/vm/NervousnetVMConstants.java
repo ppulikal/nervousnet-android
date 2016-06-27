@@ -13,18 +13,23 @@ public class NervousnetVMConstants {
 
 	public final static int REQUEST_ENABLE_BT = 0;
 
-	public static long[] sensor_ids = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
-	public static String[] sensor_labels = { "Accelerometer", "Battery", "Beacons", "Connectivity", "Gyroscope",
-			"Humidity", "Location", "Light", "Magnetic", "Noise", "Pressure", "Proximity", "Temperature" };
+	public static long[] sensor_ids = { 0, 1, 2, 3, 4, 5, 6};
+
+	public static String[] sensor_labels = { "Accelerometer", "Battery", "Gyroscope",
+			 "Location", "Light", "Noise", "Proximity"};
+
+//	public static long[] sensor_ids = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+//
+//	public static String[] sensor_labels = { "Accelerometer", "Battery", "Beacons", "Connectivity", "Gyroscope",
+//			"Humidity", "Location", "Light", "Magnetic", "Noise", "Pressure", "Proximity", "Temperature" };
 
 	public static String[] sensor_freq_labels = { "Off", "High", "Medium", "Low" };
 
-	public static int[][] sensor_freq_constants = { { 0, 60000, 200000, -1 }, { 0, 300000, 1800000, -1 },
-			{ 0, 60000, 300000, -1 }, { 0, 300000, 1800000, -1 }, { 0, 10000, 30000, -1 }, { 0, 300000, 1800000, -1 },
-			{ 0, 300000, 1800000, -1 }, { 0, 300000, 1800000, -1 }, { 0, 300000, 1800000, -1 },
-			{ 0, 300000, 1800000, -1 }, { 0, 300000, 1800000, -1 }, { 0, 300000, 1800000, -1 },
-			{ 0, 300000, 1800000, -1 } };
+	public static int[][] sensor_freq_constants = { { -1, 60000, 120000, 300000}, { -1, 60000, 120000, 300000},
+			{ -1, 60000, 120000, 300000}, { -1, 60000, 120000, 300000}, { -1, 60000, 120000, 300000}, { -1, 60000, 120000, 300000},
+			{ -1, 60000, 120000, 300000}
+	};
 
 	public static byte SENSOR_STATE_NOT_AVAILABLE = -2;
 	public static byte SENSOR_STATE_AVAILABLE_PERMISSION_DENIED = -1;

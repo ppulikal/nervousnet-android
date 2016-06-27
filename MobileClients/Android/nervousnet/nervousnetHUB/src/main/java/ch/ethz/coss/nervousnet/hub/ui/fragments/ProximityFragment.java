@@ -36,16 +36,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
-import ch.ethz.coss.nervousnet.lib.PressureReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
-public class PressureFragment extends BaseFragment {
+public class ProximityFragment extends BaseFragment {
 
-	public PressureFragment() {
+	public ProximityFragment() {
 	}
 
-	public PressureFragment(int type) {
+	public ProximityFragment(int type) {
 		super(type);
 	}
 
@@ -72,8 +71,7 @@ public class PressureFragment extends BaseFragment {
 			handleError((ErrorReading) reading);
 			return;
 		}
-		TextView pressureTV = (TextView) getActivity().findViewById(R.id.pressureValue);
-		pressureTV.setText("" + ((PressureReading) reading).getPressureValue());
+		//TODO
 	}
 
 	@Override

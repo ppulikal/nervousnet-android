@@ -11,16 +11,11 @@ public class SensorAuthentication {
 	public void SensorAuthentication() {
 		sensorAuthList.put(LibConstants.SENSOR_ACCELEROMETER, (byte) 0);
 		sensorAuthList.put(LibConstants.SENSOR_BATTERY, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_BLEBEACON, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_CONNECTIVITY, (byte) 0);
 		sensorAuthList.put(LibConstants.DEVICE_INFO, (byte) 0);
 		sensorAuthList.put(LibConstants.SENSOR_GYROSCOPE, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_HUMIDITY, (byte) 0);
 		sensorAuthList.put(LibConstants.SENSOR_LIGHT, (byte) 0);
 		sensorAuthList.put(LibConstants.SENSOR_LOCATION, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_MAGNETIC, (byte) 0);
 		sensorAuthList.put(LibConstants.SENSOR_NOISE, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_PRESSURE, (byte) 0);
 		sensorAuthList.put(LibConstants.SENSOR_PROXIMITY, (byte) 0);
 	}
 

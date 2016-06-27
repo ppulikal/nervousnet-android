@@ -99,7 +99,8 @@ public class BatterySensor extends BaseSensor {
 		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
 			NNLog.d(LOG_TAG, "Cancelled Starting Battery sensor as permission denied by user.");
 			return false;
-		} else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		}
+		else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			NNLog.d(LOG_TAG, "Cancelled starting Battery sensor as Sensor state is switched off.");
 			return false;
 		}

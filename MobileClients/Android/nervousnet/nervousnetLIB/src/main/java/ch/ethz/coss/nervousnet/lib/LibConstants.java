@@ -30,17 +30,11 @@ public class LibConstants {
 
 	public static final int SENSOR_ACCELEROMETER = 0;
 	public static final int SENSOR_BATTERY = 1;
-	public static final int SENSOR_BLEBEACON = 2;
-	public static final int SENSOR_CONNECTIVITY = 3;
-	public static final int SENSOR_GYROSCOPE = 4;
-	public static final int SENSOR_HUMIDITY = 5;
-	public static final int SENSOR_LOCATION = 6;
-	public static final int SENSOR_LIGHT = 7;
-	public static final int SENSOR_MAGNETIC = 8;
-	public static final int SENSOR_NOISE = 9;
-	public static final int SENSOR_PRESSURE = 10;
-	public static final int SENSOR_PROXIMITY = 11;
-	public static final int SENSOR_TEMPERATURE = 12;
+	public static final int SENSOR_GYROSCOPE = 2;
+	public static final int SENSOR_LOCATION = 3;
+	public static final int SENSOR_LIGHT = 4;
+	public static final int SENSOR_NOISE = 5;
+	public static final int SENSOR_PROXIMITY = 6;
 
 	public static final int DEVICE_INFO = 101;
 	public static final int ERROR = -1;

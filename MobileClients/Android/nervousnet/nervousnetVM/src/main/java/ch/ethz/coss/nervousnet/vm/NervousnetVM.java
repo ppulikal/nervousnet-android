@@ -16,7 +16,6 @@ import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.sensors.AccelerometerSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.BatterySensor;
-import ch.ethz.coss.nervousnet.vm.sensors.ConnectivitySensor;
 import ch.ethz.coss.nervousnet.vm.sensors.GyroSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.LightSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.LocationSensor;
@@ -93,69 +92,30 @@ public class NervousnetVM {
 			} else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[1]) { // Battery
 				sensor = new BatterySensor(context, sensorConfig.getState());
 			}
-			// else if(sensorConfig.getID() ==
-			// NervousnetVMConstants.sensor_ids[2]) { //Beacons
-			// sensor = new
-			// BLEBeaconsSensor((manager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)
-			// ||
-			// manager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE))?
-			// sensorConfig.getState() :
-			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// }
-			else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[3]) { // Connectivity
-				sensor = new ConnectivitySensor(context,
-						(manager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)
-								|| manager.hasSystemFeature(PackageManager.FEATURE_WIFI)) ? sensorConfig.getState()
-										: NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			} else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[4]) { // Gyroscope
+			else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[2]) { // Gyroscope
 				sensor = new GyroSensor(sensorManager, manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE)
 						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
 			}
-			// else if(sensorConfig.getID() ==
-			// NervousnetVMConstants.sensor_ids[5]) { //Humidity
-			// sensor = new
-			// HumiditySensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_RELATIVE_HUMIDITY)
-			// ? sensorConfig.getState() :
-			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// }
-			else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[6]) { // Location
+			else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[3]) { // Location
 				sensor = new LocationSensor(manager.hasSystemFeature(PackageManager.FEATURE_LOCATION)
 						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE, locManager,
 						context);
-			} else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[7]) { // Light
+			} else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[4]) { // Light
 				sensor = new LightSensor(sensorManager, manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT)
 						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
 			}
-			// else if(sensorConfig.getID() ==
-			// NervousnetVMConstants.sensor_ids[8]) { //Magnetic
-			// sensor = new
-			// MagneticSensor(manager.hasSystemFeature(PackageManager.) ?
-			// sensorConfig.getState() :
-			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// }
-			else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[9]) { // Noise
+			else if (sensorConfig.getID() == NervousnetVMConstants.sensor_ids[5]) { // Noise
 				sensor = new NoiseSensor(manager.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)
 						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
 			}
-			// else if(sensorConfig.getID() ==
-			// NervousnetVMConstants.sensor_ids[10]) { //Pressure
-			// sensor = new
-			// PressureSensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_BAROMETER)
-			// ? sensorConfig.getState() :
-			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// } else if(sensorConfig.getID() ==
-			// NervousnetVMConstants.sensor_ids[11]) { //Proximity
-			// sensor = new
-			// ProximitySensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
-			// ? sensorConfig.getState() :
-			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// } else if(sensorConfig.getID() ==
-			// NervousnetVMConstants.sensor_ids[12]) { //Temperature
-			// sensor = new
-			// TemperatureSensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_AMBIENT_TEMPERATURE)
-			// ? sensorConfig.getState() :
-			// NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-			// }
+//			else if(sensorConfig.getID() ==
+//			 NervousnetVMConstants.sensor_ids[6]) { //Proximity
+//			 sensor = new
+//			 ProximitySensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
+//			 ? sensorConfig.getState() :
+//			 NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
+//			 }
+
 			if (sensor != null) {
 				sensor.addListener(sqlHelper);
 				hSensors.put(sensorConfig.getID(), sensor);
@@ -172,8 +132,9 @@ public class NervousnetVM {
 		for (Long key : hSensors.keySet()) {
 			NNLog.d(LOG_TAG, "Inside startSensors Sensor ID = " + key);
 			BaseSensor sensor = hSensors.get(NervousnetVMConstants.sensor_ids[count++]);
-			if (sensor != null)
+			if (sensor != null ) {
 				sensor.start();
+			}
 		}
 		
 
@@ -242,7 +203,8 @@ public class NervousnetVM {
 			sensorConfig.setState(state);
 			hSensorConfig.put(sensorConfig.getID(), sensorConfig);
 		}
-		
+
+
 		try {
 			sqlHelper.updateAllSensorConfig(hSensorConfig.values());
 			
@@ -250,13 +212,11 @@ public class NervousnetVM {
 			NNLog.d(LOG_TAG, "Exception while calling updateSensorConfig ");
 			e.printStackTrace();
 		}
-		
-//		reInitSensor(sensorConfig.getID());
 
-//		BaseSensor sensor = hSensors.get(sensorConfig.getID());
-//		sensor.updateAndRestart(state);
-		
-		if(state != NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+		stopSensors();
+		initSensors();
+
+		if(state > NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			startSensors();
 		}
 		
