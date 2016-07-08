@@ -58,7 +58,8 @@
                         android:text="Large Text"
                         android:id="@+id/gettingStarted_webView"
                         android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentStart="true"
+                        android:background="#FF0000"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -66,6 +67,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal" >
+
+                    <ExpandableListView
+                        android:id="@+id/lstView_faq"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"/>
 
                 </RelativeLayout>
             </FrameLayout>

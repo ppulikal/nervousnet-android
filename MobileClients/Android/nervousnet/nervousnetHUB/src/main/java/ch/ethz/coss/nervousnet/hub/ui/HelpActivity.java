@@ -28,10 +28,20 @@
 package ch.ethz.coss.nervousnet.hub.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ExpandableListView;
 import android.widget.TabHost;
+import android.widget.Toast;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.hub.ui.views.FaqExpandableListAdapter;
 
 /**
  * @author prasad
@@ -62,6 +72,32 @@ public class HelpActivity extends BaseActivity {
         //WebView
         WebView webview = (WebView) findViewById(R.id.gettingStarted_webView);
         webview.loadUrl("file:///android_asset/getting_started.html");
+
+        //FAQ
+        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.lstView_faq);
+        final HashMap<String,List<String>> expandableListDetail = getStringListHashMap();
+        final ArrayList<String> expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+
+        FaqExpandableListAdapter expandableListAdapter = new FaqExpandableListAdapter(this, expandableListTitle, expandableListDetail);
+        expandableListView.setAdapter(expandableListAdapter);
+
 	}
+
+    @NonNull
+    private HashMap<String, List<String>> getStringListHashMap() {
+        HashMap<String, List<String>> res = new HashMap<String, List<String>>();
+
+        res.put("Is my data safe?", createArrayListWithOneItem("Sure. It is. Yay."));
+        res.put("How many times should I look at this app?", createArrayListWithOneItem("Depending on the Axon you do not have to look at it at all"));
+        res.put("How can I contribute?", createArrayListWithOneItem("Development guides can be found on the webpage"));
+        res.put("Are we alone?", createArrayListWithOneItem("Most probably not"));
+        return res;
+    }
+
+    private ArrayList<String> createArrayListWithOneItem(String item) {
+        ArrayList<String> res = new ArrayList<String>();
+        res.add(item);
+        return res;
+    }
 
 }
