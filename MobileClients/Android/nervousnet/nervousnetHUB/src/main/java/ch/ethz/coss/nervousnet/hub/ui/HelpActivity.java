@@ -28,6 +28,9 @@
 package ch.ethz.coss.nervousnet.hub.ui;
 
 import android.os.Bundle;
+import android.webkit.WebView;
+import android.widget.TabHost;
+
 import ch.ethz.coss.nervousnet.hub.R;
 
 /**
@@ -41,6 +44,24 @@ public class HelpActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_help);
 
+		TabHost host = (TabHost)findViewById(R.id.tabHostHelp);
+		host.setup();
+
+		//Tab 1
+		TabHost.TabSpec spec = host.newTabSpec("Getting Started");
+		spec.setContent(R.id.tab_gettingStarted);
+		spec.setIndicator("Getting Started");
+		host.addTab(spec);
+
+		//Tab 2
+		spec = host.newTabSpec("FAQ");
+		spec.setContent(R.id.tab_FAQ);
+		spec.setIndicator("FAQ");
+		host.addTab(spec);
+
+        //WebView
+        WebView webview = (WebView) findViewById(R.id.gettingStarted_webView);
+        webview.loadUrl("file:///android_asset/getting_started.html");
 	}
 
 }

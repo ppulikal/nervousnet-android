@@ -65,9 +65,9 @@ public class AnalyticsActivity extends BaseActivity {
 
         /* Show a dialog to make user select from/to dates and times */
         LayoutInflater inflater = getLayoutInflater();
-        View dialoglayout = inflater.inflate(R.layout.time_range_plots_input,null);
+        View dialogLayout = inflater.inflate(R.layout.time_range_plots_input,null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(dialoglayout);
+        builder.setView(dialogLayout);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Toast.makeText(AnalyticsActivity.this, "Clicked OK", Toast.LENGTH_SHORT).show();
@@ -79,15 +79,15 @@ public class AnalyticsActivity extends BaseActivity {
                     }
                 });
 
-        TimePicker fromTimePicker = ((TimePicker) dialoglayout.findViewById(R.id.fromTimePicker));
-        TimePicker toTimePicker = ((TimePicker) dialoglayout.findViewById(R.id.toTimePicker));
-        DatePicker fromDatePicker = ((DatePicker) dialoglayout.findViewById(R.id.fromDatePicker));
-        DatePicker toDatePicker = ((DatePicker) dialoglayout.findViewById(R.id.toDatePicker));
+        TimePicker fromTimePicker = ((TimePicker) dialogLayout.findViewById(R.id.fromTimePicker));
+        TimePicker toTimePicker = ((TimePicker) dialogLayout.findViewById(R.id.toTimePicker));
+        DatePicker fromDatePicker = ((DatePicker) dialogLayout.findViewById(R.id.fromDatePicker));
+        DatePicker toDatePicker = ((DatePicker) dialogLayout.findViewById(R.id.toDatePicker));
 
         fromTimePicker.setIs24HourView(true);
         toTimePicker.setIs24HourView(true);
 
-        TabHost tabHost = (TabHost)dialoglayout.findViewById(R.id.tabHost);
+        TabHost tabHost = (TabHost)dialogLayout.findViewById(R.id.tabHost);
         tabHost.setup();
 
         TabHost.TabSpec tab1 = tabHost.newTabSpec("From");
