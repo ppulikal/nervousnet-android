@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,15 +15,15 @@ import ch.ethz.coss.nervousnet.hub.R;
 
 public class FaqExpandableListAdapter extends BaseExpandableListAdapter {
 
-    public FaqExpandableListAdapter(Context context, List<String> questionList,
-                                       HashMap<String, List<String>> answerList) {
+    public FaqExpandableListAdapter(Context context, ArrayList<String> questionList,
+                                       ArrayList<String> answerList) {
         this.context = context;
         this.questionList = questionList;
         this.answerList = answerList;
     }
 
-    private List<String> questionList;
-    private HashMap<String, List<String>> answerList;
+    private ArrayList<String> questionList;
+    private ArrayList<String> answerList;
     Context context;
 
     @Override
@@ -32,8 +33,7 @@ public class FaqExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.answerList.get(this.questionList.get(groupPosition))
-                .size();
+        return 1;
     }
 
     @Override
@@ -43,8 +43,7 @@ public class FaqExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.answerList.get(this.questionList.get(groupPosition))
-                .get(childPosition);
+        return this.answerList.get(groupPosition);
     }
 
     @Override

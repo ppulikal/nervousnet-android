@@ -78,16 +78,17 @@ public class HelpActivity extends BaseActivity {
 
         //FAQ
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.lstView_faq);
-        final HashMap<String,List<String>> expandableListDetail = getFAQList();
-        final ArrayList<String> expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        ArrayList<ArrayList<String>> faqList = getFAQList();
+        ArrayList<String> listQ = faqList.get(0);
+        ArrayList<String> listA = faqList.get(1);
 
-        FaqExpandableListAdapter expandableListAdapter = new FaqExpandableListAdapter(this, expandableListTitle, expandableListDetail);
+        FaqExpandableListAdapter expandableListAdapter = new FaqExpandableListAdapter(this, listQ, listA);
         expandableListView.setAdapter(expandableListAdapter);
 
 	}
 
     @NonNull
-    private HashMap<String, List<String>> getFAQList() {
+    private ArrayList<ArrayList<String>> getFAQList() {
 
 
         InputStream is = getResources().openRawResource(R.raw.faq);
@@ -116,22 +117,19 @@ public class HelpActivity extends BaseActivity {
             listA.add(mA.group(1));
         }
 
-        HashMap<String, List<String>> res = new HashMap<String, List<String>>();
         if (listA.size() != listQ.size()){
-            res.put("Unequal Q and A sizes", createArrayListWithOneItem(" "));
-            return res;
+            listQ.clear();
+            listA.clear();
+            listQ.add("Unequal Q and A sizes");
+            listA.add("Please format faq.xml");
         }
 
-        for (int i = 0; i < listA.size(); ++i) {
-            res.put(listQ.get(i), createArrayListWithOneItem(listA.get(i)));
-        }
+        ArrayList<ArrayList<String> > res = new ArrayList<ArrayList<String>>();
+        res.add(listQ);
+        res.add(listA);
         return res;
+
     }
 
-    private ArrayList<String> createArrayListWithOneItem(String item) {
-        ArrayList<String> res = new ArrayList<String>();
-        res.add(item);
-        return res;
-    }
 
 }
