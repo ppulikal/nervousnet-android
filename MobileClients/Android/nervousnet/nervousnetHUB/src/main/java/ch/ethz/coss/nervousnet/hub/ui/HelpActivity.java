@@ -27,18 +27,21 @@
 
 package ch.ethz.coss.nervousnet.hub.ui;
 
+import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.View;
 import android.webkit.WebView;
 import android.widget.ExpandableListView;
 import android.widget.TabHost;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.FaqExpandableListAdapter;
@@ -75,7 +78,7 @@ public class HelpActivity extends BaseActivity {
 
         //FAQ
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.lstView_faq);
-        final HashMap<String,List<String>> expandableListDetail = getStringListHashMap();
+        final HashMap<String,List<String>> expandableListDetail = getFAQList();
         final ArrayList<String> expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
 
         FaqExpandableListAdapter expandableListAdapter = new FaqExpandableListAdapter(this, expandableListTitle, expandableListDetail);
@@ -84,13 +87,44 @@ public class HelpActivity extends BaseActivity {
 	}
 
     @NonNull
-    private HashMap<String, List<String>> getStringListHashMap() {
-        HashMap<String, List<String>> res = new HashMap<String, List<String>>();
+    private HashMap<String, List<String>> getFAQList() {
 
-        res.put("Is my data safe?", createArrayListWithOneItem("Sure. It is. Yay."));
-        res.put("How many times should I look at this app?", createArrayListWithOneItem("Depending on the Axon you do not have to look at it at all"));
-        res.put("How can I contribute?", createArrayListWithOneItem("Development guides can be found on the webpage"));
-        res.put("Are we alone?", createArrayListWithOneItem("Most probably not"));
+
+        InputStream is = getResources().openRawResource(R.raw.faq);
+        Scanner s = new Scanner(is).useDelimiter("\\A");
+        String line = s.hasNext() ? s.next() : "";
+
+
+//        String line = "your k<q>kk insevure an</q>d with aaa but not kkk is <q>it silver aaa</q> confess <a> screw ks </a> ano <a> cros </a>";
+        String patternQ = "<q>(.+?)</q>";
+        String patternA = "<a>(.+?)</a>";
+
+        // Create a Pattern object
+        Pattern pQ = Pattern.compile(patternQ);
+        Pattern pA = Pattern.compile(patternA);
+
+        // Now create matcher object.
+        Matcher mQ = pQ.matcher(line);
+        ArrayList<String> listQ = new ArrayList<String>();
+        while(mQ.find( )) {
+            listQ.add(mQ.group(1));
+        }
+
+        Matcher mA = pA.matcher(line);
+        ArrayList<String> listA = new ArrayList<String>();
+        while(mA.find( )) {
+            listA.add(mA.group(1));
+        }
+
+        HashMap<String, List<String>> res = new HashMap<String, List<String>>();
+        if (listA.size() != listQ.size()){
+            res.put("Unequal Q and A sizes", createArrayListWithOneItem(" "));
+            return res;
+        }
+
+        for (int i = 0; i < listA.size(); ++i) {
+            res.put(listQ.get(i), createArrayListWithOneItem(listA.get(i)));
+        }
         return res;
     }
 

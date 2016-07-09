@@ -9,6 +9,8 @@
         android:layout_height="wrap_content"
         android:text="How many times is it?"
         android:textStyle="italic"
-        android:padding="20dp"
+        android:paddingTop="@dimen/padding_faq"
+        android:paddingBottom="@dimen/padding_faq"
+        android:paddingLeft="@dimen/paddingLeftA_faq"
         />
 </RelativeLayout>

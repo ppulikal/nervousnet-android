@@ -20,5 +20,8 @@
     <dimen name="griditem_image_height">90dp</dimen>
     <dimen name="griditem_label_size">14sp</dimen>
     <dimen name="switch_label_size">14sp</dimen>
+    <dimen name="padding_faq">10dp</dimen>
+    <dimen name="paddingLeftQ_faq">40dp</dimen>
+    <dimen name="paddingLeftA_faq">50dp</dimen>
 
 </resources>
