@@ -40,6 +40,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 /**
  * @author prasad
@@ -55,8 +56,7 @@ public class AnalyticsActivity extends BaseActivity {
 
 		ListView sensList = (ListView) findViewById(R.id.sensors_list_SensStatChart);
 
-		String[] sensorArr = {"Accelerometer","Light","Noise","Gyro","Gravity"};
-		ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, sensorArr);
+		ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, NervousnetVMConstants.sensor_labels);
 		sensList.setAdapter(modeAdapter);
 	}
 
