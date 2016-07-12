@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LocationReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -44,10 +45,7 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 public class LocationFragment extends BaseFragment {
 
 	public LocationFragment() {
-	}
-
-	public LocationFragment(int type) {
-		super(type);
+		super(LibConstants.SENSOR_LOCATION);
 	}
 
 	@Override

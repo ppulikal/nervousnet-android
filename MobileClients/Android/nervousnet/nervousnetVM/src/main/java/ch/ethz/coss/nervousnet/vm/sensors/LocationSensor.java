@@ -26,7 +26,9 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.vm.sensors;
 
+import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -34,6 +36,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -67,6 +70,7 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 
 	@Override
 	public boolean start() {
+
 
 		if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
 			Log.d(LOG_TAG, "Cancelled Starting Location sensor as Sensor is not available.");
@@ -133,6 +137,8 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 		return true;
 	}
 
+	final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
 	@TargetApi(23)
 	public void startLocationCollection() {
 		Log.d(LOG_TAG, "startLocationCollection ");
@@ -142,6 +148,8 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 						android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
 				&& ContextCompat.checkSelfPermission(mContext,
 						android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			ActivityCompat.requestPermissions((Activity)mContext, new String[]{"Manifest.permission.ACCESS_FINE_LOCATION"}, REQUEST_CODE_ASK_PERMISSIONS);
+
 			return;
 		}
 

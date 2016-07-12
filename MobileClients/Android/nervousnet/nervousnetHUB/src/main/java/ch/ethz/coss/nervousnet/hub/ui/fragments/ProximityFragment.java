@@ -36,17 +36,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class ProximityFragment extends BaseFragment {
 
 	public ProximityFragment() {
+		super(LibConstants.SENSOR_PROXIMITY);
 	}
 
-	public ProximityFragment(int type) {
-		super(type);
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

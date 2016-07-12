@@ -38,6 +38,7 @@ import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.AccelerometerSensorView;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
@@ -46,11 +47,9 @@ public class AccelFragment extends BaseFragment {
 	AccelerometerSensorView accelView;
 	
 	public AccelFragment() {
+		super(LibConstants.SENSOR_ACCELEROMETER);
 	}
 
-	public AccelFragment(int type) {
-		super(type);
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -270,28 +270,28 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
 			switch (i) {
 			case 0:
-				fragment = new AccelFragment(0);
+				fragment = new AccelFragment();
 				break;
 			case 1:
-				fragment = new BatteryFragment(1);
+				fragment = new BatteryFragment();
 				break;
 			case 2:
-				fragment = new GyroFragment(2);
+				fragment = new GyroFragment();
 				break;
 			case 3:
-				fragment = new LocationFragment(3);
+				fragment = new LocationFragment();
 				break;
 			case 4:
-				fragment = new LightFragment(4);
+				fragment = new LightFragment();
 				break;
 			case 5:
-				fragment = new NoiseFragment(5);
+				fragment = new NoiseFragment();
 				break;
 			case 6:
-				fragment = new ProximityFragment(6);
+				fragment = new ProximityFragment();
 				break;
 			default:
-				fragment = new DummyFragment(-1);
+				fragment = new DummyFragment();
 				break;
 			}
 			return fragment;

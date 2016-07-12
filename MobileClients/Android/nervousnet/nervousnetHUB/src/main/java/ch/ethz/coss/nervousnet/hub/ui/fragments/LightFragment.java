@@ -37,6 +37,7 @@ import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.LightSensorView;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -45,11 +46,9 @@ public class LightFragment extends BaseFragment {
 	private LightSensorView luxViz;
 	
 	public LightFragment() {
+		super(LibConstants.SENSOR_LIGHT);
 	}
 
-	public LightFragment(int type) {
-		super(type);
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

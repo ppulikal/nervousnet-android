@@ -39,6 +39,7 @@ import ch.ethz.coss.nervousnet.hub.ui.views.AccelerometerSensorView;
 import ch.ethz.coss.nervousnet.hub.ui.views.BatterySensorView;
 import ch.ethz.coss.nervousnet.lib.BatteryReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
@@ -46,11 +47,10 @@ public class BatteryFragment extends BaseFragment {
 	BatterySensorView batView;
 	
 	public BatteryFragment() {
+		super(LibConstants.SENSOR_BATTERY);
 	}
 
-	public BatteryFragment(int type) {
-		super(type);
-	}
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

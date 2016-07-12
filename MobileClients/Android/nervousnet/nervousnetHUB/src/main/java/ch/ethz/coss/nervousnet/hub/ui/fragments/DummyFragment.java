@@ -46,8 +46,8 @@ public class DummyFragment extends BaseFragment {
 	/**
 	 * 
 	 */
-	public DummyFragment(int type) {
-		super(type);
+	public DummyFragment() {
+	super(-1);
 	}
 
 	@Override

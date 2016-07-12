@@ -37,6 +37,7 @@ import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.DecibelMeterView;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -46,11 +47,9 @@ public class NoiseFragment extends BaseFragment {
 	private float db;
 	private float newDb;
 	public NoiseFragment() {
+		super(LibConstants.SENSOR_NOISE);
 	}
 
-	public NoiseFragment(int type) {
-		super(type);
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

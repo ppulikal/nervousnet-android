@@ -38,6 +38,7 @@ import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.GyroscopeSensorView;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
+import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
@@ -49,10 +50,7 @@ public class GyroFragment extends BaseFragment {
 	GyroscopeSensorView gyroView;
 	
 	public GyroFragment() {
-	}
-
-	public GyroFragment(int type) {
-		super(type);
+		super(LibConstants.SENSOR_GYROSCOPE);
 	}
 
 	@Override
