@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "ch.ethz.coss.nervousnet.hub"
         minSdkVersion 17
-        targetSdkVersion 23
+        targetSdkVersion 22
     }
     buildTypes {
         release {

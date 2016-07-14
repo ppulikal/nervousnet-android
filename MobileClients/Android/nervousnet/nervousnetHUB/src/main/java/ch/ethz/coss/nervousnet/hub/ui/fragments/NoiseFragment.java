@@ -29,11 +29,18 @@
  */
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v13.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.DecibelMeterView;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
@@ -41,6 +48,7 @@ import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class NoiseFragment extends BaseFragment {
 	private DecibelMeterView noiseView;
@@ -83,9 +91,29 @@ public class NoiseFragment extends BaseFragment {
 		noiseView.setDecibleValue(newDb);
 	}
 
+	final private int REQUEST_CODE_ASK_PERMISSIONS_NOISE = 2;
+
 	@Override
 	public void handleError(ErrorReading reading) {
-		// TODO Auto-generated method stub
+		NNLog.d("NoiseFragment", "handleError called");
+		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_noise);
+		status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
+
+//		Toast.makeText(getActivity(),"Error Code = "+Build.VERSION.SDK_INT, Toast.LENGTH_SHORT).show();
+
+//		if (Build.VERSION.SDK_INT >= 23) {
+			if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+				if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.RECORD_AUDIO)) {
+					ActivityCompat.requestPermissions(
+							getActivity(),
+							new String[]{Manifest.permission.RECORD_AUDIO},
+							REQUEST_CODE_ASK_PERMISSIONS_NOISE
+					);
+				}
+			}
+			return;
+//		}
+
 
 	}
 }

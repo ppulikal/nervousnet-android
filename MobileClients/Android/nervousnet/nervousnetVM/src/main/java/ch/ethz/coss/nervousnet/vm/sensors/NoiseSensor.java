@@ -26,12 +26,17 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.vm.sensors;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder.AudioSource;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -61,9 +66,11 @@ public class NoiseSensor extends BaseSensor {
 	private int fftlen;
 	private int buffersize;
 	private AudioRecord audioRecord;
+	private Context mContext;
 
-	public NoiseSensor(byte sensorState) {
+	public NoiseSensor(byte sensorState, Context context) {
 		this.sensorState = sensorState;
+		this.mContext = context;
 
 	}
 
@@ -253,6 +260,13 @@ public class NoiseSensor extends BaseSensor {
 		}
 		else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
 			NNLog.d(LOG_TAG, "Cancelled NoiseSensor sensor as Sensor state is switched off.");
+			return false;
+		}
+
+		if (Build.VERSION.SDK_INT >= 23
+				&& ContextCompat.checkSelfPermission(mContext,
+				Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+			setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED);
 			return false;
 		}
 

@@ -27,11 +27,15 @@
 
 package ch.ethz.coss.nervousnet.hub.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v13.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -85,10 +89,38 @@ public class CollectionRateSettingsActivity extends BaseActivity {
 				String optionSelected = option_array[itemClicked];
 				((Application)getApplication()).nn_VM.updateAllSensorConfig(
 						(byte) itemClicked);
+
 				finish();
 				startActivity(getIntent());
+				requestPermissions();
 			}
 		});
 		return builder.create();
 	}
+
+
+	final private int REQUEST_CODE_ASK_PERMISSIONS_LOC = 1;
+	final private int REQUEST_CODE_ASK_PERMISSIONS_NOISE = 2;
+
+	public void requestPermissions(){
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+				ActivityCompat.requestPermissions(
+						this,
+						new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+						REQUEST_CODE_ASK_PERMISSIONS_LOC
+				);
+			}
+		}
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+			if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
+				ActivityCompat.requestPermissions(
+						this,
+						new String[]{Manifest.permission.RECORD_AUDIO},
+						REQUEST_CODE_ASK_PERMISSIONS_NOISE
+				);
+			}
+		}
+	}
+
 }

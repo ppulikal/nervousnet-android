@@ -36,6 +36,10 @@ public class ErrorReading extends SensorReading {
 
 	private String[] errorValues = new String[3];
 
+	public ErrorReading() {
+		this.type = LibConstants.ERROR;
+	}
+
 	public ErrorReading(String[] values) {
 		this.type = LibConstants.ERROR;
 		this.errorValues = values;

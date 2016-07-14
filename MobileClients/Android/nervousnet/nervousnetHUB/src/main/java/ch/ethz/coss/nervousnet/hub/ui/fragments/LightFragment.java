@@ -83,7 +83,9 @@ public class LightFragment extends BaseFragment {
 
 	@Override
 	public void handleError(ErrorReading reading) {
-		// TODO Auto-generated method stub
+		NNLog.d("LightFragment", "handleError called");
+		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_light);
+		status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
 
 	}
 

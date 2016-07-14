@@ -29,12 +29,19 @@
  */
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v13.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
@@ -86,12 +93,25 @@ public class LocationFragment extends BaseFragment {
 		}
 
 	}
+	final private int REQUEST_CODE_ASK_PERMISSIONS_LOC = 1;
+	final private int REQUEST_CODE_ASK_PERMISSIONS_NOISE = 2;
 
 	@Override
 	public void handleError(ErrorReading reading) {
 		NNLog.d("LocationFragment", "handleError called");
 		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_loc);
 		status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
+
+		if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+				ActivityCompat.requestPermissions(
+						getActivity(),
+						new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+						REQUEST_CODE_ASK_PERMISSIONS_LOC
+				);
+			}
+		}
+
 	}
 
 }

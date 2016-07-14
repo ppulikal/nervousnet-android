@@ -162,8 +162,8 @@ public class Application extends android.app.Application {
 	// nn_VM.storeSensorAsync(sensorData);
 	// }
 
-	@SuppressWarnings("rawtypes")
-	public void readSensorData(int type, long startTime, long endTime, ArrayList list) {
-		nn_VM.getSensorReadings(type, startTime, endTime, list);
-	}
+//	@SuppressWarnings("rawtypes")
+//	public void readSensorData(int type, long startTime, long endTime, ArrayList list) {
+//		nn_VM.getSensorReadings(type, startTime, endTime, list);
+//	}
 }

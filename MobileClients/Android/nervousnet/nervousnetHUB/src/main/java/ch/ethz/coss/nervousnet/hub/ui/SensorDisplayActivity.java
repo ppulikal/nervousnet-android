@@ -341,18 +341,28 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 		}
 	}
 
-	protected void updateStatus(SensorReading reading, int index) {
+	protected boolean updateStatus(SensorReading reading, int index) {
 
 		BaseFragment fragment = (BaseFragment) sapAdapter.getFragment(index);
 		NNLog.d("SensorDisplayActivity", "Inside updateStatus, index =  " + index);
 
 		if (reading != null) {
-			if (reading instanceof ErrorReading)
-				fragment.handleError((ErrorReading) reading);
-			else
-				fragment.updateReadings(reading);
-		}
+			if (reading instanceof ErrorReading) {
+				ErrorReading error = 	(ErrorReading) reading;
 
+				fragment.handleError((ErrorReading) reading);
+				if((error.getErrorCode() == 103 )) {
+					return true;
+				}
+				return false;
+			}
+			else {
+				fragment.updateReadings(reading);
+				return false;
+			}
+
+		}
+		return false;
 		// else
 		// fragment.handleError(new ErrorReading(new String[]{"100", "Reading is
 		// null", ""}));
@@ -365,13 +375,20 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 	}
 
 	void startRepeatingTask() {
+
 		m_statusChecker = new Runnable() {
 			@Override
 			public void run() {
-
+				boolean errorFlag = false;
 				NNLog.d("SensorDisplayActivity", "before updating");
-				if (mService != null)
-					update(); // this function can change value of m_interval.
+				if (mService != null) {
+					errorFlag = update(); // this function can change value of m_interval.
+
+//					if(errorFlag) {
+//						stopRepeatingTask();
+//					}
+				}
+
 				else {
 					NNLog.d("SensorDisplayActivity", "mService is null");
 
@@ -390,7 +407,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 						}
 					});
 
-					stopRepeatingTask();
+
 				}
 
 				m_handler.postDelayed(m_statusChecker, m_interval);
@@ -406,42 +423,46 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
 	}
 
-	protected void update() {
+	protected boolean update() {
 		try {
 			int index = viewPager.getCurrentItem();
 			NNLog.d("SensorDisplayActivity", "Inside update : index  = " + index);
-
+			boolean errorFlag;
 			switch (index) {
 			case 0:
-				updateStatus(mService.getReading(LibConstants.SENSOR_ACCELEROMETER), index);
+				errorFlag = updateStatus(mService.getLatestReading(LibConstants.SENSOR_ACCELEROMETER), index);
 				break;
 			case 1:
-				updateStatus(mService.getReading(LibConstants.SENSOR_BATTERY), index);
+				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_BATTERY), index);
 				break;
 			case 2:
-				updateStatus(mService.getReading(LibConstants.SENSOR_GYROSCOPE), index);
+				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_GYROSCOPE), index);
 				break;
 			case 3:
-				updateStatus(mService.getReading(LibConstants.SENSOR_LOCATION), index);
+				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_LOCATION), index);
 				break;
 			case 4:
-				updateStatus(mService.getReading(LibConstants.SENSOR_LIGHT), index);
+				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_LIGHT), index);
 				break;
 			case 5:
-				updateStatus(mService.getReading(LibConstants.SENSOR_NOISE), index);
+				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_NOISE), index);
 				break;
 			case 6:
 				// Pressure
-				updateStatus(mService.getReading(LibConstants.SENSOR_PROXIMITY), index);
+				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_PROXIMITY), index);
 				break;
 
 			case 11:
 				// Proximity
+				errorFlag = false;
 				break;
+
+				default:
+					return false;
 			}
 
 			viewPager.getAdapter().notifyDataSetChanged();
-
+			return errorFlag;
 			// }
 			// catch (RemoteException e) {
 			// // TODO Auto-generated catch block
@@ -449,6 +470,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return true;
 		}
 	}
 

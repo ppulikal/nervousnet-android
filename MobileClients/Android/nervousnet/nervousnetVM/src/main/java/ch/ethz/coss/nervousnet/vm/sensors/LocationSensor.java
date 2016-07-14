@@ -137,7 +137,6 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 		return true;
 	}
 
-	final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
 	@TargetApi(23)
 	public void startLocationCollection() {
@@ -148,8 +147,8 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 						android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
 				&& ContextCompat.checkSelfPermission(mContext,
 						android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-			ActivityCompat.requestPermissions((Activity)mContext, new String[]{"Manifest.permission.ACCESS_FINE_LOCATION"}, REQUEST_CODE_ASK_PERMISSIONS);
-
+//			ActivityCompat.requestPermissions((Activity)mContext, new String[]{"Manifest.permission.ACCESS_FINE_LOCATION"}, REQUEST_CODE_ASK_PERMISSIONS);
+			setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED);
 			return;
 		}
 

@@ -86,6 +86,8 @@ public abstract class SensorReading implements Parcelable {
 				return new BatteryReading(in);
 			} else if (className.equals(DeviceReading.class.getName())) {
 				return new DeviceReading(in);
+			} else if (className.equals(ErrorReading.class.getName())) {
+				return new ErrorReading(in);
 			} else if (className.equals(GyroReading.class.getName())) {
 				return new GyroReading(in);
 			} else if (className.equals(LightReading.class.getName())) {

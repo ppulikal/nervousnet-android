@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.RemoteException;
 import android.util.Log;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.BatteryReading;
@@ -17,6 +18,7 @@ import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.LocationReading;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
+import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
@@ -235,61 +237,72 @@ public class SQLHelper implements BaseSensorListener {
 		return false;
 	}
 
-	public synchronized void getSensorReadings(int type, long startTime, long endTime, ArrayList<SensorReading> list) {
+	public synchronized void getSensorReadings(int type, long startTime, long endTime, RemoteCallback cb) {
 		QueryBuilder<?> qb = null;
-
+		ArrayList<SensorReading> list = new ArrayList<SensorReading>();
+		ArrayList<SensorDataImpl> aList;
+		Iterator<SensorDataImpl> iterator;
 		switch (type) {
 		case LibConstants.SENSOR_ACCELEROMETER:
 			qb = accDao.queryBuilder();
 			qb.where(AccelDataDao.Properties.TimeStamp.between(startTime, endTime));
-			@SuppressWarnings("unchecked")
-			ArrayList<SensorDataImpl> aList = (ArrayList<SensorDataImpl>) qb.list();
-			Iterator<SensorDataImpl> iterator = aList.iterator();
+			aList = (ArrayList<SensorDataImpl>) qb.list();
+			iterator = aList.iterator();
 			while (iterator.hasNext()) {
 				list.add(convertSensorDataToSensorReading(iterator.next()));
 			}
-
 			NNLog.d(LOG_TAG, "List size = " + list.size());
 
-			return;
-		case LibConstants.SENSOR_BATTERY:
-			qb = battDao.queryBuilder();
-			qb.where(BatteryDataDao.Properties.TimeStamp.between(startTime, endTime));
+			try {
+				cb.success(list);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			break;
+//		case LibConstants.SENSOR_BATTERY:
+//			qb = battDao.queryBuilder();
+//			qb.where(BatteryDataDao.Properties.TimeStamp.between(startTime, endTime));
+//			aList = (ArrayList<SensorDataImpl>) qb.list();
+//			iterator = aList.iterator();
+//			while (iterator.hasNext()) {
+//				list.add(convertSensorDataToSensorReading(iterator.next()));
+//			}
+//
+//			return list;
+//		case LibConstants.DEVICE_INFO:
+//
+//			// TODO
+//			return;
+//		case LibConstants.SENSOR_LOCATION:
+//			qb = locDao.queryBuilder();
+//			qb.where(LocationDataDao.Properties.TimeStamp.between(startTime, endTime));
+//
+//			return;
+//
+//		case LibConstants.SENSOR_GYROSCOPE:
+//			qb = gyroDao.queryBuilder();
+//			qb.where(GyroDataDao.Properties.TimeStamp.between(startTime, endTime));
+//
+//			return;
+//
+//		case LibConstants.SENSOR_LIGHT:
+//			qb = lightDao.queryBuilder();
+//			qb.where(LightDataDao.Properties.TimeStamp.between(startTime, endTime));
+//
+//			return;
+//
+//		case LibConstants.SENSOR_NOISE:
+//			qb = noiseDao.queryBuilder();
+//			qb.where(NoiseDataDao.Properties.TimeStamp.between(startTime, endTime));
+//
+//			return;
+//
+//		case LibConstants.SENSOR_PROXIMITY:
+//			// TODO
+//			return;
 
-			return;
-		case LibConstants.DEVICE_INFO:
-
-			// TODO
-			return;
-		case LibConstants.SENSOR_LOCATION:
-			qb = locDao.queryBuilder();
-			qb.where(LocationDataDao.Properties.TimeStamp.between(startTime, endTime));
-
-			return;
-
-		case LibConstants.SENSOR_GYROSCOPE:
-			qb = gyroDao.queryBuilder();
-			qb.where(GyroDataDao.Properties.TimeStamp.between(startTime, endTime));
-
-			return;
-
-		case LibConstants.SENSOR_LIGHT:
-			qb = lightDao.queryBuilder();
-			qb.where(LightDataDao.Properties.TimeStamp.between(startTime, endTime));
-
-			return;
-
-		case LibConstants.SENSOR_NOISE:
-			qb = noiseDao.queryBuilder();
-			qb.where(NoiseDataDao.Properties.TimeStamp.between(startTime, endTime));
-
-			return;
-
-		case LibConstants.SENSOR_PROXIMITY:
-			// TODO
-			return;
-
-
+			default:
+				break;
 		}
 
 	}

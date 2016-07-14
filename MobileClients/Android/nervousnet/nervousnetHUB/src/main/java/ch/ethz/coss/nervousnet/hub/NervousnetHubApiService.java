@@ -34,9 +34,13 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.widget.Toast;
+
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
+import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVM;
@@ -82,19 +86,30 @@ public class NervousnetHubApiService extends Service {
 		return mBinder;
 	}
 
+
+
 	private final NervousnetRemote.Stub mBinder = new NervousnetRemote.Stub() {
 
 		@Override
-		public SensorReading getReading(int sensorType) throws RemoteException {
+		public SensorReading getLatestReading(long sensorType) throws RemoteException {
 			NNLog.d(LOG_TAG, "Sensor getReading() of Type = " + sensorType + " requested ");
 			return ((Application) getApplication()).nn_VM.getLatestReading(sensorType);
 		}
 
 		@Override
-		public void getReadings(int sensorType, long startTime, long endTime, List list) {
+		public void getReading(long sensorType,  RemoteCallback cb) throws RemoteException {
+			NNLog.d(LOG_TAG, "Sensor getReading() with callback of Type = " + sensorType + " requested  "+cb);
+//			return ((Application) getApplication()).nn_VM.getLatestReading(sensorType);
+			((Application) getApplication()).nn_VM.getReading(sensorType, cb);
+		}
+
+
+		@Override
+		public void getReadings(long sensorType, long startTime, long endTime, RemoteCallback cb) {
 			NNLog.d(LOG_TAG, "getReadings of Type = " + sensorType + " requested ");
-			((Application) getApplicationContext()).nn_VM.getSensorReadings(sensorType, startTime, endTime,
-					(ArrayList) list);
+			((Application) getApplication()).nn_VM.getReadings(sensorType,startTime, endTime, cb);
+//			((Application) getApplicationContext()).nn_VM.getSensorReadings(sensorType, startTime, endTime,
+//					(ArrayList) list);
 
 		}
 
