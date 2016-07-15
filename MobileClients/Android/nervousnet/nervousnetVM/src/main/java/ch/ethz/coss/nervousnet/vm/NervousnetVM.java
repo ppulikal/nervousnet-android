@@ -26,6 +26,7 @@ import ch.ethz.coss.nervousnet.vm.sensors.GyroSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.LightSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.LocationSensor;
 import ch.ethz.coss.nervousnet.vm.sensors.NoiseSensor;
+import ch.ethz.coss.nervousnet.vm.sensors.ProximitySensor;
 import ch.ethz.coss.nervousnet.vm.storage.Config;
 import ch.ethz.coss.nervousnet.vm.storage.SQLHelper;
 import ch.ethz.coss.nervousnet.vm.storage.SensorConfig;
@@ -114,13 +115,11 @@ public class NervousnetVM {
 				sensor = new NoiseSensor(manager.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)
 						? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE, context);
 			}
-//			else if(sensorConfig.getID() ==
-//			 NervousnetVMConstants.sensor_ids[6]) { //Proximity
-//			 sensor = new
-//			 ProximitySensor(manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
-//			 ? sensorConfig.getState() :
-//			 NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
-//			 }
+			else if(sensorConfig.getID() ==
+			 NervousnetVMConstants.sensor_ids[6]) { //Proximity
+			 sensor = new ProximitySensor(sensorManager,manager.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
+					 ? sensorConfig.getState() : NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE);
+			 }
 
 			if (sensor != null) {
 				sensor.addListener(sqlHelper);

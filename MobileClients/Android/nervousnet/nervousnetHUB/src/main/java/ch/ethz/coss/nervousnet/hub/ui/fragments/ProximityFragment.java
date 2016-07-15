@@ -37,6 +37,8 @@ import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
+import ch.ethz.coss.nervousnet.lib.LightReading;
+import ch.ethz.coss.nervousnet.lib.ProximityReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
@@ -49,33 +51,39 @@ public class ProximityFragment extends BaseFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_pressure, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_proximity, container, false);
 
 		return rootView;
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.ethz.coss.nervousnet.sample.BaseFragment#updateReadings(ch.ethz.coss.
-	 * nervousnet.vm.SensorReading)
-	 */
+         * (non-Javadoc)
+         *
+         * @see
+         * ch.ethz.coss.nervousnet.sample.BaseFragment#updateReadings(ch.ethz.coss.
+         * nervousnet.vm.SensorReading)
+         */
 	@Override
 	public void updateReadings(SensorReading reading) {
-
-		NNLog.d("PressureFragment", "Inside updateReadings");
+		NNLog.d("ProximityFragment", "Inside updateReadings");
 
 		if (reading instanceof ErrorReading) {
+
+			NNLog.d("ProximityFragment", "Inside updateReadings - ErrorReading");
 			handleError((ErrorReading) reading);
-			return;
+		} else {
+			TextView prox = (TextView) getActivity().findViewById(R.id.proxValue);
+			prox.setText("" + ((ProximityReading) reading).getProximity());
+
+
 		}
-		//TODO
 	}
 
 	@Override
 	public void handleError(ErrorReading reading) {
-		// TODO Auto-generated method stub
+		NNLog.d("ProximityFragment", "handleError called");
+		TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_prox);
+		status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
 
 	}
 
