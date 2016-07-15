@@ -18,6 +18,7 @@ import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.LocationReading;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
+import ch.ethz.coss.nervousnet.lib.ProximityReading;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -27,6 +28,7 @@ import ch.ethz.coss.nervousnet.vm.storage.DaoMaster.DevOpenHelper;
 import de.greenrobot.dao.query.QueryBuilder;
 
 public class SQLHelper implements BaseSensorListener {
+
 	private static final String LOG_TAG = SQLHelper.class.getSimpleName();
 	Config config = null;
 	DaoMaster daoMaster;
@@ -158,23 +160,8 @@ public class SQLHelper implements BaseSensorListener {
 			this.type = type;
 		}
 
-//		@Override
-//		protected Void doInBackground(ArrayList<SensorDataImpl> params) {
-//
-//			if (params != null && params.length > 0) {
-//
-//				// for (int i = 0; i < params.length; i++) {
-//				// Log.d(LOG_TAG, "doInBackground (params[i] = " + params[i] +
-//				// ")");
-//				storeSensor(type, Arrays.asList(params));
-//				// }
-//			}
-//			return null;
-//		}
-
 		@Override
 		protected Void doInBackground(ArrayList<SensorDataImpl>... params) {
-			// TODO Auto-generated method stub
 			storeSensor(type, params[0]);
 			return null;
 		}
@@ -231,6 +218,8 @@ public class SQLHelper implements BaseSensorListener {
 			noiseDao.insertInTx(sensorDataList);
 			return true;
 		case LibConstants.SENSOR_PROXIMITY:
+			NNLog.d(LOG_TAG, "ProximityData table count = " + proximityDao.count());
+			proximityDao.insertInTx(sensorDataList);
 			return true;
 
 		}
@@ -238,6 +227,8 @@ public class SQLHelper implements BaseSensorListener {
 	}
 
 	public synchronized void getSensorReadings(int type, long startTime, long endTime, RemoteCallback cb) {
+
+		NNLog.d(LOG_TAG, "getSensorReadings with callback");
 		QueryBuilder<?> qb = null;
 		ArrayList<SensorReading> list = new ArrayList<SensorReading>();
 		ArrayList<SensorDataImpl> aList;
@@ -246,63 +237,66 @@ public class SQLHelper implements BaseSensorListener {
 		case LibConstants.SENSOR_ACCELEROMETER:
 			qb = accDao.queryBuilder();
 			qb.where(AccelDataDao.Properties.TimeStamp.between(startTime, endTime));
-			aList = (ArrayList<SensorDataImpl>) qb.list();
-			iterator = aList.iterator();
-			while (iterator.hasNext()) {
-				list.add(convertSensorDataToSensorReading(iterator.next()));
-			}
-			NNLog.d(LOG_TAG, "List size = " + list.size());
 
-			try {
-				cb.success(list);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
+			NNLog.d(LOG_TAG, "SENSOR_ACCELEROMETER List size = " + list.size());
 			break;
-//		case LibConstants.SENSOR_BATTERY:
-//			qb = battDao.queryBuilder();
-//			qb.where(BatteryDataDao.Properties.TimeStamp.between(startTime, endTime));
-//			aList = (ArrayList<SensorDataImpl>) qb.list();
-//			iterator = aList.iterator();
-//			while (iterator.hasNext()) {
-//				list.add(convertSensorDataToSensorReading(iterator.next()));
-//			}
-//
-//			return list;
+		case LibConstants.SENSOR_BATTERY:
+			qb = battDao.queryBuilder();
+			qb.where(BatteryDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+			NNLog.d(LOG_TAG, "SENSOR_BATTERY List size = " + list.size());
+			break;
 //		case LibConstants.DEVICE_INFO:
 //
 //			// TODO
 //			return;
-//		case LibConstants.SENSOR_LOCATION:
-//			qb = locDao.queryBuilder();
-//			qb.where(LocationDataDao.Properties.TimeStamp.between(startTime, endTime));
+		case LibConstants.SENSOR_LOCATION:
+			qb = locDao.queryBuilder();
+			qb.where(LocationDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+			NNLog.d(LOG_TAG, "SENSOR_LOCATION List size = " + list.size());
+
+			break;
 //
-//			return;
+		case LibConstants.SENSOR_GYROSCOPE:
+			qb = gyroDao.queryBuilder();
+			qb.where(GyroDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+
+			NNLog.d(LOG_TAG, "SENSOR_GYROSCOPE");
+
+			break;
 //
-//		case LibConstants.SENSOR_GYROSCOPE:
-//			qb = gyroDao.queryBuilder();
-//			qb.where(GyroDataDao.Properties.TimeStamp.between(startTime, endTime));
+		case LibConstants.SENSOR_LIGHT:
+			qb = lightDao.queryBuilder();
+			qb.where(LightDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+
+			break;
 //
-//			return;
+		case LibConstants.SENSOR_NOISE:
+			qb = noiseDao.queryBuilder();
+			qb.where(NoiseDataDao.Properties.TimeStamp.between(startTime, endTime));
+			break;
 //
-//		case LibConstants.SENSOR_LIGHT:
-//			qb = lightDao.queryBuilder();
-//			qb.where(LightDataDao.Properties.TimeStamp.between(startTime, endTime));
-//
-//			return;
-//
-//		case LibConstants.SENSOR_NOISE:
-//			qb = noiseDao.queryBuilder();
-//			qb.where(NoiseDataDao.Properties.TimeStamp.between(startTime, endTime));
-//
-//			return;
-//
-//		case LibConstants.SENSOR_PROXIMITY:
-//			// TODO
-//			return;
+		case LibConstants.SENSOR_PROXIMITY:
+			qb = proximityDao.queryBuilder();
+			qb.where(ProximityDataDao.Properties.TimeStamp.between(startTime, endTime));
+			break;
 
 			default:
 				break;
+		}
+
+		aList = (ArrayList<SensorDataImpl>) qb.list();
+		iterator = aList.iterator();
+		while (iterator.hasNext()) {
+			list.add(convertSensorDataToSensorReading(iterator.next()));
+		}
+		try {
+			cb.success(list);
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -321,7 +315,7 @@ public class SQLHelper implements BaseSensorListener {
 			return reading;
 
 		case LibConstants.SENSOR_BATTERY:
-			//TODO
+
 			 BatteryData bdata = (BatteryData) data;
 			 reading = new BatteryReading(bdata.getTimeStamp(),
 			 bdata.getPercent(), false, false, false, 0f, 0, (byte)0,
@@ -357,8 +351,10 @@ public class SQLHelper implements BaseSensorListener {
 				return reading;
 
 			case LibConstants.SENSOR_PROXIMITY:
-				// TODO
-				return null;
+				ProximityData pdata = (ProximityData) data;
+				reading = new ProximityReading(pdata.getTimeStamp(), pdata.getProximity());
+				reading.type = LibConstants.SENSOR_PROXIMITY;
+				return reading;
 		default:
 			return null;
 
@@ -440,6 +436,7 @@ public class SQLHelper implements BaseSensorListener {
 			}
 			
 			break;
+
 		case LibConstants.SENSOR_NOISE:
 			NoiseReading noiseReading = (NoiseReading) reading;
 			sensorData = new NoiseData( null, reading.timestamp, noiseReading.getdbValue(), 0l, true);
