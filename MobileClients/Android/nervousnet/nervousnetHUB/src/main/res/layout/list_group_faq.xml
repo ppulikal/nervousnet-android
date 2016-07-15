@@ -7,10 +7,9 @@
         android:id="@+id/txt_faqQuestion"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="How many times is it?"
-        android:paddingTop="@dimen/padding_faq"
         android:paddingBottom="@dimen/padding_faq"
         android:paddingLeft="@dimen/paddingLeftQ_faq"
-        />
+        android:paddingTop="@dimen/padding_faq"
+        android:text="How many times is it?" />
 
 </RelativeLayout>

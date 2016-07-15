@@ -6,34 +6,34 @@ import ch.ethz.coss.nervousnet.lib.LibConstants;
 
 public class SensorAuthentication {
 
-	private Hashtable<Integer, Byte> sensorAuthList = new Hashtable<Integer, Byte>();
+    private Hashtable<Integer, Byte> sensorAuthList = new Hashtable<Integer, Byte>();
 
-	public void SensorAuthentication() {
-		sensorAuthList.put(LibConstants.SENSOR_ACCELEROMETER, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_BATTERY, (byte) 0);
-		sensorAuthList.put(LibConstants.DEVICE_INFO, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_GYROSCOPE, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_LIGHT, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_LOCATION, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_NOISE, (byte) 0);
-		sensorAuthList.put(LibConstants.SENSOR_PROXIMITY, (byte) 0);
-	}
+    public void SensorAuthentication() {
+        sensorAuthList.put(LibConstants.SENSOR_ACCELEROMETER, (byte) 0);
+        sensorAuthList.put(LibConstants.SENSOR_BATTERY, (byte) 0);
+        sensorAuthList.put(LibConstants.DEVICE_INFO, (byte) 0);
+        sensorAuthList.put(LibConstants.SENSOR_GYROSCOPE, (byte) 0);
+        sensorAuthList.put(LibConstants.SENSOR_LIGHT, (byte) 0);
+        sensorAuthList.put(LibConstants.SENSOR_LOCATION, (byte) 0);
+        sensorAuthList.put(LibConstants.SENSOR_NOISE, (byte) 0);
+        sensorAuthList.put(LibConstants.SENSOR_PROXIMITY, (byte) 0);
+    }
 
-	public void updateSensorAuthentication(int sensorID, byte accessRightsValue) {
-		sensorAuthList.put(sensorID, accessRightsValue);
-	}
+    public void updateSensorAuthentication(int sensorID, byte accessRightsValue) {
+        sensorAuthList.put(sensorID, accessRightsValue);
+    }
 
-	public String getSensorAuthenticationString() {
-		String buffer = "";
-		for (int key : sensorAuthList.keySet()) {
-			buffer = +key + "|" + sensorAuthList.get(key);
-		}
+    public String getSensorAuthenticationString() {
+        String buffer = "";
+        for (int key : sensorAuthList.keySet()) {
+            buffer = +key + "|" + sensorAuthList.get(key);
+        }
 
-		return buffer;
-	}
+        return buffer;
+    }
 
-	public void parseSensorAuthenticationString(String sensorString) {
+    public void parseSensorAuthenticationString(String sensorString) {
 
-	}
+    }
 
 }

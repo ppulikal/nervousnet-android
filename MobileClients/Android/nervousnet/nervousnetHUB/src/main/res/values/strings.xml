@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="action_settings">Settings</string>
-    <string name="label_sensors">Sensors</string>
-    <string name="label_share">Share</string>
-    <string name="label_settings">More</string>
     <string name="organization">ETH Zürich,\n Department of Humanities and Social Sciences (D-GESS)\n
 Professorship of Computational Social Science (COSS)\n
 Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
     <string name="rate_app_label">Rate App</string>
-    <string name="terms">Terms and Conditions</string>
-    <string name="license_label">License</string>
-    <string name="title_data_retention">Data Retention</string>
-    <string name="default_checkbox_data_retention"></string>
-    <string name="title_data_privacy">Data Privacy</string>
-    <string name="app_name">nervousnet</string>
+	<string name="app_name">nervousnet</string>
     <string name="button_accept_label">Accept</string>
     <string name="local_service_started">nervousnet Service Running</string>
     <string name="local_service_label">nervousnet</string>
@@ -26,21 +17,6 @@ Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
         <item>Settings</item>
         <item>Help</item>
         <item>About</item>
-    </string-array>
-    <string-array name="sensors_list">
-        <item>Accelerometer</item>
-        <item>Battery</item>
-        <item>Beacons</item>
-        <item>Connectivity</item>
-        <item>Gyroscope</item>
-        <item>Humidity</item>
-        <item>Location</item>
-        <item>Light</item>
-        <item>Magnetic</item>
-        <item>Noise</item>
-        <item>Pressure</item>
-        <item>Proximity</item>
-        <item>Temperature</item>
     </string-array>
 
     <string name="terms_of_use"> &lt;b>TERMS OF USE&lt;/b>&lt;br>&lt;br>
@@ -163,10 +139,6 @@ Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
 		href=\'mailto:nervousnet@ethz.ch\'>nervousnet@ethz.ch&lt;/a>, and
 		help!&lt;/br></string>
     <string name="title_activity_sensors">SensorsActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_base_sensor">BaseSensorActivity</string>
-    <string name="title_activity_acc_sensor">AccSensorActivity</string>
-    <string name="title_activity_loc_sensor">LocSensorActivity</string>
-    <string name="title_activity_space">SpaceActivity</string>
+	<string name="title_activity_space">SpaceActivity</string>
 
 </resources>

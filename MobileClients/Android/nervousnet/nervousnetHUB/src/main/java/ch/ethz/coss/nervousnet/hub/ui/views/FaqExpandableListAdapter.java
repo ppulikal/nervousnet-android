@@ -8,23 +8,20 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import ch.ethz.coss.nervousnet.hub.R;
 
 public class FaqExpandableListAdapter extends BaseExpandableListAdapter {
 
+    Context context;
+    private ArrayList<String> questionList;
+    private ArrayList<String> answerList;
     public FaqExpandableListAdapter(Context context, ArrayList<String> questionList,
-                                       ArrayList<String> answerList) {
+                                    ArrayList<String> answerList) {
         this.context = context;
         this.questionList = questionList;
         this.answerList = answerList;
     }
-
-    private ArrayList<String> questionList;
-    private ArrayList<String> answerList;
-    Context context;
 
     @Override
     public int getGroupCount() {
@@ -90,6 +87,7 @@ public class FaqExpandableListAdapter extends BaseExpandableListAdapter {
         expandedListTextView.setText(expandedListText);
         return convertView;
     }
+
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;

@@ -1,31 +1,30 @@
-/*******************************************************************************
- *
- *  *     Nervousnet - a distributed middleware software for social sensing. 
- *  *      It is responsible for collecting and managing data in a fully de-centralised fashion
- *  *
- *  *     Copyright (C) 2016 ETH Zürich, COSS
- *  *
- *  *     This file is part of Nervousnet Framework
- *  *
- *  *     Nervousnet is free software: you can redistribute it and/or modify
- *  *     it under the terms of the GNU General Public License as published by
- *  *     the Free Software Foundation, either version 3 of the License, or
- *  *     (at your option) any later version.
- *  *
- *  *     Nervousnet is distributed in the hope that it will be useful,
- *  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  *     GNU General Public License for more details.
- *  *
- *  *     You should have received a copy of the GNU General Public License
- *  *     along with NervousNet. If not, see <http://www.gnu.org/licenses/>.
- *  *
- *  *
- *  * 	Contributors:
- *  * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
- *******************************************************************************/
 /**
- * 
+ * *     Nervousnet - a distributed middleware software for social sensing.
+ * *      It is responsible for collecting and managing data in a fully de-centralised fashion
+ * *
+ * *     Copyright (C) 2016 ETH Zürich, COSS
+ * *
+ * *     This file is part of Nervousnet Framework
+ * *
+ * *     Nervousnet is free software: you can redistribute it and/or modify
+ * *     it under the terms of the GNU General Public License as published by
+ * *     the Free Software Foundation, either version 3 of the License, or
+ * *     (at your option) any later version.
+ * *
+ * *     Nervousnet is distributed in the hope that it will be useful,
+ * *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * *     GNU General Public License for more details.
+ * *
+ * *     You should have received a copy of the GNU General Public License
+ * *     along with NervousNet. If not, see <http://www.gnu.org/licenses/>.
+ * *
+ * *
+ * * 	Contributors:
+ * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ */
+/**
+ *
  */
 package ch.ethz.coss.nervousnet.hub.ui;
 
@@ -38,6 +37,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -48,82 +48,82 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
  */
 public abstract class BaseActivity extends Activity implements ActionBarImplementation {
 
-	protected View parentView;
+    protected View parentView;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		updateActionBar();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        updateActionBar();
 
-	}
+    }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		updateActionBar();
-	}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateActionBar();
+    }
 
-	@Override
-	public void updateActionBar() {
-		LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View v = inflator.inflate(R.layout.ab_nn, null);
+    @Override
+    public void updateActionBar() {
+        LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflator.inflate(R.layout.ab_nn, null);
 
-		ActionBar actionBar = null;
-		Switch mainSwitch;
-		actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(false);
-		actionBar.setDisplayShowHomeEnabled(false);
-		actionBar.setDisplayShowCustomEnabled(true);
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setCustomView(v);
-		mainSwitch = (Switch) findViewById(R.id.mainSwitch);
+        ActionBar actionBar = null;
+        Switch mainSwitch;
+        actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setCustomView(v);
+        mainSwitch = (Switch) findViewById(R.id.mainSwitch);
 
-		byte state = ((Application) getApplication()).getState(this);
-		NNLog.d("BaseActivity", "state = " + state);
-		mainSwitch.setChecked(state == 0 ? false : true);
+        byte state = ((Application) getApplication()).getState(this);
+        NNLog.d("BaseActivity", "state = " + state);
+        mainSwitch.setChecked(state == 0 ? false : true);
 
-		mainSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				startStopSensorService(isChecked);
-			}
-		});
+        mainSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                startStopSensorService(isChecked);
+            }
+        });
 
-	}
+    }
 
-	public void startStopSensorService(boolean on) {
-		if (on) {
-			((Application) getApplication()).startService(this);
-		} else {
-			((Application) getApplication()).stopService(this);
-		}
+    public void startStopSensorService(boolean on) {
+        if (on) {
+            ((Application) getApplication()).startService(this);
+        } else {
+            ((Application) getApplication()).stopService(this);
+        }
 
-		((Application) getApplication()).setState(this, on ? (byte) 1 : (byte) 0);
+        ((Application) getApplication()).setState(this, on ? (byte) 1 : (byte) 0);
 //		finish();
 //		startActivity(getIntent());
 //		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-	}
+    }
 
-	protected void startNextActivity(Intent intent) {
-		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-		startActivity(intent);
-		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-	}
+    protected void startNextActivity(Intent intent) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
 
-	@Override
-	public void onRestart() {
-		super.onRestart();
-		updateActionBar();
-	}
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        updateActionBar();
+    }
 
-	@Override
-	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-	}
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-	}
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
 }

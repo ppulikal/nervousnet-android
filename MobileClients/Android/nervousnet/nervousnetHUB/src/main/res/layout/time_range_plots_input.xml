@@ -5,29 +5,25 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-         >
+        android:layout_height="fill_parent">
 
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </TabWidget>
+            android:layout_height="wrap_content"></TabWidget>
 
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@android:id/tabs"
-            >
+            android:layout_below="@android:id/tabs">
 
             <RelativeLayout
                 android:id="@+id/From"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
-                    android:id="@+id/linearLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -38,17 +34,15 @@
                         android:layout_height="wrap_content"
 
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        />
+                        android:layout_alignParentTop="true" />
 
                     <DatePicker
                         android:id="@+id/fromDatePicker"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:calendarViewShown="false"
-                        android:layout_below="@id/fromTimePicker"
                         android:layout_alignParentRight="true"
-  />
+                        android:layout_below="@id/fromTimePicker"
+                        android:calendarViewShown="false" />
 
 
                 </RelativeLayout>
@@ -57,8 +51,7 @@
             <RelativeLayout
                 android:id="@+id/To"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -69,8 +62,7 @@
                         android:id="@+id/toTimePicker"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        />
+                        android:layout_alignParentTop="true" />
 
                     <DatePicker
                         android:id="@+id/toDatePicker"

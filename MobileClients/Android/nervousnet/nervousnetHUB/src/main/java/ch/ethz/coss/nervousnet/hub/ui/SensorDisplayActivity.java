@@ -1,33 +1,29 @@
 /*******************************************************************************
- *
- *  *     Nervousnet - a distributed middleware software for social sensing. 
- *  *      It is responsible for collecting and managing data in a fully de-centralised fashion
- *  *
- *  *     Copyright (C) 2016 ETH Zürich, COSS
- *  *
- *  *     This file is part of Nervousnet Framework
- *  *
- *  *     Nervousnet is free software: you can redistribute it and/or modify
- *  *     it under the terms of the GNU General Public License as published by
- *  *     the Free Software Foundation, either version 3 of the License, or
- *  *     (at your option) any later version.
- *  *
- *  *     Nervousnet is distributed in the hope that it will be useful,
- *  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  *     GNU General Public License for more details.
- *  *
- *  *     You should have received a copy of the GNU General Public License
- *  *     along with NervousNet. If not, see <http://www.gnu.org/licenses/>.
- *  *
- *  *
- *  * 	Contributors:
- *  * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * *     Nervousnet - a distributed middleware software for social sensing.
+ * *      It is responsible for collecting and managing data in a fully de-centralised fashion
+ * *
+ * *     Copyright (C) 2016 ETH Zürich, COSS
+ * *
+ * *     This file is part of Nervousnet Framework
+ * *
+ * *     Nervousnet is free software: you can redistribute it and/or modify
+ * *     it under the terms of the GNU General Public License as published by
+ * *     the Free Software Foundation, either version 3 of the License, or
+ * *     (at your option) any later version.
+ * *
+ * *     Nervousnet is distributed in the hope that it will be useful,
+ * *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * *     GNU General Public License for more details.
+ * *
+ * *     You should have received a copy of the GNU General Public License
+ * *     along with NervousNet. If not, see <http://www.gnu.org/licenses/>.
+ * *
+ * *
+ * * 	Contributors:
+ * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub.ui;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 import android.app.ActionBar;
 import android.content.ComponentName;
@@ -55,6 +51,10 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.Constants;
 import ch.ethz.coss.nervousnet.hub.R;
@@ -76,416 +76,401 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class SensorDisplayActivity extends FragmentActivity implements ActionBarImplementation {
-	protected NervousnetRemote mService;
-	private ServiceConnection mServiceConnection;
-	private Boolean bindFlag;
-	private SensorDisplayPagerAdapter sapAdapter;
-	private ViewPager viewPager;
-	private static BaseFragment fragment;
+    private static BaseFragment fragment;
+    protected NervousnetRemote mService;
+    int m_interval = 100; // 100 seconds by default, can be changed later
+    Handler m_handler = new Handler();
+    Runnable m_statusChecker;
+    private ServiceConnection mServiceConnection;
+    private Boolean bindFlag;
+    private SensorDisplayPagerAdapter sapAdapter;
+    private ViewPager viewPager;
 
-	int m_interval = 100; // 100 seconds by default, can be changed later
-	Handler m_handler = new Handler();
-	Runnable m_statusChecker;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        updateActionBar();
+        setContentView(R.layout.activity_sensor_display);
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		updateActionBar();
-		setContentView(R.layout.activity_sensor_display);
+        sapAdapter = new SensorDisplayPagerAdapter(getApplicationContext(), getSupportFragmentManager());
 
-		sapAdapter = new SensorDisplayPagerAdapter(getApplicationContext(), getSupportFragmentManager());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(sapAdapter);
 
-		viewPager = (ViewPager) findViewById(R.id.pager);
-		viewPager.setAdapter(sapAdapter);
+        if (mServiceConnection == null) {
+            initConnection();
+        }
 
-		if (mServiceConnection == null) {
-			initConnection();
-		}
+        if (mService == null) {
+            try {
 
-		if (mService == null) {
-			try {
+                doBindService();
+                NNLog.d("SensorDisplayActivity", bindFlag.toString()); // will
+                // return
+                // "true"
+                //
+                // if (!bindFlag) {
+                // Utils.displayAlert(SensorDisplayActivity.this, "Alert",
+                // "Please switch on the data collection option to access this
+                // feature.",
+                // "Switch On", new DialogInterface.OnClickListener() {
+                // public void onClick(DialogInterface dialog, int id) {
+                // startStopSensorService(true);
+                //
+                // }
+                // }, "Back", new DialogInterface.OnClickListener() {
+                // public void onClick(DialogInterface dialog, int id) {
+                //
+                // }
+                // });
+                // Toast.makeText(SensorDisplayActivity.this,
+                // "Please check if the Nervousnet Remote Service is installed
+                // and running.",
+                // Toast.LENGTH_SHORT).show();
+                // }
+                //
+                // else {
+                // startRepeatingTask();
+                // Toast.makeText(SensorDisplayActivity.this,
+                // "Nervousnet Remote is running fine and startRepeatingTask()
+                // called", Toast.LENGTH_SHORT)
+                // .show();
+                //
+                // }
 
-				doBindService();
-				NNLog.d("SensorDisplayActivity", bindFlag.toString()); // will
-																		// return
-																		// "true"
-				//
-				// if (!bindFlag) {
-				// Utils.displayAlert(SensorDisplayActivity.this, "Alert",
-				// "Please switch on the data collection option to access this
-				// feature.",
-				// "Switch On", new DialogInterface.OnClickListener() {
-				// public void onClick(DialogInterface dialog, int id) {
-				// startStopSensorService(true);
-				//
-				// }
-				// }, "Back", new DialogInterface.OnClickListener() {
-				// public void onClick(DialogInterface dialog, int id) {
-				//
-				// }
-				// });
-				// Toast.makeText(SensorDisplayActivity.this,
-				// "Please check if the Nervousnet Remote Service is installed
-				// and running.",
-				// Toast.LENGTH_SHORT).show();
-				// }
-				//
-				// else {
-				// startRepeatingTask();
-				// Toast.makeText(SensorDisplayActivity.this,
-				// "Nervousnet Remote is running fine and startRepeatingTask()
-				// called", Toast.LENGTH_SHORT)
-				// .show();
-				//
-				// }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("SensorDisplayActivity", "not able to bind ! ");
+            }
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				Log.e("SensorDisplayActivity", "not able to bind ! ");
-			}
+        }
 
-		}
+    }
 
-	}
+    void initConnection() {
 
-	void initConnection() {
+        NNLog.d("SensorDisplayActivity", "Inside initConnection");
+        mServiceConnection = new ServiceConnection() {
 
-		NNLog.d("SensorDisplayActivity", "Inside initConnection");
-		mServiceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                NNLog.d("SensorDisplayActivity", "Inside onServiceDisconnected 2");
+                System.out.println("onServiceDisconnected");
+                // TODO Auto-generated method stub
+                mService = null;
+                mServiceConnection = null;
+                Toast.makeText(getApplicationContext(), "NervousnetRemote Service not connected", Toast.LENGTH_SHORT)
+                        .show();
+                NNLog.d("SensorDisplayActivity", "Binding - Service disconnected");
+            }
 
-			@Override
-			public void onServiceDisconnected(ComponentName name) {
-				NNLog.d("SensorDisplayActivity", "Inside onServiceDisconnected 2");
-				System.out.println("onServiceDisconnected");
-				// TODO Auto-generated method stub
-				mService = null;
-				mServiceConnection = null;
-				Toast.makeText(getApplicationContext(), "NervousnetRemote Service not connected", Toast.LENGTH_SHORT)
-						.show();
-				NNLog.d("SensorDisplayActivity", "Binding - Service disconnected");
-			}
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                NNLog.d("SensorDisplayActivity", "onServiceConnected");
 
-			@Override
-			public void onServiceConnected(ComponentName name, IBinder service) {
-				NNLog.d("SensorDisplayActivity", "onServiceConnected");
+                mService = NervousnetRemote.Stub.asInterface(service);
 
-				mService = NervousnetRemote.Stub.asInterface(service);
+                startRepeatingTask();
+                Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
+                        .show();
+                NNLog.d("SensorDisplayActivity", "Binding is done - Service connected");
+            }
+        };
 
-				startRepeatingTask();
-				Toast.makeText(getApplicationContext(), "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
-						.show();
-				NNLog.d("SensorDisplayActivity", "Binding is done - Service connected");
-			}
-		};
+    }
 
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return false;
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return false;
-	}
+    @Override
+    public void updateActionBar() {
+        LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflator.inflate(R.layout.ab_nn, null);
+        ActionBar actionBar;
+        Switch mainSwitch;
 
-	@Override
-	public void updateActionBar() {
-		LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View v = inflator.inflate(R.layout.ab_nn, null);
-		ActionBar actionBar;
-		Switch mainSwitch;
+        actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setCustomView(v);
+        mainSwitch = (Switch) findViewById(R.id.mainSwitch);
 
-		actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(false);
-		actionBar.setDisplayShowHomeEnabled(false);
-		actionBar.setDisplayShowCustomEnabled(true);
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setCustomView(v);
-		mainSwitch = (Switch) findViewById(R.id.mainSwitch);
+        byte state = ((Application) getApplication()).getState(this);
+        NNLog.d("SensorDisplayActivity", "state = " + state);
+        mainSwitch.setChecked(state == 0 ? false : true);
 
-		byte state = ((Application) getApplication()).getState(this);
-		NNLog.d("SensorDisplayActivity", "state = " + state);
-		mainSwitch.setChecked(state == 0 ? false : true);
+        mainSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                startStopSensorService(isChecked);
+            }
+        });
 
-		mainSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				startStopSensorService(isChecked);
-			}
-		});
+    }
 
-	}
+    public void startStopSensorService(boolean on) {
+        if (on) {
+            ((Application) getApplication()).startService(this);
+            initConnection();
+            // startRepeatingTask();
 
-	public void startStopSensorService(boolean on) {
-		if (on) {
-			((Application) getApplication()).startService(this);
-			initConnection();
-			// startRepeatingTask();
+            // UploadService.startService(this);
+            // serviceRunning = true;
+            //
+            // // If the user wants to collect BT/BLE data, ask to enable
+            // bluetooth
+            // // if disabled
+            // SensorConfiguration sc =
+            // SensorConfiguration.getInstance(getApplicationContext());
+            // SensorCollectStatus scs =
+            // sc.getInitialSensorCollectStatus(Constants.SENSOR_BLEBEACON);
+            // if (scs.isCollect()) {
+            // // This will only work on API level 18 or higher
+            // initializeBluetooth();
+            // }
 
-			// UploadService.startService(this);
-			// serviceRunning = true;
-			//
-			// // If the user wants to collect BT/BLE data, ask to enable
-			// bluetooth
-			// // if disabled
-			// SensorConfiguration sc =
-			// SensorConfiguration.getInstance(getApplicationContext());
-			// SensorCollectStatus scs =
-			// sc.getInitialSensorCollectStatus(Constants.SENSOR_BLEBEACON);
-			// if (scs.isCollect()) {
-			// // This will only work on API level 18 or higher
-			// initializeBluetooth();
-			// }
+        } else {
+            ((Application) getApplication()).stopService(this);
+            stopRepeatingTask();
+            // UploadService.stopService(this);
+            // serviceRunning = false;
+        }
 
-		} else {
-			((Application) getApplication()).stopService(this);
-			stopRepeatingTask();
-			// UploadService.stopService(this);
-			// serviceRunning = false;
-		}
+        ((Application) getApplication()).setState(this, on ? (byte) 1 : (byte) 0);
+        // updateServiceInfo();
+    }
 
-		((Application) getApplication()).setState(this, on ? (byte) 1 : (byte) 0);
-		// updateServiceInfo();
-	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    protected boolean updateStatus(SensorReading reading, int index) {
 
-	public static class SensorDisplayPagerAdapter extends FragmentStatePagerAdapter {
-		Context context;
+        BaseFragment fragment = (BaseFragment) sapAdapter.getFragment(index);
+        NNLog.d("SensorDisplayActivity", "Inside updateStatus, index =  " + index);
 
-		public SensorDisplayPagerAdapter(Context context, FragmentManager fm) {
-			super(fm);
-			this.context = context;
-		}
+        if (reading != null) {
+            if (reading instanceof ErrorReading) {
+                ErrorReading error = (ErrorReading) reading;
 
-		@Override
-		public Fragment getItem(int i) {
+                fragment.handleError((ErrorReading) reading);
+                if ((error.getErrorCode() == 103)) {
+                    return true;
+                }
+                return false;
+            } else {
+                fragment.updateReadings(reading);
+                return false;
+            }
 
-			switch (i) {
-			case 0:
-				fragment = new AccelFragment();
-				break;
-			case 1:
-				fragment = new BatteryFragment();
-				break;
-			case 2:
-				fragment = new GyroFragment();
-				break;
-			case 3:
-				fragment = new LocationFragment();
-				break;
-			case 4:
-				fragment = new LightFragment();
-				break;
-			case 5:
-				fragment = new NoiseFragment();
-				break;
-			case 6:
-				fragment = new ProximityFragment();
-				break;
-			default:
-				fragment = new DummyFragment();
-				break;
-			}
-			return fragment;
-		}
+        }
+        return false;
+        // else
+        // fragment.handleError(new ErrorReading(new String[]{"100", "Reading is
+        // null", ""}));
+    }
 
-		@Override
-		public int getCount() {
-			return NervousnetVMConstants.sensor_labels.length;
-		}
+    @Override
+    public void onBackPressed() {
+        stopRepeatingTask();
+        finish();
+    }
 
-		@Override
-		public CharSequence getPageTitle(int position) {
-			Drawable drawable;
-			ImageSpan span;
-			SpannableStringBuilder sb;
-			sb = new SpannableStringBuilder("  " + NervousnetVMConstants.sensor_labels[position]);
+    void startRepeatingTask() {
 
-			drawable = context.getResources().getDrawable(Constants.icon_array_sensors[position]);
-			drawable.setBounds(0, 0, 40, 40);
-			span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
-			sb.setSpan(span, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-			// sb.setSpan(new ClickableSpan() {
-			// @Override
-			// public void onClick(View widget) {
-			// Toast.makeText(context, "Clicked Span",
-			// Toast.LENGTH_LONG).show();
-			// }
-			// }, 0, sb.length(),
-			// Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-			return sb;
-		}
-
-		@SuppressWarnings("unchecked")
-		public Fragment getFragment(int position) {
-			try {
-				Field f = FragmentStatePagerAdapter.class.getDeclaredField("mFragments");
-				f.setAccessible(true);
-				ArrayList<Fragment> fragments = (ArrayList<Fragment>) f.get(this);
-				if (fragments.size() > position) {
-					return fragments.get(position);
-				}
-				return null;
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
-
-	protected boolean updateStatus(SensorReading reading, int index) {
-
-		BaseFragment fragment = (BaseFragment) sapAdapter.getFragment(index);
-		NNLog.d("SensorDisplayActivity", "Inside updateStatus, index =  " + index);
-
-		if (reading != null) {
-			if (reading instanceof ErrorReading) {
-				ErrorReading error = 	(ErrorReading) reading;
-
-				fragment.handleError((ErrorReading) reading);
-				if((error.getErrorCode() == 103 )) {
-					return true;
-				}
-				return false;
-			}
-			else {
-				fragment.updateReadings(reading);
-				return false;
-			}
-
-		}
-		return false;
-		// else
-		// fragment.handleError(new ErrorReading(new String[]{"100", "Reading is
-		// null", ""}));
-	}
-
-	@Override
-	public void onBackPressed() {
-		stopRepeatingTask();
-		finish();
-	}
-
-	void startRepeatingTask() {
-
-		m_statusChecker = new Runnable() {
-			@Override
-			public void run() {
-				boolean errorFlag = false;
-				NNLog.d("SensorDisplayActivity", "before updating");
-				if (mService != null) {
-					errorFlag = update(); // this function can change value of m_interval.
+        m_statusChecker = new Runnable() {
+            @Override
+            public void run() {
+                boolean errorFlag = false;
+                NNLog.d("SensorDisplayActivity", "before updating");
+                if (mService != null) {
+                    errorFlag = update(); // this function can change value of m_interval.
 
 //					if(errorFlag) {
 //						stopRepeatingTask();
 //					}
-				}
+                } else {
+                    NNLog.d("SensorDisplayActivity", "mService is null");
 
-				else {
-					NNLog.d("SensorDisplayActivity", "mService is null");
+                    Utils.displayAlert(SensorDisplayActivity.this, "Alert",
+                            "Please switch on the data collection option to access this feature.", "Switch On",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    startStopSensorService(true);
+                                }
+                            }, "Back", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
 
-					Utils.displayAlert(SensorDisplayActivity.this, "Alert",
-							"Please switch on the data collection option to access this feature.", "Switch On",
-							new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int id) {
-							startStopSensorService(true);
-						}
-					}, "Back", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int id) {
-
-							finish();
-						}
-					});
+                                    finish();
+                                }
+                            });
 
 
-				}
+                }
 
-				m_handler.postDelayed(m_statusChecker, m_interval);
-			}
-		};
+                m_handler.postDelayed(m_statusChecker, m_interval);
+            }
+        };
 
-		m_statusChecker.run();
-	}
+        m_statusChecker.run();
+    }
 
-	void stopRepeatingTask() {
-		m_handler.removeCallbacks(m_statusChecker);
-		m_statusChecker = null;
+    void stopRepeatingTask() {
+        m_handler.removeCallbacks(m_statusChecker);
+        m_statusChecker = null;
 
-	}
+    }
 
-	protected boolean update() {
-		try {
-			int index = viewPager.getCurrentItem();
-			NNLog.d("SensorDisplayActivity", "Inside update : index  = " + index);
-			boolean errorFlag;
-			switch (index) {
-			case 0:
-				errorFlag = updateStatus(mService.getLatestReading(LibConstants.SENSOR_ACCELEROMETER), index);
-				break;
-			case 1:
-				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_BATTERY), index);
-				break;
-			case 2:
-				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_GYROSCOPE), index);
-				break;
-			case 3:
-				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_LOCATION), index);
-				break;
-			case 4:
-				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_LIGHT), index);
-				break;
-			case 5:
-				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_NOISE), index);
-				break;
-			case 6:
-				// Pressure
-				errorFlag =  updateStatus(mService.getLatestReading(LibConstants.SENSOR_PROXIMITY), index);
-				break;
+    protected boolean update() {
+        try {
+            int index = viewPager.getCurrentItem();
+            NNLog.d("SensorDisplayActivity", "Inside update : index  = " + index);
+            boolean errorFlag;
+            switch (index) {
+                case 0:
+                    errorFlag = updateStatus(mService.getLatestReading(LibConstants.SENSOR_ACCELEROMETER), index);
+                    break;
+                case 1:
+                    errorFlag = updateStatus(mService.getLatestReading(LibConstants.SENSOR_BATTERY), index);
+                    break;
+                case 2:
+                    errorFlag = updateStatus(mService.getLatestReading(LibConstants.SENSOR_GYROSCOPE), index);
+                    break;
+                case 3:
+                    errorFlag = updateStatus(mService.getLatestReading(LibConstants.SENSOR_LOCATION), index);
+                    break;
+                case 4:
+                    errorFlag = updateStatus(mService.getLatestReading(LibConstants.SENSOR_LIGHT), index);
+                    break;
+                case 5:
+                    errorFlag = updateStatus(mService.getLatestReading(LibConstants.SENSOR_NOISE), index);
+                    break;
+                case 6:
+                    // Pressure
+                    errorFlag = updateStatus(mService.getLatestReading(LibConstants.SENSOR_PROXIMITY), index);
+                    break;
 
-			case 11:
-				// Proximity
-				errorFlag = false;
-				break;
+                case 11:
+                    // Proximity
+                    errorFlag = false;
+                    break;
 
-				default:
-					return false;
-			}
+                default:
+                    return false;
+            }
 
-			viewPager.getAdapter().notifyDataSetChanged();
-			return errorFlag;
-			// }
-			// catch (RemoteException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return true;
-		}
-	}
+            viewPager.getAdapter().notifyDataSetChanged();
+            return errorFlag;
+            // }
+            // catch (RemoteException e) {
+            // // TODO Auto-generated catch block
+            // e.printStackTrace();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return true;
+        }
+    }
 
-	protected void doBindService() {
-		NNLog.d("SensorDisplayActivity", "doBindService successfull");
+    protected void doBindService() {
+        NNLog.d("SensorDisplayActivity", "doBindService successfull");
 
-		Intent it = new Intent();
-		it.setClassName("ch.ethz.coss.nervousnet.hub", "ch.ethz.coss.nervousnet.hub.NervousnetHubApiService");
-		bindFlag = getApplicationContext().bindService(it, mServiceConnection, Context.BIND_AUTO_CREATE);
+        Intent it = new Intent();
+        it.setClassName("ch.ethz.coss.nervousnet.hub", "ch.ethz.coss.nervousnet.hub.NervousnetHubApiService");
+        bindFlag = getApplicationContext().bindService(it, mServiceConnection, Context.BIND_AUTO_CREATE);
 
-	}
+    }
 
-	protected void doUnbindService() {
-		getApplicationContext().unbindService(mServiceConnection);
-		bindFlag = false;
-		NNLog.d("SensorDisplayActivity ", "doUnbindService successfull");
-	}
+    protected void doUnbindService() {
+        getApplicationContext().unbindService(mServiceConnection);
+        bindFlag = false;
+        NNLog.d("SensorDisplayActivity ", "doUnbindService successfull");
+    }
+
+    public static class SensorDisplayPagerAdapter extends FragmentStatePagerAdapter {
+        Context context;
+
+        public SensorDisplayPagerAdapter(Context context, FragmentManager fm) {
+            super(fm);
+            this.context = context;
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+
+            switch (i) {
+                case 0:
+                    fragment = new AccelFragment();
+                    break;
+                case 1:
+                    fragment = new BatteryFragment();
+                    break;
+                case 2:
+                    fragment = new GyroFragment();
+                    break;
+                case 3:
+                    fragment = new LocationFragment();
+                    break;
+                case 4:
+                    fragment = new LightFragment();
+                    break;
+                case 5:
+                    fragment = new NoiseFragment();
+                    break;
+                case 6:
+                    fragment = new ProximityFragment();
+                    break;
+                default:
+                    fragment = new DummyFragment();
+                    break;
+            }
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return NervousnetVMConstants.sensor_labels.length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Drawable drawable;
+            ImageSpan span;
+            SpannableStringBuilder sb;
+            sb = new SpannableStringBuilder("  " + NervousnetVMConstants.sensor_labels[position]);
+
+            drawable = context.getResources().getDrawable(Constants.icon_array_sensors[position]);
+            drawable.setBounds(0, 0, 40, 40);
+            span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
+            sb.setSpan(span, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            // sb.setSpan(new ClickableSpan() {
+            // @Override
+            // public void onClick(View widget) {
+            // Toast.makeText(context, "Clicked Span",
+            // Toast.LENGTH_LONG).show();
+            // }
+            // }, 0, sb.length(),
+            // Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return sb;
+        }
+
+        @SuppressWarnings("unchecked")
+        public Fragment getFragment(int position) {
+            try {
+                Field f = FragmentStatePagerAdapter.class.getDeclaredField("mFragments");
+                f.setAccessible(true);
+                ArrayList<Fragment> fragments = (ArrayList<Fragment>) f.get(this);
+                if (fragments.size() > position) {
+                    return fragments.get(position);
+                }
+                return null;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
