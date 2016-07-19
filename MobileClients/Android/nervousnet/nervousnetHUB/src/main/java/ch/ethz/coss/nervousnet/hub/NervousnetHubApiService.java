@@ -68,6 +68,8 @@ public class NervousnetHubApiService extends Service {
 
         }
 
+
+
     };
     private PowerManager.WakeLock wakeLock;
     private HandlerThread hthread;
@@ -102,6 +104,10 @@ public class NervousnetHubApiService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+        NNLog.d(LOG_TAG, "Inside onBind "+mBinder.getCallingPid());
+        NNLog.d(LOG_TAG, "Inside onBind "+mBinder.getCallingUid());
+        NNLog.d(LOG_TAG, "Inside onBind "+mBinder.getCallingUserHandle());
+
         return mBinder;
     }
 

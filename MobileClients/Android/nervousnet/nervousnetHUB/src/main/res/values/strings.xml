@@ -140,5 +140,6 @@ Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
 		help!&lt;/br></string>
     <string name="title_activity_sensors">SensorsActivity</string>
 	<string name="title_activity_space">SpaceActivity</string>
+	<string name="api_perm_desc">Permissions to allow external apps to connect to Nervousnet HUB API Service</string>
 
 </resources>
