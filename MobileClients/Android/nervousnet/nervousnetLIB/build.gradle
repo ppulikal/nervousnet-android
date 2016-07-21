@@ -4,7 +4,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
 
 // This is the library version used when deploying the artifact
-version = "0.7.15"
+version = "0.7.16"
 
 ext {
     bintrayRepo = 'maven'
@@ -19,7 +19,7 @@ ext {
     siteUrl = 'https://github.com/nervousnet/nervousnet-android'
     gitUrl = 'https://github.com/nervousnet/nervousnet-android.git'
 
-    libraryVersion = '0.7.15'
+    libraryVersion = '0.7.16'
 
     developerId = 'ppulikal'
     developerName = 'Prasad Pulikal'
@@ -34,7 +34,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion '23.0.1'
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 22
         versionName '0.7.15 - alpha'
