@@ -7,28 +7,47 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
-/**
- * Created by prasad on 21/07/16.
- */
+import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
+
+/*******************************************************************************
+ * *     Nervousnet - a distributed middleware software for social sensing.
+ * *      It is responsible for collecting and managing data in a fully de-centralised fashion
+ * *
+ * *     Copyright (C) 2016 ETH Zürich, COSS
+ * *
+ * *     This file is part of Nervousnet Framework
+ * *
+ * *     Nervousnet is free software: you can redistribute it and/or modify
+ * *     it under the terms of the GNU General Public License as published by
+ * *     the Free Software Foundation, either version 3 of the License, or
+ * *     (at your option) any later version.
+ * *
+ * *     Nervousnet is distributed in the hope that it will be useful,
+ * *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * *     GNU General Public License for more details.
+ * *
+ * *     You should have received a copy of the GNU General Public License
+ * *     along with NervousNet. If not, see http://www.gnu.org/licenses/.
+ * *
+ * *
+ * * 	Contributors:
+ * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ *******************************************************************************/
 public class NervousnetServiceController {
 
+    private static String LOG_TAG = NervousnetServiceController.class.getSimpleName();
 
     NervousnetServiceConnectionListener listener;
     Context context;
 
-
-    /**********
-     * Step 1 for nervousnet HUB API's
-     **********/
-    protected NervousnetRemote mService;
+    public NervousnetRemote mService;
     private ServiceConnection mServiceConnection;
     private Boolean bindFlag;
-    /***********
-     * END OF STEP 1
-     **************/
 
     public NervousnetServiceController(Context context, NervousnetServiceConnectionListener listener) {
         this.context = context;
@@ -36,7 +55,6 @@ public class NervousnetServiceController {
     }
 
     public void connect() {
-/***********STEP 2 for nervousnet HUB API's************/
         if (mServiceConnection == null) {
             initConnection();
         }
@@ -44,7 +62,7 @@ public class NervousnetServiceController {
         if (mService == null) {
             try {
                 doBindService();
-                Log.d("NervousnetServiceUtil", bindFlag.toString());
+                Log.d(LOG_TAG, bindFlag.toString());
                 if (!bindFlag) {
                     Utils.displayAlert(context, "Alert",
                             "Nervousnet HUB application is required to be installed and running to use this app. If not installed please download it from the App Store. If already installed, please turn on the Data Collection option inside the Nervousnet HUB application.",
@@ -65,25 +83,28 @@ public class NervousnetServiceController {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("NervousnetServiceUtil", "not able to bind ! ");
+                Log.e(LOG_TAG, "Exception - not able to bind ! ");
             }
 
 
         }
-        /**********END OF STEP 2**************/
+
     }
 
-    /*********
-     * STEP3 for nervousnet HUB API's
-     ********/
+
+    public void disconnect() {
+        doUnbindService();
+    }
+
+
     private void initConnection() {
-        Log.d("NervousnetServiceUtil", "Inside initConnection");
+        Log.d(LOG_TAG, "Inside initConnection");
         mServiceConnection = new ServiceConnection() {
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
-                Log.d("NervousnetServiceUtil", "Inside onServiceDisconnected 2");
-                ;
+                Log.d(LOG_TAG, "Inside onServiceDisconnected 2");
+
                 mService = null;
                 mServiceConnection = null;
                 Toast.makeText(context, "NervousnetRemote Service not connected", Toast.LENGTH_SHORT)
@@ -101,8 +122,8 @@ public class NervousnetServiceController {
 
                 Toast.makeText(context, "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
                         .show();
-                Log.d("NervousnetServiceUtil", "Binding is done - Service connected");
-                listener.onServiceConnected(mService);
+                Log.d(LOG_TAG, "Binding is done - Service connected");
+                listener.onServiceConnected();
             }
         };
 
@@ -110,7 +131,7 @@ public class NervousnetServiceController {
 
 
     private void doBindService() {
-        Log.d("NervousnetServiceUtil", "doBindService successfull");
+        Log.d(LOG_TAG, "doBindService successfull");
         Intent it = new Intent();
         it.setClassName("ch.ethz.coss.nervousnet.hub", "ch.ethz.coss.nervousnet.hub.NervousnetHubApiService");
         bindFlag = context.bindService(it, mServiceConnection, 0);
@@ -120,11 +141,16 @@ public class NervousnetServiceController {
     private  void doUnbindService() {
         context.unbindService(mServiceConnection);
         bindFlag = false;
-        Log.d("NervousnetServiceUtil ", "doUnbindService successfull");
+        Log.d(LOG_TAG, "doUnbindService successfull");
     }
 
-    public void disconnect() {
-        doUnbindService();
+
+    public SensorReading getLatestReading(long sensorID) throws RemoteException{
+        if(bindFlag)
+            if(mService != null)
+                return mService.getLatestReading(sensorID);
+
+        return null;
     }
 
 
