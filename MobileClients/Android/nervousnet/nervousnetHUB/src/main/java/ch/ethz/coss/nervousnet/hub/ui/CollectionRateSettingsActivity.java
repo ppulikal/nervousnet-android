@@ -99,6 +99,7 @@ public class CollectionRateSettingsActivity extends BaseActivity {
         return builder.create();
     }
 
+    // Android 6.0 permission request
     public void requestPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {

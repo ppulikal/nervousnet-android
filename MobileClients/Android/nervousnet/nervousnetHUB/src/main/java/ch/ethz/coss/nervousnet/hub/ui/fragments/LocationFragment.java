@@ -100,6 +100,7 @@ public class LocationFragment extends BaseFragment {
         TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_loc);
         status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
 
+        // Android 6.0 permission request
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
                 ActivityCompat.requestPermissions(

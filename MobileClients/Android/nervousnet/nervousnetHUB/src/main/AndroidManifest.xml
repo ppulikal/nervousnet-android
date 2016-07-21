@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.ethz.coss.nervousnet.hub"
-    android:versionCode="23"
-    android:versionName="0.7.16 alpha">
+    android:versionCode="25"
+    android:versionName="0.7.18 alpha">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,6 +14,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
+
+    <permission
+        android:name="ch.ethz.coss.nervousnet.hub.API_PERM"
+        android:description="@string/api_perm_desc"
+        android:label="Nervousnet HUB API permissions"
+        android:permissionGroup="ch.ethz.coss.nervousnet.hub"
+        android:protectionLevel="signature" />
 
     <uses-sdk
         android:minSdkVersion="17"

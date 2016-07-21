@@ -95,9 +95,7 @@ public class NoiseFragment extends BaseFragment {
         TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_noise);
         status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
 
-//		Toast.makeText(getActivity(),"Error Code = "+Build.VERSION.SDK_INT, Toast.LENGTH_SHORT).show();
-
-//		if (Build.VERSION.SDK_INT >= 23) {
+        // Android 6.0 permission request
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.RECORD_AUDIO)) {
                 ActivityCompat.requestPermissions(
@@ -108,8 +106,6 @@ public class NoiseFragment extends BaseFragment {
             }
         }
         return;
-//		}
-
 
     }
 }
