@@ -26,6 +26,8 @@ import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
+import ch.ethz.coss.nervousnet.lib.NervousnetServiceConnectionListener;
+import ch.ethz.coss.nervousnet.lib.NervousnetServiceController;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
@@ -33,23 +35,19 @@ import ch.ethz.coss.nervousnet.lib.Utils;
 
 public class LightmeterActivity extends Activity implements NervousnetServiceConnectionListener {
 
-
-
-
-
 	int m_interval = 100; // 100 milliseconds by default, can be changed later
 	Handler m_handler = new Handler();
 	Runnable m_statusChecker;
 
-	NervousnetServiceUtil nervousnetServiceUtil;
+	NervousnetServiceController nervousnetServiceController;
 	TextView lux, errorView;
 	LinearLayout reading, error;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		nervousnetServiceUtil = new NervousnetServiceUtil(LightmeterActivity.this, this);
-		nervousnetServiceUtil.init();
+		nervousnetServiceController = new NervousnetServiceController(LightmeterActivity.this, this);
+		nervousnetServiceController.connect();
 		setContentView(R.layout.activity_lightmeter);
 
 
@@ -89,8 +87,7 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
 
 	@Override
 	public void onBackPressed() {
-
-		nervousnetServiceUtil.doUnbindService();
+		nervousnetServiceController.disconnect();
 		finish();
 		System.exit(0);
 	}
@@ -216,12 +213,12 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
 	}
 
 	@Override
-	public void ServiceConnected(NervousnetRemote mService) {
+	public void onServiceConnected(NervousnetRemote mService) {
 		startRepeatingTask(mService);
 	}
 
 	@Override
-	public void ServiceDisconnected() {
+	public void onServiceDisconnected() {
 		stopRepeatingTask();
 	}
 
