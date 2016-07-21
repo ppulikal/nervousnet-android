@@ -33,7 +33,6 @@ import android.os.Parcelable;
 
 /**
  * @author prasad
- *
  */
 public abstract class SensorReading implements Parcelable {
     public static Parcelable.Creator<SensorReading> CREATOR = new Parcelable.Creator<SensorReading>() {

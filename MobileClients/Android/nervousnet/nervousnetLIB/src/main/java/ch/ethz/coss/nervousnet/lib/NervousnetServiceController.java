@@ -11,8 +11,6 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
-import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
-
 /*******************************************************************************
  * *     Nervousnet - a distributed middleware software for social sensing.
  * *      It is responsible for collecting and managing data in a fully de-centralised fashion
@@ -41,11 +39,9 @@ import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 public class NervousnetServiceController {
 
     private static String LOG_TAG = NervousnetServiceController.class.getSimpleName();
-
+    public NervousnetRemote mService;
     NervousnetServiceConnectionListener listener;
     Context context;
-
-    public NervousnetRemote mService;
     private ServiceConnection mServiceConnection;
     private Boolean bindFlag;
 
@@ -138,21 +134,20 @@ public class NervousnetServiceController {
 
     }
 
-    private  void doUnbindService() {
+    private void doUnbindService() {
         context.unbindService(mServiceConnection);
         bindFlag = false;
         Log.d(LOG_TAG, "doUnbindService successfull");
     }
 
 
-    public SensorReading getLatestReading(long sensorID) throws RemoteException{
-        if(bindFlag)
-            if(mService != null)
+    public SensorReading getLatestReading(long sensorID) throws RemoteException {
+        if (bindFlag)
+            if (mService != null)
                 return mService.getLatestReading(sensorID);
 
         return null;
     }
-
 
 
 }

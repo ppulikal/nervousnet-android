@@ -43,7 +43,6 @@ import ch.ethz.coss.nervousnet.hub.ui.views.FaqExpandableListAdapter;
 
 /**
  * @author prasad
- *
  */
 public class HelpActivity extends BaseActivity {
 

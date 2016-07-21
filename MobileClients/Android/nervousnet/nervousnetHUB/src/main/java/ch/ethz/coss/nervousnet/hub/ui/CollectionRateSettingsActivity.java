@@ -47,7 +47,6 @@ import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 /**
  * @author prasad
- *
  */
 
 public class CollectionRateSettingsActivity extends BaseActivity {

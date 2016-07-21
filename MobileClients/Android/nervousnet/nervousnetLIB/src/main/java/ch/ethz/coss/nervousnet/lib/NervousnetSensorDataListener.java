@@ -1,15 +1,5 @@
 package ch.ethz.coss.nervousnet.lib;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.net.Uri;
-import android.os.IBinder;
-import android.util.Log;
-import android.widget.Toast;
-
 /*******************************************************************************
  * *     Nervousnet - a distributed middleware software for social sensing.
  * *      It is responsible for collecting and managing data in a fully de-centralised fashion

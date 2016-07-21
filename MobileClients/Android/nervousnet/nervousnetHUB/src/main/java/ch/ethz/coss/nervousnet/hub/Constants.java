@@ -27,7 +27,6 @@ package ch.ethz.coss.nervousnet.hub;
 
 /**
  * @author prasad
- *
  */
 public final class Constants {
 

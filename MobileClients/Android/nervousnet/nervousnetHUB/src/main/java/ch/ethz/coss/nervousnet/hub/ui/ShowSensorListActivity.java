@@ -39,7 +39,6 @@ import ch.ethz.coss.nervousnet.hub.R;
 
 /**
  * @author prasad
- *
  */
 public class ShowSensorListActivity extends BaseActivity {
     SensorManager smm;

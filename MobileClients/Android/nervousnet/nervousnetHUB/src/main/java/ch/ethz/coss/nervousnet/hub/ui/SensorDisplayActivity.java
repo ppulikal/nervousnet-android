@@ -26,15 +26,10 @@
 package ch.ethz.coss.nervousnet.hub.ui;
 
 import android.app.ActionBar;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -43,14 +38,11 @@ import android.support.v4.view.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -69,11 +61,9 @@ import ch.ethz.coss.nervousnet.hub.ui.fragments.NoiseFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.ProximityFragment;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
-import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.NervousnetServiceConnectionListener;
 import ch.ethz.coss.nervousnet.lib.NervousnetServiceController;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.lib.Utils;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
@@ -82,12 +72,10 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
     int m_interval = 100; // 100 milliseconds by default, can be changed later
     Handler m_handler = new Handler();
     Runnable m_statusChecker;
+    NervousnetServiceController nervousnetServiceController;
     private Boolean bindFlag;
     private SensorDisplayPagerAdapter sapAdapter;
     private ViewPager viewPager;
-
-
-    NervousnetServiceController nervousnetServiceController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,7 +185,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
                 boolean errorFlag = false;
                 NNLog.d("SensorDisplayActivity", "before updating");
 //                if (mService != null) {
-                    errorFlag = update(); // this function can change value of m_interval.
+                errorFlag = update(); // this function can change value of m_interval.
 
 //					if(errorFlag) {
 //						stopRepeatingTask();
@@ -287,7 +275,16 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         }
     }
 
+    @Override
+    public void onServiceConnected() {
+        startRepeatingTask();
 
+    }
+
+    @Override
+    public void onServiceDisconnected() {
+        stopRepeatingTask();
+    }
 
     public static class SensorDisplayPagerAdapter extends FragmentStatePagerAdapter {
         Context context;
@@ -371,17 +368,6 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
                 throw new RuntimeException(e);
             }
         }
-    }
-
-    @Override
-    public void onServiceConnected() {
-        startRepeatingTask();
-
-    }
-
-    @Override
-    public void onServiceDisconnected() {
-        stopRepeatingTask();
     }
 
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
-    tools:context="ch.ethz.coss.nervousnet.extensions.lightmeter.LightmeterActivity" >
+    tools:context="ch.ethz.coss.nervousnet.extensions.lightmeter.LightmeterActivity">
 
     <!--
          The primary full-screen view. This can be replaced with whatever view
@@ -18,7 +18,7 @@
         android:gravity="center"
         android:keepScreenOn="true"
         android:orientation="vertical"
-        android:textColor="#33b5e5" >
+        android:textColor="#33b5e5">
 
         <LinearLayout
             android:id="@+id/reading"
@@ -27,7 +27,7 @@
             android:gravity="center"
             android:keepScreenOn="true"
             android:orientation="vertical"
-            android:textColor="#33b5e5" >
+            android:textColor="#33b5e5">
 
             <!--
              android:textSize="50sp"
@@ -44,9 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
-               
 
                 <TextView
                     android:id="@+id/lux"
@@ -56,7 +55,7 @@
                     android:hint="lux value comes here" />
             </LinearLayout>
 
-            
+
         </LinearLayout>
 
         <LinearLayout
@@ -68,7 +67,7 @@
             android:orientation="vertical"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            android:textColor="#33b5e5" >
+            android:textColor="#33b5e5">
 
             <TextView
                 android:id="@+id/error_tv"
@@ -76,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Nervousnet HUB application is required running to use this app. If already installed, please turn on the Data Collection option inside the Nervousnet HUB application." />
-            
+
             <Button
                 android:id="@+id/startButton"
                 android:layout_width="match_parent"
@@ -94,7 +93,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true" >
+        android:fitsSystemWindows="true">
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
@@ -104,7 +103,7 @@
             android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
             android:orientation="horizontal"
-            tools:ignore="UselessParent" >
+            tools:ignore="UselessParent">
 
             <Button
                 android:id="@+id/about_button"
@@ -113,8 +112,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/about_button" />
-            
-            
+
+
         </LinearLayout>
     </FrameLayout>
 

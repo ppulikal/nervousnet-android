@@ -134,7 +134,7 @@ public class LightSensorView extends View {
 
         // candle upper side
         /*
-		paint.setStyle(Paint.Style.FILL);
+        paint.setStyle(Paint.Style.FILL);
 		paint.setShader(null);
 		paint.setColor(Color.rgb(250, 250, 250));
 		//canvas.drawOval(new RectF(CENTER-0.1f,CENTER-.045f,CENTER+0.1f, CENTER+0.04f), paint);

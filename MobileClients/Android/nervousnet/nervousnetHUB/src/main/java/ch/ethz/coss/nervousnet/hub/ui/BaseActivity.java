@@ -44,7 +44,6 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 
 /**
  * @author prasad
- *
  */
 public abstract class BaseActivity extends Activity implements ActionBarImplementation {
 

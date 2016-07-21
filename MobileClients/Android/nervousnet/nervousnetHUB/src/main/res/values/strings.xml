@@ -5,7 +5,7 @@
 Professorship of Computational Social Science (COSS)\n
 Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
     <string name="rate_app_label">Rate App</string>
-	<string name="app_name">nervousnet</string>
+    <string name="app_name">nervousnet</string>
     <string name="button_accept_label">Accept</string>
     <string name="local_service_started">nervousnet Service Running</string>
     <string name="local_service_label">nervousnet</string>
@@ -139,7 +139,7 @@ Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
 		href=\'mailto:nervousnet@ethz.ch\'>nervousnet@ethz.ch&lt;/a>, and
 		help!&lt;/br></string>
     <string name="title_activity_sensors">SensorsActivity</string>
-	<string name="title_activity_space">SpaceActivity</string>
-	<string name="api_perm_desc">Permissions to allow external apps to connect to Nervousnet HUB API Service</string>
+    <string name="title_activity_space">SpaceActivity</string>
+    <string name="api_perm_desc">Permissions to allow external apps to connect to Nervousnet HUB API Service</string>
 
 </resources>

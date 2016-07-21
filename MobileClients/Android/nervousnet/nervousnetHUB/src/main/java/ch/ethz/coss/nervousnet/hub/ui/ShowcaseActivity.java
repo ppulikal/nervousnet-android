@@ -47,7 +47,6 @@ import ch.ethz.coss.nervousnet.hub.ui.adapters.ImageAdapter;
 
 /**
  * @author prasad
- *
  */
 public class ShowcaseActivity extends BaseActivity {
 

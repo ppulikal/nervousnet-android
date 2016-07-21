@@ -200,7 +200,7 @@ public class AccelerometerSensorView extends View {
 
     public void setAccelerometerValues(float[] values) {
         /*
-		if(getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
+        if(getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
 			xVal = -values[1];
 			yVal = -values[0];
 		} else{

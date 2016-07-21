@@ -16,6 +16,7 @@ public class FaqExpandableListAdapter extends BaseExpandableListAdapter {
     Context context;
     private ArrayList<String> questionList;
     private ArrayList<String> answerList;
+
     public FaqExpandableListAdapter(Context context, ArrayList<String> questionList,
                                     ArrayList<String> answerList) {
         this.context = context;

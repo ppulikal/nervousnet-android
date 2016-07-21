@@ -44,7 +44,6 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 
 /**
  * @author prasad
- *
  */
 public class GyroFragment extends BaseFragment {
     GyroscopeSensorView gyroView;

@@ -34,7 +34,6 @@ import ch.ethz.coss.nervousnet.hub.R;
 
 /**
  * @author prasad
- *
  */
 
 public class SettingsActivity extends BaseActivity {

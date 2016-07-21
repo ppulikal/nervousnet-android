@@ -39,7 +39,6 @@ import ch.ethz.coss.nervousnet.lib.SensorReading;
 
 /**
  * @author prasad
- *
  */
 public class DummyFragment extends BaseFragment {
 

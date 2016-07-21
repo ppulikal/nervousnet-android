@@ -68,8 +68,7 @@ public class LocationReading extends SensorReading {
     }
 
     /**
-     * @param latnLong
-     *            the latnLong to set
+     * @param latnLong the latnLong to set
      */
     public void setLatnLong(double[] latnLong) {
         this.latnLong = latnLong;
