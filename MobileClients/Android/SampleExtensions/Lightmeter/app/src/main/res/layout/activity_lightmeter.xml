@@ -27,7 +27,8 @@
             android:gravity="center"
             android:keepScreenOn="true"
             android:orientation="vertical"
-            android:textColor="#33b5e5">
+            android:textColor="#33b5e5"
+            android:visibility="invisible">
 
             <!--
              android:textSize="50sp"

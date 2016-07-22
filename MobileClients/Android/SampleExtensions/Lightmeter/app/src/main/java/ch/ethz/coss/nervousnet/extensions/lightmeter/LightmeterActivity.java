@@ -75,7 +75,6 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-
     }
 
     @Override
@@ -88,26 +87,29 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
 
     protected void update() throws RemoteException {
         Log.d("LightmeterActivity", "before updating 1");
-        SensorReading lReading = nervousnetServiceController.getLatestReading(LibConstants.SENSOR_LIGHT);
-        if (lReading != null) {
-            if (lReading instanceof LightReading) {
-                Log.d("LightmeterActivity", "LightReading found");
-                lux.setText("" + ((LightReading) lReading).getLuxValue());
-                reading.setVisibility(View.VISIBLE);
-                error.setVisibility(View.INVISIBLE);
-            } else if (lReading instanceof ErrorReading) {
-                Log.d("LightmeterActivity", "ErrorReading found");
-                lux.setText("Error Code: " + ((ErrorReading) lReading).getErrorCode() + ", " + ((ErrorReading) lReading).getErrorString());
-                reading.setVisibility(View.VISIBLE);
-                error.setVisibility(View.INVISIBLE);
+        SensorReading lReading;
 
+        if(nervousnetServiceController != null) {
+            lReading  = nervousnetServiceController.getLatestReading(LibConstants.SENSOR_LIGHT);
+            if (lReading != null) {
+                if (lReading instanceof LightReading) {
+                    Log.d("LightmeterActivity", "LightReading found");
+                    lux.setText("" + ((LightReading) lReading).getLuxValue());
+                    reading.setVisibility(View.VISIBLE);
+                    error.setVisibility(View.INVISIBLE);
+                } else if (lReading instanceof ErrorReading) {
+                    Log.d("LightmeterActivity", "ErrorReading found");
+                    lux.setText("Error Code: " + ((ErrorReading) lReading).getErrorCode() + ", " + ((ErrorReading) lReading).getErrorString());
+                    reading.setVisibility(View.VISIBLE);
+                    error.setVisibility(View.INVISIBLE);
+
+                }
+            } else {
+                lux.setText("Light object is null");
+                reading.setVisibility(View.INVISIBLE);
+                error.setVisibility(View.VISIBLE);
             }
-        } else {
-            lux.setText("Light object is null");
-            reading.setVisibility(View.INVISIBLE);
-            error.setVisibility(View.VISIBLE);
         }
-
 
     }
 
@@ -144,7 +146,20 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
 
     @Override
     public void onServiceDisconnected() {
+
+        lux.setText("Nervousnet HUB application is required running to use this app. If already installed, please turn on the Data Collection option inside the Nervousnet HUB application.");
+        reading.setVisibility(View.INVISIBLE);
+        error.setVisibility(View.VISIBLE);
+
         stopRepeatingTask();
+    }
+
+    @Override
+    public void onServiceConnectionFailed() {
+        lux.setText("Service Connection Failed" +"\n"
+        +"Nervousnet HUB application is required running to use this app. If already installed, please turn on the Data Collection option inside the Nervousnet HUB application.");
+        reading.setVisibility(View.INVISIBLE);
+        error.setVisibility(View.VISIBLE);
     }
 
     @Override
