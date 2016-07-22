@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.ethz.coss.nervousnet.hub"
-    android:versionCode="25"
-    android:versionName="0.7.18 alpha">
+    android:versionCode="26"
+    android:versionName="0.7.19 alpha">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,9 +18,9 @@
     <permission
         android:name="ch.ethz.coss.nervousnet.hub.API_PERM"
         android:description="@string/api_perm_desc"
-        android:label="Nervousnet HUB API permissions"
+        android:label="Nervousnet HUB API permission"
         android:permissionGroup="ch.ethz.coss.nervousnet.hub"
-        android:protectionLevel="signature" />
+        android:protectionLevel="dangerous" />
 
     <uses-sdk
         android:minSdkVersion="17"

@@ -286,6 +286,11 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         stopRepeatingTask();
     }
 
+    @Override
+    public void onServiceConnectionFailed() {
+
+    }
+
     public static class SensorDisplayPagerAdapter extends FragmentStatePagerAdapter {
         Context context;
 
