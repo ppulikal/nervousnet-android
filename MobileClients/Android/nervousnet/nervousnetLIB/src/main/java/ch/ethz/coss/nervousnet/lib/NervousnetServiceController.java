@@ -80,6 +80,9 @@ public class NervousnetServiceController {
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(LOG_TAG, "Exception - not able to bind ! ");
+                doUnbindService();
+
+                listener.onServiceConnectionFailed();
             }
 
 
@@ -115,10 +118,10 @@ public class NervousnetServiceController {
 
                 mService = NervousnetRemote.Stub.asInterface(service);
 
-
                 Toast.makeText(context, "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
                         .show();
                 Log.d(LOG_TAG, "Binding is done - Service connected");
+                if(listener != null)
                 listener.onServiceConnected();
             }
         };
@@ -132,22 +135,52 @@ public class NervousnetServiceController {
         it.setClassName("ch.ethz.coss.nervousnet.hub", "ch.ethz.coss.nervousnet.hub.NervousnetHubApiService");
         bindFlag = context.bindService(it, mServiceConnection, 0);
 
+        if(!bindFlag && listener != null) {
+            listener.onServiceConnectionFailed();
+        }
+
     }
 
     private void doUnbindService() {
-        context.unbindService(mServiceConnection);
+        if(mServiceConnection != null)
+         context.unbindService(mServiceConnection);
+
         bindFlag = false;
+        mService = null;
+        mServiceConnection = null;
         Log.d(LOG_TAG, "doUnbindService successfull");
     }
 
 
     public SensorReading getLatestReading(long sensorID) throws RemoteException {
-        if (bindFlag)
+        if (bindFlag) {
             if (mService != null)
                 return mService.getLatestReading(sensorID);
+            else
+                return new ErrorReading(new String[]{"002", "Service not connected."});
+        } else
+            return new ErrorReading(new String[]{"003", "Service not bound."});
 
-        return null;
+
+
     }
 
+//    /**
+//     * gets latest reading using a listener.
+//     * @param sensorID
+//     * @param nnSensorDataListener
+//     * @throws RemoteException
+//     */
+//    public void getReading(long sensorID, NervousnetSensorDataListener nnSensorDataListener) throws RemoteException {
+//        if (bindFlag) {
+//            if (mService != null)
+//                return mService.getLatestReading(sensorID);
+//            else
+//                nnSensorDataListener.onSensorDataReady(new ErrorReading(new String[]{"002", "Service not connected."}));
+//        } else
+//            nnSensorDataListener.onSensorDataReady(new ErrorReading(new String[]{"003", "Service not bound."}));
+//
+//
+//    }
 
 }

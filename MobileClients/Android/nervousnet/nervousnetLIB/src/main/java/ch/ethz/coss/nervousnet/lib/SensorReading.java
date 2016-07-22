@@ -56,8 +56,10 @@ public abstract class SensorReading implements Parcelable {
                 return new NoiseReading(in);
             } else if (className.equals(ProximityReading.class.getName())) {
                 return new ProximityReading(in);
-            } else
+            } else {
                 return new ErrorReading(new String[]{"100", "Sensor not found"});
+            }
+
         }
 
         public SensorReading[] newArray(int size) {

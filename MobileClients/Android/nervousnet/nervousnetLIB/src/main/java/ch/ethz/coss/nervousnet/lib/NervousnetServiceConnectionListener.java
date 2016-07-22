@@ -30,4 +30,6 @@ public interface NervousnetServiceConnectionListener {
     public void onServiceConnected();
 
     public void onServiceDisconnected();
+
+    public void onServiceConnectionFailed();
 }

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
 import android.net.ConnectivityManager;
 
-public class Utils {
+public class  Utils {
 
     public static void displayAlert(Context context, String title, String message, String posButtonTitle,
                                     OnClickListener posOnClickListener, String negButtonTitle, OnClickListener negOnClickListener) {

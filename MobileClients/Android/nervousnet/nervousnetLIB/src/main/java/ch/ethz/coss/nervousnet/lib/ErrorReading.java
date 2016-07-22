@@ -27,6 +27,7 @@ package ch.ethz.coss.nervousnet.lib;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * @author prasad
@@ -44,7 +45,7 @@ public class ErrorReading extends SensorReading {
             return new ErrorReading[size];
         }
     };
-    private String[] errorValues = new String[3];
+    private String[] errorValues = new String[2];
 
     public ErrorReading() {
         this.type = LibConstants.ERROR;
@@ -71,6 +72,7 @@ public class ErrorReading extends SensorReading {
     }
 
     public void readFromParcel(Parcel in) {
+        Log.e("ErrorReading", "Exception - not able to bind ! ");
 
         in.readStringArray(errorValues);
     }
