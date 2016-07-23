@@ -32,6 +32,7 @@ import android.view.View;
 
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.SharingNodeActivity;
+import ch.ethz.coss.nervousnet.hub.SensorPermissionsActivity;
 
 /**
  * @author prasad
@@ -61,7 +62,7 @@ public class SettingsActivity extends BaseActivity {
         findViewById(R.id.sensor_perm_item).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//				startNextActivity(new Intent(SettingsActivity.this, CollectionRateSettingsActivity.class));
+				startNextActivity(new Intent(SettingsActivity.this, SensorPermissionsActivity.class));
             }
         });
 

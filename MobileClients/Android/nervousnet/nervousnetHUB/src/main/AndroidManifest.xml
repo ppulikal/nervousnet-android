@@ -118,6 +118,7 @@
             android:name=".ui.SpaceActivity"
             android:label="@string/title_activity_space" />
         <activity android:name=".SharingNodeActivity"></activity>
+        <activity android:name=".SensorPermissionsActivity"></activity>
     </application>
 
 </manifest>
