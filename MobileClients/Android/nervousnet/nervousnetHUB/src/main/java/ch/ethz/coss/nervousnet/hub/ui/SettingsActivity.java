@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.hub.SharingNodeActivity;
 
 /**
  * @author prasad
@@ -53,7 +54,7 @@ public class SettingsActivity extends BaseActivity {
         findViewById(R.id.sharing_nodes_item).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//				startNextActivity(new Intent(SettingsActivity.this, CollectionRateSettingsActivity.class));
+				startNextActivity(new Intent(SettingsActivity.this, SharingNodeActivity.class));
             }
         });
 
