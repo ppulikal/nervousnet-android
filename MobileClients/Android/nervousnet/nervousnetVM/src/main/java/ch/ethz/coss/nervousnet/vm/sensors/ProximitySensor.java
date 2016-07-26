@@ -61,7 +61,7 @@ public class ProximitySensor extends BaseSensor implements SensorEventListener {
         NNLog.d(LOG_TAG, "Starting ProximitySensor sensor with state = " + sensorState);
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
-                NervousnetVMConstants.sensor_freq_constants[6][sensorState]);
+                SensorManager.SENSOR_DELAY_NORMAL);
 
         return true;
     }
