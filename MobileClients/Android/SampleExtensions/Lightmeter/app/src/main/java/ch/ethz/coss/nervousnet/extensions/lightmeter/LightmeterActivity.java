@@ -40,8 +40,6 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        nervousnetServiceController = new NervousnetServiceController(LightmeterActivity.this, this);
-        nervousnetServiceController.connect();
         setContentView(R.layout.activity_lightmeter);
 
 
@@ -68,6 +66,9 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
         lux = (TextView) findViewById(R.id.lux);
         errorView = (TextView) findViewById(R.id.error_tv);
 
+
+        nervousnetServiceController = new NervousnetServiceController(LightmeterActivity.this, this);
+        nervousnetServiceController.connect();
 
     }
 
@@ -140,13 +141,14 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
 
     @Override
     public void onServiceConnected() {
+        Log.d("LightmeterActivity", "onServiceConnected");
         startRepeatingTask();
 
     }
 
     @Override
     public void onServiceDisconnected() {
-
+        Log.d("LightmeterActivity", "onServiceDisconnected");
         lux.setText("Nervousnet HUB application is required running to use this app. If already installed, please turn on the Data Collection option inside the Nervousnet HUB application.");
         reading.setVisibility(View.INVISIBLE);
         error.setVisibility(View.VISIBLE);
@@ -156,6 +158,8 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
 
     @Override
     public void onServiceConnectionFailed() {
+
+        Log.d("LightmeterActivity", "onServiceConnectionFailed");
         lux.setText("Service Connection Failed" +"\n"
         +"Nervousnet HUB application is required running to use this app. If already installed, please turn on the Data Collection option inside the Nervousnet HUB application.");
         reading.setVisibility(View.INVISIBLE);

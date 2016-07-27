@@ -40,8 +40,7 @@ public class AccelerometerActivity extends Activity implements NervousnetService
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        nervousnetServiceController = new NervousnetServiceController(AccelerometerActivity.this, this);
-        nervousnetServiceController.connect();
+
         setContentView(R.layout.activity_accelerometer);
 
 
@@ -70,7 +69,8 @@ public class AccelerometerActivity extends Activity implements NervousnetService
         z_val = (TextView) findViewById(R.id.accel_z);
         errorView = (TextView) findViewById(R.id.error_tv);
 
-
+        nervousnetServiceController = new NervousnetServiceController(AccelerometerActivity.this, this);
+        nervousnetServiceController.connect();
     }
 
     @Override
