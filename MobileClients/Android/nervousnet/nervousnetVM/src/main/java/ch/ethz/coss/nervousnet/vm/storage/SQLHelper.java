@@ -42,11 +42,10 @@ public class SQLHelper implements BaseSensorListener {
     LightDataDao lightDao;
     NoiseDataDao noiseDao;
     LocationDataDao locDao;
-    ConnectivityDataDao connDao;
     GyroDataDao gyroDao;
     ProximityDataDao proximityDao;
 
-    ArrayList<SensorDataImpl> accelDataArrList, battDataArrList, gyroDataArrList, lightDataArrList, locDataArrList, noiseDataArrList;
+    ArrayList<SensorDataImpl> accelDataArrList, battDataArrList, gyroDataArrList, lightDataArrList, locDataArrList, noiseDataArrList, proxDataArrList;
 
     public SQLHelper(Context context, String DB_NAME) {
         initDao(context, DB_NAME);
@@ -68,10 +67,10 @@ public class SQLHelper implements BaseSensorListener {
         accDao = daoSession.getAccelDataDao();
         battDao = daoSession.getBatteryDataDao();
         locDao = daoSession.getLocationDataDao();
-        connDao = daoSession.getConnectivityDataDao();
         gyroDao = daoSession.getGyroDataDao();
         lightDao = daoSession.getLightDataDao();
         noiseDao = daoSession.getNoiseDataDao();
+        proximityDao = daoSession.getProximityDataDao();
 
         populateSensorConfig();
         accelDataArrList = new ArrayList<SensorDataImpl>();
@@ -80,7 +79,7 @@ public class SQLHelper implements BaseSensorListener {
         lightDataArrList = new ArrayList<SensorDataImpl>();
         locDataArrList = new ArrayList<SensorDataImpl>();
         noiseDataArrList = new ArrayList<SensorDataImpl>();
-
+        proxDataArrList = new ArrayList<SensorDataImpl>();
     }
 
     public synchronized void populateSensorConfig() {
@@ -432,6 +431,17 @@ public class SQLHelper implements BaseSensorListener {
                 if (noiseDataArrList.size() > 100) {
                     storeSensorAsync(LibConstants.SENSOR_NOISE, new ArrayList<SensorDataImpl>(noiseDataArrList));
                     noiseDataArrList.clear();
+                }
+
+                break;
+            case LibConstants.SENSOR_PROXIMITY:
+                ProximityReading proxReading = (ProximityReading) reading;
+                sensorData = new ProximityData(null, proxReading.timestamp, proxReading.getProximity(), proxReading.volatility, proxReading.isShare);
+                sensorData.setType(LibConstants.SENSOR_PROXIMITY);
+                proxDataArrList.add((SensorDataImpl) sensorData);
+                if (proxDataArrList.size() > 100) {
+                    storeSensorAsync(LibConstants.SENSOR_PROXIMITY, new ArrayList<SensorDataImpl>(proxDataArrList));
+                    proxDataArrList.clear();
                 }
 
                 break;
