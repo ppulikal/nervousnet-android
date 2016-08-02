@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.ethz.coss.nervousnet.extensions.lightmeter"
-    android:versionCode="8"
-    android:versionName="1.7">
+    android:versionCode="9"
+    android:versionName="1.8">
+    <uses-permission android:name="ch.ethz.coss.nervousnet.hub.BIND_PERM" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <permission
+        android:name="ch.ethz.coss.nervousnet.hub.BIND_PERM"
+        android:label="Nervousnet HUB API permission" />
 
     <uses-sdk
         android:minSdkVersion="17"

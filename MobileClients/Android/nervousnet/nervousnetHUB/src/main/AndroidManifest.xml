@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.ethz.coss.nervousnet.hub"
-    android:versionCode="26"
-    android:versionName="0.7.19 alpha">
+    android:versionCode="27"
+    android:versionName="0.7.20 alpha">
 
     <uses-sdk
         android:minSdkVersion="17"
@@ -19,15 +19,17 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="ch.ethz.coss.nervousnet.hub.BIND_PERM" />
+
     <permission
-        android:name="ch.ethz.coss.nervousnet.hub.API_PERM"
+        android:name="ch.ethz.coss.nervousnet.hub.BIND_PERM"
         android:description="@string/api_perm_desc"
         android:label="Nervousnet HUB API permission"
-        android:permissionGroup="ch.ethz.coss.nervousnet.hub"
         android:protectionLevel="dangerous" />
 
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Application"
@@ -49,7 +51,7 @@
         <service
             android:name=".NervousnetHubApiService"
             android:enabled="true"
-            android:exported="true">
+            android:permission="ch.ethz.coss.nervousnet.hub.BIND_PERM">
             <intent-filter>
                 <action android:name="ch.ethz.coss.nervousnet.hub" />
             </intent-filter>
