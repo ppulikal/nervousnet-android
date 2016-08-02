@@ -287,7 +287,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
     }
 
     @Override
-    public void onServiceConnectionFailed() {
+    public void onServiceConnectionFailed(ErrorReading errorReading) {
 
     }
 

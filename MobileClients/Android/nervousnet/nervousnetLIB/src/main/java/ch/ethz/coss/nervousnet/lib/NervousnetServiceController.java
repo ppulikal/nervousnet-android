@@ -77,12 +77,18 @@ public class NervousnetServiceController {
                                 }
                             });
                 }
+            } catch (SecurityException e) {
+                e.printStackTrace();
+                Log.e(LOG_TAG, "SecurityException - cannot bind to nervousnet service due to missing permission or permission denied. use 'ch.ethz.coss.nervousnet.hub.BIND_PERM' in your manifest to connect to nervousnet HUB Service");
+                doUnbindService();
+
+                listener.onServiceConnectionFailed(new ErrorReading(new String[]{"303","Security Exception - Cannot bind to nervousnet HUB service. Missing or denied Permission."}));
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(LOG_TAG, "Exception - not able to bind ! ");
                 doUnbindService();
 
-                listener.onServiceConnectionFailed();
+                listener.onServiceConnectionFailed(new ErrorReading(new String[]{"301","Unable to bind to nervousnet HUB service"}));
             }
 
 
@@ -136,7 +142,7 @@ public class NervousnetServiceController {
         bindFlag = context.bindService(it, mServiceConnection, 0);
 
         if(!bindFlag && listener != null) {
-            listener.onServiceConnectionFailed();
+            listener.onServiceConnectionFailed(new ErrorReading(new String[]{"302","Cannot bind to nervousnet HUB service."}));
         }
 
     }

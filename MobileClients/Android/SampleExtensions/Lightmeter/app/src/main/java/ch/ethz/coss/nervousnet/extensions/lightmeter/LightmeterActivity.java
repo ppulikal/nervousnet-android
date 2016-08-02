@@ -150,18 +150,18 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
     public void onServiceDisconnected() {
         Log.d("LightmeterActivity", "onServiceDisconnected");
         lux.setText("Nervousnet HUB application is required running to use this app. If already installed, please turn on the Data Collection option inside the Nervousnet HUB application.");
-        reading.setVisibility(View.INVISIBLE);
-        error.setVisibility(View.VISIBLE);
+        reading.setVisibility(View.VISIBLE);
+        error.setVisibility(View.INVISIBLE);
 
         stopRepeatingTask();
     }
 
     @Override
-    public void onServiceConnectionFailed() {
+    public void onServiceConnectionFailed(ErrorReading errorReading) {
 
         Log.d("LightmeterActivity", "onServiceConnectionFailed");
-        lux.setText("Service Connection Failed" +"\n"
-        +"Nervousnet HUB application is required running to use this app. If already installed, please turn on the Data Collection option inside the Nervousnet HUB application.");
+        errorView.setText("Service Connection Failed" +"\n"
+        +""+errorReading.getErrorCode()+" - "+errorReading.getErrorString());
         reading.setVisibility(View.INVISIBLE);
         error.setVisibility(View.VISIBLE);
     }
