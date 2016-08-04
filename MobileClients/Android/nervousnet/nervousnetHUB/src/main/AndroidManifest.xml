@@ -18,10 +18,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="ch.ethz.coss.nervousnet.hub.BIND_PERM" />
 
     <permission
@@ -29,7 +27,6 @@
         android:description="@string/api_perm_desc"
         android:label="Nervousnet HUB API permission"
         android:protectionLevel="dangerous" />
-
 
     <application
         android:name=".Application"
@@ -119,8 +116,9 @@
         <activity
             android:name=".ui.SpaceActivity"
             android:label="@string/title_activity_space" />
-        <activity android:name=".SharingNodeActivity"></activity>
-        <activity android:name=".SensorPermissionsActivity"></activity>
+        <activity android:name=".SharingNodeActivity" />
+        <activity android:name=".SensorPermissionsActivity" />
+        <activity android:name=".AxonSensorsActivity"></activity>
     </application>
 
 </manifest>
