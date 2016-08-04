@@ -12,10 +12,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import ch.ethz.coss.nervousnet.hub.ui.BaseActivity;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.NervousnetNode;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.NodesArrayAdapter;
 
-public class SharingNodeActivity extends Activity {
+public class SharingNodeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
