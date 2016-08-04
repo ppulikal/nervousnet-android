@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:gravity="top"
-        android:text="Settings" />
+        android:text="Settings"
+        android:textColor="@color/gray"/>
 
     <ScrollView
         android:id="@+id/scrollView1"

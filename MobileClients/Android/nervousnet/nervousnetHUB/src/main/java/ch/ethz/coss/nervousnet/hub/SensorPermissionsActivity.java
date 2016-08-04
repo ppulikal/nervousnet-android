@@ -27,9 +27,9 @@ public class SensorPermissionsActivity extends Activity {
         //// TODO: 02/08/2016 Get real axon list
         NervousnetAxon data[] = new NervousnetAxon[]
                 {
-                        new NervousnetAxon("Survive", R.drawable.ic_analytics),
-                        new NervousnetAxon("Whatever", R.drawable.ic_apps),
-                        new NervousnetAxon("Stuff", R.drawable.ic_analytics),
+                        new NervousnetAxon("Axon 1", R.drawable.ic_analytics),
+                        new NervousnetAxon("Axon 2", R.drawable.ic_apps),
+                        new NervousnetAxon("Axon 3", R.drawable.ic_analytics),
                 };
 
         return data;
