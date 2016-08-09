@@ -171,6 +171,25 @@ public class NervousnetServiceController {
 
     }
 
+
+    public SensorReading getReadings(long sensorID, long startTime, long endTime, RemoteCallback cb) throws RemoteException {
+        if (bindFlag) {
+            if (mService != null){
+
+                mService.getReadings(sensorID,startTime, endTime, cb);
+                return null;
+            } else
+                return new ErrorReading(new String[]{"002", "Service not connected."});
+        } else
+            return new ErrorReading(new String[]{"003", "Service not bound."});
+
+
+
+    }
+
+
+
+
 //    /**
 //     * gets latest reading using a listener.
 //     * @param sensorID

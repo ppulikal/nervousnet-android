@@ -14,14 +14,15 @@ import java.util.UUID;
 
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.BatteryReading;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.LocationReading;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.lib.ProximityReading;
-import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor.BaseSensorListener;
@@ -254,6 +255,7 @@ public class SQLHelper implements BaseSensorListener {
                 break;
 //
             case LibConstants.SENSOR_LIGHT:
+                NNLog.d(LOG_TAG, "SENSOR_LIGHT");
                 qb = lightDao.queryBuilder();
                 qb.where(LightDataDao.Properties.TimeStamp.between(startTime, endTime));
 
@@ -275,14 +277,29 @@ public class SQLHelper implements BaseSensorListener {
         }
 
         aList = (ArrayList<SensorDataImpl>) qb.list();
+        NNLog.d(LOG_TAG, " List size = " + aList.size());
         iterator = aList.iterator();
         while (iterator.hasNext()) {
-            list.add(convertSensorDataToSensorReading(iterator.next()));
+
+            NNLog.d(LOG_TAG, " 2. List size = " + list.size());
+            SensorDataImpl data = iterator.next();
+            data.setType(type);
+            list.add(convertSensorDataToSensorReading(data));
+
         }
         try {
+            if(cb == null || list == null)
+                NNLog.d(LOG_TAG, "getSensorReadings with callback, Callback instance or list is  null");
+            NNLog.d(LOG_TAG, "getSensorReadings with callback - SUCCESS");
+
             cb.success(list);
         } catch (RemoteException e) {
+            NNLog.d(LOG_TAG, "getSensorReadings with callback - RemoteException");
+//            cb.failure(new ErrorReading(new String[]{"300", "RemoteException while sending success"}));
             e.printStackTrace();
+        } catch (Exception e) {
+            NNLog.d(LOG_TAG, "getSensorReadings with callback - FAILURE");
+//            cb.failure(new ErrorReading(new String[]{"301", "Exception while sending success"}));
         }
 
     }

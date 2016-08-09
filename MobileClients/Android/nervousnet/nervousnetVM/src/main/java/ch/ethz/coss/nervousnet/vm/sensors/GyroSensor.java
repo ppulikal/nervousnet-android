@@ -116,7 +116,8 @@ public class GyroSensor extends BaseSensor implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         NNLog.d(LOG_TAG, "X = " + event.values[0]);
-        reading = new GyroReading(event.timestamp, event.values);
+        reading = new GyroReading(System.currentTimeMillis()
+                + (event.timestamp - System.nanoTime()) / 1000000L, event.values);
         if (reading != null)
             dataReady(reading);
     }

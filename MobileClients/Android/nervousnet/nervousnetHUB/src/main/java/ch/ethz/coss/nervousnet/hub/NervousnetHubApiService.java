@@ -23,6 +23,9 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
@@ -30,10 +33,15 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
@@ -43,6 +51,9 @@ import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 public class NervousnetHubApiService extends Service {
 
     private static final String LOG_TAG = NervousnetHubApiService.class.getSimpleName();
+
+    private static int NOTIFICATION_Text = R.string.local_service_started;
+
     private final NervousnetRemote.Stub mBinder = new NervousnetRemote.Stub() {
 
         @Override
@@ -70,6 +81,9 @@ public class NervousnetHubApiService extends Service {
 
 
     };
+
+
+
     private PowerManager.WakeLock wakeLock;
     private HandlerThread hthread;
     private Handler handler;
@@ -92,14 +106,16 @@ public class NervousnetHubApiService extends Service {
             // Display a notification about us starting. We put an icon in the
             // status bar.
             ((Application) getApplication()).initNotification();
-//			if(((Application) getApplication()).nn_VM == null)
-//			((Application) getApplication()).nn_VM = new NervousnetVM(getApplicationContext());
+
         } else {
             NNLog.d(LOG_TAG, "Stopping Sensor Service as nervousnet is not running");
             stopSelf();
+            ((Application) getApplication()).removeNotification();
         }
 
     }
+
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -131,6 +147,12 @@ public class NervousnetHubApiService extends Service {
             wakeLock.release();
         }
         hthread.quit();
+    }
+
+
+    private int getNotificationIcon() {
+        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
+        return useWhiteIcon ? R.drawable.ic_logo_white : R.drawable.ic_logo;
     }
 
 }

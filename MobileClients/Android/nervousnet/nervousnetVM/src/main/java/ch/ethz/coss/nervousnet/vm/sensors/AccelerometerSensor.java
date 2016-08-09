@@ -117,7 +117,8 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
         if (event == null)
             return;
 
-        reading = new AccelerometerReading(event.timestamp, event.values);
+        reading = new AccelerometerReading(System.currentTimeMillis()
+                + (event.timestamp - System.nanoTime()) / 1000000L, event.values);
         dataReady(reading);
     }
 

@@ -8,10 +8,10 @@ import java.util.List;
 interface NervousnetRemote
 	{
 		/*
-	 	* Returns latest Sensor values using callback
+	 	* Returns latest Sensor value (single reading) using callback
 	    * sensorType = type of Sensor. Check LibConstants for types.
 	    * startTime = from time , endTime = to time
-	    * cb = Callback object with list that will contain the returned object of SensorReading
+	    * cb = Callback object with list that will contain a single returned object of SensorReading
 	    */
 	    void getReading(long sensorType, RemoteCallback cb);
 	    

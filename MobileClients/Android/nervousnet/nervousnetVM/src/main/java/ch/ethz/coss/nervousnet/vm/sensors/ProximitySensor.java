@@ -117,7 +117,8 @@ public class ProximitySensor extends BaseSensor implements SensorEventListener {
         if (event == null)
             return;
 
-        reading = new ProximityReading(event.timestamp, event.values[0]);
+        reading = new ProximityReading(System.currentTimeMillis()
+                + (event.timestamp - System.nanoTime()) / 1000000L, event.values[0]);
         dataReady(reading);
     }
 

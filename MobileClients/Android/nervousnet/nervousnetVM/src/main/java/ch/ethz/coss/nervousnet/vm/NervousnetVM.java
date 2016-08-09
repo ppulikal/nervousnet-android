@@ -276,6 +276,12 @@ public class NervousnetVM {
                 cb.success(aList);
             } catch (RemoteException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                try {
+                cb.failure(new ErrorReading(new String[]{"301", "getReading callback Exception occured"}));
+            } catch (RemoteException re) {
+                re.printStackTrace();
+            }
             }
         }
 
