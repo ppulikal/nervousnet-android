@@ -82,7 +82,7 @@ public class Application extends android.app.Application {
         System.exit(0);
     }
 
-    public byte getState(Context context) {
+    public byte getState() {
         return nn_VM.getState();
     }
 

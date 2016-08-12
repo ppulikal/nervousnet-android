@@ -14,7 +14,7 @@ import android.webkit.WebViewClient;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
-public class SpaceActivity extends Activity {
+public class SpaceActivity extends BaseActivity {
     private static final String LOG_TAG = "SpaceActivity";
     private WebView webview;
     private ProgressDialog progressBar;
@@ -22,7 +22,6 @@ public class SpaceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_space);
         this.webview = (WebView) findViewById(R.id.space_webView);

@@ -41,6 +41,7 @@ import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -105,6 +106,8 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
     @Override
     public void updateActionBar() {
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflator.inflate(R.layout.ab_nn, null);
         ActionBar actionBar;
@@ -118,7 +121,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         actionBar.setCustomView(v);
         mainSwitch = (Switch) findViewById(R.id.mainSwitch);
 
-        byte state = ((Application) getApplication()).getState(this);
+        byte state = ((Application) getApplication()).getState();
         NNLog.d("SensorDisplayActivity", "state = " + state);
         mainSwitch.setChecked(state == 0 ? false : true);
 
