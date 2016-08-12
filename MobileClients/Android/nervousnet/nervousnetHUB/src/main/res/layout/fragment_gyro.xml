@@ -1,45 +1,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+tools:context="ch.ethz.coss.nervousnet.hub.ui.fragments.GyroFragment">
+
+<ScrollView
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ch.ethz.coss.nervousnet.hub.ui.fragments.GyroFragment">
+    android:fillViewport="true">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="top"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Status" />
-
-                <TextView
-                    android:id="@+id/sensor_status_gyro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Sensor Status comes here" />
-            </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reading" />
+                android:hint="Sensor Status: " />
+
+            <TextView
+                android:id="@+id/sensor_status_gyro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Sensor Status comes here" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="fill_horizontal|center_vertical|center|center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gyroscope Reading"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_gravity="center_horizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +67,8 @@
                     android:id="@+id/gyro_x"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint=" Gyro X value comes here" />
+                    android:hint="Gyroscope X value comes here" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -72,7 +85,8 @@
                     android:id="@+id/gyro_y"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint=" Gyro Y value comes here" />
+                    android:hint="Gyroscope Y value comes here" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -89,14 +103,13 @@
                     android:id="@+id/gyro_z"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint=" Gyro Z value comes here" />
+                    android:hint="Gyroscope Z value comes here" />
             </LinearLayout>
 
-            <ch.ethz.coss.nervousnet.hub.ui.views.GyroscopeSensorView
-                android:id="@+id/gyroVizView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
         </LinearLayout>
-    </ScrollView>
+
+    </LinearLayout>
+
+</ScrollView>
 
 </LinearLayout>

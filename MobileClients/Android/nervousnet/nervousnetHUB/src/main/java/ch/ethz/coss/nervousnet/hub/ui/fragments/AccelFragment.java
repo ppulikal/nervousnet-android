@@ -44,7 +44,6 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class AccelFragment extends BaseFragment {
 
-    AccelerometerSensorView accelView;
 
     public AccelFragment() {
         super(LibConstants.SENSOR_ACCELEROMETER);
@@ -54,7 +53,6 @@ public class AccelFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_accel, container, false);
-        accelView = (AccelerometerSensorView) rootView.findViewById(R.id.accelVizView);
         return rootView;
     }
 
@@ -79,7 +77,6 @@ public class AccelFragment extends BaseFragment {
             values[0] = ((AccelerometerReading) reading).getX();
             values[1] = ((AccelerometerReading) reading).getY();
             values[2] = ((AccelerometerReading) reading).getZ();
-            accelView.setAccelerometerValues(values);
         }
 
     }

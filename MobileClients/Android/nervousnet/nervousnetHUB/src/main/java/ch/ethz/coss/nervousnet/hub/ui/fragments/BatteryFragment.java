@@ -43,7 +43,6 @@ import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class BatteryFragment extends BaseFragment {
-    BatterySensorView batView;
 
     public BatteryFragment() {
         super(LibConstants.SENSOR_BATTERY);
@@ -53,7 +52,6 @@ public class BatteryFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_battery, container, false);
-        batView = (BatterySensorView) rootView.findViewById(R.id.batVizView);
         return rootView;
     }
 
@@ -85,10 +83,6 @@ public class BatteryFragment extends BaseFragment {
             AC_charging.setText(((BatteryReading) reading).getCharging_type() == 0 ? "YES" : "NO");
 
 
-            batView.setChargingState(((BatteryReading) reading).isCharging());
-            batView.setACCharging(((BatteryReading) reading).getCharging_type() == 0);
-            batView.setUSBCharging(((BatteryReading) reading).getCharging_type() == 1);
-            batView.setBatteryLevel(((BatteryReading) reading).getPercent() * 100);
         }
     }
 

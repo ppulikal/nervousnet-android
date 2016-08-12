@@ -46,8 +46,6 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
  * @author prasad
  */
 public class GyroFragment extends BaseFragment {
-    GyroscopeSensorView gyroView;
-
     public GyroFragment() {
         super(LibConstants.SENSOR_GYROSCOPE);
     }
@@ -55,7 +53,6 @@ public class GyroFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gyro, container, false);
-        gyroView = (GyroscopeSensorView) rootView.findViewById(R.id.gyroVizView);
         return rootView;
     }
 
@@ -88,7 +85,6 @@ public class GyroFragment extends BaseFragment {
             f[0] = ((GyroReading) reading).getGyroX();
             f[1] = ((GyroReading) reading).getGyroY();
             f[2] = ((GyroReading) reading).getGyroZ();
-            gyroView.setGyroValues(f);
         }
 
     }

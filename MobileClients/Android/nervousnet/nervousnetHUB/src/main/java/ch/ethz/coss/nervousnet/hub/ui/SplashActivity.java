@@ -40,18 +40,17 @@ import ch.ethz.coss.nervousnet.hub.TermsOfUse;
  * true it shows the "Terms Of Use" Dialog and if this flag is not enabled it
  * launches the MainActivity.
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends Activity {
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().hide();
+
 
         setContentView(R.layout.activity_splash);
-
+//        getActionBar().hide();
         new TermsOfUse(SplashActivity.this).showTerms();
     }
 

@@ -48,7 +48,6 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class NoiseFragment extends BaseFragment {
     final private int REQUEST_CODE_ASK_PERMISSIONS_NOISE = 2;
-    private DecibelMeterView noiseView;
     private float db;
     private float newDb;
 
@@ -60,7 +59,6 @@ public class NoiseFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_noise, container, false);
-        noiseView = (DecibelMeterView) rootView.findViewById(R.id.noiseVizView);
         return rootView;
     }
 
@@ -86,7 +84,6 @@ public class NoiseFragment extends BaseFragment {
             newDb = db;
 
         dbTV.setText("" + Math.round(db));
-        noiseView.setDecibleValue(newDb);
     }
 
     @Override
