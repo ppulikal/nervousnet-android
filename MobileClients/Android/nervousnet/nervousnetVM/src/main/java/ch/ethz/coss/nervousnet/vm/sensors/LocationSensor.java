@@ -38,6 +38,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import ch.ethz.coss.nervousnet.lib.LocationReading;
+import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class LocationSensor extends BaseSensor implements LocationListener {
@@ -70,17 +71,17 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 
 
         if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-            Log.d(LOG_TAG, "Cancelled Starting Location sensor as Sensor is not available.");
+            NNLog.d(LOG_TAG, "Cancelled Starting Location sensor as Sensor is not available.");
             return false;
         } else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-            Log.d(LOG_TAG, "Cancelled Starting Location sensor as permission denied by user.");
+            NNLog.d(LOG_TAG, "Cancelled Starting Location sensor as permission denied by user.");
             return false;
         } else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-            Log.d(LOG_TAG, "Cancelled starting Location sensor as Sensor state is switched off.");
+            NNLog.d(LOG_TAG, "Cancelled starting Location sensor as Sensor state is switched off.");
             return false;
         }
 
-        Log.d(LOG_TAG, "Starting Location sensor with state = " + sensorState);
+        NNLog.d(LOG_TAG, "Starting Location sensor with state = " + sensorState);
 
         MIN_TIME_BW_UPDATES = NervousnetVMConstants.sensor_freq_constants[0][sensorState - 1];
         startLocationCollection();
@@ -95,21 +96,21 @@ public class LocationSensor extends BaseSensor implements LocationListener {
     public boolean updateAndRestart(byte state) {
 
         if (state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-            Log.d(LOG_TAG, "Cancelled Starting Location sensor as Sensor is not available.");
+            NNLog.d(LOG_TAG, "Cancelled Starting Location sensor as Sensor is not available.");
             return false;
         } else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-            Log.d(LOG_TAG, "Cancelled Starting Location sensor as permission denied by user.");
+            NNLog.d(LOG_TAG, "Cancelled Starting Location sensor as permission denied by user.");
             return false;
         } else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
             setSensorState(state);
-            Log.d(LOG_TAG, "Cancelled starting Location sensor as Sensor state is switched off.");
+            NNLog.d(LOG_TAG, "Cancelled starting Location sensor as Sensor state is switched off.");
             return false;
         }
 
         stop(false);
 
         setSensorState(state);
-        Log.d(LOG_TAG, "Restarting Location sensor with state = " + sensorState);
+        NNLog.d(LOG_TAG, "Restarting Location sensor with state = " + sensorState);
 
         start();
         return true;
@@ -118,13 +119,13 @@ public class LocationSensor extends BaseSensor implements LocationListener {
     @Override
     public boolean stop(boolean changeStateFlag) {
         if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
-            Log.d(LOG_TAG, "Cancelled stop Location sensor as Sensor state is not available ");
+            NNLog.d(LOG_TAG, "Cancelled stop Location sensor as Sensor state is not available ");
             return false;
         } else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
-            Log.d(LOG_TAG, "Cancelled stop Location sensor as permission denied by user.");
+            NNLog.d(LOG_TAG, "Cancelled stop Location sensor as permission denied by user.");
             return false;
         } else if (sensorState == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-            Log.d(LOG_TAG, "Cancelled stop Location sensor as Sensor state is switched off ");
+            NNLog.d(LOG_TAG, "Cancelled stop Location sensor as Sensor state is switched off ");
             return false;
         }
         setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
@@ -136,7 +137,7 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 
     @TargetApi(23)
     public void startLocationCollection() {
-        Log.d(LOG_TAG, "startLocationCollection ");
+        NNLog.d(LOG_TAG, "startLocationCollection ");
 
         if (Build.VERSION.SDK_INT >= 23
                 && ContextCompat.checkSelfPermission(mContext,
@@ -150,7 +151,7 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 
         if (locationManager == null)
             return;
-        Log.d(LOG_TAG, "startLocationCollection2");
+        NNLog.d(LOG_TAG, "startLocationCollection2");
 
         // getting GPS status
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -160,7 +161,7 @@ public class LocationSensor extends BaseSensor implements LocationListener {
 
         if (!isGPSEnabled && !isNetworkEnabled) {
             setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED);
-            Log.d(LOG_TAG, "Location settings disabled");
+            NNLog.d(LOG_TAG, "Location settings disabled");
             // no network provider is enabled
             Toast.makeText(mContext, "Location settings disabled", Toast.LENGTH_LONG).show();
         } else {
@@ -169,7 +170,7 @@ public class LocationSensor extends BaseSensor implements LocationListener {
             if (isNetworkEnabled) {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES,
                         MIN_TIME_BW_UPDATES, this);
-                Log.d(LOG_TAG, "Network");
+                NNLog.d(LOG_TAG, "Network");
                 if (locationManager != null) {
                     location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     if (location != null) {
@@ -184,7 +185,7 @@ public class LocationSensor extends BaseSensor implements LocationListener {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,
                             MIN_TIME_BW_UPDATES, this);
 
-                    Log.d(LOG_TAG, "GPS Enabled");
+                    NNLog.d(LOG_TAG, "GPS Enabled");
 
                     if (locationManager != null) {
                         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
