@@ -1,0 +1,65 @@
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/api_detail"
+    style="?android:attr/textAppearanceSmall"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:textIsSelectable="true"
+    android:textSize="10sp"
+    tools:context="ch.ethz.coss.nervousnet.extensions.nervousnetapidemo.APIDetailFragment" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Nervousnet Service Connection status:"/>
+    <LinearLayout
+        android:id="@+id/conn_status_layout"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Medium Text"
+            android:id="@+id/conn_status_textview" />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Sensor Data"/>
+    <LinearLayout
+        android:id="@+id/sensor_details_layout"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/country_arrays"
+        android:prompt="@string/country_prompt"
+        />
+
+    <Button
+        android:id="@+id/api_detail_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Fetch Data"
+        android:padding="16dp"/>
+    </LinearLayout>
+
+</LinearLayout>

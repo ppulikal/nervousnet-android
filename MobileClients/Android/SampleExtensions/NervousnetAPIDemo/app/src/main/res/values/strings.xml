@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Nervousnet API Demo</string>
+    <string name="title_api_detail">API Detail</string>
+    <string name="country_prompt">Choose a sensor</string>
+    <string-array name="country_arrays">
+        <item>Accelerometer</item>
+        <item>Battery</item>
+        <item>Gyroscope</item>
+        <item>Location</item>
+        <item>Light</item>
+        <item>Noise</item>
+        <item>Proximity</item>
+    </string-array>
+</resources>

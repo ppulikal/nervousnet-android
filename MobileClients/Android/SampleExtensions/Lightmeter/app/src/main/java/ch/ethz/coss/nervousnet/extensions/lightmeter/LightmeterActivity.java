@@ -13,6 +13,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
@@ -37,9 +43,12 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
 
     SensorReading lReading;
 
+    Callback cb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("LightmeterActivity", "onCreate()");
         setContentView(R.layout.activity_lightmeter);
 
 
@@ -75,7 +84,6 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
     }
 
     @Override
@@ -87,7 +95,7 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
 
 
     protected void update() throws RemoteException {
-        Log.d("LightmeterActivity", "before updating 1");
+        Log.d("LightmeterActivity", "update()");
         SensorReading lReading;
 
         if(nervousnetServiceController != null) {
@@ -142,8 +150,18 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
     @Override
     public void onServiceConnected() {
         Log.d("LightmeterActivity", "onServiceConnected");
-        startRepeatingTask();
+//        startRepeatingTask();
+        cb = new Callback();
 
+        if (nervousnetServiceController != null) {
+            try {
+
+                Log.d("LightmeterActivity", "Before requesting getReadings callback : Timestamp = "+(System.currentTimeMillis() - 20000 )+ "<<>>"+System.currentTimeMillis());
+                nervousnetServiceController.getReadings(LibConstants.SENSOR_LIGHT, System.currentTimeMillis() - 1000000, System.currentTimeMillis(), cb);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -175,20 +193,40 @@ public class LightmeterActivity extends Activity implements NervousnetServiceCon
     class Callback extends RemoteCallback.Stub {
 
         @Override
-        public void success(List list) throws RemoteException {
+        public void success(final List<SensorReading> list) throws RemoteException {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    Log.d("LightmeterActivity", "callback success "+list.size());
+//                                successImpl(result);
 
+
+                        Iterator<SensorReading> iterator;
+                        iterator = list.iterator();
+                        while (iterator.hasNext()) {
+                            SensorReading reading = iterator.next();
+
+                            Log.d("LightmeterActivity", "Light Reading found - " + ((LightReading) reading).getLuxValue());
+                        }
+
+                }
+            });
         }
 
         @Override
-        public void failure(ErrorReading reading) throws RemoteException {
-
+        public void failure(final ErrorReading reading) throws RemoteException {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    Log.d("LightmeterActivity", "callback failure "+reading.getErrorString());
+                }
+            });
         }
-
-        @Override
-        public IBinder asBinder() {
-            return null;
-        }
+//
+//        @Override
+//        public IBinder asBinder() {
+//            return super.asBinder();
+//        }
     }
 
-
 }
+
+
