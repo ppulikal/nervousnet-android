@@ -71,8 +71,7 @@ public class NervousnetVM {
             NNLog.d(LOG_TAG, "Config - state = " + state);
         } else {
             NNLog.d(LOG_TAG, "Inside Constructure after loadVMConfig() no config found. Create a new config.");
-            uuid = UUID.randomUUID();
-            sqlHelper.storeVMConfig(state, uuid);
+            newUUID();
         }
 
         initSensors();
@@ -80,6 +79,8 @@ public class NervousnetVM {
         if (state == NervousnetVMConstants.STATE_RUNNING)
             startSensors();
     }
+
+
 
     private void initSensors() {
         NNLog.d(LOG_TAG, "Inside initSensors");
@@ -167,10 +168,19 @@ public class NervousnetVM {
         return uuid;
     }
 
+
     public synchronized void newUUID() {
         uuid = UUID.randomUUID();
         sqlHelper.storeVMConfig(state, uuid);
     }
+
+
+    public synchronized void regenerateUUID() {
+        newUUID();
+        sqlHelper.resetDatabase();
+    }
+
+
 
     public void storeNervousnetState(byte state) {
         this.state = state;

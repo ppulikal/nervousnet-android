@@ -100,6 +100,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.ethz.coss.nervousnet.hub.ui.MainActivity" />
         </activity>
+
+        <activity
+            android:name=".ui.GenericSettingsActivity"
+            android:label="@string/title_activity_sensors">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.ethz.coss.nervousnet.hub.ui.MainActivity" />
+        </activity>
         <activity
             android:name=".ui.CollectionRateSettingsActivity"
             android:label="@string/title_activity_sensors">

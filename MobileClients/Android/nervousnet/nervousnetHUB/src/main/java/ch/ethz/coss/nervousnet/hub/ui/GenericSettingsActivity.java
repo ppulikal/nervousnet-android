@@ -29,50 +29,36 @@ package ch.ethz.coss.nervousnet.hub.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
-import ch.ethz.coss.nervousnet.hub.SharingNodeActivity;
 import ch.ethz.coss.nervousnet.hub.SensorPermissionsActivity;
+import ch.ethz.coss.nervousnet.hub.SharingNodeActivity;
+import ch.ethz.coss.nervousnet.vm.storage.SQLHelper;
 
 /**
  * @author prasad
  */
 
-public class SettingsActivity extends BaseActivity {
+public class GenericSettingsActivity extends BaseActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_generic_settings);
 
-        findViewById(R.id.gen_settings_item).setOnClickListener(new View.OnClickListener() {
+        final TextView uuid_tv = (TextView) findViewById(R.id.uuid_TV);
+        uuid_tv.setText(((Application) getApplication()).nn_VM.getUUID().toString());
+
+        findViewById(R.id.uuid_gen_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startNextActivity(new Intent(SettingsActivity.this, GenericSettingsActivity.class));
+                ((Application) getApplication()).nn_VM.newUUID();
+                uuid_tv.setText(((Application) getApplication()).nn_VM.getUUID().toString());
             }
         });
-
-        findViewById(R.id.coll_rate_item).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startNextActivity(new Intent(SettingsActivity.this, CollectionRateSettingsActivity.class));
-            }
-        });
-
-        findViewById(R.id.sharing_nodes_item).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-				startNextActivity(new Intent(SettingsActivity.this, SharingNodeActivity.class));
-            }
-        });
-
-        findViewById(R.id.sensor_perm_item).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-				startNextActivity(new Intent(SettingsActivity.this, SensorPermissionsActivity.class));
-            }
-        });
-
     }
 
 }

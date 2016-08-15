@@ -48,6 +48,10 @@ public class SQLHelper implements BaseSensorListener {
 
     ArrayList<SensorDataImpl> accelDataArrList, battDataArrList, gyroDataArrList, lightDataArrList, locDataArrList, noiseDataArrList, proxDataArrList;
 
+    public SQLHelper() {
+
+    }
+
     public SQLHelper(Context context, String DB_NAME) {
         initDao(context, DB_NAME);
     }
@@ -97,6 +101,24 @@ public class SQLHelper implements BaseSensorListener {
         }
     }
 
+    public void resetDatabase() {
+          accDao.deleteAll();
+          battDao.deleteAll();
+        locDao.deleteAll();
+        gyroDao.deleteAll();
+        lightDao.deleteAll();
+        noiseDao.deleteAll();
+        proximityDao.deleteAll();
+
+
+        accelDataArrList.clear();
+        battDataArrList.clear();
+        gyroDataArrList.clear();
+        lightDataArrList.clear();
+        locDataArrList.clear();
+        noiseDataArrList.clear();
+        proxDataArrList.clear();
+    }
     public synchronized Config loadVMConfig() {
         NNLog.d(LOG_TAG, "Inside loadVMConfig");
 
@@ -122,6 +144,7 @@ public class SQLHelper implements BaseSensorListener {
             config = configDao.queryBuilder().unique();
             configDao.deleteAll();
             config.setState(state);
+            config.setUUID(uuid.toString());
             configDao.insert(config);
             config = configDao.queryBuilder().unique();
             NNLog.d(LOG_TAG, "state = " + config.getState());
@@ -467,6 +490,11 @@ public class SQLHelper implements BaseSensorListener {
                 break;
 
         }
+    }
+
+    public String getUUID() {
+
+        return ((Config)loadVMConfig()).getUUID();
     }
 
     class StoreTask extends AsyncTask<ArrayList<SensorDataImpl>, Integer, Void> {
