@@ -1,4 +1,4 @@
-package ch.ethz.coss.nervousnet.hub;
+package ch.ethz.coss.nervousnet.hub.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import ch.ethz.coss.nervousnet.hub.ui.BaseActivity;
+import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.NervousnetNode;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.NodesArrayAdapter;
 

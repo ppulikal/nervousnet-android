@@ -1,4 +1,4 @@
-package ch.ethz.coss.nervousnet.hub;
+package ch.ethz.coss.nervousnet.hub.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import ch.ethz.coss.nervousnet.hub.ui.BaseActivity;
+import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.AxonsArrayAdapter;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.NervousnetAxon;
 

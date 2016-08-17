@@ -31,8 +31,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import ch.ethz.coss.nervousnet.hub.R;
-import ch.ethz.coss.nervousnet.hub.SensorPermissionsActivity;
-import ch.ethz.coss.nervousnet.hub.SharingNodeActivity;
 
 /**
  * @author prasad
