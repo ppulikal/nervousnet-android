@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
 import ch.ethz.coss.nervousnet.vm.NNLog;

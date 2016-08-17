@@ -13,7 +13,6 @@ import java.util.UUID;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;

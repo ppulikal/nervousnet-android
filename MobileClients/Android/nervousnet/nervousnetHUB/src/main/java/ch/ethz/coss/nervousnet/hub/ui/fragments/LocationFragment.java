@@ -64,15 +64,15 @@ public class LocationFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_location, container, false);
         sensorSwitch = (Switch) rootView.findViewById(R.id.locSensorSwitch);
         sensorStatusTV = (TextView) rootView.findViewById(R.id.locSensorStatus);
-        sensorSwitch.setChecked(((((Application) ((Activity)getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_LOCATION))== 1) ? true : false);
+        sensorSwitch.setChecked(((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_LOCATION)) == 1) ? true : false);
 
         sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_LOCATION);
+                if (isChecked)
+                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_LOCATION);
                 else {
-                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_LOCATION, true);
+                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_LOCATION, true);
 
                 }
 
@@ -132,7 +132,6 @@ public class LocationFragment extends BaseFragment {
         }
 
     }
-
 
 
 }

@@ -1,95 +1,98 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-android:paddingBottom="@dimen/activity_vertical_margin"
-android:paddingLeft="@dimen/activity_horizontal_margin"
-android:paddingRight="@dimen/activity_horizontal_margin"
-android:paddingTop="@dimen/activity_vertical_margin"
-tools:context="ch.ethz.coss.nervousnet.hub.ui.fragments.LightFragment">
-
-<ScrollView
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ch.ethz.coss.nervousnet.hub.ui.fragments.LightFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="top"
-        android:orientation="vertical">
-
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Sensor Status : " />
-
-            <Switch
-                android:id="@+id/lightSensorSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/switch_min_width"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:switchMinWidth="@dimen/switch_min_width"
-                android:text=""
-                android:textSize="@dimen/switch_label_size"
-                android:thumb="@drawable/thumb"
-                android:track="@drawable/track" />
-
-
-        </LinearLayout>
-        <TextView
-            android:id="@+id/lightSensorStatus"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint=" ***** "
-            android:layout_gravity="center"
-            android:gravity="center_horizontal" />
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="fill_horizontal|center_vertical|center|center_horizontal">
+            android:layout_gravity="top"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Light Reading"
-                android:gravity="center_vertical|center_horizontal"
-                android:layout_gravity="center_horizontal" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Lux : " />
+                    android:hint="Sensor Status : " />
 
-                <TextView
-                    android:id="@+id/lux"
+                <Switch
+                    android:id="@+id/lightSensorSwitch"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Lux value comes here" />
+                    android:layout_height="@dimen/switch_min_width"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:switchMinWidth="@dimen/switch_min_width"
+                    android:text=""
+                    android:textSize="@dimen/switch_label_size"
+                    android:thumb="@drawable/thumb"
+                    android:track="@drawable/track" />
 
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/lightSensorStatus"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:hint=" ***** " />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="fill_horizontal|center_vertical|center|center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Light Reading" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Lux : " />
+
+                    <TextView
+                        android:id="@+id/lux"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Lux value comes here" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
 
 </LinearLayout>

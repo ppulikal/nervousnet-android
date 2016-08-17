@@ -57,15 +57,15 @@ public class ProximityFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_proximity, container, false);
         sensorSwitch = (Switch) rootView.findViewById(R.id.proxSensorSwitch);
         sensorStatusTV = (TextView) rootView.findViewById(R.id.proxSensorStatus);
-        sensorSwitch.setChecked(((((Application) ((Activity)getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_PROXIMITY))== 1) ? true : false);
+        sensorSwitch.setChecked(((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_PROXIMITY)) == 1) ? true : false);
 
         sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_PROXIMITY);
+                if (isChecked)
+                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_PROXIMITY);
                 else {
-                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_PROXIMITY, true);
+                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_PROXIMITY, true);
 
                 }
 

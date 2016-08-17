@@ -23,25 +23,15 @@
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
-import android.util.Log;
 import android.widget.Toast;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.locks.Lock;
 
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
-import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
@@ -57,9 +47,10 @@ public class NervousnetHubApiService extends Service {
     private final NervousnetRemote.Stub mBinder = new NervousnetRemote.Stub() {
 
         @Override
-        public boolean getNervousnetHubStatus () throws RemoteException {
-            return (((Application) getApplication()).getState())  == 0 ? false : true;
+        public boolean getNervousnetHubStatus() throws RemoteException {
+            return (((Application) getApplication()).getState()) == 0 ? false : true;
         }
+
         @Override
         public SensorReading getLatestReading(long sensorType) throws RemoteException {
             NNLog.d(LOG_TAG, "Sensor getReading() of Type = " + sensorType + " requested ");
@@ -87,24 +78,23 @@ public class NervousnetHubApiService extends Service {
     };
 
 
-
     private PowerManager.WakeLock wakeLock;
-//    private HandlerThread hthread;
+    //    private HandlerThread hthread;
 //    private Handler handler;
     private Lock storeMutex;
 
     @Override
     public void onCreate() {
-          NNLog.d(LOG_TAG, "Starting Sensor Service");
-            // Prepare the wakelock
-            PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
-            wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, LOG_TAG);
+        NNLog.d(LOG_TAG, "Starting Sensor Service");
+        // Prepare the wakelock
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, LOG_TAG);
 //            hthread = new HandlerThread("HandlerThread");
 //            hthread.start();
-            // Acquire wakelock, some sensors on some phones need this
-            if (!wakeLock.isHeld()) {
-                wakeLock.acquire();
-            }
+        // Acquire wakelock, some sensors on some phones need this
+        if (!wakeLock.isHeld()) {
+            wakeLock.acquire();
+        }
         if (((Application) getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_RUNNING) {
 
             // Display a notification about us starting. We put an icon in the
@@ -118,7 +108,6 @@ public class NervousnetHubApiService extends Service {
         }
 
     }
-
 
 
     @Override

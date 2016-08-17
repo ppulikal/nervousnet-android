@@ -6,7 +6,7 @@
     android:scaleType="centerCrop">
 
 
-         <android.support.v4.view.PagerTitleStrip
+    <android.support.v4.view.PagerTitleStrip
         android:id="@+id/pager_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,8 +14,7 @@
         android:background="@color/white_nervous"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
-        android:textColor="@color/gray"
-             />
+        android:textColor="@color/gray" />
 
 
     <!--android.support.v4.view.PagerTabStrip

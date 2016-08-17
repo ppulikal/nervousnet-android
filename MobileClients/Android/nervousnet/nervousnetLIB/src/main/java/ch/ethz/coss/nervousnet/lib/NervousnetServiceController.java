@@ -37,7 +37,7 @@ import android.widget.Toast;
  * * 	Contributors:
  * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
-public  class NervousnetServiceController {
+public class NervousnetServiceController {
 
     private static String LOG_TAG = NervousnetServiceController.class.getSimpleName();
     public NervousnetRemote mService;
@@ -53,17 +53,17 @@ public  class NervousnetServiceController {
 
     public void connect() {
 
-        if(isAppInstalled("ch.ethz.coss.nervousnet.hub") || isAppInstalled("ch.ethz.coss.nervousnet.hub.debug") ){
+        if (isAppInstalled("ch.ethz.coss.nervousnet.hub") || isAppInstalled("ch.ethz.coss.nervousnet.hub.debug")) {
 
-        if (mServiceConnection == null) {
-            initConnection();
-        }
+            if (mServiceConnection == null) {
+                initConnection();
+            }
 
-        if (mService == null) {
-            try {
-                doBindService();
-                Log.d(LOG_TAG, "bindflag : "+bindFlag.toString());
-                if (!bindFlag) {
+            if (mService == null) {
+                try {
+                    doBindService();
+                    Log.d(LOG_TAG, "bindflag : " + bindFlag.toString());
+                    if (!bindFlag) {
 //                    Utils.displayAlert(context, "Alert",
 //                            "Nervousnet HUB application is required running to use this app. Please turn on the Data Collection option inside the Nervousnet HUB application. ",
 //                            "Launch Nervousnet", new DialogInterface.OnClickListener() {
@@ -77,25 +77,25 @@ public  class NervousnetServiceController {
 //                                }
 //                            });
 
-                    listener.onServiceConnectionFailed(Utils.getErrorReading(101));
+                        listener.onServiceConnectionFailed(Utils.getErrorReading(101));
 
+                    }
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                    Log.e(LOG_TAG, "SecurityException - cannot bind to nervousnet service due to missing permission or permission denied. use 'ch.ethz.coss.nervousnet.hub.BIND_PERM' in your manifest to connect to nervousnet HUB Service");
+                    doUnbindService();
+
+                    listener.onServiceConnectionFailed(Utils.getErrorReading(102));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(LOG_TAG, "Exception - not able to bind ! ");
+                    doUnbindService();
+
+                    listener.onServiceConnectionFailed(Utils.getErrorReading(103));
                 }
-            } catch (SecurityException e) {
-                e.printStackTrace();
-                Log.e(LOG_TAG, "SecurityException - cannot bind to nervousnet service due to missing permission or permission denied. use 'ch.ethz.coss.nervousnet.hub.BIND_PERM' in your manifest to connect to nervousnet HUB Service");
-                doUnbindService();
 
-                listener.onServiceConnectionFailed(Utils.getErrorReading(102));
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(LOG_TAG, "Exception - not able to bind ! ");
-                doUnbindService();
 
-                listener.onServiceConnectionFailed(Utils.getErrorReading(103));
             }
-
-
-        }
 
         } else {
             Utils.displayAlert(context, "Alert",
@@ -146,18 +146,18 @@ public  class NervousnetServiceController {
                 mService = NervousnetRemote.Stub.asInterface(service);
 
                 try {
-                    if(mService.getNervousnetHubStatus()){
+                    if (mService.getNervousnetHubStatus()) {
                         Toast.makeText(context, "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
                                 .show();
                         Log.d(LOG_TAG, "Binding is done - Service connected");
-                        if(listener != null)
+                        if (listener != null)
                             listener.onServiceConnected();
                     } else {
-                        if(listener != null)
-                        listener.onServiceConnectionFailed(Utils.getErrorReading(101));
+                        if (listener != null)
+                            listener.onServiceConnectionFailed(Utils.getErrorReading(101));
                     }
                 } catch (RemoteException e) {
-                    if(listener != null)
+                    if (listener != null)
                         listener.onServiceConnectionFailed(Utils.getErrorReading(104));
 
                     e.printStackTrace();
@@ -176,7 +176,7 @@ public  class NervousnetServiceController {
         it.setClassName("ch.ethz.coss.nervousnet.hub", "ch.ethz.coss.nervousnet.hub.NervousnetHubApiService");
         bindFlag = context.bindService(it, mServiceConnection, 0);
 
-        if(!bindFlag && listener != null) {
+        if (!bindFlag && listener != null) {
             listener.onServiceConnectionFailed(Utils.getErrorReading(103));
         }
 
@@ -184,8 +184,8 @@ public  class NervousnetServiceController {
 
     private void doUnbindService() {
         Log.d(LOG_TAG, "doUnbindService successfull");
-        if(mServiceConnection != null)
-         context.unbindService(mServiceConnection);
+        if (mServiceConnection != null)
+            context.unbindService(mServiceConnection);
 
         bindFlag = false;
         mService = null;
@@ -204,21 +204,19 @@ public  class NervousnetServiceController {
             return new ErrorReading(new String[]{"003", "Service not bound."});
 
 
-
     }
 
 
     public SensorReading getReadings(long sensorID, long startTime, long endTime, RemoteCallback cb) throws RemoteException {
         if (bindFlag) {
-            if (mService != null){
+            if (mService != null) {
 
-                mService.getReadings(sensorID,startTime, endTime, cb);
+                mService.getReadings(sensorID, startTime, endTime, cb);
                 return null;
             } else
                 return new ErrorReading(new String[]{"002", "Nervousnet Service not connected."});
         } else
             return new ErrorReading(new String[]{"003", "Nervousnet Service not bound."});
-
 
 
     }
@@ -227,12 +225,10 @@ public  class NervousnetServiceController {
         try {
             context.getPackageManager().getApplicationInfo(packageName, 0);
             return true;
-        }
-        catch (PackageManager.NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
     }
-
 
 
 //    /**

@@ -26,16 +26,12 @@
 
 package ch.ethz.coss.nervousnet.hub.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
-import ch.ethz.coss.nervousnet.hub.SensorPermissionsActivity;
-import ch.ethz.coss.nervousnet.hub.SharingNodeActivity;
-import ch.ethz.coss.nervousnet.vm.storage.SQLHelper;
 
 /**
  * @author prasad

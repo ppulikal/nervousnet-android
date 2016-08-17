@@ -1,9 +1,5 @@
 package ch.ethz.coss.nervousnet.vm;
 
-import java.util.Hashtable;
-
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
-
 public class NervousnetVMConstants {
 
     public static final int STATE_PAUSED = 0;

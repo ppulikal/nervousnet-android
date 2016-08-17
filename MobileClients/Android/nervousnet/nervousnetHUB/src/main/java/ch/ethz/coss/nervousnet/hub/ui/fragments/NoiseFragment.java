@@ -43,7 +43,6 @@ import android.widget.TextView;
 
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
-import ch.ethz.coss.nervousnet.hub.ui.views.DecibelMeterView;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
@@ -65,15 +64,15 @@ public class NoiseFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_noise, container, false);
         sensorSwitch = (Switch) rootView.findViewById(R.id.noiseSensorSwitch);
         sensorStatusTV = (TextView) rootView.findViewById(R.id.noiseSensorStatus);
-        sensorSwitch.setChecked(((((Application) ((Activity)getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_NOISE))== 1) ? true : false);
+        sensorSwitch.setChecked(((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_NOISE)) == 1) ? true : false);
 
         sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_NOISE);
+                if (isChecked)
+                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_NOISE);
                 else {
-                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_NOISE, true);
+                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_NOISE, true);
 
                 }
 

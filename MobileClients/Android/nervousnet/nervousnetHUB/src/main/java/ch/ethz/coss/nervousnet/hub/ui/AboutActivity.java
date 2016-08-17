@@ -55,7 +55,7 @@ public class AboutActivity extends BaseActivity {
 
             String version = pInfo.versionName;
             int verCode = pInfo.versionCode;
-            versionTV.setText(version + ", " + verCode + (BuildConfig.DEBUG ? "\n"+"Debug build" : ""));
+            versionTV.setText(version + ", " + verCode + (BuildConfig.DEBUG ? "\n" + "Debug build" : ""));
 
         } catch (NameNotFoundException e) {
             // TODO Auto-generated catch block

@@ -86,11 +86,11 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         setContentView(R.layout.activity_sensor_display);
 
 
-            sapAdapter = new SensorDisplayPagerAdapter(getApplicationContext(), getSupportFragmentManager());
+        sapAdapter = new SensorDisplayPagerAdapter(getApplicationContext(), getSupportFragmentManager());
 
-            viewPager = (ViewPager) findViewById(R.id.pager);
-            viewPager.setAdapter(sapAdapter);
-        if(savedInstanceState == null) {
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(sapAdapter);
+        if (savedInstanceState == null) {
             initServiceConnection();
         }
     }
@@ -180,6 +180,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         startRepeatingTask();
 
     }
+
     @Override
     public void onBackPressed() {
 
@@ -196,7 +197,6 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
                 boolean errorFlag;
                 NNLog.d("SensorDisplayActivity", "before updating");
                 update(); // this function can change value of m_interval.
-
 
 
                 m_handler.postDelayed(m_statusChecker, m_interval);

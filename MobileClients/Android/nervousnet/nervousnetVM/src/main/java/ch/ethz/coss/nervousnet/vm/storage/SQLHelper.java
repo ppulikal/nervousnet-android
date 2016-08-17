@@ -14,15 +14,14 @@ import java.util.UUID;
 
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.BatteryReading;
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.LocationReading;
 import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.lib.ProximityReading;
-import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
+import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor.BaseSensorListener;

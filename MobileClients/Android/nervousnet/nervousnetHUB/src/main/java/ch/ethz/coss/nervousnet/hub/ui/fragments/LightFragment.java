@@ -39,7 +39,6 @@ import android.widget.TextView;
 
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
-import ch.ethz.coss.nervousnet.hub.ui.views.LightSensorView;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.LightReading;
@@ -58,15 +57,15 @@ public class LightFragment extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_light, container, false);
         sensorSwitch = (Switch) rootView.findViewById(R.id.lightSensorSwitch);
         sensorStatusTV = (TextView) rootView.findViewById(R.id.lightSensorStatus);
-        sensorSwitch.setChecked(((((Application) ((Activity)getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_LIGHT))== 1) ? true : false);
+        sensorSwitch.setChecked(((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_LIGHT)) == 1) ? true : false);
 
         sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_LIGHT);
+                if (isChecked)
+                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_LIGHT);
                 else {
-                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_LIGHT, true);
+                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_LIGHT, true);
 
                 }
 
@@ -99,7 +98,6 @@ public class LightFragment extends BaseFragment {
 
         }
     }
-
 
 
     @Override
