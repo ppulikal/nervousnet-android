@@ -65,6 +65,7 @@ import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NervousnetServiceConnectionListener;
 import ch.ethz.coss.nervousnet.lib.NervousnetServiceController;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.lib.Utils;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
@@ -84,13 +85,14 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         updateActionBar();
         setContentView(R.layout.activity_sensor_display);
 
-        sapAdapter = new SensorDisplayPagerAdapter(getApplicationContext(), getSupportFragmentManager());
 
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(sapAdapter);
+            sapAdapter = new SensorDisplayPagerAdapter(getApplicationContext(), getSupportFragmentManager());
 
-        initServiceConnection();
-
+            viewPager = (ViewPager) findViewById(R.id.pager);
+            viewPager.setAdapter(sapAdapter);
+        if(savedInstanceState == null) {
+            initServiceConnection();
+        }
     }
 
     private void initServiceConnection() {
@@ -139,8 +141,9 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
             ((Application) getApplication()).startService(this);
             initServiceConnection();
         } else {
+            nervousnetServiceController.disconnect();
             ((Application) getApplication()).stopService(this);
-            stopRepeatingTask();
+//            stopRepeatingTask();
         }
 
         ((Application) getApplication()).setState(this, on ? (byte) 1 : (byte) 0);
@@ -148,34 +151,39 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
     }
 
 
-    protected boolean updateStatus(SensorReading reading, int index) {
+    protected void updateStatus(SensorReading reading, int index) {
 
         BaseFragment fragment = (BaseFragment) sapAdapter.getFragment(index);
         NNLog.d("SensorDisplayActivity", "Inside updateStatus, index =  " + index);
 
         if (reading != null) {
             if (reading instanceof ErrorReading) {
-                ErrorReading error = (ErrorReading) reading;
-
                 fragment.handleError((ErrorReading) reading);
-                if ((error.getErrorCode() == 103)) {
-                    return true;
-                }
-                return false;
             } else {
                 fragment.updateReadings(reading);
-                return false;
             }
 
         }
-        return false;
-        // else
-        // fragment.handleError(new ErrorReading(new String[]{"100", "Reading is
-        // null", ""}));
+
     }
 
     @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+        stopRepeatingTask();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        startRepeatingTask();
+
+    }
+    @Override
     public void onBackPressed() {
+
+        nervousnetServiceController.disconnect();
         stopRepeatingTask();
         finish();
     }
@@ -185,34 +193,11 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         m_statusChecker = new Runnable() {
             @Override
             public void run() {
-                boolean errorFlag = false;
+                boolean errorFlag;
                 NNLog.d("SensorDisplayActivity", "before updating");
-//                if (mService != null) {
-                errorFlag = update(); // this function can change value of m_interval.
+                update(); // this function can change value of m_interval.
 
-//					if(errorFlag) {
-//						stopRepeatingTask();
-//					}
-//                } else {
-//                    NNLog.d("SensorDisplayActivity", "mService is null");
-//
-//                    Utils.displayAlert(SensorDisplayActivity.this, "Alert",
-//                            "Please switch on the data collection option to access this feature.", "Switch On",
-//                            new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    startStopSensorService(true);
-//                                }
-//                            }, "Back", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int id) {
-//
-//                                    finish();
-//                                }
-//                            });
-//
-//
-//                }
+
 
                 m_handler.postDelayed(m_statusChecker, m_interval);
             }
@@ -227,54 +212,42 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
     }
 
-    protected boolean update() {
+    protected void update() {
         try {
             int index = viewPager.getCurrentItem();
             NNLog.d("SensorDisplayActivity", "Inside update : index  = " + index);
             boolean errorFlag;
             switch (index) {
                 case 0:
-                    errorFlag = updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_ACCELEROMETER), index);
+                    updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_ACCELEROMETER), index);
                     break;
                 case 1:
-                    errorFlag = updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_BATTERY), index);
+                    updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_BATTERY), index);
                     break;
                 case 2:
-                    errorFlag = updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_GYROSCOPE), index);
+                    updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_GYROSCOPE), index);
                     break;
                 case 3:
-                    errorFlag = updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_LOCATION), index);
+                    updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_LOCATION), index);
                     break;
                 case 4:
-                    errorFlag = updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_LIGHT), index);
+                    updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_LIGHT), index);
                     break;
                 case 5:
-                    errorFlag = updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_NOISE), index);
+                    updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_NOISE), index);
                     break;
                 case 6:
-                    // Pressure
-                    errorFlag = updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_PROXIMITY), index);
-                    break;
-
-                case 11:
-                    // Proximity
-                    errorFlag = false;
+                    updateStatus(nervousnetServiceController.getLatestReading(LibConstants.SENSOR_PROXIMITY), index);
                     break;
 
                 default:
-                    return false;
+                    break;
             }
 
             viewPager.getAdapter().notifyDataSetChanged();
-            return errorFlag;
-            // }
-            // catch (RemoteException e) {
-            // // TODO Auto-generated catch block
-            // e.printStackTrace();
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            return true;
         }
     }
 
@@ -286,6 +259,8 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
     @Override
     public void onServiceDisconnected() {
+        fragment.handleError(Utils.getErrorReading(101));
+
         stopRepeatingTask();
     }
 

@@ -1,5 +1,9 @@
 package ch.ethz.coss.nervousnet.vm;
 
+import java.util.Hashtable;
+
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
+
 public class NervousnetVMConstants {
 
     public static final int STATE_PAUSED = 0;
@@ -39,5 +43,7 @@ public class NervousnetVMConstants {
     public static byte SENSOR_STATE_AVAILABLE_DELAY_HIGH = 1;
     public static byte SENSOR_STATE_AVAILABLE_DELAY_MED = 2;
     public static byte SENSOR_STATE_AVAILABLE_DELAY_LOW = 3;
+
+
 
 }

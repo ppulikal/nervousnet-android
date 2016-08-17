@@ -29,6 +29,7 @@
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v13.app.ActivityCompat;
@@ -36,8 +37,11 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.DecibelMeterView;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
@@ -58,7 +62,23 @@ public class NoiseFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_noise, container, false);
+        rootView = inflater.inflate(R.layout.fragment_noise, container, false);
+        sensorSwitch = (Switch) rootView.findViewById(R.id.noiseSensorSwitch);
+        sensorStatusTV = (TextView) rootView.findViewById(R.id.noiseSensorStatus);
+        sensorSwitch.setChecked(((((Application) ((Activity)getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_NOISE))== 1) ? true : false);
+
+        sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_NOISE);
+                else {
+                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_NOISE, true);
+
+                }
+
+            }
+        });
         return rootView;
     }
 
@@ -72,25 +92,32 @@ public class NoiseFragment extends BaseFragment {
     @Override
     public void updateReadings(SensorReading reading) {
 
-        NNLog.d("NoiseFragment", "Inside updateReadings");
-        db = ((NoiseReading) reading).getdbValue();
-        TextView dbTV = (TextView) getActivity().findViewById(R.id.dbValue);
+        if (reading instanceof ErrorReading) {
 
-        if (newDb < Math.round(db))
-            newDb++;
-        else if (newDb > Math.round(db))
-            newDb--;
-        else
-            newDb = db;
+            NNLog.d("NoiseFragment", "Inside updateReadings - ErrorReading");
+            handleError((ErrorReading) reading);
+        } else {
+            NNLog.d("NoiseFragment", "Inside updateReadings");
+            sensorStatusTV.setText("Service connected and sensor is running");
+            db = ((NoiseReading) reading).getdbValue();
+            TextView dbTV = (TextView) getActivity().findViewById(R.id.dbValue);
 
-        dbTV.setText("" + Math.round(db));
+            if (newDb < Math.round(db))
+                newDb++;
+            else if (newDb > Math.round(db))
+                newDb--;
+            else
+                newDb = db;
+
+            dbTV.setText("" + Math.round(db));
+
+        }
     }
 
     @Override
     public void handleError(ErrorReading reading) {
         NNLog.d("NoiseFragment", "handleError called");
-        TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_noise);
-        status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
+        sensorStatusTV.setText(reading.getErrorString());
 
         // Android 6.0 permission request
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {

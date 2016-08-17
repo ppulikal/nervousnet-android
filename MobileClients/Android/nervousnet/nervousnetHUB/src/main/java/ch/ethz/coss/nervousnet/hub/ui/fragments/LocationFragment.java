@@ -29,6 +29,7 @@
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v13.app.ActivityCompat;
@@ -37,8 +38,11 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
@@ -57,8 +61,23 @@ public class LocationFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_location, container, false);
+        rootView = inflater.inflate(R.layout.fragment_location, container, false);
+        sensorSwitch = (Switch) rootView.findViewById(R.id.locSensorSwitch);
+        sensorStatusTV = (TextView) rootView.findViewById(R.id.locSensorStatus);
+        sensorSwitch.setChecked(((((Application) ((Activity)getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_LOCATION))== 1) ? true : false);
 
+        sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_LOCATION);
+                else {
+                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_LOCATION, true);
+
+                }
+
+            }
+        });
         return rootView;
     }
 
@@ -80,6 +99,8 @@ public class LocationFragment extends BaseFragment {
             handleError((ErrorReading) reading);
         } else {
 
+            sensorStatusTV.setText("Service connected and sensor is running");
+
             double[] location = ((LocationReading) reading).getLatnLong();
             FragmentActivity fragAct = getActivity();
             if (fragAct == null)
@@ -97,8 +118,7 @@ public class LocationFragment extends BaseFragment {
     @Override
     public void handleError(ErrorReading reading) {
         NNLog.d("LocationFragment", "handleError called");
-        TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_loc);
-        status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
+        sensorStatusTV.setText(reading.getErrorString());
 
         // Android 6.0 permission request
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -112,5 +132,7 @@ public class LocationFragment extends BaseFragment {
         }
 
     }
+
+
 
 }

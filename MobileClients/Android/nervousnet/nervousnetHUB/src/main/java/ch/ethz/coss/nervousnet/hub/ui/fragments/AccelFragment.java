@@ -28,12 +28,17 @@
  */
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.AccelerometerSensorView;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
@@ -44,7 +49,6 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class AccelFragment extends BaseFragment {
 
-
     public AccelFragment() {
         super(LibConstants.SENSOR_ACCELEROMETER);
     }
@@ -52,9 +56,27 @@ public class AccelFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_accel, container, false);
+        rootView = inflater.inflate(R.layout.fragment_accel, container, false);
+        sensorSwitch = (Switch) rootView.findViewById(R.id.accelSensorSwitch);
+        sensorStatusTV = (TextView) rootView.findViewById(R.id.accelSensorStatus);
+        sensorSwitch.setChecked(((((Application) ((Activity)getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_ACCELEROMETER))== 1) ? true : false);
+
+        sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               if(isChecked)
+                   ((Application) ((Activity)getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_ACCELEROMETER);
+                else {
+                   ((Application) ((Activity)getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_ACCELEROMETER, true);
+
+               }
+
+            }
+        });
         return rootView;
     }
+
+
 
     @Override
     public void updateReadings(SensorReading reading) {
@@ -65,9 +87,12 @@ public class AccelFragment extends BaseFragment {
             NNLog.d("AccelFragment", "Inside updateReadings - ErrorReading");
             handleError((ErrorReading) reading);
         } else {
-            TextView x_value = (TextView) getActivity().findViewById(R.id.accel_x);
-            TextView y_value = (TextView) getActivity().findViewById(R.id.accel_y);
-            TextView z_value = (TextView) getActivity().findViewById(R.id.accel_z);
+
+            sensorStatusTV.setText("Service connected and sensor is running");
+
+            TextView x_value = (TextView) rootView.findViewById(R.id.accel_x);
+            TextView y_value = (TextView) rootView.findViewById(R.id.accel_y);
+            TextView z_value = (TextView) rootView.findViewById(R.id.accel_z);
 
             x_value.setText("" + ((AccelerometerReading) reading).getX());
             y_value.setText("" + ((AccelerometerReading) reading).getY());
@@ -84,8 +109,8 @@ public class AccelFragment extends BaseFragment {
     @Override
     public void handleError(ErrorReading reading) {
         NNLog.d("AccelFragment", "handleError called");
-        TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_accel);
-        status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
+
+        sensorStatusTV.setText(reading.getErrorString());
     }
 
 }

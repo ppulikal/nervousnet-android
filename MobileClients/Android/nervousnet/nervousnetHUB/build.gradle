@@ -14,9 +14,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
 
-        debug {
-            applicationIdSuffix ".debug"
-        }
+//        debug {
+//            applicationIdSuffix ".debug"
+//        }
     }
     productFlavors {
     }
@@ -25,4 +25,5 @@ android {
 dependencies {
     compile project(':nervousnetVM')
     compile 'com.android.support:support-v13:24.0.0'
+    compile 'com.android.support:appcompat-v7:'
 }

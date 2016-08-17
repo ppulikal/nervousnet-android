@@ -28,12 +28,16 @@
  */
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.LightSensorView;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
@@ -51,7 +55,23 @@ public class LightFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_light, container, false);
+        rootView = inflater.inflate(R.layout.fragment_light, container, false);
+        sensorSwitch = (Switch) rootView.findViewById(R.id.lightSensorSwitch);
+        sensorStatusTV = (TextView) rootView.findViewById(R.id.lightSensorStatus);
+        sensorSwitch.setChecked(((((Application) ((Activity)getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_LIGHT))== 1) ? true : false);
+
+        sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_LIGHT);
+                else {
+                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_LIGHT, true);
+
+                }
+
+            }
+        });
         return rootView;
     }
 
@@ -71,18 +91,22 @@ public class LightFragment extends BaseFragment {
             NNLog.d("LightFragment", "Inside updateReadings - ErrorReading");
             handleError((ErrorReading) reading);
         } else {
+
+            sensorStatusTV.setText("Service connected and sensor is running");
+
             TextView lux = (TextView) getActivity().findViewById(R.id.lux);
             lux.setText("" + ((LightReading) reading).getLuxValue());
 
         }
     }
 
+
+
     @Override
     public void handleError(ErrorReading reading) {
         NNLog.d("LightFragment", "handleError called");
-        TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_light);
-        status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
-
+        sensorStatusTV.setText(reading.getErrorString());
     }
+
 
 }

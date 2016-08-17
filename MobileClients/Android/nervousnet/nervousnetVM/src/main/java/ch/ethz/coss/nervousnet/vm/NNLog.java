@@ -16,7 +16,7 @@ public class NNLog {
     }
 
     public static void d(String tag, String message) {
-        if (isDebug)
+//        if (BuildConfig.DEBUG)
             Log.d(tag, message);
     }
 

@@ -28,12 +28,16 @@
  */
 package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.BatterySensorView;
 import ch.ethz.coss.nervousnet.lib.BatteryReading;
@@ -51,7 +55,23 @@ public class BatteryFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_battery, container, false);
+        rootView = inflater.inflate(R.layout.fragment_battery, container, false);
+        sensorSwitch = (Switch) rootView.findViewById(R.id.battSensorSwitch);
+        sensorStatusTV = (TextView) rootView.findViewById(R.id.battSensorStatus);
+        sensorSwitch.setChecked(((((Application) ((Activity)getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_BATTERY))== 1) ? true : false);
+
+        sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_BATTERY);
+                else {
+                    ((Application) ((Activity)getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_BATTERY, true);
+
+                }
+
+            }
+        });
         return rootView;
     }
 
@@ -70,6 +90,8 @@ public class BatteryFragment extends BaseFragment {
             NNLog.d("BatteryFragment", "Inside updateReadings - ErrorReading");
             handleError((ErrorReading) reading);
         } else {
+            sensorStatusTV.setText("Service connected and sensor is running");
+
             TextView percent = (TextView) getActivity().findViewById(R.id.battery_percent);
             percent.setText("" + ((BatteryReading) reading).getPercent() * 100 + " %");
 
@@ -89,8 +111,8 @@ public class BatteryFragment extends BaseFragment {
     @Override
     public void handleError(ErrorReading reading) {
         NNLog.d("BatteryFragment", "handleError called");
-        TextView status = (TextView) getActivity().findViewById(R.id.sensor_status_batt);
-        status.setText("Error: code = " + reading.getErrorCode() + ", message = " + reading.getErrorString());
+        sensorStatusTV.setText(reading.getErrorString());
     }
+
 
 }

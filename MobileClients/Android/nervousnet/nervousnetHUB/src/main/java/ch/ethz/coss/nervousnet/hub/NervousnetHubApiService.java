@@ -57,6 +57,10 @@ public class NervousnetHubApiService extends Service {
     private final NervousnetRemote.Stub mBinder = new NervousnetRemote.Stub() {
 
         @Override
+        public boolean getNervousnetHubStatus () throws RemoteException {
+            return (((Application) getApplication()).getState())  == 0 ? false : true;
+        }
+        @Override
         public SensorReading getLatestReading(long sensorType) throws RemoteException {
             NNLog.d(LOG_TAG, "Sensor getReading() of Type = " + sensorType + " requested ");
             return ((Application) getApplication()).nn_VM.getLatestReading(sensorType);
@@ -85,23 +89,23 @@ public class NervousnetHubApiService extends Service {
 
 
     private PowerManager.WakeLock wakeLock;
-    private HandlerThread hthread;
-    private Handler handler;
+//    private HandlerThread hthread;
+//    private Handler handler;
     private Lock storeMutex;
 
     @Override
     public void onCreate() {
-        if (((Application) getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_RUNNING) {
-            NNLog.d(LOG_TAG, "Starting Sensor Service");
+          NNLog.d(LOG_TAG, "Starting Sensor Service");
             // Prepare the wakelock
             PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, LOG_TAG);
-            hthread = new HandlerThread("HandlerThread");
-            hthread.start();
+//            hthread = new HandlerThread("HandlerThread");
+//            hthread.start();
             // Acquire wakelock, some sensors on some phones need this
             if (!wakeLock.isHeld()) {
                 wakeLock.acquire();
             }
+        if (((Application) getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_RUNNING) {
 
             // Display a notification about us starting. We put an icon in the
             // status bar.
@@ -109,7 +113,7 @@ public class NervousnetHubApiService extends Service {
 
         } else {
             NNLog.d(LOG_TAG, "Stopping Sensor Service as nervousnet is not running");
-            stopSelf();
+//            stopSelf();
             ((Application) getApplication()).removeNotification();
         }
 
@@ -122,6 +126,11 @@ public class NervousnetHubApiService extends Service {
 //        NNLog.d(LOG_TAG, "Inside onBind " + mBinder.getCallingPid());
 //        NNLog.d(LOG_TAG, "Inside onBind " + mBinder.getCallingUid());
 //        NNLog.d(LOG_TAG, "Inside onBind " + mBinder.getCallingUserHandle());
+
+        if (((Application) getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED) {
+
+            return null;
+        }
 
         return mBinder;
     }
@@ -146,7 +155,7 @@ public class NervousnetHubApiService extends Service {
         if (wakeLock.isHeld()) {
             wakeLock.release();
         }
-        hthread.quit();
+//        hthread.quit();
     }
 
 

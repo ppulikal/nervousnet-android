@@ -29,15 +29,29 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Sensor Status: " />
+                    android:hint="Sensor Status : " />
 
-                <TextView
-                    android:id="@+id/sensor_status_accel"
+                <Switch
+                    android:id="@+id/accelSensorSwitch"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Sensor Status comes here" />
+                    android:layout_height="@dimen/switch_min_width"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:switchMinWidth="@dimen/switch_min_width"
+                    android:text=""
+                    android:textSize="@dimen/switch_label_size"
+                    android:thumb="@drawable/thumb"
+                    android:track="@drawable/track" />
+
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/accelSensorStatus"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint=" ***** "
+                android:layout_gravity="center"
+                android:gravity="center_horizontal" />
 
             <LinearLayout
                 android:orientation="vertical"
@@ -107,6 +121,13 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/sensor_status_accel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:hint="Sensor Status comes here" />
 
         </LinearLayout>
 
