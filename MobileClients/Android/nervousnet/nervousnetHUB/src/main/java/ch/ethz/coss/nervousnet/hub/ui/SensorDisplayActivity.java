@@ -170,14 +170,14 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
     @Override
     public void onPause() {
         super.onPause();  // Always call the superclass method first
-        stopRepeatingTask();
+        nervousnetServiceController.disconnect();
 
     }
 
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
-        startRepeatingTask();
+        nervousnetServiceController.connect();
 
     }
 
