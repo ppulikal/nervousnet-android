@@ -90,7 +90,7 @@ public class ProximityFragment extends BaseFragment {
             NNLog.d("ProximityFragment", "Inside updateReadings - ErrorReading");
             handleError((ErrorReading) reading);
         } else {
-            sensorStatusTV.setText("Service connected and sensor is running");
+            sensorStatusTV.setText(R.string.sensor_status_connected);
             TextView prox = (TextView) getActivity().findViewById(R.id.proxValue);
             prox.setText("" + ((ProximityReading) reading).getProximity());
 

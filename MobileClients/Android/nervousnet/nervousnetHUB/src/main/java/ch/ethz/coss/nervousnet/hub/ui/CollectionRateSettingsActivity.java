@@ -82,10 +82,10 @@ public class CollectionRateSettingsActivity extends BaseActivity {
 
     public Dialog createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setItems(Constants.collection_rate_global_options, new DialogInterface.OnClickListener() {
+        builder.setItems(R.array.collection_rate_global_options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int itemClicked) {
-                String[] option_array = Constants.collection_rate_global_options;
+                String[] option_array = getResources().getStringArray(R.array.collection_rate_global_options);
                 String optionSelected = option_array[itemClicked];
                 ((Application) getApplication()).nn_VM.updateAllSensorConfig(
                         (byte) itemClicked);

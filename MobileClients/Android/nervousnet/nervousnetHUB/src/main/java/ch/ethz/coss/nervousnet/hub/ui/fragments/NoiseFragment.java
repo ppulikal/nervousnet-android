@@ -97,7 +97,7 @@ public class NoiseFragment extends BaseFragment {
             handleError((ErrorReading) reading);
         } else {
             NNLog.d("NoiseFragment", "Inside updateReadings");
-            sensorStatusTV.setText("Service connected and sensor is running");
+            sensorStatusTV.setText(R.string.sensor_status_connected);
             db = ((NoiseReading) reading).getdbValue();
             TextView dbTV = (TextView) getActivity().findViewById(R.id.dbValue);
 

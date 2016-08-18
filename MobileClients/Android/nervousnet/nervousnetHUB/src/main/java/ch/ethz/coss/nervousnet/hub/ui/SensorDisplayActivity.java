@@ -90,9 +90,9 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(sapAdapter);
-        if (savedInstanceState == null) {
+//        if (savedInstanceState == null) {
             initServiceConnection();
-        }
+//        }
     }
 
     private void initServiceConnection() {

@@ -47,6 +47,8 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class AccelFragment extends BaseFragment {
 
+    private static final String LOG_TAG = AccelFragment.class.getSimpleName();
+
     public AccelFragment() {
         super(LibConstants.SENSOR_ACCELEROMETER);
     }
@@ -77,15 +79,15 @@ public class AccelFragment extends BaseFragment {
 
     @Override
     public void updateReadings(SensorReading reading) {
-        NNLog.d("AccelFragment", "Inside updateReadings ");
+        NNLog.d(LOG_TAG, "Inside updateReadings ");
 
         if (reading instanceof ErrorReading) {
 
-            NNLog.d("AccelFragment", "Inside updateReadings - ErrorReading");
+            NNLog.d(LOG_TAG, "Inside updateReadings - ErrorReading");
             handleError((ErrorReading) reading);
         } else {
 
-            sensorStatusTV.setText("Service connected and sensor is running");
+            sensorStatusTV.setText(R.string.sensor_status_connected);
 
             TextView x_value = (TextView) rootView.findViewById(R.id.accel_x);
             TextView y_value = (TextView) rootView.findViewById(R.id.accel_y);
@@ -105,7 +107,7 @@ public class AccelFragment extends BaseFragment {
 
     @Override
     public void handleError(ErrorReading reading) {
-        NNLog.d("AccelFragment", "handleError called");
+        NNLog.d(LOG_TAG, "handleError called");
 
         sensorStatusTV.setText(reading.getErrorString());
     }

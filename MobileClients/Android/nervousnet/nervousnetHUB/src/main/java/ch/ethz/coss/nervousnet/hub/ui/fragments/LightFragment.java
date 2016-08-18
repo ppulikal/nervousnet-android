@@ -91,7 +91,7 @@ public class LightFragment extends BaseFragment {
             handleError((ErrorReading) reading);
         } else {
 
-            sensorStatusTV.setText("Service connected and sensor is running");
+            sensorStatusTV.setText(R.string.sensor_status_connected);
 
             TextView lux = (TextView) getActivity().findViewById(R.id.lux);
             lux.setText("" + ((LightReading) reading).getLuxValue());

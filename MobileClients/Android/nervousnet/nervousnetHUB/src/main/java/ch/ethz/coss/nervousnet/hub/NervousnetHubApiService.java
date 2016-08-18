@@ -128,7 +128,7 @@ public class NervousnetHubApiService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         NNLog.d(LOG_TAG, "Service execution started");
         if (((Application) getApplicationContext()).nn_VM.getState() == NervousnetVMConstants.STATE_RUNNING) {
-            Toast.makeText(NervousnetHubApiService.this, "Service Started", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NervousnetHubApiService.this, R.string.toast_service_started, Toast.LENGTH_SHORT).show();
             ((Application) getApplicationContext()).nn_VM.startSensors();
         }
         return START_STICKY;

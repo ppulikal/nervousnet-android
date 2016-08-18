@@ -92,7 +92,7 @@ public class GyroFragment extends BaseFragment {
             handleError((ErrorReading) reading);
         } else {
 
-            sensorStatusTV.setText("Service connected and sensor is running");
+            sensorStatusTV.setText(R.string.sensor_status_connected);
             TextView x_value = (TextView) getActivity().findViewById(R.id.gyro_x);
             TextView y_value = (TextView) getActivity().findViewById(R.id.gyro_y);
             TextView z_value = (TextView) getActivity().findViewById(R.id.gyro_z);

@@ -99,7 +99,7 @@ public class LocationFragment extends BaseFragment {
             handleError((ErrorReading) reading);
         } else {
 
-            sensorStatusTV.setText("Service connected and sensor is running");
+            sensorStatusTV.setText(R.string.sensor_status_connected);
 
             double[] location = ((LocationReading) reading).getLatnLong();
             FragmentActivity fragAct = getActivity();

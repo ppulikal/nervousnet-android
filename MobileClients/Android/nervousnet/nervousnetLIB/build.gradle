@@ -18,7 +18,7 @@ ext {
     siteUrl = 'https://github.com/nervousnet/nervousnet-android'
     gitUrl = 'https://github.com/nervousnet/nervousnet-android.git'
 
-    libraryVersion = '0.7.33'
+    libraryVersion = '0.7.34'
 
     developerId = 'ppulikal'
     developerName = 'Prasad Pulikal'
@@ -36,8 +36,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 38
-        versionName '0.7.33 - alpha'
+        versionCode 41
+        versionName '0.7.34 - alpha'
     }
     buildTypes {
         release {

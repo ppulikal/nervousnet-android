@@ -93,7 +93,7 @@ public class Application extends android.app.Application {
 
     public void startService(Context context) {
         NNLog.d(LOG_TAG, "inside startService");
-        Toast.makeText(context, "Service Started", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.toast_service_started, Toast.LENGTH_SHORT).show();
         Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
         context.startService(sensorIntent);
         showNotification();
@@ -101,7 +101,7 @@ public class Application extends android.app.Application {
 
     public void stopService(Context context) {
         NNLog.d(LOG_TAG, "inside stopService");
-        Toast.makeText(context, "Service Stopped", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.toast_service_stopped, Toast.LENGTH_SHORT).show();
         nn_VM.stopSensors();
         Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
         context.stopService(sensorIntent);

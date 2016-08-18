@@ -47,6 +47,7 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class BatteryFragment extends BaseFragment {
 
+    private static final String LOG_TAG = BatteryFragment.class.getSimpleName();
     public BatteryFragment() {
         super(LibConstants.SENSOR_BATTERY);
     }
@@ -83,13 +84,13 @@ public class BatteryFragment extends BaseFragment {
      */
     @Override
     public void updateReadings(SensorReading reading) {
-        NNLog.d("BatteryFragment", "Inside updateReadings");
+        NNLog.d(LOG_TAG, "Inside updateReadings");
         if (reading instanceof ErrorReading) {
 
-            NNLog.d("BatteryFragment", "Inside updateReadings - ErrorReading");
+            NNLog.d(LOG_TAG, "Inside updateReadings - ErrorReading");
             handleError((ErrorReading) reading);
         } else {
-            sensorStatusTV.setText("Service connected and sensor is running");
+            sensorStatusTV.setText(R.string.sensor_status_connected);
 
             TextView percent = (TextView) getActivity().findViewById(R.id.battery_percent);
             percent.setText("" + ((BatteryReading) reading).getPercent() * 100 + " %");
@@ -98,10 +99,10 @@ public class BatteryFragment extends BaseFragment {
             isCharging.setText("" + ((BatteryReading) reading).isCharging());
 
             TextView USB_Charging = (TextView) getActivity().findViewById(R.id.battery_isUSB);
-            USB_Charging.setText(((BatteryReading) reading).getCharging_type() == 1 ? "YES" : "NO");
+            USB_Charging.setText(((BatteryReading) reading).getCharging_type() == 1 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
 
             TextView AC_charging = (TextView) getActivity().findViewById(R.id.battery_isAC);
-            AC_charging.setText(((BatteryReading) reading).getCharging_type() == 0 ? "YES" : "NO");
+            AC_charging.setText(((BatteryReading) reading).getCharging_type() == 0 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
 
 
         }
@@ -109,7 +110,7 @@ public class BatteryFragment extends BaseFragment {
 
     @Override
     public void handleError(ErrorReading reading) {
-        NNLog.d("BatteryFragment", "handleError called");
+        NNLog.d(LOG_TAG, "handleError called");
         sensorStatusTV.setText(reading.getErrorString());
     }
 
