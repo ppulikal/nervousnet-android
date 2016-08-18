@@ -21,7 +21,7 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
@@ -30,7 +30,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Sensor Status : " />
+                    android:hint="Sensor Status :"
+                    android:layout_weight="0.5"
+                    android:padding="@dimen/padding_sensor_values"/>
 
                 <Switch
                     android:id="@+id/gyroSensorSwitch"
@@ -42,7 +44,10 @@
                     android:text=""
                     android:textSize="@dimen/switch_label_size"
                     android:thumb="@drawable/thumb"
-                    android:track="@drawable/track" />
+                    android:track="@drawable/track"
+
+                    android:layout_weight="0.5"
+                    android:padding="@dimen/padding_sensor_values"/>
 
 
             </LinearLayout>
@@ -53,73 +58,87 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
-                android:hint=" ***** " />
+                android:hint=" ***** "
+                android:padding="@dimen/padding_sensor_values"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:gravity="fill_horizontal|center_vertical|center|center_horizontal"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="Gyroscope Reading" />
+                    android:text="Gyroscope Reading"
+                    android:padding="@dimen/padding_sensor_values"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="X axis" />
+                        android:hint="X axis"
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values" />
 
                     <TextView
                         android:id="@+id/gyro_x"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Gyroscope X value comes here" />
+                        android:hint="Gyroscope X value comes here"
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Y axis" />
+                        android:hint="Y axis"
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values" />
 
                     <TextView
                         android:id="@+id/gyro_y"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Gyroscope Y value comes here" />
+                        android:hint="Gyroscope Y value comes here"
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Z axis" />
+                        android:hint="Z axis"
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values" />
 
                     <TextView
                         android:id="@+id/gyro_z"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Gyroscope Z value comes here" />
+                        android:hint="Gyroscope Z value comes here"
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values" />
                 </LinearLayout>
 
             </LinearLayout>

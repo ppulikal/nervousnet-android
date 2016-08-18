@@ -28,13 +28,15 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="Sensor Status : " />
+                    android:hint="Sensor Status : "
+                    android:layout_weight="0.50"
+                    android:padding="@dimen/padding_sensor_values"/>
 
                 <Switch
                     android:id="@+id/proxSensorSwitch"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/switch_min_width"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
@@ -42,7 +44,9 @@
                     android:text=""
                     android:textSize="@dimen/switch_label_size"
                     android:thumb="@drawable/thumb"
-                    android:track="@drawable/track" />
+                    android:track="@drawable/track"
+                    android:layout_weight="0.50"
+                    android:padding="@dimen/padding_sensor_values" />
 
 
             </LinearLayout>
@@ -63,9 +67,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Proximity Reading" />
+                    android:layout_gravity="center"
+                    android:text="Proximity Reading"
+                    android:gravity="center_horizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -73,15 +79,20 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Proximity : " />
+                        android:hint="Proximity : "
+                        android:layout_weight="0.50"
+                        android:padding="@dimen/padding_sensor_values"/>
 
                     <TextView
                         android:id="@+id/proxValue"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Proximity value comes here" />
+                        android:hint="Proximity value comes here"
+                        android:layout_weight="0.50"
+                        android:padding="@dimen/padding_sensor_values"
+                        />
                 </LinearLayout>
             </LinearLayout>
 

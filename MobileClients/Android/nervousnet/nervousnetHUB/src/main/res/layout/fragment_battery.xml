@@ -20,28 +20,33 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="Sensor Status : " />
+                    android:hint="Sensor Status : "
+
+                    android:layout_weight="0.5"
+                    android:padding="@dimen/padding_sensor_values"/>
 
                 <Switch
                     android:id="@+id/battSensorSwitch"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/switch_min_width"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:switchMinWidth="@dimen/switch_min_width"
-                    android:text=""
                     android:textSize="@dimen/switch_label_size"
                     android:thumb="@drawable/thumb"
-                    android:track="@drawable/track" />
+                    android:track="@drawable/track"
+
+                    android:layout_weight="0.5"
+                    android:padding="@dimen/padding_sensor_values"/>
 
 
             </LinearLayout>
@@ -52,95 +57,115 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
-                android:hint=" ***** " />
+                android:hint=" ***** "
+                android:padding="@dimen/padding_sensor_values"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="fill_horizontal|center_vertical|center|center_horizontal"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Battery Values" />
-
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Battery Values"
+                    />
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Battery Level" />
+                        android:hint="Battery Level"
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values"/>
 
                     <TextView
                         android:id="@+id/battery_percent"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="battery level comes here" />
+                        android:hint="battery level comes here"
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="Charging State" />
+                        android:hint="Charging State"
+
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values"/>
 
                     <TextView
                         android:id="@+id/battery_isCharging"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="battery charging state comes here" />
+                        android:hint="battery charging state comes here"
+
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="USB Charging" />
+                        android:hint="USB Charging"
+
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values"/>
 
                     <TextView
                         android:id="@+id/battery_isUSB"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="USB charging state comes here" />
+                        android:hint="USB charging state comes here"
+
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="AC Charging" />
+                        android:hint="AC Charging"
+
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values"/>
 
                     <TextView
                         android:id="@+id/battery_isAC"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="AC charging state comes here" />
+                        android:hint="AC charging state comes here"
+
+                        android:layout_weight="0.5"
+                        android:padding="@dimen/padding_sensor_values"/>
                 </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"></LinearLayout>
-            </LinearLayout>
         </LinearLayout>
+
+            </LinearLayout>
 
     </ScrollView>
 
