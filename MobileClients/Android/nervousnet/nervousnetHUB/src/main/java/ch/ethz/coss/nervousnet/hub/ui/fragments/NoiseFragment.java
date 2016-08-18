@@ -118,16 +118,16 @@ public class NoiseFragment extends BaseFragment {
         NNLog.d("NoiseFragment", "handleError called");
         sensorStatusTV.setText(reading.getErrorString());
 
-        // Android 6.0 permission request
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.RECORD_AUDIO)) {
-                ActivityCompat.requestPermissions(
-                        getActivity(),
-                        new String[]{Manifest.permission.RECORD_AUDIO},
-                        REQUEST_CODE_ASK_PERMISSIONS_NOISE
-                );
-            }
-        }
+//        // Android 6.0 permission request
+//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+//            if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.RECORD_AUDIO)) {
+//                ActivityCompat.requestPermissions(
+//                        getActivity(),
+//                        new String[]{Manifest.permission.RECORD_AUDIO},
+//                        REQUEST_CODE_ASK_PERMISSIONS_NOISE
+//                );
+//            }
+//        }
         return;
 
     }

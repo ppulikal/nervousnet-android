@@ -120,16 +120,16 @@ public class LocationFragment extends BaseFragment {
         NNLog.d("LocationFragment", "handleError called");
         sensorStatusTV.setText(reading.getErrorString());
 
-        // Android 6.0 permission request
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(
-                        getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        REQUEST_CODE_ASK_PERMISSIONS_LOC
-                );
-            }
-        }
+//        // Android 6.0 permission request
+//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+//                ActivityCompat.requestPermissions(
+//                        getActivity(),
+//                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                        REQUEST_CODE_ASK_PERMISSIONS_LOC
+//                );
+//            }
+//        }
 
     }
 
