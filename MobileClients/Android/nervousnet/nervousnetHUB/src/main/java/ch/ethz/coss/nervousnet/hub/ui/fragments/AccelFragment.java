@@ -34,6 +34,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -44,6 +46,7 @@ import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class AccelFragment extends BaseFragment {
 
@@ -53,29 +56,80 @@ public class AccelFragment extends BaseFragment {
         super(LibConstants.SENSOR_ACCELEROMETER);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_accel, container, false);
-        sensorSwitch = (Switch) rootView.findViewById(R.id.accelSensorSwitch);
-        sensorStatusTV = (TextView) rootView.findViewById(R.id.accelSensorStatus);
-        sensorSwitch.setChecked(((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_ACCELEROMETER)) == 1) ? true : false);
+        return inflater.inflate(R.layout.fragment_accel, container, false);
 
-        sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_ACCELEROMETER);
-                else {
-                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_ACCELEROMETER, true);
 
-                }
 
-            }
-        });
-        return rootView;
+
+//        sensorSwitch.setChecked(((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_ACCELEROMETER)) == 1) ? true : false);
+//
+//        sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked)
+//                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.startSensor(LibConstants.SENSOR_ACCELEROMETER);
+//                else {
+//                    ((Application) ((Activity) getContext()).getApplication()).nn_VM.stopSensor(LibConstants.SENSOR_ACCELEROMETER, true);
+//
+//                }
+//
+//            }
+//        });
+//        return rootView;
     }
 
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        sensorStatusTV = (TextView) getView().findViewById(R.id.accelSensorStatus);
+        radioGroup = (RadioGroup)  getView().findViewById(R.id.radioRateSensor);
+        lastCollectionRate = ((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_ACCELEROMETER)));
+
+        ((RadioButton)radioGroup.getChildAt(lastCollectionRate)).setChecked(true);
+
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                NNLog.d(LOG_TAG, "Inside radioGroup onCheckedChanged ");
+
+                switch(checkedId){
+                    case R.id.radioOff:
+                        if(lastCollectionRate > NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_ACCELEROMETER,NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
+                        }
+                        break;
+                    case R.id.radioLow:
+                        if(lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_ACCELEROMETER,NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW);
+                        }
+                        break;
+                    case R.id.radioMed:
+                        if(lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_ACCELEROMETER,NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED);
+                        }
+                        break;
+                    case R.id.radioHigh:
+                        if(lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_ACCELEROMETER,NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH);
+                        }
+                        break;
+                }
+            }
+        });
+
+        if((((Application) ((Activity) getContext()).getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED)) {
+            for (int i = 0; i < radioGroup.getChildCount(); i++) {
+                ((RadioButton) radioGroup.getChildAt(i)).setEnabled(false);
+            }
+            sensorStatusTV.setText(R.string.local_service_paused);
+        }
+    }
 
     @Override
     public void updateReadings(SensorReading reading) {
@@ -89,9 +143,9 @@ public class AccelFragment extends BaseFragment {
 
             sensorStatusTV.setText(R.string.sensor_status_connected);
 
-            TextView x_value = (TextView) rootView.findViewById(R.id.accel_x);
-            TextView y_value = (TextView) rootView.findViewById(R.id.accel_y);
-            TextView z_value = (TextView) rootView.findViewById(R.id.accel_z);
+            TextView x_value = (TextView) getView().findViewById(R.id.accel_x);
+            TextView y_value = (TextView) getView().findViewById(R.id.accel_y);
+            TextView z_value = (TextView) getView().findViewById(R.id.accel_z);
 
             x_value.setText("" + ((AccelerometerReading) reading).getX());
             y_value.setText("" + ((AccelerometerReading) reading).getY());

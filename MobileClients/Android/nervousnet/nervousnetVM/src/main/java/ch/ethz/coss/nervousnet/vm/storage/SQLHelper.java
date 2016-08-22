@@ -96,7 +96,7 @@ public class SQLHelper implements BaseSensorListener {
 
             for (int i = 0; i < NervousnetVMConstants.sensor_ids.length; i++)
                 sensorConfigDao.insert(new SensorConfig(NervousnetVMConstants.sensor_ids[i],
-                        NervousnetVMConstants.sensor_labels[i], (byte) 0));
+                        NervousnetVMConstants.sensor_labels[i], NervousnetVMConstants.sensor_default_states[i]));
         }
     }
 

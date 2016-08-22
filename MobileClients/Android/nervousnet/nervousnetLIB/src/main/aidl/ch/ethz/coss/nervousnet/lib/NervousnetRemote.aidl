@@ -12,7 +12,7 @@ interface NervousnetRemote
            	 	* Returns the current state of Nervousnet HUB - RUNNING or PAUSED
            	    * returns boolean
            	    */
-           	 boolean getNervousnetHubStatus();
+         boolean getNervousnetHubStatus();
 
 	   	/*
        	 	* Returns latest Sensor values.

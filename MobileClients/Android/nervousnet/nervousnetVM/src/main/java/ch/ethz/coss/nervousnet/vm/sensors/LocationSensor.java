@@ -92,7 +92,7 @@ public class LocationSensor extends BaseSensor implements LocationListener {
     }
 
     @Override
-    public boolean updateAndRestart(byte state) {
+    public boolean stopAndRestart(byte state) {
 
         if (state == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
             NNLog.d(LOG_TAG, "Cancelled Starting Location sensor as Sensor is not available.");

@@ -42,7 +42,7 @@ public class NervousnetVM {
 
     private UUID uuid;
     private Context context;
-    private byte state = NervousnetVMConstants.STATE_PAUSED;
+    private byte state = NervousnetVMConstants.STATE_RUNNING;
 
     private SQLHelper sqlHelper;
     private SensorManager sensorManager;
@@ -141,7 +141,8 @@ public class NervousnetVM {
         int count = 0;
         for (Long key : hSensors.keySet()) {
             NNLog.d(LOG_TAG, "Inside startSensors Sensor ID = " + key);
-            BaseSensor sensor = hSensors.get(NervousnetVMConstants.sensor_ids[count++]);
+            BaseSensor sensor = hSensors.get(NervousnetVMConstants.sensor_ids[count]);
+            sensor.setSensorState(hSensorConfig.get(NervousnetVMConstants.sensor_ids[count++]).getState());
             if (sensor != null) {
                 sensor.start();
             }
@@ -158,7 +159,7 @@ public class NervousnetVM {
             NNLog.d(LOG_TAG, "Inside stopSensors Sensor ID = " + key);
             BaseSensor sensor = hSensors.get(NervousnetVMConstants.sensor_ids[count++]);
             if (sensor != null)
-                sensor.stop(false);
+                sensor.stop(true);
         }
 
         dataCollectionHandler.removeCallbacks(runnable);
@@ -230,7 +231,7 @@ public class NervousnetVM {
 //		reInitSensor(id);
 
         BaseSensor sensor = hSensors.get(sensorConfig.getID());
-        sensor.updateAndRestart(state);
+        sensor.stopAndRestart(state);
 
     }
 

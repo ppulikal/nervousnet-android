@@ -36,6 +36,7 @@ import android.widget.Toast;
 import ch.ethz.coss.nervousnet.hub.ui.MainActivity;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVM;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 public class Application extends android.app.Application {
 
@@ -96,6 +97,7 @@ public class Application extends android.app.Application {
         Toast.makeText(context, R.string.toast_service_started, Toast.LENGTH_SHORT).show();
         Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
         context.startService(sensorIntent);
+        setState(this, NervousnetVMConstants.STATE_RUNNING);
         showNotification();
     }
 
@@ -105,6 +107,7 @@ public class Application extends android.app.Application {
         nn_VM.stopSensors();
         Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
         context.stopService(sensorIntent);
+        setState(this, NervousnetVMConstants.STATE_PAUSED);
         removeNotification();
 
     }

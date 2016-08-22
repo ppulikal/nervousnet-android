@@ -5,15 +5,16 @@
 Professorship of Computational Social Science (COSS)\n
 Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
     <string name="rate_app_label">Rate App</string>
-    <string name="app_name">nervousnet</string>
+    <string name="app_name">Nervousnet</string>
     <string name="button_accept_label">Accept</string>
-    <string name="local_service_started">nervousnet Service Running</string>
-    <string name="local_service_label">nervousnet</string>
+    <string name="local_service_started">Nervousnet Service Running</string>
+	<string name="local_service_paused">Nervousnet Service Paused</string>
+    <string name="local_service_label">Nervousnet</string>
 
     <string-array name="main_grid">
         <item>Sensors</item>
         <item>Sensor Analytics</item>
-        <item>nervousnet Space</item>
+        <item>Nervousnet Space</item>
         <item>Settings</item>
         <item>Help</item>
         <item>About</item>
@@ -157,5 +158,9 @@ Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
 	<string name="yes">YES</string>
 	<string name="no">NO</string>
 	<string name="choose_sensor_rate_label">Choose sensor collection rate:</string>
+	<string name="radio_med">MEDIUM</string>
+	<string name="radio_low">LOW</string>
+	<string name="radio_off">OFF</string>
+	<string name="radio_High">HIGH</string>
 
 </resources>

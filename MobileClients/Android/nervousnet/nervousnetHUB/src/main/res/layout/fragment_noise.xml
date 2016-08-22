@@ -25,29 +25,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Sensor Status : "
                     android:layout_weight="0.5"
                     android:padding="@dimen/padding_sensor_values"/>
 
-                <Switch
-                    android:id="@+id/noiseSensorSwitch"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/switch_min_width"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:switchMinWidth="@dimen/switch_min_width"
-                    android:text=""
-                    android:textSize="@dimen/switch_label_size"
-                    android:thumb="@drawable/thumb"
-                    android:track="@drawable/track"
-                    android:layout_weight="0.5"
-                    android:padding="@dimen/padding_sensor_values"/>
-
+                <ch.ethz.coss.nervousnet.hub.ui.views.RateSwitch
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
 

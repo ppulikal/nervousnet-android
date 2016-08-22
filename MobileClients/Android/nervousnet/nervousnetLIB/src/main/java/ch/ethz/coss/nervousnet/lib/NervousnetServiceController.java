@@ -146,16 +146,19 @@ public class NervousnetServiceController {
                 mService = NervousnetRemote.Stub.asInterface(service);
 
                 try {
-                    if (mService.getNervousnetHubStatus()) {
-                        Toast.makeText(context, "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
-                                .show();
-                        Log.d(LOG_TAG, "Binding is done - Service connected");
-                        if (listener != null)
-                            listener.onServiceConnected();
-                    } else {
-                        if (listener != null)
-                            listener.onServiceConnectionFailed(Utils.getErrorReading(101));
+                    if(mService != null) {
+                        if (mService.getNervousnetHubStatus()) {
+                            Toast.makeText(context, "Nervousnet Remote Service Connected", Toast.LENGTH_SHORT)
+                                    .show();
+                            Log.d(LOG_TAG, "Binding is done - Service connected");
+                            if (listener != null)
+                                listener.onServiceConnected();
+                        } else {
+                            if (listener != null)
+                                listener.onServiceConnectionFailed(Utils.getErrorReading(101));
+                        }
                     }
+
                 } catch (RemoteException e) {
                     if (listener != null)
                         listener.onServiceConnectionFailed(Utils.getErrorReading(104));

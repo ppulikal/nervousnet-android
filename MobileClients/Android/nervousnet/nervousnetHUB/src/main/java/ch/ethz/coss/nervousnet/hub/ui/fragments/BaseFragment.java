@@ -30,6 +30,7 @@ package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -44,8 +45,10 @@ public abstract class BaseFragment extends Fragment {
     public int type = 0;
 
     Switch sensorSwitch;
-    View rootView;
     TextView sensorStatusTV;
+
+    RadioGroup radioGroup;
+    byte lastCollectionRate;
 
 
     public BaseFragment() {

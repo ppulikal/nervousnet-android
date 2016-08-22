@@ -86,7 +86,7 @@ public abstract class BaseSensor {
 
     public abstract boolean start();
 
-    public abstract boolean updateAndRestart(byte state);
+    public abstract boolean stopAndRestart(byte state);
 
     public abstract boolean stop(boolean changeStateFlag);
 
