@@ -26,7 +26,10 @@
 package ch.ethz.coss.nervousnet.hub.ui;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,6 +47,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -351,6 +355,40 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
                 throw new RuntimeException(e);
             }
         }
+    }
+
+
+    public void showInfo(View view) {
+        String title = "Sensor Frequency:";
+
+        // Includes the updates as well so users know what changed.
+        String message = "\n\n- Settings to control the frequency of Sensors." +
+                "\nClick on the options to switch off or change the frequency." +
+                "\n- Various levels of frequency can be selected" +
+                "\n          - HIGH, MEDIUM, LOW or OFF" +
+                "\n";
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new Dialog.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.dismiss();
+
+                    }
+                });
+        builder.setCancelable(false);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+        alert.getWindow().getAttributes();
+
+        TextView textView = (TextView) alert.findViewById(android.R.id.message);
+        textView.setTextSize(12);
     }
 
 }

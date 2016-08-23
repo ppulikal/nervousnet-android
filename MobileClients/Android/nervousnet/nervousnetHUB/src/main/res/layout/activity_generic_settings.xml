@@ -30,16 +30,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_weight="0.1"
-                android:gravity="left"
-                android:text="UUID :"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="0.1"
+                    android:gravity="left|bottom"
+                    android:text="UUID :"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                <ImageButton
+                    android:id="@+id/info_prompt"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="centerInside"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_info_prompt"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="showInfo"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,12 +67,11 @@
                 android:background="@drawable/round_rect">
 
 
-
                 <TextView
                     android:id="@+id/uuid_TV"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:gravity="center"
                     android:layout_weight="1" />
 
@@ -69,11 +85,30 @@
                 android:layout_below="@+id/view"
                 android:layout_margin="5dp"
                 android:text="Generate new UUID" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/scrollView1"
+                android:background="@drawable/border_gradient" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_weight="0.1"
+                android:gravity="left|bottom"
+                android:text="Sensor :"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
         </LinearLayout>
+
     </ScrollView>
 
     <View
-        android:id="@+id/view"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_alignParentLeft="true"
