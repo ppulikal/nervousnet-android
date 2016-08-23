@@ -30,35 +30,39 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_weight="0.1"
+                android:gravity="left"
+                android:text="UUID :"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_weight="0.1"
-                    android:gravity="center"
-                    android:text="UUID :"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/round_rect">
+
+
 
                 <TextView
                     android:id="@+id/uuid_TV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:gravity="center"
                     android:layout_weight="1" />
 
             </LinearLayout>
 
             <Button
                 android:id="@+id/uuid_gen_button"
-                style="?android:attr/buttonStyleSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

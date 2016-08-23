@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_below="@id/globalOptionsButton"
-        android:background="@color/gray"
+        android:background="@color/white"
         android:gravity="bottom"></ListView>
 
 </RelativeLayout>

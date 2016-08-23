@@ -66,7 +66,7 @@ public class GyroFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        sensorStatusTV = (TextView) getView().findViewById(R.id.gyroSensorStatus);
+        sensorStatusTV = (TextView) getView().findViewById(R.id.sensorStatus);
 
         radioGroup = (RadioGroup) getView().findViewById(R.id.radioRateSensor);
         lastCollectionRate = ((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_GYROSCOPE)));

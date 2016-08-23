@@ -19,47 +19,16 @@
             android:layout_gravity="top"
             android:orientation="vertical">
 
+            <include layout="@layout/fragment_top_layout" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Sensor Status : " />
-
-                <ch.ethz.coss.nervousnet.hub.ui.views.RateSwitch
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"/>
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/lightSensorStatus"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:hint=" ***** " />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="fill_horizontal|center_vertical|center|center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@drawable/round_rect">
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="Light Reading" />
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -71,7 +40,8 @@
                         android:layout_height="wrap_content"
                         android:hint="Lux : "
                         android:layout_weight="0.5"
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border"/>
 
                     <TextView
                         android:id="@+id/lux"
@@ -79,7 +49,8 @@
                         android:layout_height="wrap_content"
                         android:hint="Lux value comes here"
                         android:layout_weight="0.5"
-                        android:padding="@dimen/padding_sensor_values"/>
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border"/>
 
 
                 </LinearLayout>

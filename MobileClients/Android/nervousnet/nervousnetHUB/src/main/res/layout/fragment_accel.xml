@@ -15,52 +15,18 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="@dimen/padding_sensor_values">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:hint="Sensor Status : "
-                    android:padding="@dimen/padding_sensor_values" />
-
-                <ch.ethz.coss.nervousnet.hub.ui.views.RateSwitch
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/accelSensorStatus"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:hint=" ***** " />
-
+            <include layout="@layout/fragment_top_layout" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="fill_horizontal|center_vertical|center|center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="Reading" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:background="@drawable/round_rect">
 
 
                 <LinearLayout
@@ -70,18 +36,20 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
                         android:hint="X axis: "
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border"/>
 
                     <TextView
                         android:id="@+id/accel_x"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:hint="Accelerometer X value comes here"
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:hint=" X value comes here"
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border" />
 
                 </LinearLayout>
 
@@ -92,18 +60,20 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
                         android:hint="Y axis: "
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border"/>
 
                     <TextView
                         android:id="@+id/accel_y"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:hint="Accelerometer Y value comes here"
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:hint=" Y value comes here"
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border" />
 
                 </LinearLayout>
 
@@ -114,18 +84,20 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
                         android:hint="Z axis: "
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border" />
 
                     <TextView
                         android:id="@+id/accel_z"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:hint="Accelerometer Z value comes here"
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:hint=" Z value comes here"
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border" />
                 </LinearLayout>
 
             </LinearLayout>

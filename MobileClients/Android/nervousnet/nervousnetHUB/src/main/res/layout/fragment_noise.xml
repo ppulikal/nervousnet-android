@@ -20,78 +20,48 @@
             android:orientation="vertical">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Sensor Status : "
-                    android:layout_weight="0.5"
-                    android:padding="@dimen/padding_sensor_values"/>
-
-                <ch.ethz.coss.nervousnet.hub.ui.views.RateSwitch
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/noiseSensorStatus"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:hint=" ***** " />
+            <include layout="@layout/fragment_top_layout" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="fill_horizontal|center_vertical|center|center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@drawable/round_rect">
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="Noise Reading" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="@drawable/shape_rect_border">
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:hint="Decibel : "
                         android:layout_weight="0.40"
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:padding="@dimen/padding_sensor_values"/>
 
                     <TextView
                         android:id="@+id/dbValue"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:hint="DB value comes here"
+                        android:layout_height="match_parent"
+                        android:hint="***"
                         android:layout_weight="0.30"
                         android:padding="@dimen/padding_sensor_values"
                         android:layout_gravity="right"
-                        android:gravity="right" />
+                        android:gravity="right"/>
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:hint="dB"
                         android:layout_weight="0.30"
                         android:paddingRight="@dimen/padding_sensor_values"
                         android:paddingTop="@dimen/padding_sensor_values"
                         android:paddingBottom="@dimen/padding_sensor_values"
-                        android:layout_gravity="left" />
+                        android:layout_gravity="left"/>
                 </LinearLayout>
             </LinearLayout>
 

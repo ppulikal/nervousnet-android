@@ -30,6 +30,7 @@ package ch.ethz.coss.nervousnet.hub.ui.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,9 +61,6 @@ public class AccelFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_accel, container, false);
 
-
-
-
 //        sensorSwitch.setChecked(((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_ACCELEROMETER)) == 1) ? true : false);
 //
 //        sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -85,7 +83,7 @@ public class AccelFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        sensorStatusTV = (TextView) getView().findViewById(R.id.accelSensorStatus);
+        sensorStatusTV = (TextView) getView().findViewById(R.id.sensorStatus);
         radioGroup = (RadioGroup)  getView().findViewById(R.id.radioRateSensor);
         lastCollectionRate = ((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_ACCELEROMETER)));
 
@@ -129,6 +127,19 @@ public class AccelFragment extends BaseFragment {
             }
             sensorStatusTV.setText(R.string.local_service_paused);
         }
+
+        final View.OnClickListener clickListener = new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        };
+
+
+//        final View coordinatorLayoutView = getView().findViewById(R.id.snackbarPosition);
+//        Snackbar
+//                .make(getView(), "Hello", Snackbar.LENGTH_LONG)
+//                .setAction("CLICK", clickListener)
+//                .show();
     }
 
     @Override
@@ -162,7 +173,6 @@ public class AccelFragment extends BaseFragment {
     @Override
     public void handleError(ErrorReading reading) {
         NNLog.d(LOG_TAG, "handleError called");
-
         sensorStatusTV.setText(reading.getErrorString());
     }
 

@@ -18,47 +18,15 @@
             android:layout_height="match_parent"
             android:layout_gravity="top"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Sensor Status : " />
-
-                <ch.ethz.coss.nervousnet.hub.ui.views.RateSwitch
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"/>
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/locSensorStatus"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:hint=" ***** " />
+            <include layout="@layout/fragment_top_layout" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="fill_horizontal|center_vertical|center|center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="Location Reading" />
+                android:orientation="vertical"
+                android:background="@drawable/round_rect">
 
 
                 <LinearLayout
@@ -68,18 +36,20 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:hint="Latitude : "
                         android:layout_weight="0.40"
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border"/>
 
                     <TextView
                         android:id="@+id/latitude"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:hint="Latitude value comes here"
                         android:layout_weight="0.60"
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -89,18 +59,20 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:hint="Longitude : "
                         android:layout_weight="0.40"
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border"/>
 
                     <TextView
                         android:id="@+id/longitude"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:hint=" Longitude value comes here"
                         android:layout_weight="0.60"
-                        android:padding="@dimen/padding_sensor_values" />
+                        android:padding="@dimen/padding_sensor_values"
+                        android:background="@drawable/shape_rect_border"/>
                 </LinearLayout>
 
             </LinearLayout>
