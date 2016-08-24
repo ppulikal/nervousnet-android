@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import ch.ethz.coss.nervousnet.hub.BuildConfig;
 import ch.ethz.coss.nervousnet.hub.R;
+import ch.ethz.coss.nervousnet.hub.TermsOfUse;
 
 /**
  * @author prasad
@@ -74,6 +75,13 @@ public class AboutActivity extends BaseActivity {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
                             getString(R.string.url_playstore_website))));
                 }
+            }
+        });
+
+        ((Button) findViewById(R.id.termsButton)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TermsOfUse(AboutActivity.this).showTerms(false);
             }
         });
 

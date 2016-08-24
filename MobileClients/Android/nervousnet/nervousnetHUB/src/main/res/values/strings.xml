@@ -26,7 +26,7 @@ Clausiusstrasse 50,\n 8092 Zürich,\n Switzerland\n</string>
 		<item>Set all Sensors to Medium</item>
 		<item>Set all Sensors to low</item>
 	</string-array>
-	s
+	<string name="terms_label">Terms of Use</string>
     <string name="terms_of_use"> &lt;b>TERMS OF USE&lt;/b>&lt;br>&lt;br>
 
 		This

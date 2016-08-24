@@ -49,8 +49,7 @@ public class SplashActivity extends Activity {
 
 
         setContentView(R.layout.activity_splash);
-//        getActionBar().hide();
-        new TermsOfUse(SplashActivity.this).showTerms();
+        new TermsOfUse(SplashActivity.this).showTerms(true);
     }
 
     public void startThread() {
