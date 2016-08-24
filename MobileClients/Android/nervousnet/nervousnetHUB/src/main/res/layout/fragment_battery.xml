@@ -38,7 +38,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:hint="Battery Level"
+                        android:hint="Battery Level :"
                         android:layout_weight="0.5"
                         android:padding="@dimen/padding_sensor_values"
                         android:background="@drawable/shape_rect_border"/>
@@ -61,7 +61,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:hint="Charging State"
+                        android:hint="Charging :"
 
                         android:layout_weight="0.5"
                         android:padding="@dimen/padding_sensor_values"
@@ -86,7 +86,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:hint="USB Charging"
+                        android:hint="USB Charging :"
 
                         android:layout_weight="0.5"
                         android:padding="@dimen/padding_sensor_values"
@@ -111,7 +111,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:hint="AC Charging"
+                        android:hint="AC Charging :"
 
                         android:layout_weight="0.5"
                         android:padding="@dimen/padding_sensor_values"

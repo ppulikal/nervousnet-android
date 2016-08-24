@@ -366,7 +366,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
                 "\nClick on the options to switch off or change the frequency." +
                 "\n- Various levels of frequency can be selected" +
                 "\n          - HIGH, MEDIUM, LOW or OFF" +
-                "\n";
+                "\n Please note if the Nervousnet Service is Paused, this control is disabled.";
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(title)

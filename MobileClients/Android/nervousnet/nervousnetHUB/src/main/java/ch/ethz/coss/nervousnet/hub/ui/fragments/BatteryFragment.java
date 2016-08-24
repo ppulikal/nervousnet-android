@@ -104,6 +104,13 @@ public class BatteryFragment extends BaseFragment {
                 }
             }
         });
+
+        if((((Application) ((Activity) getContext()).getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED)) {
+            for (int i = 0; i < radioGroup.getChildCount(); i++) {
+                ((RadioButton) radioGroup.getChildAt(i)).setEnabled(false);
+            }
+            sensorStatusTV.setText(R.string.local_service_paused);
+        }
     }
 
 
@@ -128,13 +135,13 @@ public class BatteryFragment extends BaseFragment {
             percent.setText("" + ((BatteryReading) reading).getPercent() * 100 + " %");
 
             TextView isCharging = (TextView) getActivity().findViewById(R.id.battery_isCharging);
-            isCharging.setText("" + ((BatteryReading) reading).isCharging());
+            isCharging.setText((((BatteryReading) reading).isCharging()) ? "YES" : "NO");
 
             TextView USB_Charging = (TextView) getActivity().findViewById(R.id.battery_isUSB);
             USB_Charging.setText(((BatteryReading) reading).getCharging_type() == 1 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
 
             TextView AC_charging = (TextView) getActivity().findViewById(R.id.battery_isAC);
-            AC_charging.setText(((BatteryReading) reading).getCharging_type() == 0 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
+            AC_charging.setText(((BatteryReading) reading).getCharging_type() == 2 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
 
 
         }

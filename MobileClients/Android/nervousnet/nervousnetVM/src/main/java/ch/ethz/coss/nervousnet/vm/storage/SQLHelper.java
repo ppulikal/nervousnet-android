@@ -240,20 +240,18 @@ public class SQLHelper implements BaseSensorListener {
         NNLog.d(LOG_TAG, "getSensorReadings with callback");
         QueryBuilder<?> qb = null;
         ArrayList<SensorReading> list = new ArrayList<SensorReading>();
-        ArrayList<SensorDataImpl> aList;
+        List<SensorDataImpl> aList;
         Iterator<SensorDataImpl> iterator;
         switch (type) {
             case LibConstants.SENSOR_ACCELEROMETER:
                 qb = accDao.queryBuilder();
                 qb.where(AccelDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-                NNLog.d(LOG_TAG, "SENSOR_ACCELEROMETER List size = " + list.size());
                 break;
             case LibConstants.SENSOR_BATTERY:
                 qb = battDao.queryBuilder();
                 qb.where(BatteryDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-                NNLog.d(LOG_TAG, "SENSOR_BATTERY List size = " + list.size());
                 break;
 //		case LibConstants.DEVICE_INFO:
 //
@@ -263,8 +261,6 @@ public class SQLHelper implements BaseSensorListener {
                 qb = locDao.queryBuilder();
                 qb.where(LocationDataDao.Properties.TimeStamp.between(startTime, endTime));
 
-                NNLog.d(LOG_TAG, "SENSOR_LOCATION List size = " + list.size());
-
                 break;
 //
             case LibConstants.SENSOR_GYROSCOPE:
@@ -272,12 +268,10 @@ public class SQLHelper implements BaseSensorListener {
                 qb.where(GyroDataDao.Properties.TimeStamp.between(startTime, endTime));
 
 
-                NNLog.d(LOG_TAG, "SENSOR_GYROSCOPE");
 
                 break;
 //
             case LibConstants.SENSOR_LIGHT:
-                NNLog.d(LOG_TAG, "SENSOR_LIGHT");
                 qb = lightDao.queryBuilder();
                 qb.where(LightDataDao.Properties.TimeStamp.between(startTime, endTime));
 

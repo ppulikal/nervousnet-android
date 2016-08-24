@@ -42,7 +42,7 @@ public class NervousnetVM {
 
     private UUID uuid;
     private Context context;
-    private byte state = NervousnetVMConstants.STATE_RUNNING;
+    private byte state = NervousnetVMConstants.STATE_PAUSED;
 
     private SQLHelper sqlHelper;
     private SensorManager sensorManager;

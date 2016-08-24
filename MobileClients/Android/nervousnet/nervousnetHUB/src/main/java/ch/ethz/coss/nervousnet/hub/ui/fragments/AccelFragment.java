@@ -128,18 +128,7 @@ public class AccelFragment extends BaseFragment {
             sensorStatusTV.setText(R.string.local_service_paused);
         }
 
-        final View.OnClickListener clickListener = new View.OnClickListener() {
-            public void onClick(View v) {
 
-            }
-        };
-
-
-//        final View coordinatorLayoutView = getView().findViewById(R.id.snackbarPosition);
-//        Snackbar
-//                .make(getView(), "Hello", Snackbar.LENGTH_LONG)
-//                .setAction("CLICK", clickListener)
-//                .show();
     }
 
     @Override
