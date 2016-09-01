@@ -39,8 +39,8 @@ public class NervousnetVMConstants {
 
     public static String[] sensor_freq_labels = {"Off", "Low", "Medium", "High"};
 
-    public static int[][] sensor_freq_constants = {{-1, 1000000, 250000, 60000 }, {-1, 300000, 120000, 60000},
-            {-1, 1000000, 250000, 60000 }, {-1, 300000, 120000, 60000 }, {-1, 300000, 120000, 60000}, {-1, 300000, 120000, 60000},
+    public static int[][] sensor_freq_constants = {{-1, 1000000, 250000, 60000}, {-1, 300000, 120000, 60000},
+            {-1, 1000000, 250000, 60000}, {-1, 300000, 120000, 60000}, {-1, 300000, 120000, 60000}, {-1, 300000, 120000, 60000},
             {-1, 300000, 120000, 60000}
     };
 
@@ -50,8 +50,6 @@ public class NervousnetVMConstants {
     public static byte EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST = 3;
     public static byte EVENT_NERVOUSNET_STATE_UPDATED = 4;
     public static byte EVENT_SENSOR_STATE_UPDATED = 5;
-
-
 
 
 }

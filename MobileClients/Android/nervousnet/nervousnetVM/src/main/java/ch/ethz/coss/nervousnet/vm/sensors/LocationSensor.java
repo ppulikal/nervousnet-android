@@ -152,61 +152,61 @@ public class LocationSensor extends BaseSensor implements LocationListener {
         NNLog.d(LOG_TAG, "startLocationCollection2");
         // getting GPS status
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        NNLog.d(LOG_TAG, "isGPSEnabled = "+isGPSEnabled);
+        NNLog.d(LOG_TAG, "isGPSEnabled = " + isGPSEnabled);
         // getting network status
         isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        NNLog.d(LOG_TAG, "isNetworkEnabled = "+isNetworkEnabled);
+        NNLog.d(LOG_TAG, "isNetworkEnabled = " + isNetworkEnabled);
 
         /////TODO:
         if (Build.VERSION.SDK_INT >= 23
-                    && ContextCompat.checkSelfPermission(mContext,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(mContext,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                && ContextCompat.checkSelfPermission(mContext,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(mContext,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED);
 
-			} else
+        } else
 
-        ////TODO:
-        if (!isGPSEnabled && !isNetworkEnabled) {
-            setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED);
-            NNLog.d(LOG_TAG, "Location settings disabled");
-            // no network provider is enabled
-            Toast.makeText(mContext, "Location settings disabled", Toast.LENGTH_LONG).show();
-        } else {
-            this.canGetLocation = true;
-            // First get location from Network Provider
-            if (isNetworkEnabled) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES,
-                        MIN_TIME_BW_UPDATES, this);
-                NNLog.d(LOG_TAG, "Network");
-                if (locationManager != null) {
-                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    if (location != null) {
-                        reading = new LocationReading(System.currentTimeMillis(),
-                                new double[]{location.getLatitude(), location.getLongitude()});
-                    }
-                }
-            }
-            // if GPS Enabled get lat/long using GPS Services
-            if (isGPSEnabled) {
-                if (location == null) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,
+            ////TODO:
+            if (!isGPSEnabled && !isNetworkEnabled) {
+                setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED);
+                NNLog.d(LOG_TAG, "Location settings disabled");
+                // no network provider is enabled
+                Toast.makeText(mContext, "Location settings disabled", Toast.LENGTH_LONG).show();
+            } else {
+                this.canGetLocation = true;
+                // First get location from Network Provider
+                if (isNetworkEnabled) {
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES,
                             MIN_TIME_BW_UPDATES, this);
-
-                    NNLog.d(LOG_TAG, "GPS Enabled");
-
+                    NNLog.d(LOG_TAG, "Network");
                     if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (location != null) {
                             reading = new LocationReading(System.currentTimeMillis(),
                                     new double[]{location.getLatitude(), location.getLongitude()});
                         }
                     }
                 }
+                // if GPS Enabled get lat/long using GPS Services
+                if (isGPSEnabled) {
+                    if (location == null) {
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,
+                                MIN_TIME_BW_UPDATES, this);
+
+                        NNLog.d(LOG_TAG, "GPS Enabled");
+
+                        if (locationManager != null) {
+                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            if (location != null) {
+                                reading = new LocationReading(System.currentTimeMillis(),
+                                        new double[]{location.getLatitude(), location.getLongitude()});
+                            }
+                        }
+                    }
+                }
+                dataReady(reading);
             }
-            dataReady(reading);
-        }
 
     }
 

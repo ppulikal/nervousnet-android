@@ -16,7 +16,7 @@ public class NNEvent {
     }
 
 
-    public NNEvent(byte state, byte type){
+    public NNEvent(byte state, byte type) {
         this.eventType = type;
         this.state = state;
     }

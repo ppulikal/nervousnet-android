@@ -101,8 +101,8 @@ public class SQLHelper implements BaseSensorListener {
     }
 
     public void resetDatabase() {
-          accDao.deleteAll();
-          battDao.deleteAll();
+        accDao.deleteAll();
+        battDao.deleteAll();
         locDao.deleteAll();
         gyroDao.deleteAll();
         lightDao.deleteAll();
@@ -118,6 +118,7 @@ public class SQLHelper implements BaseSensorListener {
         noiseDataArrList.clear();
         proxDataArrList.clear();
     }
+
     public synchronized Config loadVMConfig() {
         NNLog.d(LOG_TAG, "Inside loadVMConfig");
 
@@ -262,7 +263,6 @@ public class SQLHelper implements BaseSensorListener {
                 qb.where(GyroDataDao.Properties.TimeStamp.between(startTime, endTime));
 
 
-
                 break;
 //
             case LibConstants.SENSOR_LIGHT:
@@ -298,7 +298,7 @@ public class SQLHelper implements BaseSensorListener {
 
         }
         try {
-            if(cb == null || list == null)
+            if (cb == null || list == null)
                 NNLog.d(LOG_TAG, "getSensorReadings with callback, Callback instance or list is  null");
             NNLog.d(LOG_TAG, "getSensorReadings with callback - SUCCESS");
 
@@ -481,7 +481,7 @@ public class SQLHelper implements BaseSensorListener {
 
     public String getUUID() {
 
-        return ((Config)loadVMConfig()).getUUID();
+        return ((Config) loadVMConfig()).getUUID();
     }
 
     class StoreTask extends AsyncTask<ArrayList<SensorDataImpl>, Integer, Void> {
