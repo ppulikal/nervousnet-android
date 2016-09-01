@@ -33,10 +33,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import ch.ethz.coss.nervousnet.hub.Application;
@@ -51,6 +49,7 @@ import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 public class BatteryFragment extends BaseFragment {
 
     private static final String LOG_TAG = BatteryFragment.class.getSimpleName();
+
     public BatteryFragment() {
         super(LibConstants.SENSOR_BATTERY);
     }
@@ -62,7 +61,6 @@ public class BatteryFragment extends BaseFragment {
     }
 
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -71,41 +69,40 @@ public class BatteryFragment extends BaseFragment {
         radioGroup = (RadioGroup) getView().findViewById(R.id.radioRateSensor);
         lastCollectionRate = ((((Application) ((Activity) getContext()).getApplication()).nn_VM.getSensorState(LibConstants.SENSOR_BATTERY)));
 
-        ((RadioButton)radioGroup.getChildAt(lastCollectionRate)).setChecked(true);
+        ((RadioButton) radioGroup.getChildAt(lastCollectionRate)).setChecked(true);
 
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 NNLog.d(LOG_TAG, "Inside radioGroup onCheckedChanged ");
 
-                switch(checkedId){
+                switch (checkedId) {
                     case R.id.radioOff:
-                        if(lastCollectionRate > NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
-                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_BATTERY,NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
+                        if (lastCollectionRate > NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_BATTERY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
                         }
                         break;
                     case R.id.radioLow:
-                        if(lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
-                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_BATTERY,NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW);
+                        if (lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_BATTERY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW);
                         }
                         break;
                     case R.id.radioMed:
-                        if(lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
-                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_BATTERY,NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED);
+                        if (lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_BATTERY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED);
                         }
                         break;
                     case R.id.radioHigh:
-                        if(lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
-                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_BATTERY,NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH);
+                        if (lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_BATTERY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH);
                         }
                         break;
                 }
             }
         });
 
-        if((((Application) ((Activity) getContext()).getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED)) {
+        if ((((Application) ((Activity) getContext()).getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED)) {
             for (int i = 0; i < radioGroup.getChildCount(); i++) {
                 ((RadioButton) radioGroup.getChildAt(i)).setEnabled(false);
             }

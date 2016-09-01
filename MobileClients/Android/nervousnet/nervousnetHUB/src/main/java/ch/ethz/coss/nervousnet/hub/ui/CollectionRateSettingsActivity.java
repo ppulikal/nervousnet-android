@@ -146,10 +146,10 @@ public class CollectionRateSettingsActivity extends BaseActivity {
     public void onNNEvent(NNEvent event) {
         NNLog.d("CollectionRateSettingsActivity", "onSensorStateEvent called ");
 
-        if(event.eventType == NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED) {
+        if (event.eventType == NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED) {
             finish();
             startActivity(getIntent());
-        } else if(event.eventType == NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED) {
+        } else if (event.eventType == NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED) {
 
             if (((Application) getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED) {
                 finish();

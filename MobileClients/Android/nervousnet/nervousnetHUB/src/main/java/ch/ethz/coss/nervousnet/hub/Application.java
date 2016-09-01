@@ -92,13 +92,12 @@ public class Application extends android.app.Application {
     }
 
 
-
     public void startService(Context context) {
         NNLog.d(LOG_TAG, "inside startService");
         Toast.makeText(context, R.string.toast_service_started, Toast.LENGTH_SHORT).show();
         Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
         context.startService(sensorIntent);
-        EventBus.getDefault().post(new NNEvent( NervousnetVMConstants.EVENT_START_NERVOUSNET_REQUEST));
+        EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_START_NERVOUSNET_REQUEST));
         showNotification();
     }
 
@@ -108,7 +107,7 @@ public class Application extends android.app.Application {
         nn_VM.stopSensors();
         Intent sensorIntent = new Intent(context, NervousnetHubApiService.class);
         context.stopService(sensorIntent);
-        EventBus.getDefault().post(new NNEvent( NervousnetVMConstants.EVENT_PAUSE_NERVOUSNET_REQUEST));
+        EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_PAUSE_NERVOUSNET_REQUEST));
         removeNotification();
 
     }

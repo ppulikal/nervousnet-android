@@ -1,7 +1,5 @@
 package ch.ethz.coss.nervousnet.vm.events;
 
-import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
-
 /**
  * Created by prasad on 30/08/16.
  */

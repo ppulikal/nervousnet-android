@@ -127,7 +127,7 @@
             android:label="@string/title_activity_space" />
         <activity android:name=".ui.SharingNodeActivity" />
         <activity android:name=".ui.SensorPermissionsActivity" />
-        <activity android:name=".ui.AxonSensorsActivity"/>
+        <activity android:name=".ui.AxonSensorsActivity" />
     </application>
 
 </manifest>

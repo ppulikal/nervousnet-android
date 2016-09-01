@@ -40,5 +40,4 @@ public final class Constants {
             R.drawable.ic_noise, R.drawable.ic_proxim};
 
 
-
 }

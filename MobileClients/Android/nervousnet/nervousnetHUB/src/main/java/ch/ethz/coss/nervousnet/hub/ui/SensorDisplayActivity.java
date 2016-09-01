@@ -99,7 +99,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(sapAdapter);
 //        if (savedInstanceState == null) {
-            initServiceConnection();
+        initServiceConnection();
 //        }
     }
 
@@ -112,7 +112,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
     public void onNNEvent(NNEvent event) {
         NNLog.d("SensorDisplayActivityon", "onNNEvent called ");
 
-        if(event.eventType == NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED || event.eventType == NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED) {
+        if (event.eventType == NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED || event.eventType == NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED) {
 //            getSupportFragmentManager().beginTransaction().detach(sapAdapter.getItem(viewPager.getCurrentItem())).commit();
             finish();
             startActivity(getIntent());
@@ -160,7 +160,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         if (on) {
             ((Application) getApplication()).startService(this);
             initServiceConnection();
-            EventBus.getDefault().post(new NNEvent( NervousnetVMConstants.EVENT_START_NERVOUSNET_REQUEST));
+            EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_START_NERVOUSNET_REQUEST));
         } else {
             nervousnetServiceController.disconnect();
             ((Application) getApplication()).stopService(this);
@@ -303,6 +303,39 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
     }
 
+    public void showInfo(View view) {
+        String title = "Sensor Frequency:";
+
+        // Includes the updates as well so users know what changed.
+        String message = "\n\n- Settings to control the frequency of Sensors." +
+                "\nClick on the options to switch off or change the frequency." +
+                "\n- Various levels of frequency can be selected" +
+                "\n          - HIGH, MEDIUM, LOW or OFF" +
+                "\n Please note if the Nervousnet Service is Paused, this control is disabled.";
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new Dialog.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.dismiss();
+
+                    }
+                });
+        builder.setCancelable(false);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+        alert.getWindow().getAttributes();
+
+        TextView textView = (TextView) alert.findViewById(android.R.id.message);
+        textView.setTextSize(12);
+    }
+
     public static class SensorDisplayPagerAdapter extends FragmentStatePagerAdapter {
         Context context;
 
@@ -386,44 +419,6 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
             }
         }
     }
-
-
-    public void showInfo(View view) {
-        String title = "Sensor Frequency:";
-
-        // Includes the updates as well so users know what changed.
-        String message = "\n\n- Settings to control the frequency of Sensors." +
-                "\nClick on the options to switch off or change the frequency." +
-                "\n- Various levels of frequency can be selected" +
-                "\n          - HIGH, MEDIUM, LOW or OFF" +
-                "\n Please note if the Nervousnet Service is Paused, this control is disabled.";
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("OK", new Dialog.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        dialogInterface.dismiss();
-
-                    }
-                });
-        builder.setCancelable(false);
-
-        AlertDialog alert = builder.create();
-        alert.show();
-
-        alert.getWindow().getAttributes();
-
-        TextView textView = (TextView) alert.findViewById(android.R.id.message);
-        textView.setTextSize(12);
-    }
-
-
-
-
 
 
 }
