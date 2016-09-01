@@ -49,6 +49,9 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -72,10 +75,11 @@ import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
+import ch.ethz.coss.nervousnet.vm.events.NNEvent;
 
 public class SensorDisplayActivity extends FragmentActivity implements ActionBarImplementation, NervousnetServiceConnectionListener {
     private static BaseFragment fragment;
-    int m_interval = 100; // 100 milliseconds by default, can be changed later
+    int m_interval = 300; // 100 milliseconds by default, can be changed later
     Handler m_handler = new Handler();
     Runnable m_statusChecker;
     NervousnetServiceController nervousnetServiceController;
@@ -104,6 +108,18 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         nervousnetServiceController.connect();
     }
 
+    @Subscribe
+    public void onNNEvent(NNEvent event) {
+        NNLog.d("SensorDisplayActivityon", "onNNEvent called ");
+
+        if(event.eventType == NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED || event.eventType == NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED) {
+//            getSupportFragmentManager().beginTransaction().detach(sapAdapter.getItem(viewPager.getCurrentItem())).commit();
+            finish();
+            startActivity(getIntent());
+            NNLog.d("SensorDisplayActivityon", "onNNEvent 2 called ");
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,14 +160,13 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         if (on) {
             ((Application) getApplication()).startService(this);
             initServiceConnection();
+            EventBus.getDefault().post(new NNEvent( NervousnetVMConstants.EVENT_START_NERVOUSNET_REQUEST));
         } else {
             nervousnetServiceController.disconnect();
             ((Application) getApplication()).stopService(this);
 //            stopRepeatingTask();
         }
 
-        ((Application) getApplication()).setState(this, on ? (byte) 1 : (byte) 0);
-        // updateServiceInfo();
     }
 
 
@@ -169,6 +184,21 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
         }
 
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+        nervousnetServiceController.connect();
+    }
+
+    @Override
+    public void onStop() {
+        nervousnetServiceController.disconnect();
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -390,5 +420,10 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         TextView textView = (TextView) alert.findViewById(android.R.id.message);
         textView.setTextSize(12);
     }
+
+
+
+
+
 
 }

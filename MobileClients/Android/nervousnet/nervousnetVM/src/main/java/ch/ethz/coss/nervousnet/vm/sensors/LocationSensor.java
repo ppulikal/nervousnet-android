@@ -26,6 +26,9 @@
 package ch.ethz.coss.nervousnet.vm.sensors;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.Application;
+import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -33,6 +36,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
@@ -68,7 +72,6 @@ public class LocationSensor extends BaseSensor implements LocationListener {
     @Override
     public boolean start() {
 
-
         if (sensorState == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE) {
             NNLog.d(LOG_TAG, "Cancelled Starting Location sensor as Sensor is not available.");
             return false;
@@ -99,6 +102,15 @@ public class LocationSensor extends BaseSensor implements LocationListener {
             return false;
         } else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED) {
             NNLog.d(LOG_TAG, "Cancelled Starting Location sensor as permission denied by user.");
+//            if (Build.VERSION.SDK_INT >= 23
+//                    && ContextCompat.checkSelfPermission(mContext,
+//                    android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+//                    && ContextCompat.checkSelfPermission(mContext,
+//                    android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//			ActivityCompat.requestPermissions((Activity)mContext, new String[]{"Manifest.permission.ACCESS_FINE_LOCATION"}, NervousnetVMConstants.REQUEST_CODE_ASK_PERMISSIONS_LOC);
+////                setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED);
+//                return false;
+//            }
             return false;
         } else if (state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
             setSensorState(state);
@@ -138,26 +150,28 @@ public class LocationSensor extends BaseSensor implements LocationListener {
     public void startLocationCollection() {
         NNLog.d(LOG_TAG, "startLocationCollection ");
 
-        if (Build.VERSION.SDK_INT >= 23
-                && ContextCompat.checkSelfPermission(mContext,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(mContext,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//			ActivityCompat.requestPermissions((Activity)mContext, new String[]{"Manifest.permission.ACCESS_FINE_LOCATION"}, REQUEST_CODE_ASK_PERMISSIONS);
-            setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED);
-            return;
-        }
 
         if (locationManager == null)
             return;
         NNLog.d(LOG_TAG, "startLocationCollection2");
-
         // getting GPS status
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
+        NNLog.d(LOG_TAG, "isGPSEnabled = "+isGPSEnabled);
         // getting network status
         isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        NNLog.d(LOG_TAG, "isNetworkEnabled = "+isNetworkEnabled);
 
+        /////TODO:
+        if (Build.VERSION.SDK_INT >= 23
+                    && ContextCompat.checkSelfPermission(mContext,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ContextCompat.checkSelfPermission(mContext,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED);
+
+			} else
+
+        ////TODO:
         if (!isGPSEnabled && !isNetworkEnabled) {
             setSensorState(NervousnetVMConstants.SENSOR_STATE_AVAILABLE_PERMISSION_DENIED);
             NNLog.d(LOG_TAG, "Location settings disabled");

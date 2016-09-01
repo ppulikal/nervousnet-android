@@ -177,7 +177,7 @@ public class SQLHelper implements BaseSensorListener {
         new StoreTask(type).execute(sensorDataList);
     }
 
-    public synchronized boolean storeSensor(int type, ArrayList sensorDataList) {
+    public boolean storeSensor(int type, ArrayList sensorDataList) {
         NNLog.d(LOG_TAG, "Inside storeSensor ");
 
         if (sensorDataList == null) {
@@ -185,12 +185,6 @@ public class SQLHelper implements BaseSensorListener {
             return false;
         }
         NNLog.d(LOG_TAG, "sensorDataList (Type = " + type + ")"); // ,
-        // Timestamp
-        // =
-        // "+sensorData.getTimeStamp()+",
-        // Volatility
-        // =
-        // "+sensorData.getVolatility());
 
         switch (type) {
             case LibConstants.SENSOR_ACCELEROMETER:

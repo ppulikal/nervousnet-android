@@ -39,9 +39,15 @@ import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.vm.NNLog;
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
+import ch.ethz.coss.nervousnet.vm.events.NNEvent;
+import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor;
 
 /**
  * @author prasad
@@ -126,5 +132,8 @@ public abstract class BaseActivity extends Activity implements ActionBarImplemen
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
+
+
+
 
 }

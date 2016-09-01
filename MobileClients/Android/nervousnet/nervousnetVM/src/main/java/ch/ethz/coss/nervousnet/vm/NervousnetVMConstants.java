@@ -16,9 +16,13 @@ public class NervousnetVMConstants {
     public static byte SENSOR_STATE_NOT_AVAILABLE = -2;
     public static byte SENSOR_STATE_AVAILABLE_PERMISSION_DENIED = -1;
     public static byte SENSOR_STATE_AVAILABLE_BUT_OFF = 0;
-    public static byte SENSOR_STATE_AVAILABLE_DELAY_HIGH = 1;
+    public static byte SENSOR_STATE_AVAILABLE_DELAY_LOW = 1;
     public static byte SENSOR_STATE_AVAILABLE_DELAY_MED = 2;
-    public static byte SENSOR_STATE_AVAILABLE_DELAY_LOW = 3;
+    public static byte SENSOR_STATE_AVAILABLE_DELAY_HIGH = 3;
+
+
+    public static int REQUEST_CODE_ASK_PERMISSIONS_LOC = 1;
+    public static int REQUEST_CODE_ASK_PERMISSIONS_NOISE = 2;
 
     public static long[] sensor_ids = {0, 1, 2, 3, 4, 5, 6};
 
@@ -33,12 +37,19 @@ public class NervousnetVMConstants {
 //	public static String[] sensor_labels = { "Accelerometer", "Battery", "Beacons", "Connectivity", "Gyroscope",
 //			"Humidity", "Location", "Light", "Magnetic", "Noise", "Pressure", "Proximity", "Temperature" };
 
-    public static String[] sensor_freq_labels = {"Off", "High", "Medium", "Low"};
+    public static String[] sensor_freq_labels = {"Off", "Low", "Medium", "High"};
 
-    public static int[][] sensor_freq_constants = {{-1, 60000, 250000, 1000000}, {-1, 60000, 120000, 300000},
-            {-1, 60000, 250000, 1000000}, {-1, 60000, 120000, 300000}, {-1, 60000, 120000, 300000}, {-1, 60000, 120000, 300000},
-            {-1, 60000, 120000, 300000}
+    public static int[][] sensor_freq_constants = {{-1, 1000000, 250000, 60000 }, {-1, 300000, 120000, 60000},
+            {-1, 1000000, 250000, 60000 }, {-1, 300000, 120000, 60000 }, {-1, 300000, 120000, 60000}, {-1, 300000, 120000, 60000},
+            {-1, 300000, 120000, 60000}
     };
+
+    public static byte EVENT_PAUSE_NERVOUSNET_REQUEST = 0;
+    public static byte EVENT_START_NERVOUSNET_REQUEST = 1;
+    public static byte EVENT_CHANGE_SENSOR_STATE_REQUEST = 2;
+    public static byte EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST = 3;
+    public static byte EVENT_NERVOUSNET_STATE_UPDATED = 4;
+    public static byte EVENT_SENSOR_STATE_UPDATED = 5;
 
 
 
