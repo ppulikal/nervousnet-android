@@ -62,9 +62,7 @@ https://developer.android.com/guide/components/aidl.html<br><br>
 ### GitHub structure
 <small>
 Root <br>
- |<br>
- &nbsp; -- <b>Deliverables</b> <i>( Contains installables, apk files for nervousnet mobile app.)</i><br>
- |<br>
+|<br>
  &nbsp; -- <b>Documents</b> <i>(Contains all documentation related to nervousnet and the Android Project)</i><br>
  |<br>
  &nbsp; -- <b>Mobile Clients</b> <i>( Contains nervousnet mobile app Android Project)</i><br>
