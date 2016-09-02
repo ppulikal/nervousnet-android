@@ -81,6 +81,9 @@ Root <br>
  &nbsp;  |<br> 
  &nbsp; -- <b>Resources</b> <i>( Contains all resource, raw images and final images that are used for the nervousnet Android Project)</i><br>
 </small>
+### Wiki 
+A detailed explanation of Nervousnet, the platform, its architecture and components, Android project details, sample Axon project and a step by step guide to build nervousnet Axon apps can be found on the Wiki of this Github project at the following link:
+![alt tag](https://github.com/nervousnet/nervousnet-android/wiki/Nervousnet)
 
 ### Support or Contact
-For more information or support check out our website http://www.nervousnet.info
+For more information or support check out our website http://www.nervousnet.info or email us at nervousnet@ethz.ch
