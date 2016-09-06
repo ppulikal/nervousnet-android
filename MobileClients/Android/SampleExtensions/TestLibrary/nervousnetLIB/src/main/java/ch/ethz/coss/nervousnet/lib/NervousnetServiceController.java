@@ -228,10 +228,16 @@ public class NervousnetServiceController {
     }
 
     public List getAverage(long sensorID) throws RemoteException {
+        Log.d(LOG_TAG, "getAverage - nervousnet service controller");
         if (bindFlag) {
-            if (mService != null)
-                return mService.getAverage(sensorID);
+            if (mService != null){
+                Log.d(LOG_TAG, "getAverage - nervousnet service controller - nService ok");
+                List list =  mService.getAverage(sensorID);
+                Log.d(LOG_TAG, "getAverage - nervousnet service controller - nService ok - done");
+                return list;
+            }
             else{
+                Log.d(LOG_TAG, "getAverage - nervousnet service controller - ErrorReading");
                 ArrayList<ErrorReading> list = new ArrayList<>();
                 list.add(new ErrorReading(new String[]{"002", "Service not connected."}));
                 return list;

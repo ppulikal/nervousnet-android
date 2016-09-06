@@ -285,18 +285,20 @@ public class SQLHelper implements BaseSensorListener {
             default:
                 break;
         }
+        if (!qb.list().isEmpty()) {
+            aList = (ArrayList<SensorDataImpl>) qb.list();
+            NNLog.d(LOG_TAG, " List size = " + aList.size());
+            iterator = aList.iterator();
+            while (iterator.hasNext()) {
 
-        aList = (ArrayList<SensorDataImpl>) qb.list();
-        NNLog.d(LOG_TAG, " List size = " + aList.size());
-        iterator = aList.iterator();
-        while (iterator.hasNext()) {
+                NNLog.d(LOG_TAG, " 2. List size = " + list.size());
+                SensorDataImpl data = iterator.next();
+                data.setType(type);
+                list.add(convertSensorDataToSensorReading(data));
 
-            NNLog.d(LOG_TAG, " 2. List size = " + list.size());
-            SensorDataImpl data = iterator.next();
-            data.setType(type);
-            list.add(convertSensorDataToSensorReading(data));
-
+            }
         }
+
         try {
             if (cb == null || list == null)
                 NNLog.d(LOG_TAG, "getSensorReadings with callback, Callback instance or list is  null");

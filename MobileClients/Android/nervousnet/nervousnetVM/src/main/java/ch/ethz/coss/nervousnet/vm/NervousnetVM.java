@@ -5,17 +5,28 @@ import android.content.pm.PackageManager;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.RemoteException;
+import android.telecom.Call;
+import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
+import ch.ethz.coss.nervousnet.lib.BatteryReading;
+import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.GyroReading;
+import ch.ethz.coss.nervousnet.lib.LightReading;
+import ch.ethz.coss.nervousnet.lib.NoiseReading;
+import ch.ethz.coss.nervousnet.lib.ProximityReading;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
@@ -326,6 +337,127 @@ public class NervousnetVM {
         } else {
 
             sqlHelper.getSensorReadings((int) sensorID, startTime, endTime, cb);
+        }
+    }
+
+    public synchronized List getAverage(long sensorID){
+        Log.d(LOG_TAG, "getAverage");
+        if (state == NervousnetVMConstants.STATE_PAUSED) {
+            NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
+            List list = new ArrayList();
+            list.add(Utils.getErrorReading(101));
+            return list;
+        } else {
+            Log.d(LOG_TAG, "average - Call back");
+            class Callback implements RemoteCallback {
+                List list = new ArrayList();
+                @Override
+                public void success(List<SensorReading> list) throws RemoteException {
+                    Log.d(LOG_TAG, "average - Callback - success");
+                    if (list.size() > 0) {
+                        SensorReading sensor = list.get(0);
+                        if (sensor instanceof AccelerometerReading){
+                            double avgX = 0;
+                            double avgY = 0;
+                            double avgZ = 0;
+
+                            // Not stable computation
+                            for (SensorReading sr : list){
+                                AccelerometerReading reading = (AccelerometerReading) sr;
+                                avgX += reading.getX();
+                                avgY += reading.getY();
+                                avgZ += reading.getZ();
+                            }
+
+                            avgX /= list.size();
+                            avgY /= list.size();
+                            avgZ /= list.size();
+                            this.list.add(avgX);
+                            this.list.add(avgY);
+                            this.list.add(avgZ);
+                        }
+                        else if(sensor instanceof BatteryReading){
+                            double avg = 0;
+                            for (SensorReading sr : list){
+                                BatteryReading reading = (BatteryReading) sr;
+                                avg += reading.getPercent();
+                            }
+                            avg /= list.size();
+                            this.list.add(avg);
+                        }
+                        else if (sensor instanceof GyroReading){
+                            double avgX = 0;
+                            double avgY = 0;
+                            double avgZ = 0;
+
+                            // Not stable computation
+                            for (SensorReading sr : list){
+                                GyroReading reading = (GyroReading) sr;
+                                avgX += reading.getGyroX();
+                                avgY += reading.getGyroY();
+                                avgZ += reading.getGyroZ();
+                            }
+
+                            avgX /= list.size();
+                            avgY /= list.size();
+                            avgZ /= list.size();
+                            this.list.add(avgX);
+                            this.list.add(avgY);
+                            this.list.add(avgZ);
+                        }
+                        else if(sensor instanceof LightReading){
+                            Log.d(LOG_TAG, "average - inside call back - compute light average. List size "+ list.size());
+                            double avg = 0;
+                            for (SensorReading sr : list){
+                                LightReading reading = (LightReading) sr;
+                                avg += reading.getLuxValue();
+                            }
+                            avg /= list.size();
+                            this.list.add(avg);
+                        }
+                        else if(sensor instanceof NoiseReading){
+                            double avg = 0;
+                            for (SensorReading sr : list){
+                                NoiseReading reading = (NoiseReading) sr;
+                                avg += reading.getdbValue();
+                            }
+                            avg /= list.size();
+                            this.list.add(avg);
+                        }
+                        else if(sensor instanceof ProximityReading){
+                            double avg = 0;
+                            for (SensorReading sr : list){
+                                ProximityReading reading = (ProximityReading) sr;
+                                avg += reading.getProximity();
+                            }
+                            avg /= list.size();
+                            this.list.add(avg);
+                        }
+                    }
+                }
+
+                @Override
+                public void failure(ErrorReading reading) throws RemoteException {
+                    this.list = new ArrayList();
+                    this.list.add(reading);
+                }
+
+                @Override
+                public IBinder asBinder() {
+                    return null;
+                }
+
+                public List getList(){
+                    return this.list;
+                }
+            }
+
+            Callback cb = new Callback();
+
+            sqlHelper.getSensorReadings((int) sensorID, 0, Long.MAX_VALUE, cb);
+            List list = cb.getList();
+            return cb.getList();
+
         }
     }
 

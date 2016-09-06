@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ch.ethz.coss.nervousnet.lib"
+    android:versionCode="32"
+    android:versionName="0.7.25">
+
+</manifest>

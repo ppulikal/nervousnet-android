@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+//apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: "com.jfrog.bintray"
+
+
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'nervousnetLIB'
+
+    publishedGroupId = 'ch.ethz.coss.nervousnet'
+    libraryName = 'nervousnetLIB'
+    artifact = 'nervousnetLIB'
+
+    libraryDescription = 'nervousnet library for Android'
+
+    siteUrl = 'https://github.com/nervousnet/nervousnet-android'
+    gitUrl = 'https://github.com/nervousnet/nervousnet-android.git'
+
+    libraryVersion = '0.7.35'
+
+    developerId = 'ppulikal'
+    developerName = 'Prasad Pulikal'
+    developerEmail = 'prasad.pulikal@gess.ethz.ch'
+
+    licenseName = 'GNU General Public License Version 3.0'
+    licenseUrl = 'http://www.gnu.org/licenses'
+    allLicenses = ["GNU GPL-3.0"]
+
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.1'
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 42
+        versionName '0.7.35 - alpha'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+}
+
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

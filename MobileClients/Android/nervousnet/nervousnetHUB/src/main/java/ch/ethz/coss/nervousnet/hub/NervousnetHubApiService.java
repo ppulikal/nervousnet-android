@@ -28,8 +28,10 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
@@ -74,6 +76,12 @@ public class NervousnetHubApiService extends Service {
 
         }
 
+        @Override
+        public List getAverage(long sensorType) throws RemoteException {
+            List list = ((Application) getApplication()).nn_VM.getAverage(sensorType);
+            Log.d(LOG_TAG, "getAverage "+list+ " " + ((Application) getApplication()).nn_VM);
+            return list;
+        }
 
     };
 
