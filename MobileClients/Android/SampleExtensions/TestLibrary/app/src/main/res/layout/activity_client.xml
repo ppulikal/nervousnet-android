@@ -32,23 +32,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="get nervousnet data"/>
-            <Button
-                android:id="@+id/connect"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Send"/>
+
             <TextView
                 android:id="@+id/sendResponse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="..."/>
-
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="200dip"
-                android:title="Graph Title"
-                android:id="@+id/graph"
-                android:layout_below="@+id/pointtext"/>
 
             <TextView
                 android:id="@+id/textNervousnet"

@@ -42,6 +42,7 @@ import ch.ethz.coss.nervousnet.vm.sensors.ProximitySensor;
 import ch.ethz.coss.nervousnet.vm.storage.Config;
 import ch.ethz.coss.nervousnet.vm.storage.SQLHelper;
 import ch.ethz.coss.nervousnet.vm.storage.SensorConfig;
+import ch.ethz.coss.nervousnet.vm.utils.StableAverageComputation;
 
 
 public class NervousnetVM {
@@ -357,50 +358,50 @@ public class NervousnetVM {
                     if (list.size() > 0) {
                         SensorReading sensor = list.get(0);
                         if (sensor instanceof AccelerometerReading){
+                            Log.d(LOG_TAG, "average - acc");
                             double avgX = 0;
                             double avgY = 0;
                             double avgZ = 0;
-
+                            int t = 1;
                             // Not stable computation
                             for (SensorReading sr : list){
                                 AccelerometerReading reading = (AccelerometerReading) sr;
-                                avgX += reading.getX();
-                                avgY += reading.getY();
-                                avgZ += reading.getZ();
+                                avgX = StableAverageComputation.computeNext(avgX, reading.getX(), t);
+                                avgY = StableAverageComputation.computeNext(avgY, reading.getY(), t);
+                                avgZ = StableAverageComputation.computeNext(avgZ, reading.getZ(), t);
+                                t++;
                             }
 
-                            avgX /= list.size();
-                            avgY /= list.size();
-                            avgZ /= list.size();
                             this.list.add(avgX);
                             this.list.add(avgY);
                             this.list.add(avgZ);
                         }
                         else if(sensor instanceof BatteryReading){
+                            Log.d(LOG_TAG, "average - battery");
                             double avg = 0;
+                            int t = 1;
                             for (SensorReading sr : list){
                                 BatteryReading reading = (BatteryReading) sr;
-                                avg += reading.getPercent();
+                                avg = StableAverageComputation.computeNext(avg, reading.getPercent(), t);
+                                t++;
                             }
-                            avg /= list.size();
                             this.list.add(avg);
                         }
                         else if (sensor instanceof GyroReading){
+                            Log.d(LOG_TAG, "average - gyro");
                             double avgX = 0;
                             double avgY = 0;
                             double avgZ = 0;
-
+                            int t = 1;
                             // Not stable computation
                             for (SensorReading sr : list){
                                 GyroReading reading = (GyroReading) sr;
-                                avgX += reading.getGyroX();
-                                avgY += reading.getGyroY();
-                                avgZ += reading.getGyroZ();
+                                avgX = StableAverageComputation.computeNext(avgX, reading.getGyroX(), t);
+                                avgY = StableAverageComputation.computeNext(avgY, reading.getGyroY(), t);
+                                avgZ = StableAverageComputation.computeNext(avgZ, reading.getGyroZ(), t);
+                                t++;
                             }
 
-                            avgX /= list.size();
-                            avgY /= list.size();
-                            avgZ /= list.size();
                             this.list.add(avgX);
                             this.list.add(avgY);
                             this.list.add(avgZ);
@@ -408,29 +409,37 @@ public class NervousnetVM {
                         else if(sensor instanceof LightReading){
                             Log.d(LOG_TAG, "average - inside call back - compute light average. List size "+ list.size());
                             double avg = 0;
+                            int t = 1;
                             for (SensorReading sr : list){
                                 LightReading reading = (LightReading) sr;
-                                avg += reading.getLuxValue();
+                                avg = StableAverageComputation.computeNext(avg, reading.getLuxValue(), t);
+                                t++;
                             }
-                            avg /= list.size();
+
                             this.list.add(avg);
                         }
                         else if(sensor instanceof NoiseReading){
+                            Log.d(LOG_TAG, "average - noise");
                             double avg = 0;
+                            int t = 1;
                             for (SensorReading sr : list){
                                 NoiseReading reading = (NoiseReading) sr;
-                                avg += reading.getdbValue();
+                                avg = StableAverageComputation.computeNext(avg, reading.getdbValue(), t);
+                                t++;
                             }
-                            avg /= list.size();
+
                             this.list.add(avg);
                         }
                         else if(sensor instanceof ProximityReading){
+                            Log.d(LOG_TAG, "average - proximity");
                             double avg = 0;
+                            int t = 1;
                             for (SensorReading sr : list){
                                 ProximityReading reading = (ProximityReading) sr;
-                                avg += reading.getProximity();
+                                avg = StableAverageComputation.computeNext(avg, reading.getProximity(), t);
+                                t++;
                             }
-                            avg /= list.size();
+
                             this.list.add(avg);
                         }
                     }

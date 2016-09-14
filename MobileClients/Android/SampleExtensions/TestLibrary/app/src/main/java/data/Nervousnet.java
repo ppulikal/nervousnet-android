@@ -26,7 +26,7 @@ import ch.ethz.coss.nervousnet.lib.SensorReading;
  *
  * Nervousnet queries the data in Nervousnet application. This class is source of the data.
  */
-public class Nervousnet implements iDataSource, NervousnetServiceConnectionListener, NervousnetSensorDataListener {
+public class Nervousnet implements NervousnetServiceConnectionListener, NervousnetSensorDataListener {
 
     private enum SensorType{
         ACC,
@@ -60,77 +60,26 @@ public class Nervousnet implements iDataSource, NervousnetServiceConnectionListe
         }
     }
 
-    /////////////////////////////////////////////////////////////////////////
-    // LATEST DATA
-    /////////////////////////////////////////////////////////////////////////
-
-    public AccelerometerReading getLatestAccValue() throws RemoteException {
-        AccelerometerReading lReading  = (AccelerometerReading) nervousnetServiceController.getLatestReading(LibConstants.SENSOR_ACCELEROMETER);
-        return lReading;
-    }
 
 
-    public BatteryReading getLatestBatteryValue() throws RemoteException {
-        BatteryReading lReading  = (BatteryReading) nervousnetServiceController.getLatestReading(LibConstants.SENSOR_BATTERY);
-        return lReading;
-    }
-
-
-    public LightReading getLatestLightValue() throws RemoteException {
-        LightReading reading = (LightReading) nervousnetServiceController.getLatestReading(LibConstants.SENSOR_LIGHT);
-        return reading;
-    }
-
-
-    public NoiseReading getLatestNoiseValue() throws RemoteException {
-        NoiseReading lReading  = (NoiseReading) nervousnetServiceController.getLatestReading(LibConstants.SENSOR_NOISE);
-        return lReading;
-    }
-
-
-    /////////////////////////////////////////////////////////////////////////
-    // RANGE
-    /////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public ArrayList<SensorReading> getAccValues(long startTime, long stopTime) throws RemoteException {
-        Callback cb = new Callback(SensorType.ACC);
-        nervousnetServiceController.getReadings(LibConstants.SENSOR_ACCELEROMETER, startTime, stopTime, cb);
-        return (ArrayList<SensorReading>) cb.getList();
-    }
-
-    @Override
-    public ArrayList<SensorReading> getBatteryValues(long startTime, long stopTime) throws RemoteException {
-        Callback cb = new Callback(SensorType.BATTERY);
-        Log.d("NERVOUSNET-BATTERY", "battery getReadings start ...");
-        nervousnetServiceController.getReadings(LibConstants.SENSOR_BATTERY, startTime, stopTime, cb);
-        Log.d("NERVOUSNET-BATTERY", "battery getReadings stop ...");
-        return (ArrayList<SensorReading>) cb.getList();
-    }
-
-    @Override
-    public ArrayList<SensorReading> getLightValues(long startTime, long stopTime) throws RemoteException {
-
+    public void testAverage() throws RemoteException {
         // TEST
-        List list = nervousnetServiceController.getAverage(4); // light is 4
-        Log.d("NERVOSNET-TEST", "Average " + list.get(0));
+        List list = nervousnetServiceController.getAverage(0);
+        for (Object o : list)
+            Log.d("NERVOSNET-TEST", "Average acc " + o);
 
+        list = nervousnetServiceController.getAverage(1);
+        for (Object o : list)
+            Log.d("NERVOSNET-TEST", "Average bat " + o);
 
+        list = nervousnetServiceController.getAverage(2);
+        for (Object o : list)
+            Log.d("NERVOSNET-TEST", "Average gyro " + o);
 
-        Callback cb = new Callback(SensorType.LIGHT);
-        Log.d("NERVOUSNET-LIGHT", "light getReadings start ...");
-        nervousnetServiceController.getReadings(LibConstants.SENSOR_LIGHT, startTime, stopTime, cb);
-        Log.d("NERVOUSNET-LIGHT", "light getReadings stop ...");
-        return (ArrayList<SensorReading>) cb.getList();
-    }
+        list = nervousnetServiceController.getAverage(5);
+        for (Object o : list)
+            Log.d("NERVOSNET-TEST", "Average noise " + o);
 
-    @Override
-    public ArrayList<SensorReading> getNoiseValues(long startTime, long stopTime) throws RemoteException {
-        Callback cb = new Callback(SensorType.NOISE);
-        Log.d("NERVOUSNET-NOISE", "noise getReadings start ...");
-        nervousnetServiceController.getReadings(LibConstants.SENSOR_NOISE, startTime, stopTime, cb);
-        Log.d("NERVOUSNET-NOISE", "noise getReadings stop ...");
-        return (ArrayList<SensorReading>) cb.getList();
     }
 
 
@@ -185,29 +134,4 @@ public class Nervousnet implements iDataSource, NervousnetServiceConnectionListe
 
     }
 
-
-
-/*
-
-    public SensorPoint getLatestGyroValue(){
-        GyroReading lReading = null;
-        try {
-            lReading  = (GyroReading) nervousnetServiceController.getLatestReading(LibConstants.SENSOR_GYROSCOPE);
-            long timestamp = lReading.timestamp;
-            double[] values = {lReading.getGyroX(), lReading.getGyroY(), lReading.getGyroZ()};
-            int type = lReading.type;
-            Log.d("NERVOUSNET", "Getting battery value ... " + values[0]);
-            return new SensorPoint(type, timestamp, values);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-
-    public SensorPoint getLatestLocValue(){
-        // TODO
-        return null;
-    }*/
 }
