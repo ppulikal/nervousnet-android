@@ -231,9 +231,9 @@ public class NervousnetServiceController {
         Log.d(LOG_TAG, "getAverage - nervousnet service controller");
         if (bindFlag) {
             if (mService != null){
-                Log.d(LOG_TAG, "getAverage - nervousnet service controller - nService ok");
+                Log.d(LOG_TAG, "getAverage - nervousnet service controller - nService start " + sensorID);
                 List list =  mService.getAverage(sensorID);
-                Log.d(LOG_TAG, "getAverage - nervousnet service controller - nService ok - done");
+                Log.d(LOG_TAG, "getAverage - nervousnet service controller - nService stop");
                 return list;
             }
             else{
