@@ -83,6 +83,22 @@ public class Nervousnet implements NervousnetServiceConnectionListener, Nervousn
 
     }
 
+    public void testMax() throws RemoteException {
+        RemoteCallback.Stub cb = new RemoteCallback.Stub(){
+
+            @Override
+            public void success(List<SensorReading> list) throws RemoteException {
+                Log.d("MAX", list.size() + "");
+            }
+
+            @Override
+            public void failure(ErrorReading reading) throws RemoteException {
+
+            }
+        };
+        nervousnetServiceController.getMax(1, cb); // battery
+    }
+
 
     /////////////////////////////////////////////////////////////////////////
     // CALLBACK

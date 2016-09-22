@@ -44,6 +44,7 @@ interface NervousnetRemote
         */
         List getAverage(long sensorType);
 
+        void getMax(long sensorType, RemoteCallback cb);
 	}
 	/*Methods to be added
 	getAverage, getCorrelation, getEntropy, getKMeans,

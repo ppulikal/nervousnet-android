@@ -59,6 +59,7 @@ public class Client extends Activity {
             public void onClick(View arg0) {
                 try {
                     nervousnet.testAverage();
+                    nervousnet.testMax();
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }

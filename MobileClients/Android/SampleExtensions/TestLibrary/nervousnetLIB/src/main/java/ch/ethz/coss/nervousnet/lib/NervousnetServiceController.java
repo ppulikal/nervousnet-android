@@ -228,16 +228,10 @@ public class NervousnetServiceController {
     }
 
     public List getAverage(long sensorID) throws RemoteException {
-        Log.d(LOG_TAG, "getAverage - nervousnet service controller");
         if (bindFlag) {
-            if (mService != null){
-                Log.d(LOG_TAG, "getAverage - nervousnet service controller - nService start " + sensorID);
-                List list =  mService.getAverage(sensorID);
-                Log.d(LOG_TAG, "getAverage - nervousnet service controller - nService stop");
-                return list;
-            }
+            if (mService != null)
+                return mService.getAverage(sensorID);
             else{
-                Log.d(LOG_TAG, "getAverage - nervousnet service controller - ErrorReading");
                 ArrayList<ErrorReading> list = new ArrayList<>();
                 list.add(new ErrorReading(new String[]{"002", "Service not connected."}));
                 return list;
@@ -248,6 +242,22 @@ public class NervousnetServiceController {
             return list;
         }
     }
+
+    public void getMax(long sensorID, RemoteCallback cb) throws RemoteException {
+        if (bindFlag) {
+            if (mService != null)
+                mService.getMax((int)sensorID, cb); // TODO, int vs long???
+            else{
+                ArrayList<ErrorReading> list = new ArrayList<>();
+                cb.failure(new ErrorReading(new String[]{"002", "Service not connected."}));
+            }
+        } else {
+            ArrayList<ErrorReading> list = new ArrayList<>();
+            list.add(new ErrorReading(new String[]{"003", "Service not bound."}));
+            cb.failure(new ErrorReading(new String[]{"003", "Service not bound."}));
+        }
+    }
+
 
     private boolean isAppInstalled(String packageName) {
         try {

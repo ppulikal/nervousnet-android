@@ -363,7 +363,7 @@ public class NervousnetVM {
                             double avgY = 0;
                             double avgZ = 0;
                             int t = 1;
-                            // Not stable computation
+
                             for (SensorReading sr : list){
                                 AccelerometerReading reading = (AccelerometerReading) sr;
                                 avgX = StableAverageComputation.computeNext(avgX, reading.getX(), t);
@@ -393,7 +393,7 @@ public class NervousnetVM {
                             double avgY = 0;
                             double avgZ = 0;
                             int t = 1;
-                            // Not stable computation
+
                             for (SensorReading sr : list){
                                 GyroReading reading = (GyroReading) sr;
                                 avgX = StableAverageComputation.computeNext(avgX, reading.getGyroX(), t);
@@ -499,5 +499,10 @@ public class NervousnetVM {
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED));
         }
 
+    }
+
+    public synchronized void getMax(int sensorID, RemoteCallback cb){
+
+        sqlHelper.getMax(sensorID, cb);
     }
 }

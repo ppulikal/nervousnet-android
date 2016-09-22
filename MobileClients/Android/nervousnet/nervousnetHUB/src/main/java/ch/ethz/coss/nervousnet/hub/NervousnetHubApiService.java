@@ -83,6 +83,11 @@ public class NervousnetHubApiService extends Service {
             return list;
         }
 
+        @Override
+        public void getMax(long sensorType, RemoteCallback cb) throws RemoteException {
+            ((Application) getApplication()).nn_VM.getMax((int)sensorType, cb);
+        }
+
     };
 
 

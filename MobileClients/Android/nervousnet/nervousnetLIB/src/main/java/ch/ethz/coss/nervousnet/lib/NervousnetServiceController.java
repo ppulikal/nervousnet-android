@@ -243,6 +243,22 @@ public class NervousnetServiceController {
         }
     }
 
+    public void getMax(long sensorID, RemoteCallback cb) throws RemoteException {
+        if (bindFlag) {
+            if (mService != null)
+                mService.getMax((int)sensorID, cb); // TODO, int vs long???
+            else{
+                ArrayList<ErrorReading> list = new ArrayList<>();
+                cb.failure(new ErrorReading(new String[]{"002", "Service not connected."}));
+            }
+        } else {
+            ArrayList<ErrorReading> list = new ArrayList<>();
+            list.add(new ErrorReading(new String[]{"003", "Service not bound."}));
+            cb.failure(new ErrorReading(new String[]{"003", "Service not bound."}));
+        }
+    }
+
+
     private boolean isAppInstalled(String packageName) {
         try {
             context.getPackageManager().getApplicationInfo(packageName, 0);

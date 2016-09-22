@@ -241,12 +241,11 @@ public class SQLHelper implements BaseSensorListener {
             case LibConstants.SENSOR_ACCELEROMETER:
                 qb = accDao.queryBuilder();
                 qb.where(AccelDataDao.Properties.TimeStamp.between(startTime, endTime));
-
                 break;
             case LibConstants.SENSOR_BATTERY:
                 qb = battDao.queryBuilder();
                 qb.where(BatteryDataDao.Properties.TimeStamp.between(startTime, endTime));
-
+                qb.orderRaw(BatteryDataDao.TABLENAME + BatteryDataDao.Properties.Percent);
                 break;
 //		case LibConstants.DEVICE_INFO:
 //
@@ -500,5 +499,86 @@ public class SQLHelper implements BaseSensorListener {
         }
 
     }
+
+
+
+
+    public synchronized void getMax(int type, RemoteCallback cb) {
+
+        NNLog.d(LOG_TAG, "getSensorReadings with callback");
+        QueryBuilder<?> qb = null;
+        ArrayList list = new ArrayList();
+
+        switch (type) {
+            case LibConstants.SENSOR_ACCELEROMETER:
+                qb = accDao.queryBuilder();
+                qb.orderRaw("SELECT MAX("+AccelDataDao.Properties.X.columnName+") FROM "+AccelDataDao.TABLENAME);
+                list.addAll(qb.list());
+                qb.orderRaw("SELECT MAX("+AccelDataDao.Properties.Y.columnName+") FROM "+AccelDataDao.TABLENAME);
+                list.addAll(qb.list());
+                qb.orderRaw("SELECT MAX("+AccelDataDao.Properties.Z.columnName+") FROM "+AccelDataDao.TABLENAME);
+                list.addAll(qb.list());
+                break;
+            case LibConstants.SENSOR_BATTERY:
+                qb = battDao.queryBuilder();
+                qb.orderRaw("SELECT MAX("+BatteryDataDao.Properties.Percent.columnName+") FROM "+BatteryDataDao.TABLENAME);
+                list.addAll(qb.list());
+                break;
+/*//		case LibConstants.DEVICE_INFO:
+//
+//			// TODO
+//			return;
+            case LibConstants.SENSOR_LOCATION:
+                qb = locDao.queryBuilder();
+                qb.where(LocationDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+                break;
+//
+            case LibConstants.SENSOR_GYROSCOPE:
+                qb = gyroDao.queryBuilder();
+                qb.where(GyroDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+
+                break;
+//
+            case LibConstants.SENSOR_LIGHT:
+                qb = lightDao.queryBuilder();
+                qb.where(LightDataDao.Properties.TimeStamp.between(startTime, endTime));
+
+
+                break;
+//
+            case LibConstants.SENSOR_NOISE:
+                qb = noiseDao.queryBuilder();
+                qb.where(NoiseDataDao.Properties.TimeStamp.between(startTime, endTime));
+                break;
+//
+            case LibConstants.SENSOR_PROXIMITY:
+                qb = proximityDao.queryBuilder();
+                qb.where(ProximityDataDao.Properties.TimeStamp.between(startTime, endTime));
+                break;
+
+            default:
+                break;*/
+        }
+
+        try {
+            if (cb == null || list == null)
+                NNLog.d(LOG_TAG, "getSensorReadings with callback, Callback instance or list is  null");
+            NNLog.d(LOG_TAG, "getSensorReadings with callback - SUCCESS");
+
+            cb.success(list);
+        } catch (RemoteException e) {
+            NNLog.d(LOG_TAG, "getSensorReadings with callback - RemoteException");
+//            cb.failure(new ErrorReading(new String[]{"300", "RemoteException while sending success"}));
+            e.printStackTrace();
+        } catch (Exception e) {
+            NNLog.d(LOG_TAG, "getSensorReadings with callback - FAILURE");
+//            cb.failure(new ErrorReading(new String[]{"301", "Exception while sending success"}));
+        }
+
+    }
+
+
 
 }
