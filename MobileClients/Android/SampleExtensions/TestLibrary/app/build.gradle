@@ -28,7 +28,5 @@ dependencies {
     //compile 'ch.ethz.coss.nervousnet:nervousnetLIB:0.7.34'
     //compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile files('libs/json-simple-1.1.1.jar')
-
-    //compile project(path: ':nervousnetLIB')
     compile project(path: ':nervousnetLIB')
 }

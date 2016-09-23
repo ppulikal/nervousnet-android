@@ -68,7 +68,7 @@ public abstract class SensorReading implements Parcelable {
     };
     public int type = 0;
     public long timestamp;
-    public float[] values;
+    public float[] values = new float[3];
     public String uuid;
     /*
      * Volatility defines the time this specific data object will be kept alive
