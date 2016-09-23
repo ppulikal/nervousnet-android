@@ -228,15 +228,28 @@ public class NervousnetServiceController {
     }
 
     public List getAverage(long sensorID) throws RemoteException {
-        Callback cb = new Callback();
+        if (bindFlag) {
+            if (mService != null){
+                Callback cb = new Callback();
 
-        long start = System.currentTimeMillis() - 80000;
-        long stop = System.currentTimeMillis();
+                long start = System.currentTimeMillis() - 80000;
+                long stop = System.currentTimeMillis();
 
-        getReadings(sensorID, start, stop, cb);
-        List<SensorReading> list = cb.getList();
+                getReadings(sensorID, start, stop, cb);
+                List<SensorReading> list = cb.getList();
 
-        return null;
+                return null;
+            }
+            else{
+                ArrayList<ErrorReading> list = new ArrayList<>();
+                list.add(new ErrorReading(new String[]{"002", "Service not connected."}));
+                return list;
+            }
+        } else {
+            ArrayList<ErrorReading> list = new ArrayList<>();
+            list.add(new ErrorReading(new String[]{"003", "Service not bound."}));
+            return list;
+        }
     }
 
     public void getMax(long sensorID, RemoteCallback cb) throws RemoteException {
@@ -263,7 +276,6 @@ public class NervousnetServiceController {
             return false;
         }
     }
-
     class Callback extends RemoteCallback.Stub {
         private List<SensorReading> list;
 
