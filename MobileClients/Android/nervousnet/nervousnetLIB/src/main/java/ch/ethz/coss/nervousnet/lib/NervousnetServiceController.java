@@ -229,8 +229,17 @@ public class NervousnetServiceController {
 
     public List getAverage(long sensorID) throws RemoteException {
         if (bindFlag) {
-            if (mService != null)
-                return mService.getAverage(sensorID);
+            if (mService != null){
+                Callback cb = new Callback();
+
+                long start = System.currentTimeMillis() - 80000;
+                long stop = System.currentTimeMillis();
+
+                getReadings(sensorID, start, stop, cb);
+                List<SensorReading> list = cb.getList();
+
+                return null;
+            }
             else{
                 ArrayList<ErrorReading> list = new ArrayList<>();
                 list.add(new ErrorReading(new String[]{"002", "Service not connected."}));
@@ -267,24 +276,23 @@ public class NervousnetServiceController {
             return false;
         }
     }
+    class Callback extends RemoteCallback.Stub {
+        private List<SensorReading> list;
 
+        public Callback(){
+        }
 
-//    /**
-//     * gets latest reading using a listener.
-//     * @param sensorID
-//     * @param nnSensorDataListener
-//     * @throws RemoteException
-//     */
-//    public void getReading(long sensorID, NervousnetSensorDataListener nnSensorDataListener) throws RemoteException {
-//        if (bindFlag) {
-//            if (mService != null)
-//                return mService.getLatestReading(sensorID);
-//            else
-//                nnSensorDataListener.onSensorDataReady(new ErrorReading(new String[]{"002", "Service not connected."}));
-//        } else
-//            nnSensorDataListener.onSensorDataReady(new ErrorReading(new String[]{"003", "Service not bound."}));
-//
-//
-//    }
+        @Override
+        public void success(final List<SensorReading> list) throws RemoteException {
+            //Log.d("NERVOUSNET CALLBACK", sType + " callback success " + list.size());
+            this.list = list;
+        }
 
+        @Override
+        public void failure(final ErrorReading reading) throws RemoteException {
+            //Log.d("NERVOUSNET CALLBACK", sType + "callback failure "+reading.getErrorString());
+        }
+
+        public List getList() { return this.list; }
+    }
 }
