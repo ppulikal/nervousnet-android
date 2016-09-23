@@ -1,6 +1,7 @@
 package data;
 
 import android.content.Context;
+import android.hardware.Sensor;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -61,6 +62,13 @@ public class Nervousnet implements NervousnetServiceConnectionListener, Nervousn
     }
 
 
+    public void testReadings() throws RemoteException {
+        Callback cb = new Callback();
+        nervousnetServiceController.getReadings(0, System.currentTimeMillis() - 80000, System.currentTimeMillis(), cb);
+        Log.d("Nervousnet", "testReadings size " + cb.getList().size());
+    }
+
+
 
     public void testAverage() throws RemoteException {
         // TEST
@@ -83,7 +91,7 @@ public class Nervousnet implements NervousnetServiceConnectionListener, Nervousn
 
     }
 
-    public void testMax() throws RemoteException {
+    /*public void testMax() throws RemoteException {
         RemoteCallback.Stub cb = new RemoteCallback.Stub(){
 
             @Override
@@ -97,7 +105,7 @@ public class Nervousnet implements NervousnetServiceConnectionListener, Nervousn
             }
         };
         nervousnetServiceController.getMax(1, cb); // battery
-    }
+    }*/
 
 
     /////////////////////////////////////////////////////////////////////////
@@ -105,22 +113,20 @@ public class Nervousnet implements NervousnetServiceConnectionListener, Nervousn
     /////////////////////////////////////////////////////////////////////////
 
     class Callback extends RemoteCallback.Stub {
-        private SensorType sType;
         private List list;
 
-        public Callback(SensorType sType){
-            this.sType = sType;
+        public Callback(){
         }
 
         @Override
         public void success(final List<SensorReading> list) throws RemoteException {
-            Log.d("NERVOUSNET CALLBACK", sType + " callback success " + list.size());
+            //Log.d("NERVOUSNET CALLBACK", sType + " callback success " + list.size());
             this.list = list;
         }
 
         @Override
         public void failure(final ErrorReading reading) throws RemoteException {
-            Log.d("NERVOUSNET CALLBACK", sType + "callback failure "+reading.getErrorString());
+            //Log.d("NERVOUSNET CALLBACK", sType + "callback failure "+reading.getErrorString());
         }
 
         public List getList() { return this.list; }

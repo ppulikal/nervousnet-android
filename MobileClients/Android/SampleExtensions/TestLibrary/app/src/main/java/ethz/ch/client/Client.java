@@ -57,12 +57,19 @@ public class Client extends Activity {
         this.buttonNervousnetOnClickListener = new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                try {
-                    nervousnet.testAverage();
-                    nervousnet.testMax();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            nervousnet.testReadings();
+                            Log.d("TEST", "testReadings done");
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                thread.start();
             }
         };
     }
