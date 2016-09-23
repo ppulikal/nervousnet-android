@@ -238,7 +238,26 @@ public class NervousnetServiceController {
                 getReadings(sensorID, start, stop, cb);
                 List<SensorReading> list = cb.getList();
 
-                return null;
+                int listSize = list.size();
+
+                if (listSize > 0) {
+                    int dim = list.get(0).values.length;
+                    float[] avgValues = new float[listSize];
+                    for (int i = 0; i < listSize; i++) {
+                        SensorReading reading = list.get(i);
+                        for (int j = 0; j < dim ; j++){
+                            avgValues[j] += reading.values[j];
+                        }
+                    }
+
+                    ArrayList returnList = new ArrayList();
+                    for (int j = 0 ; j < dim ; j ++){
+                        returnList.add(avgValues[j] / listSize);
+                    }
+
+                    return returnList;
+                }
+                return new ArrayList();
             }
             else{
                 ArrayList<ErrorReading> list = new ArrayList<>();
@@ -251,6 +270,7 @@ public class NervousnetServiceController {
             return list;
         }
     }
+
 
     public void getMax(long sensorID, RemoteCallback cb) throws RemoteException {
         if (bindFlag) {

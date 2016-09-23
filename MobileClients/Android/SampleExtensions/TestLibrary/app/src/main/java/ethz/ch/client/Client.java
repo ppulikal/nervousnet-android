@@ -63,8 +63,8 @@ public class Client extends Activity {
                         try {
                             nervousnet.testReadings();
                             Log.d("TEST", "testReadings done");
-                            //nervousnet.testAverage();
-                            //Log.d("TEST", "testAverage done");
+                            nervousnet.testAverage();
+                            Log.d("TEST", "testAverage done");
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }

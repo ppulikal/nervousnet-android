@@ -44,7 +44,7 @@ public class AccelerometerReading extends SensorReading {
             return new AccelerometerReading[size];
         }
     };
-    private float[] values = new float[3];
+    //private float[] values = new float[3];
 
     public AccelerometerReading(long timestamp, float[] values) {
         this.type = LibConstants.SENSOR_ACCELEROMETER;
