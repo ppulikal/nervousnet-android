@@ -236,15 +236,17 @@ public class NervousnetServiceController {
                 long stop = System.currentTimeMillis();
 
                 getReadings(sensorID, start, stop, cb);
-                List<SensorReading> list = cb.getList();
+                ArrayList<SensorReading> list = (ArrayList<SensorReading>) cb.getList();
 
                 int listSize = list.size();
 
                 if (listSize > 0) {
-                    int dim = list.get(0).values.length;
+                    SensorReading reading = list.get(0);
+                    float[] values = reading.values;
+                    int dim = values.length;
                     float[] avgValues = new float[listSize];
                     for (int i = 0; i < listSize; i++) {
-                        SensorReading reading = list.get(i);
+                        reading = list.get(i);
                         for (int j = 0; j < dim ; j++){
                             avgValues[j] += reading.values[j];
                         }
