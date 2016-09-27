@@ -241,12 +241,12 @@ public class NervousnetServiceController {
                 int listSize = list.size();
 
                 if (listSize > 0) {
-                    int dim = list.get(0).values.length;
+                    int dim = list.get(0).valuesList.size();
                     float[] avgValues = new float[listSize];
                     for (int i = 0; i < listSize; i++) {
                         SensorReading reading = list.get(i);
                         for (int j = 0; j < dim ; j++){
-                            avgValues[j] += reading.values[j];
+                            avgValues[j] += (Float)reading.valuesList.get(j);
                         }
                     }
 
@@ -304,7 +304,7 @@ public class NervousnetServiceController {
 
         @Override
         public void success(final List<SensorReading> list) throws RemoteException {
-            //Log.d("NERVOUSNET CALLBACK", sType + " callback success " + list.size());
+            Log.d("NERVOUSNET CALLBACK", " callback success " + list.size());
             this.list = list;
         }
 

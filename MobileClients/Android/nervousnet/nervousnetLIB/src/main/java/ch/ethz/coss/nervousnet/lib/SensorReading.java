@@ -31,6 +31,9 @@ package ch.ethz.coss.nervousnet.lib;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author prasad
  */
@@ -69,6 +72,8 @@ public abstract class SensorReading implements Parcelable {
     public int type = 0;
     public long timestamp;
     public float[] values = new float[3];
+    public List valuesList;
+
     public String uuid;
     /*
      * Volatility defines the time this specific data object will be kept alive

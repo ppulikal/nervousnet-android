@@ -50,6 +50,8 @@ public class ProximityReading extends SensorReading {
         this.type = LibConstants.SENSOR_PROXIMITY;
         this.timestamp = timestamp;
         this.proximity = proximity;
+
+        //this.valuesList.add(proximity);
     }
 
     /**

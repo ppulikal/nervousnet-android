@@ -61,8 +61,8 @@ public class Client extends Activity {
                     @Override
                     public void run() {
                         try {
-                            nervousnet.testReadings();
-                            Log.d("TEST", "testReadings done");
+                            //nervousnet.testReadings();
+                            //Log.d("TEST", "testReadings done");
                             nervousnet.testAverage();
                             Log.d("TEST", "testAverage done");
                         } catch (RemoteException e) {

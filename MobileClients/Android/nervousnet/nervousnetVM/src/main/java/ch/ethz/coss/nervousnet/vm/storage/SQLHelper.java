@@ -284,8 +284,8 @@ public class SQLHelper implements BaseSensorListener {
             default:
                 break;
         }
-        if (!qb.list().isEmpty()) {
-            aList = (ArrayList<SensorDataImpl>) qb.list();
+        aList = (ArrayList<SensorDataImpl>) qb.list();
+        if (!aList.isEmpty()) {
             NNLog.d(LOG_TAG, " List size = " + aList.size());
             iterator = aList.iterator();
             while (iterator.hasNext()) {

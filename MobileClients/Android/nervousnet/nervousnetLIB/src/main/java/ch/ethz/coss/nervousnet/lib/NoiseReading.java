@@ -50,6 +50,8 @@ public class NoiseReading extends SensorReading {
         this.type = LibConstants.SENSOR_NOISE;
         this.timestamp = timestamp;
         this.dbValue = value;
+
+        //this.valuesList.add(value);
     }
 
     /**

@@ -29,15 +29,6 @@ import ch.ethz.coss.nervousnet.lib.SensorReading;
  */
 public class Nervousnet implements NervousnetServiceConnectionListener, NervousnetSensorDataListener {
 
-    private enum SensorType{
-        ACC,
-        BATTERY,
-        GYRO,
-        LIGHT,
-        LOC,
-        NOISE
-    }
-
     // We need context to get connections and sensor data
     private Context context;
 
@@ -65,7 +56,12 @@ public class Nervousnet implements NervousnetServiceConnectionListener, Nervousn
     public void testReadings() throws RemoteException {
         Callback cb = new Callback();
         nervousnetServiceController.getReadings(0, System.currentTimeMillis() - 80000, System.currentTimeMillis(), cb);
-        Log.d("Nervousnet", "testReadings size " + cb.getList().size());
+        Log.d("Nervousnet", "testReadings acc size " + cb.getList().size());
+
+        cb = new Callback();
+        nervousnetServiceController.getReadings(5, System.currentTimeMillis() - 80000, System.currentTimeMillis(), cb);
+        Log.d("Nervousnet", "testReadings noise size " + cb.getList().size());
+
     }
 
 
@@ -74,6 +70,8 @@ public class Nervousnet implements NervousnetServiceConnectionListener, Nervousn
         // TEST
         List list;
         list = nervousnetServiceController.getAverage(0);
+        Log.d("NERVOSNET-TEST", "Average acc size: " + list.size());
+
         for (Object o : list)
             Log.d("NERVOSNET-TEST", "Average acc " + o);
 
@@ -87,8 +85,8 @@ public class Nervousnet implements NervousnetServiceConnectionListener, Nervousn
 
         /*list = nervousnetServiceController.getAverage(5);
         for (Object o : list)
-            Log.d("NERVOSNET-TEST", "Average noise " + o);
-*/
+            Log.d("NERVOSNET-TEST", "Average noise " + o);*/
+
     }
 
     /*public void testMax() throws RemoteException {

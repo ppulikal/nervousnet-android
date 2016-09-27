@@ -28,6 +28,9 @@ package ch.ethz.coss.nervousnet.lib;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author prasad
  */
@@ -46,10 +49,17 @@ public class AccelerometerReading extends SensorReading {
     };
     //private float[] values = new float[3];
 
+
     public AccelerometerReading(long timestamp, float[] values) {
         this.type = LibConstants.SENSOR_ACCELEROMETER;
         this.timestamp = timestamp;
         this.values = values;
+
+        // Init inside
+        this.valuesList = new ArrayList();
+        for (float f : values) {
+            this.valuesList.add(new Float(f));
+        }
     }
 
     /**
@@ -72,10 +82,10 @@ public class AccelerometerReading extends SensorReading {
     }
 
     public void readFromParcel(Parcel in) {
-
         timestamp = in.readLong();
-
         in.readFloatArray(values);
+        valuesList = new ArrayList();
+        in.readList(valuesList, getClass().getClassLoader());
     }
 
     /*
@@ -99,6 +109,7 @@ public class AccelerometerReading extends SensorReading {
         out.writeString(getClass().getName());
         out.writeLong(timestamp);
         out.writeFloatArray(values);
+        out.writeList(valuesList);
     }
 
 }
