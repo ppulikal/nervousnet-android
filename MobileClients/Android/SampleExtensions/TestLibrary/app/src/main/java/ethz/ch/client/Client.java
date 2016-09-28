@@ -19,11 +19,9 @@ import data.Nervousnet;
 public class Client extends Activity {
 
     TextView sendResponse, textNervousnet;
-    Button buttonConnect, buttonNervousnet;
-    OnClickListener buttonNervousnetOnClickListener;
+    Button buttonReconnect, buttonNervousnet;
+    OnClickListener buttonNervousnetOnClickListener, buttonNervousnetReconnectListener;
     Nervousnet nervousnet;
-
-    boolean isRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,9 @@ public class Client extends Activity {
         // 1. Initialize buttons
         buttonNervousnet = (Button)findViewById(R.id.nervousnet);
         initButtonNervousnet(this);
-        buttonNervousnet.setOnClickListener(buttonNervousnetOnClickListener);
+
+        buttonReconnect = (Button)findViewById(R.id.buttonReconnect);
+        initButtonReconnect(this);
 
         // 2. Initialize text
         sendResponse = (TextView)findViewById(R.id.sendResponse);
@@ -74,5 +74,21 @@ public class Client extends Activity {
                 thread.start();
             }
         };
+
+        buttonNervousnet.setOnClickListener(buttonNervousnetOnClickListener);
+    }
+
+    protected void initButtonReconnect(final Context context) {
+        // Create button connector
+        this.buttonNervousnetReconnectListener = new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                nervousnet = new Nervousnet(context);
+                nervousnet.connect();
+
+            }
+        };
+        buttonReconnect.setOnClickListener(buttonNervousnetReconnectListener);
     }
 }
