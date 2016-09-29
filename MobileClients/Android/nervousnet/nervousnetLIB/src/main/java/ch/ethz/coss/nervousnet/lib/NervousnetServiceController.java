@@ -241,12 +241,12 @@ public class NervousnetServiceController {
                 int listSize = list.size();
 
                 if (listSize > 0) {
-                    int dim = list.get(0).valuesList.size();
+                    int dim = list.get(0).values.size();
                     float[] avgValues = new float[listSize];
                     for (int i = 0; i < listSize; i++) {
                         SensorReading reading = list.get(i);
                         for (int j = 0; j < dim ; j++){
-                            avgValues[j] += (Float)reading.valuesList.get(j);
+                            avgValues[j] += (Float)reading.values.get(j);
                         }
                     }
 

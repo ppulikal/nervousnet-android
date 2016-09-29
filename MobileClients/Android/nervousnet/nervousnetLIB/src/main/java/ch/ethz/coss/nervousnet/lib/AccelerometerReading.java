@@ -29,6 +29,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -47,18 +48,17 @@ public class AccelerometerReading extends SensorReading {
             return new AccelerometerReading[size];
         }
     };
-    //private float[] values = new float[3];
 
+    List<String> paramNames = Arrays.asList(new String[]{"accX", "accY", "accZ"});
 
     public AccelerometerReading(long timestamp, float[] values) {
         this.type = LibConstants.SENSOR_ACCELEROMETER;
         this.timestamp = timestamp;
-        this.values = values;
 
         // Init inside
-        this.valuesList = new ArrayList();
+        this.values = new ArrayList();
         for (float f : values) {
-            this.valuesList.add(new Float(f));
+            this.values.add(new Float(f));
         }
     }
 
@@ -70,22 +70,21 @@ public class AccelerometerReading extends SensorReading {
     }
 
     public float getX() {
-        return values[0];
+        return (float)values.get(0);
     }
 
     public float getY() {
-        return values[1];
+        return (float)values.get(1);
     }
 
     public float getZ() {
-        return values[2];
+        return (float)values.get(2);
     }
 
     public void readFromParcel(Parcel in) {
         timestamp = in.readLong();
-        in.readFloatArray(values);
-        valuesList = new ArrayList();
-        in.readList(valuesList, getClass().getClassLoader());
+        values = new ArrayList();
+        in.readList(values, getClass().getClassLoader());
     }
 
     /*
@@ -108,8 +107,11 @@ public class AccelerometerReading extends SensorReading {
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(getClass().getName());
         out.writeLong(timestamp);
-        out.writeFloatArray(values);
-        out.writeList(valuesList);
+        out.writeList(values);
     }
 
+    @Override
+    public List<String> getValNames() {
+        return this.paramNames;
+    }
 }
