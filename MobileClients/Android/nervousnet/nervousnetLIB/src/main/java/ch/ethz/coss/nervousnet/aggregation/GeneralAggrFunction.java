@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+import ch.ethz.coss.nervousnet.lib.SensorReading;
+
 
 public abstract class GeneralAggrFunction<G extends GeneralAggrItem> {
 	private ArrayList<G> list;
@@ -724,28 +726,10 @@ public abstract class GeneralAggrFunction<G extends GeneralAggrItem> {
 	{
 		ArrayList<Float> moo = new ArrayList<Float>();
 		try{
-			ArrayList<Float> average = new ArrayList<Float>();
-			int size = 0;
-			if (list.size() > 0){
-				size = list.get(0).getValue().size();
-				for (int i = 0; i < size; i++)
-					average.add(new Float(0));
-			}
-
-			// 0-> avg of x and so on...
-			ArrayList<Float> temp;
-			for (G sensorData : list) {
-				G sensDesc = sensorData; // loop over the sensor data,get the object
-				temp = sensDesc.getValue();
-				for(int i = 0; i < temp.size(); i++)                   //for each x,z & z
-				{
-					float temptemp = average.get(i) + temp.get(i);   //add current data to the existing one and replace
-					average.set(i,temptemp);
-				}
-
-			}
+			ArrayList<Float> average = getAverage();
 
 			ArrayList< ArrayList<Float> > prob = new ArrayList<ArrayList<Float> >();
+			ArrayList<Float> temp;
 			for (G sensorData : list) {
 				G sensDesc = sensorData; // loop over the sensor data,get the object
 				temp = sensDesc.getValue();
@@ -753,16 +737,16 @@ public abstract class GeneralAggrFunction<G extends GeneralAggrItem> {
 				{
 					float temptemp = temp.get(i);                    //get x,y or z
 					temptemp = temptemp / average.get(i);
-					temp.add(i,temptemp);                            //now temp contains the probabilities of x,y,z
+					temp.set(i,temptemp);                            //now temp contains the probabilities of x,y,z
 				}
 
 				prob.add(temp);
 
 			}
 
-			size = prob.size();
+			int size = list.size();
 			if (size > 0){
-				for (int i = 0; i < size; i++)
+				for (int i = 0; i < list.get(0).getValue().size(); i++)
 					moo.add(new Float(0));
 			}
 			for(int i = 0;i<prob.size();i++)
@@ -772,7 +756,7 @@ public abstract class GeneralAggrFunction<G extends GeneralAggrItem> {
 				{
 					float temptemp = moo.get(j);                        //get particular x,,y or z
 					temptemp = (float) (temptemp + temp.get(j)*Math.log10(1/temp.get(j)));
-					moo.add(j,temptemp);
+					moo.set(j,temptemp);
 				}
 			}
 
