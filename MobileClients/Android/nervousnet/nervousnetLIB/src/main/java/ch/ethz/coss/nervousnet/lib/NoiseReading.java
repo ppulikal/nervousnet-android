@@ -64,6 +64,7 @@ public class NoiseReading extends SensorReading {
     public void readFromParcel(Parcel in) {
         timestamp = in.readLong();
         dbValue = in.readFloat();
+        in.readList(values, getClass().getClassLoader());
     }
 
     public float getdbValue() {
@@ -91,6 +92,7 @@ public class NoiseReading extends SensorReading {
         out.writeString(getClass().getName());
         out.writeLong(timestamp);
         out.writeFloat(dbValue);
+        out.writeList(values);
     }
 
 }

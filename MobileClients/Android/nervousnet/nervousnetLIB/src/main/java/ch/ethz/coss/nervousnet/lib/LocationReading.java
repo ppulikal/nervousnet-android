@@ -77,6 +77,7 @@ public class LocationReading extends SensorReading {
     public void readFromParcel(Parcel in) {
         timestamp = in.readLong();
         latnLong = in.createDoubleArray();
+        in.readList(values, getClass().getClassLoader());
     }
 
     /*
@@ -100,6 +101,7 @@ public class LocationReading extends SensorReading {
         out.writeString(getClass().getName());
         out.writeLong(timestamp);
         out.writeDoubleArray(latnLong);
+        out.writeList(values);
 
     }
 

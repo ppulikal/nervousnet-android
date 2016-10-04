@@ -29,6 +29,8 @@ package ch.ethz.coss.nervousnet.lib;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * @author prasad
  */
@@ -45,12 +47,18 @@ public class GyroReading extends SensorReading {
             return new GyroReading[size];
         }
     };
-    private float[] values = new float[3];
+    //private float[] values = new float[3];
 
     public GyroReading(long timestamp, float[] values) {
         this.type = LibConstants.SENSOR_GYROSCOPE;
         this.timestamp = timestamp;
-        this.values = values;
+        //this.values = values;
+
+        // Init inside
+        this.values = new ArrayList();
+        for (float f : values) {
+            this.values.add(new Float(f));
+        }
     }
 
     /**
@@ -61,21 +69,20 @@ public class GyroReading extends SensorReading {
     }
 
     public void readFromParcel(Parcel in) {
-
         timestamp = in.readLong();
-        in.readFloatArray(values);
+        in.readList(values, getClass().getClassLoader());
     }
 
     public float getGyroX() {
-        return values[0];
+        return (float)values.get(0);
     }
 
     public float getGyroY() {
-        return values[1];
+        return (float)values.get(1);
     }
 
     public float getGyroZ() {
-        return values[2];
+        return (float)values.get(2);
     }
 
     /*
@@ -98,7 +105,7 @@ public class GyroReading extends SensorReading {
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(getClass().getName());
         out.writeLong(timestamp);
-        out.writeFloatArray(values);
+        out.writeList(values);
 
     }
 

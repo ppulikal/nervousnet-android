@@ -29,6 +29,8 @@ package ch.ethz.coss.nervousnet.lib;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * @author prasad
  */
@@ -45,12 +47,13 @@ public class LightReading extends SensorReading {
             return new LightReading[size];
         }
     };
-    private float value;
+    //private float value;
 
     public LightReading(long timestamp, float value) {
         this.type = LibConstants.SENSOR_LIGHT;
         this.timestamp = timestamp;
-        this.value = value;
+        this.values = new ArrayList();
+        this.values.add(value);
     }
 
     /**
@@ -61,13 +64,12 @@ public class LightReading extends SensorReading {
     }
 
     public void readFromParcel(Parcel in) {
-
         timestamp = in.readLong();
-        value = in.readFloat();
+        in.readList(values, getClass().getClassLoader());
     }
 
     public float getLuxValue() {
-        return value;
+        return (float)values.get(0);
     }
 
     /*
@@ -90,8 +92,7 @@ public class LightReading extends SensorReading {
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(getClass().getName());
         out.writeLong(timestamp);
-        out.writeFloat(value);
-
+        out.writeList(values);
     }
 
 }

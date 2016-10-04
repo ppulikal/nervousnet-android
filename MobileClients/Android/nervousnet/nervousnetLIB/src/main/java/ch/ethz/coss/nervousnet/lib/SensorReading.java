@@ -34,12 +34,12 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.ethz.coss.nervousnet.aggregation.SensorDescVector;
+import ch.ethz.coss.nervousnet.aggregation.GeneralAggrItem;
 
 /**
  * @author prasad
  */
-public abstract class SensorReading extends SensorDescVector implements Parcelable {
+public abstract class SensorReading extends GeneralAggrItem implements Parcelable {
     public static Parcelable.Creator<SensorReading> CREATOR = new Parcelable.Creator<SensorReading>() {
         public SensorReading createFromParcel(Parcel in) {
             String className = in.readString();
@@ -73,7 +73,7 @@ public abstract class SensorReading extends SensorDescVector implements Parcelab
     };
     public int type = 0;
     public long timestamp;
-    public ArrayList values;
+    public ArrayList values = new ArrayList<>();
 
     public String uuid;
     /*
@@ -107,9 +107,7 @@ public abstract class SensorReading extends SensorDescVector implements Parcelab
     }
 
     @Override
-    public List<String> getValNames() {
-        return null;
-    }
+    public List<String> getValNames() { return null; };
 
     /**
      * @param in

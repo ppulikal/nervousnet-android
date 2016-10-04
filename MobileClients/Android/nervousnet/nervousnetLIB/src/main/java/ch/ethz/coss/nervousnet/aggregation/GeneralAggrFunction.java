@@ -5,12 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import ch.ethz.coss.nervousnet.aggregation.SensorDescVector;
 
-
-public abstract class QueryNumVectorValue<G extends SensorDescVector> {
+public abstract class GeneralAggrFunction<G extends GeneralAggrItem> {
 	private ArrayList<G> list;
-	public QueryNumVectorValue(ArrayList<G> list) {
+	public GeneralAggrFunction(ArrayList<G> list) {
 		this.list = list;
 	}
 
@@ -339,10 +337,16 @@ public abstract class QueryNumVectorValue<G extends SensorDescVector> {
 	public ArrayList<Float> getAverage() {                       // find the average of all the values
 		ArrayList<Float> average = new ArrayList<Float>();
 		try{        // 0-> avg of x and so on...
+			int size = 0;
+			if (list.size() > 0){
+				size = list.get(0).getValue().size();
+				for (int i = 0; i < size; i++)
+					average.add(new Float(0));
+			}
+			ArrayList<Float> temp;
 			for (G sensorData : list) {
-				ArrayList<Float> temp = new ArrayList<Float>();       //temporary data
 				temp = sensorData.getValue();
-				for(int i = 0; i < temp.size(); i++)                   //for each x,z & z
+				for(int i = 0; i < size; i++)                   //for each x,z & z
 				{
 					float temptemp = average.get(i) + temp.get(i);   //add current data to the existing one and replace
 					average.set(i,temptemp);
@@ -418,17 +422,24 @@ public abstract class QueryNumVectorValue<G extends SensorDescVector> {
 
 	public ArrayList<Float> getSum() {                       // find the average of all the values
 		ArrayList<Float> sum = new ArrayList<Float>();        // 0-> avg of x and so on...
-		try{for (G sensorData : list) {
-			G sensDesc = sensorData; // loop over the sensor data,get the object
-			ArrayList<Float> temp = new ArrayList<Float>();       //temporary data
-			temp = sensDesc.getValue();
-			for(int i = 0; i < temp.size(); i++)                   //for each x,z & z
-			{
-				float temptemp = sum.get(i) + temp.get(i);   //add current data to the existing one and replace
-				sum.set(i,temptemp);
-			}
-
+		int size = 0;
+		if (list.size() > 0){
+			size = list.get(0).getValue().size();
+			for (int i = 0; i < size; i++)
+				sum.add(new Float(0));
 		}
+		try{
+			ArrayList<Float> temp;
+			for (G sensorData : list) {
+				G sensDesc = sensorData; // loop over the sensor data,get the object
+				temp = sensDesc.getValue();
+				for(int i = 0; i < size; i++)                   //for each x,z & z
+				{
+					float temptemp = sum.get(i) + temp.get(i);   //add current data to the existing one and replace
+					sum.set(i,temptemp);
+				}
+
+			}
 		}
 		catch(Exception e1){
 			System.out.println(e1);
@@ -438,17 +449,24 @@ public abstract class QueryNumVectorValue<G extends SensorDescVector> {
 
 	public ArrayList<Float> getSumSquare() {                       // find the average of all the values
 		ArrayList<Float> sum = new ArrayList<Float>();        // 0-> avg of x and so on...
-		try{for (G sensorData : list) {
-			G sensDesc = sensorData; // loop over the sensor data,get the object
-			ArrayList<Float> temp = new ArrayList<Float>();       //temporary data
-			temp = sensDesc.getValue();
-			for(int i = 0; i < temp.size(); i++)                   //for each x,z & z
-			{
-				float temptemp = (float) (sum.get(i) + Math.pow(temp.get(i),2));   //add current data to the existing one and replace
-				sum.set(i,temptemp);
-			}
-
+		int size = 0;
+		if (list.size() > 0){
+			size = list.get(0).getValue().size();
+			for (int i = 0; i < size; i++)
+				sum.add(new Float(0));
 		}
+		try{
+			ArrayList<Float> temp;
+			for (G sensorData : list) {
+				G sensDesc = sensorData; // loop over the sensor data,get the object
+				temp = sensDesc.getValue();
+				for(int i = 0; i < size; i++)                   //for each x,z & z
+				{
+					float temptemp = (float) (sum.get(i) + Math.pow(temp.get(i),2));   //add current data to the existing one and replace
+					sum.set(i,temptemp);
+				}
+
+			}
 		}
 		catch(Exception e1){
 			System.out.println(e1);
@@ -457,18 +475,25 @@ public abstract class QueryNumVectorValue<G extends SensorDescVector> {
 	}
 
 	public ArrayList<Float> getRms() {                       // find the average of all the values
-		ArrayList<Float> sum = new ArrayList<Float>();        // 0-> avg of x and so on...
-		try{for (G sensorData : list) {
-			G sensDesc = sensorData; // loop over the sensor data,get the object
-			ArrayList<Float> temp = new ArrayList<Float>();       //temporary data
-			temp = sensDesc.getValue();
-			for(int i = 0; i < temp.size(); i++)                   //for each x,z & z
-			{
-				float temptemp = (float) (sum.get(i) + Math.pow(temp.get(i),2));   //add current data to the existing one and replace
-				sum.set(i,temptemp);
-			}
-
+		ArrayList<Float> sum = new ArrayList<Float>();
+		int size = 0;
+		if (list.size() > 0){
+			size = list.get(0).getValue().size();
+			for (int i = 0; i < size; i++)
+				sum.add(new Float(0));
 		}
+		try{
+			ArrayList<Float> temp;
+			for (G sensorData : list) {
+				G sensDesc = sensorData; // loop over the sensor data,get the object
+				temp = sensDesc.getValue();
+				for(int i = 0; i < temp.size(); i++)                   //for each x,z & z
+				{
+					float temptemp = (float) (sum.get(i) + Math.pow(temp.get(i),2));   //add current data to the existing one and replace
+					sum.set(i,temptemp);
+				}
+
+			}
 			for(int i = 0 ; i < sum.size(); i++ )
 			{
 				float temptemp = sum.get(i);
@@ -486,17 +511,24 @@ public abstract class QueryNumVectorValue<G extends SensorDescVector> {
 
 	public ArrayList<Float> getMeanSquare() {                       // find the average of all the values
 		ArrayList<Float> sum = new ArrayList<Float>();        // 0-> avg of x and so on...
-		try{for (G sensorData : list) {
-			G sensDesc = sensorData; // loop over the sensor data,get the object
-			ArrayList<Float> temp = new ArrayList<Float>();       //temporary data
-			temp = sensDesc.getValue();
-			for(int i = 0; i < temp.size(); i++)                   //for each x,z & z
-			{
-				float temptemp = (float) (sum.get(i) + Math.pow(temp.get(i),2));   //add current data to the existing one and replace
-				sum.set(i,temptemp);
-			}
-
+		int size = 0;
+		if (list.size() > 0){
+			size = list.get(0).getValue().size();
+			for (int i = 0; i < size; i++)
+				sum.add(new Float(0));
 		}
+		try{
+			ArrayList<Float> temp;
+			for (G sensorData : list) {
+				G sensDesc = sensorData; // loop over the sensor data,get the object
+				temp = sensDesc.getValue();
+				for(int i = 0; i < temp.size(); i++)                   //for each x,z & z
+				{
+					float temptemp = (float) (sum.get(i) + Math.pow(temp.get(i),2));   //add current data to the existing one and replace
+					sum.set(i,temptemp);
+				}
+
+			}
 			for(int i = 0 ; i < sum.size(); i++ )
 			{
 				float temptemp = sum.get(i);
@@ -693,10 +725,17 @@ public abstract class QueryNumVectorValue<G extends SensorDescVector> {
 		ArrayList<Float> moo = new ArrayList<Float>();
 		try{
 			ArrayList<Float> average = new ArrayList<Float>();
+			int size = 0;
+			if (list.size() > 0){
+				size = list.get(0).getValue().size();
+				for (int i = 0; i < size; i++)
+					average.add(new Float(0));
+			}
+
 			// 0-> avg of x and so on...
+			ArrayList<Float> temp;
 			for (G sensorData : list) {
 				G sensDesc = sensorData; // loop over the sensor data,get the object
-				ArrayList<Float> temp = new ArrayList<Float>();       //temporary data
 				temp = sensDesc.getValue();
 				for(int i = 0; i < temp.size(); i++)                   //for each x,z & z
 				{
@@ -709,7 +748,6 @@ public abstract class QueryNumVectorValue<G extends SensorDescVector> {
 			ArrayList< ArrayList<Float> > prob = new ArrayList<ArrayList<Float> >();
 			for (G sensorData : list) {
 				G sensDesc = sensorData; // loop over the sensor data,get the object
-				ArrayList<Float> temp = new ArrayList<Float>();       //temporary data
 				temp = sensDesc.getValue();
 				for(int i = 0; i < temp.size(); i++)                  //for each x,z & z
 				{
@@ -722,9 +760,13 @@ public abstract class QueryNumVectorValue<G extends SensorDescVector> {
 
 			}
 
+			size = prob.size();
+			if (size > 0){
+				for (int i = 0; i < size; i++)
+					moo.add(new Float(0));
+			}
 			for(int i = 0;i<prob.size();i++)
 			{
-				ArrayList<Float> temp = new ArrayList<Float>();
 				temp = prob.get(i);                                     //x,y,z of 1 reading
 				for(int j = 0 ; j < temp.size(); j++)
 				{

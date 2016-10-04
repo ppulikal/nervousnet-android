@@ -70,6 +70,7 @@ public class ProximityReading extends SensorReading {
         timestamp = in.readLong();
 
         proximity = in.readFloat();
+        in.readList(values, getClass().getClassLoader());
     }
 
     /*
@@ -93,6 +94,7 @@ public class ProximityReading extends SensorReading {
         out.writeString(getClass().getName());
         out.writeLong(timestamp);
         out.writeFloat(proximity);
+        out.writeList(values);
     }
 
 }

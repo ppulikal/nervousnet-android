@@ -48,6 +48,25 @@ public class Client extends Activity {
         nervousnet = new Nervousnet(this);
         nervousnet.connect();
 
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                    try {
+                        sleep(1000);
+                        nervousnet.test();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+
+
+            }
+        };
+
+        thread.start();
+
     }
 
 
@@ -57,21 +76,18 @@ public class Client extends Activity {
         this.buttonNervousnetOnClickListener = new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Thread thread = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            //nervousnet.testReadings();
-                            //Log.d("TEST", "testReadings done");
-                            nervousnet.testAverage();
-                            Log.d("TEST", "testAverage done");
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                try {
+                    nervousnet.test();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                }
+            };
 
-                thread.start();
+            thread.start();
             }
         };
 

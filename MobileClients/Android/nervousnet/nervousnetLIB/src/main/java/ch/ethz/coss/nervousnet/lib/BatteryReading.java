@@ -26,9 +26,13 @@
 
 package ch.ethz.coss.nervousnet.lib;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.BatteryManager;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author prasad
@@ -55,6 +59,14 @@ public class BatteryReading extends SensorReading {
     private byte health = 0; // 0 = Unknown, -1 is not supported
     private String tech;
 
+    public BatteryReading(boolean isCollect) {
+        super(isCollect);
+    }
+
+    public BatteryReading(Parcel in) {
+        readFromParcel(in);
+    }
+
     public BatteryReading(long timestamp, float batteryPercent, boolean isCharging, boolean isUsbCharge,
                           boolean isAcCharge, float temp, int volt, byte health, String tech) {
         this.type = LibConstants.SENSOR_BATTERY;
@@ -66,17 +78,18 @@ public class BatteryReading extends SensorReading {
         this.volt = volt;
         this.health = health;
         this.tech = tech;
+
+        this.values = new ArrayList();
+        values.add(percent);
+        values.add(temp);
     }
 
-    public BatteryReading(boolean isCollect) {
-        super(isCollect);
-    }
-
-    /**
-     * @param in
-     */
-    public BatteryReading(Parcel in) {
-        readFromParcel(in);
+    @Override
+    public List<String> getValNames() {
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Percent");
+        names.add("Temperature");
+        return names;
     }
 
     public void readFromParcel(Parcel in) {
@@ -91,7 +104,7 @@ public class BatteryReading extends SensorReading {
         volt = in.readInt();
         health = in.readByte();
         tech = in.readString();
-
+        in.readList(values, getClass().getClassLoader());
     }
 
     /*
@@ -121,7 +134,7 @@ public class BatteryReading extends SensorReading {
         out.writeInt(volt);
         out.writeByte(health);
         out.writeString(tech);
-
+        out.writeList(values);
     }
 
     /**
