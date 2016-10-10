@@ -6,6 +6,6 @@ import java.util.List;
 public abstract class GeneralAggrItem {
 
 	public abstract ArrayList<Float> getValue();
-	public abstract List<String> getValNames();
+	//public abstract List<String> getValNames();
 
 }

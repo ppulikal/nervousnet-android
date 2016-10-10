@@ -106,7 +106,7 @@ public abstract class SensorReading extends GeneralAggrItem implements Parcelabl
         return this.values;
     }
 
-    @Override
+
     public List<String> getValNames() { return null; };
 
     /**

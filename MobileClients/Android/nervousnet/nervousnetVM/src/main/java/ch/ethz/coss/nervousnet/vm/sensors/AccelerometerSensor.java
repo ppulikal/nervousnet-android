@@ -29,6 +29,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -109,7 +110,7 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-//		NNLog.d(LOG_TAG, "onSensorChanged - X = "+event.values[0]);
+        Log.d(LOG_TAG, "onSensorChanged - X = "+event.values[0]);
         if (event == null)
             return;
 

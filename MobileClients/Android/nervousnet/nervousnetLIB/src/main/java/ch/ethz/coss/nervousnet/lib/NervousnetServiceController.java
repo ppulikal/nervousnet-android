@@ -227,65 +227,7 @@ public class NervousnetServiceController {
 
     }
 
-    public List getAverage(long sensorID) throws RemoteException {
-        if (bindFlag) {
-            if (mService != null){
-                Callback cb = new Callback();
 
-                long start = System.currentTimeMillis() - 80000;
-                long stop = System.currentTimeMillis();
-
-                getReadings(sensorID, start, stop, cb);
-                List<SensorReading> list = cb.getList();
-
-                int listSize = list.size();
-
-                if (listSize > 0) {
-                    int dim = list.get(0).values.size();
-                    float[] avgValues = new float[listSize];
-                    for (int i = 0; i < listSize; i++) {
-                        SensorReading reading = list.get(i);
-                        for (int j = 0; j < dim ; j++){
-                            avgValues[j] += (Float)reading.values.get(j);
-                        }
-                    }
-
-                    ArrayList returnList = new ArrayList();
-                    for (int j = 0 ; j < dim ; j ++){
-                        returnList.add(avgValues[j] / listSize);
-                    }
-
-                    return returnList;
-                }
-                return new ArrayList();
-            }
-            else{
-                ArrayList<ErrorReading> list = new ArrayList<>();
-                list.add(new ErrorReading(new String[]{"002", "Service not connected."}));
-                return list;
-            }
-        } else {
-            ArrayList<ErrorReading> list = new ArrayList<>();
-            list.add(new ErrorReading(new String[]{"003", "Service not bound."}));
-            return list;
-        }
-    }
-
-
-    public void getMax(long sensorID, RemoteCallback cb) throws RemoteException {
-        if (bindFlag) {
-            if (mService != null)
-                mService.getMax((int)sensorID, cb); // TODO, int vs long???
-            else{
-                ArrayList<ErrorReading> list = new ArrayList<>();
-                cb.failure(new ErrorReading(new String[]{"002", "Service not connected."}));
-            }
-        } else {
-            ArrayList<ErrorReading> list = new ArrayList<>();
-            list.add(new ErrorReading(new String[]{"003", "Service not bound."}));
-            cb.failure(new ErrorReading(new String[]{"003", "Service not bound."}));
-        }
-    }
 
 
     private boolean isAppInstalled(String packageName) {
