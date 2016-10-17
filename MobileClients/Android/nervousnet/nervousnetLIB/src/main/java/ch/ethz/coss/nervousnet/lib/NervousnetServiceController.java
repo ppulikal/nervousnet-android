@@ -15,6 +15,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.ethz.coss.nervousnet.aggregation.Aggregation;
+import ch.ethz.coss.nervousnet.clustering.Cluster;
+
 /*******************************************************************************
  * *     Nervousnet - a distributed middleware software for social sensing.
  * *      It is responsible for collecting and managing data in a fully de-centralised fashion
@@ -225,6 +228,14 @@ public class NervousnetServiceController {
             return new ErrorReading(new String[]{"003", "Nervousnet Service not bound."});
 
 
+    }
+
+    public List getAverage(long sensorID, long startTime, long endTime) throws RemoteException {
+        Callback cb = new Callback();
+        getReadings(sensorID, startTime, endTime, cb);
+        List list = cb.getList();
+        Aggregation aggr = new Aggregation(list);
+        return aggr.getAverage();
     }
 
 

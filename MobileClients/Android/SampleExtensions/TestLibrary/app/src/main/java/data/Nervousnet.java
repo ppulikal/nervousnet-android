@@ -81,7 +81,7 @@ public class Nervousnet implements NervousnetServiceConnectionListener, Nervousn
     public void testAverage() throws RemoteException {
         // TEST
         List list;
-        list = nervousnetServiceController.getAverage(0);
+        list = nervousnetServiceController.getAverage(0, System.currentTimeMillis(), System.currentTimeMillis() - 86400000);
         Log.d("NERVOSNET-TEST", "Average acc size: " + list.size());
 
         for (Object o : list)

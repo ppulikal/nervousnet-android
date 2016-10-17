@@ -110,7 +110,7 @@ public class AccelerometerSensor extends BaseSensor implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        Log.d(LOG_TAG, "onSensorChanged - X = "+event.values[0]);
+        NNLog.d(LOG_TAG, "onSensorChanged - X = "+event.values[0]);
         if (event == null)
             return;
 

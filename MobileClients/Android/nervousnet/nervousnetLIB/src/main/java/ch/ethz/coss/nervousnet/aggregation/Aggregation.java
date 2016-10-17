@@ -3,14 +3,15 @@ package ch.ethz.coss.nervousnet.aggregation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 
 
 public class Aggregation<G extends GeneralAggrItem> {
-	private ArrayList<G> list;
-	public Aggregation(ArrayList<G> list) {
+	private List<G> list;
+	public Aggregation(List<G> list) {
 		this.list = list;
 	}
 
