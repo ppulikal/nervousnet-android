@@ -12,11 +12,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import ch.ethz.coss.nervousnet.aggregation.Aggregation;
-import ch.ethz.coss.nervousnet.clustering.Cluster;
 
 /*******************************************************************************
  * *     Nervousnet - a distributed middleware software for social sensing.
@@ -208,15 +204,19 @@ public class NervousnetServiceController {
             if (mService != null)
                 return mService.getLatestReading(sensorID);
             else
-                return new ErrorReading(new String[]{"002", "Service not connected."});
+                // TODO
+                return null;
+                //return new ErrorReading(new String[]{"002", "Service not connected."});
         } else
-            return new ErrorReading(new String[]{"003", "Service not bound."});
+            // TODO
+            return null;
+            //return new ErrorReading(new String[]{"003", "Service not bound."});
 
 
     }
 
 
-    public SensorReading getReadings(long sensorID, long startTime, long endTime, RemoteCallback cb) throws RemoteException {
+    /*public SensorReading getReadings(long sensorID, long startTime, long endTime, RemoteCallback cb) throws RemoteException {
         if (bindFlag) {
             if (mService != null) {
 
@@ -228,15 +228,15 @@ public class NervousnetServiceController {
             return new ErrorReading(new String[]{"003", "Nervousnet Service not bound."});
 
 
-    }
+    }*/
 
-    public List getAverage(long sensorID, long startTime, long endTime) throws RemoteException {
+    /*public List getAverage(long sensorID, long startTime, long endTime) throws RemoteException {
         Callback cb = new Callback();
         getReadings(sensorID, startTime, endTime, cb);
         List list = cb.getList();
         Aggregation aggr = new Aggregation(list);
         return aggr.getAverage();
-    }
+    }*/
 
 
 

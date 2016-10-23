@@ -76,18 +76,6 @@ public class NervousnetHubApiService extends Service {
 
         }
 
-        @Override
-        public List getAverage(long sensorType) throws RemoteException {
-            List list = ((Application) getApplication()).nn_VM.getAverage(sensorType);
-            Log.d(LOG_TAG, "getAverage "+list+ " " + ((Application) getApplication()).nn_VM);
-            return list;
-        }
-
-        @Override
-        public void getMax(long sensorType, RemoteCallback cb) throws RemoteException {
-            ((Application) getApplication()).nn_VM.getMax((int)sensorType, cb);
-        }
-
     };
 
 

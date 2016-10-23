@@ -41,7 +41,6 @@ import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
-import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
@@ -129,7 +128,7 @@ public class LightFragment extends BaseFragment {
             sensorStatusTV.setText(R.string.sensor_status_connected);
 
             TextView lux = (TextView) getActivity().findViewById(R.id.lux);
-            lux.setText("" + ((LightReading) reading).getLuxValue());
+            lux.setText("" + reading.getValues().get(0));
 
         }
     }

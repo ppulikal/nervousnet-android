@@ -37,9 +37,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
-import ch.ethz.coss.nervousnet.lib.BatteryReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
@@ -127,18 +128,21 @@ public class BatteryFragment extends BaseFragment {
             handleError((ErrorReading) reading);
         } else {
             sensorStatusTV.setText(R.string.sensor_status_connected);
+            ArrayList values = reading.getValues();
 
             TextView percent = (TextView) getActivity().findViewById(R.id.battery_percent);
-            percent.setText("" + ((BatteryReading) reading).getPercent() * 100 + " %");
+            percent.setText("" + values.get(0) + " %");
 
-            TextView isCharging = (TextView) getActivity().findViewById(R.id.battery_isCharging);
+
+            // TODO
+            /*TextView isCharging = (TextView) getActivity().findViewById(R.id.battery_isCharging);
             isCharging.setText((((BatteryReading) reading).isCharging()) ? "YES" : "NO");
 
             TextView USB_Charging = (TextView) getActivity().findViewById(R.id.battery_isUSB);
             USB_Charging.setText(((BatteryReading) reading).getCharging_type() == 1 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
 
             TextView AC_charging = (TextView) getActivity().findViewById(R.id.battery_isAC);
-            AC_charging.setText(((BatteryReading) reading).getCharging_type() == 2 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
+            AC_charging.setText(((BatteryReading) reading).getCharging_type() == 2 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));*/
 
 
         }

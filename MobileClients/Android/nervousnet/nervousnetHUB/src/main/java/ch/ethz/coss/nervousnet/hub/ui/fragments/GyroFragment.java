@@ -40,7 +40,6 @@ import android.widget.TextView;
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
-import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -118,7 +117,7 @@ public class GyroFragment extends BaseFragment {
      */
     @Override
     public void updateReadings(SensorReading reading) {
-        NNLog.d("GyroFragment", "Inside updateReadings, X = " + ((GyroReading) reading).getGyroX());
+        NNLog.d("GyroFragment", "Inside updateReadings, X = " + reading.toString());
 
         if (reading instanceof ErrorReading) {
 
@@ -131,14 +130,10 @@ public class GyroFragment extends BaseFragment {
             TextView y_value = (TextView) getActivity().findViewById(R.id.gyro_y);
             TextView z_value = (TextView) getActivity().findViewById(R.id.gyro_z);
 
-            x_value.setText("" + ((GyroReading) reading).getGyroX());
+            /*x_value.setText("" + ((GyroReading) reading).getGyroX());
             y_value.setText("" + ((GyroReading) reading).getGyroY());
-            z_value.setText("" + ((GyroReading) reading).getGyroZ());
+            z_value.setText("" + ((GyroReading) reading).getGyroZ());*/
 
-            float[] f = new float[3];
-            f[0] = ((GyroReading) reading).getGyroX();
-            f[1] = ((GyroReading) reading).getGyroY();
-            f[2] = ((GyroReading) reading).getGyroZ();
         }
 
     }

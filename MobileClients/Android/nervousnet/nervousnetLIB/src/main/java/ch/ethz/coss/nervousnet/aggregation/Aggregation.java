@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import ch.ethz.coss.nervousnet.lib.SensorReading;
-
 
 public class Aggregation<G extends GeneralAggrItem> {
 	private List<G> list;

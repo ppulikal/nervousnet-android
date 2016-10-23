@@ -37,9 +37,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
-import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
@@ -143,14 +144,11 @@ public class AccelFragment extends BaseFragment {
             TextView y_value = (TextView) getView().findViewById(R.id.accel_y);
             TextView z_value = (TextView) getView().findViewById(R.id.accel_z);
 
-            x_value.setText("" + ((AccelerometerReading) reading).getX());
-            y_value.setText("" + ((AccelerometerReading) reading).getY());
-            z_value.setText("" + ((AccelerometerReading) reading).getZ());
+            ArrayList values = reading.getValues();
+            x_value.setText("" + values.get(0));
+            y_value.setText("" + values.get(1));
+            z_value.setText("" + values.get(2));
 
-            float[] values = new float[3];
-            values[0] = ((AccelerometerReading) reading).getX();
-            values[1] = ((AccelerometerReading) reading).getY();
-            values[2] = ((AccelerometerReading) reading).getZ();
         }
 
     }

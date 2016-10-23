@@ -37,14 +37,8 @@ interface NervousnetRemote
 	    * cb = Callback object with list that will contain the returned objects of SensorReadings
 	    */
 	    void getReadings(long sensorType, long startTime, long endTime,  RemoteCallback cb);
-	    
-        /*
-            Returns average sensor values as a List. Battery will have only one value,
-            while accelerometer will have three.
-        */
-        List getAverage(long sensorType);
 
-        void getMax(long sensorType, RemoteCallback cb);
+
 	}
 	/*Methods to be added
 	getAverage, getCorrelation, getEntropy, getKMeans,

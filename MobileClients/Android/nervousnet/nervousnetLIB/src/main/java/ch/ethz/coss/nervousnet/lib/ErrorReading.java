@@ -48,11 +48,11 @@ public class ErrorReading extends SensorReading {
     private String[] errorValues = new String[2];
 
     public ErrorReading() {
-        this.type = LibConstants.ERROR;
+        this.setId(LibConstants.ERROR);
     }
 
     public ErrorReading(String[] values) {
-        this.type = LibConstants.ERROR;
+        this.setId(LibConstants.ERROR);
         this.errorValues = values;
     }
 

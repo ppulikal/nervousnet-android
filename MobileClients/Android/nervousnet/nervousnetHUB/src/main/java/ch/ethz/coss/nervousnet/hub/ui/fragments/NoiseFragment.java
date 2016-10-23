@@ -41,7 +41,6 @@ import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
-import ch.ethz.coss.nervousnet.lib.NoiseReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
@@ -59,7 +58,6 @@ public class NoiseFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_noise, container, false);
-
     }
 
     @Override
@@ -128,7 +126,7 @@ public class NoiseFragment extends BaseFragment {
         } else {
             NNLog.d("NoiseFragment", "Inside updateReadings");
             sensorStatusTV.setText(R.string.sensor_status_connected);
-            db = ((NoiseReading) reading).getdbValue();
+            db = (float)reading.getValues().get(0);
             TextView dbTV = (TextView) getActivity().findViewById(R.id.dbValue);
 
             if (newDb < Math.round(db))

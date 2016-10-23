@@ -1,48 +1,24 @@
 package ch.ethz.coss.nervousnet.vm;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.hardware.SensorManager;
-import android.location.LocationManager;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.RemoteException;
-import android.telecom.Call;
-import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
-import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
-import ch.ethz.coss.nervousnet.lib.BatteryReading;
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
-import ch.ethz.coss.nervousnet.lib.GyroReading;
-import ch.ethz.coss.nervousnet.lib.LightReading;
-import ch.ethz.coss.nervousnet.lib.NoiseReading;
-import ch.ethz.coss.nervousnet.lib.ProximityReading;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
 import ch.ethz.coss.nervousnet.vm.events.NNEvent;
-import ch.ethz.coss.nervousnet.vm.sensors.AccelerometerSensor;
-import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor;
-import ch.ethz.coss.nervousnet.vm.sensors.BatterySensor;
-import ch.ethz.coss.nervousnet.vm.sensors.GyroSensor;
-import ch.ethz.coss.nervousnet.vm.sensors.LightSensor;
-import ch.ethz.coss.nervousnet.vm.sensors.LocationSensor;
-import ch.ethz.coss.nervousnet.vm.sensors.NoiseSensor;
-import ch.ethz.coss.nervousnet.vm.sensors.ProximitySensor;
-import ch.ethz.coss.nervousnet.vm.storage.Config;
-import ch.ethz.coss.nervousnet.vm.storage.SQLHelper;
-import ch.ethz.coss.nervousnet.vm.storage.SensorConfig;
-import ch.ethz.coss.nervousnet.vm.utils.StableAverageComputation;
+import ch.ethz.coss.nervousnet.vm.nervousnet.NervousnetCore;
 
 
 public class NervousnetVM {
@@ -52,16 +28,16 @@ public class NervousnetVM {
 
     private Lock storeMutex;
 
-    private Hashtable<Long, BaseSensor> hSensors = null;
-    private Hashtable<Long, SensorConfig> hSensorConfig = null;
+    //private Hashtable<Long, BaseSensor> hSensors = null;
+    //private Hashtable<Long, SensorConfig> hSensorConfig = null;
 
     private UUID uuid;
     private Context context;
     private byte state = NervousnetVMConstants.STATE_PAUSED;
 
-    private SQLHelper sqlHelper;
     private SensorManager sensorManager;
     private Handler dataCollectionHandler = new Handler();
+
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -71,15 +47,25 @@ public class NervousnetVM {
         }
     };
 
+
+    private NervousnetCore generalNervousnet;
+
+
     public NervousnetVM(Context context) {
+
+        // TODO: just for testing
+        generalNervousnet = new NervousnetCore(context);
+
+
+
         NNLog.d(LOG_TAG, "Inside constructor");
         this.context = context;
 
-        sqlHelper = new SQLHelper(context, DB_NAME);
+        //sqlHelper = new SQLHelper(context, DB_NAME);
 
-        Config config = sqlHelper.loadVMConfig();
+        //Config config = sqlHelper.loadVMConfig();
 
-        if (config != null) {
+        /*if (config != null) {
             state = config.getState();
             uuid = UUID.fromString(config.getUUID());
             NNLog.d(LOG_TAG, "Config - UUID = " + uuid);
@@ -88,10 +74,10 @@ public class NervousnetVM {
             NNLog.d(LOG_TAG, "Inside Constructure after loadVMConfig() no config found. Create a new config.");
             newUUID();
         }
-
+*/
         initSensors();
 
-        if (state == NervousnetVMConstants.STATE_RUNNING)
+        //if (state == NervousnetVMConstants.STATE_RUNNING)
             startSensors();
 
         EventBus.getDefault().register(this);
@@ -99,7 +85,9 @@ public class NervousnetVM {
 
 
     private void initSensors() {
-        NNLog.d(LOG_TAG, "Inside initSensors");
+
+
+        /*NNLog.d(LOG_TAG, "Inside initSensors");
         storeMutex = new ReentrantLock();
         // Initialize sensor manager
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -149,11 +137,18 @@ public class NervousnetVM {
             }
 
         }
-
+*/
     }
 
     public void startSensors() {
-        NNLog.d(LOG_TAG, "Inside startSensors");
+
+
+        generalNervousnet.startAllSensors();
+        state = NervousnetVMConstants.STATE_RUNNING;
+
+
+
+        /*NNLog.d(LOG_TAG, "Inside startSensors");
         int count = 0;
         for (Long key : hSensors.keySet()) {
             NNLog.d(LOG_TAG, "Inside startSensors Sensor ID = " + key);
@@ -162,11 +157,15 @@ public class NervousnetVM {
                 sensor.stopAndRestart(hSensorConfig.get(NervousnetVMConstants.sensor_ids[count++]).getState());
             }
         }
-        dataCollectionHandler.postDelayed(runnable, 1000);
+        dataCollectionHandler.postDelayed(runnable, 1000);*/
     }
 
     public void stopSensors() {
-        NNLog.d(LOG_TAG, "Inside stopSensors");
+
+        generalNervousnet.stopAllSensors();
+        state = NervousnetVMConstants.STATE_PAUSED;
+
+        /*NNLog.d(LOG_TAG, "Inside stopSensors");
         int count = 0;
         for (Long key : hSensors.keySet()) {
             NNLog.d(LOG_TAG, "Inside stopSensors Sensor ID = " + key);
@@ -175,10 +174,10 @@ public class NervousnetVM {
                 sensor.stop(true);
         }
 
-        dataCollectionHandler.removeCallbacks(runnable);
+        dataCollectionHandler.removeCallbacks(runnable);*/
     }
 
-//    public void startSensor(long sensorID) {
+    public void startSensor(long sensorID) {
 //
 //        BaseSensor sensor = hSensors.get(sensorID);
 //        if(sensor != null) {
@@ -192,12 +191,12 @@ public class NervousnetVM {
 //        }
 //
 //
-//    }
+    }
 
     public void stopSensor(long sensorID, boolean changeStateFlag) {
-        BaseSensor sensor = hSensors.get(sensorID);
+        /*BaseSensor sensor = hSensors.get(sensorID);
         if (sensor != null)
-            sensor.stop(true);
+            sensor.stop(true);*/
     }
 
     public synchronized UUID getUUID() {
@@ -207,20 +206,20 @@ public class NervousnetVM {
 
     public synchronized void newUUID() {
         uuid = UUID.randomUUID();
-        sqlHelper.storeVMConfig(state, uuid);
+        //sqlHelper.storeVMConfig(state, uuid);
     }
 
 
     public synchronized void regenerateUUID() {
         newUUID();
-        sqlHelper.resetDatabase();
+        //sqlHelper.resetDatabase();
     }
 
 
     public void storeNervousnetState(byte state) {
         this.state = state;
         try {
-            sqlHelper.storeVMConfig(state, uuid);
+            //sqlHelper.storeVMConfig(state, uuid);
         } catch (Exception e) {
             NNLog.d(LOG_TAG, "Exception while calling storeVMConfig ");
             e.printStackTrace();
@@ -230,7 +229,7 @@ public class NervousnetVM {
 
     public synchronized void updateSensorConfig(long id, byte state) {
         NNLog.d(LOG_TAG, "UpdateSensorConfig called with state = " + state);
-        SensorConfig sensorConfig = hSensorConfig.get(id);
+        /*SensorConfig sensorConfig = hSensorConfig.get(id);
 
         sensorConfig.setState(state);
         try {
@@ -239,7 +238,7 @@ public class NervousnetVM {
         } catch (Exception e) {
             NNLog.d(LOG_TAG, "Exception while calling updateSensorConfig ");
             e.printStackTrace();
-        }
+        }*/
 
     }
 
@@ -262,7 +261,7 @@ public class NervousnetVM {
     public synchronized void updateAllSensorConfig(byte state) {
         NNLog.d(LOG_TAG, "updateAllSensorConfig called with state = " + state);
         int count = 0;
-        for (Long key : hSensorConfig.keySet()) {
+        /*for (Long key : hSensorConfig.keySet()) {
             SensorConfig sensorConfig = hSensorConfig.get(NervousnetVMConstants.sensor_ids[count++]);
             sensorConfig.setState(state);
             hSensorConfig.put(sensorConfig.getID(), sensorConfig);
@@ -276,7 +275,7 @@ public class NervousnetVM {
             NNLog.d(LOG_TAG, "Exception while calling updateAllSensorConfig ");
             e.printStackTrace();
         }
-
+*/
     }
 
 
@@ -289,10 +288,18 @@ public class NervousnetVM {
 
         if (state == NervousnetVMConstants.STATE_PAUSED) {
             NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
-
             return Utils.getErrorReading(101);
+
         }
-        return hSensors.get(sensorID).getReading();
+        //return hSensors.get(sensorID).getReading();
+
+
+        // TODO fix
+        if (sensorID == 4){
+            return generalNervousnet.getLatestReading("Light_v2");
+        }
+        return null;
+
     }
 
     public synchronized void getReading(Long sensorID, RemoteCallback cb) {
@@ -306,20 +313,20 @@ public class NervousnetVM {
                 e.printStackTrace();
             }
         } else {
-            NNLog.d(LOG_TAG, "getReading callback with success");
-            ArrayList aList = new ArrayList();
-            NNLog.d(LOG_TAG, "getReading with callback called and state is not paused2");
-            aList.add(hSensors.get(sensorID).getReading());
-            NNLog.d(LOG_TAG, "getReading with callback called and state is not paused3 " + aList.size());
-            try {
-                cb.success(aList);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
+
+            if (sensorID == 4) {
+
+                ArrayList<SensorReading> readings = generalNervousnet.getReadings("Light_v2");
                 try {
-                    cb.failure(Utils.getErrorReading(301));
-                } catch (RemoteException re) {
-                    re.printStackTrace();
+                    cb.success(readings);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    try {
+                        cb.failure(Utils.getErrorReading(301));
+                    } catch (RemoteException re) {
+                        re.printStackTrace();
+                    }
                 }
             }
         }
@@ -328,7 +335,7 @@ public class NervousnetVM {
     }
 
     public synchronized void getReadings(long sensorID, long startTime, long endTime, RemoteCallback cb) {
-        if (state == NervousnetVMConstants.STATE_PAUSED) {
+        /*if (state == NervousnetVMConstants.STATE_PAUSED) {
             NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
             try {
                 cb.failure(Utils.getErrorReading(101));
@@ -338,140 +345,15 @@ public class NervousnetVM {
         } else {
 
             sqlHelper.getSensorReadings((int) sensorID, startTime, endTime, cb);
-        }
+        }*/
     }
 
-    public synchronized List getAverage(long sensorID){
-        Log.d(LOG_TAG, "getAverage");
-        if (state == NervousnetVMConstants.STATE_PAUSED) {
-            NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
-            List list = new ArrayList();
-            list.add(Utils.getErrorReading(101));
-            return list;
-        } else {
-            Log.d(LOG_TAG, "average - Call back");
-            class Callback implements RemoteCallback {
-                List list = new ArrayList();
-                @Override
-                public void success(List<SensorReading> list) throws RemoteException {
-                    Log.d(LOG_TAG, "average - Callback - success");
-                    if (list.size() > 0) {
-                        SensorReading sensor = list.get(0);
-                        if (sensor instanceof AccelerometerReading){
-                            Log.d(LOG_TAG, "average - acc");
-                            double avgX = 0;
-                            double avgY = 0;
-                            double avgZ = 0;
-                            int t = 1;
 
-                            for (SensorReading sr : list){
-                                AccelerometerReading reading = (AccelerometerReading) sr;
-                                avgX = StableAverageComputation.computeNext(avgX, reading.getX(), t);
-                                avgY = StableAverageComputation.computeNext(avgY, reading.getY(), t);
-                                avgZ = StableAverageComputation.computeNext(avgZ, reading.getZ(), t);
-                                t++;
-                            }
-
-                            this.list.add(avgX);
-                            this.list.add(avgY);
-                            this.list.add(avgZ);
-                        }
-                        else if(sensor instanceof BatteryReading){
-                            Log.d(LOG_TAG, "average - battery");
-                            double avg = 0;
-                            int t = 1;
-                            for (SensorReading sr : list){
-                                BatteryReading reading = (BatteryReading) sr;
-                                avg = StableAverageComputation.computeNext(avg, reading.getPercent(), t);
-                                t++;
-                            }
-                            this.list.add(avg);
-                        }
-                        else if (sensor instanceof GyroReading){
-                            Log.d(LOG_TAG, "average - gyro");
-                            double avgX = 0;
-                            double avgY = 0;
-                            double avgZ = 0;
-                            int t = 1;
-
-                            for (SensorReading sr : list){
-                                GyroReading reading = (GyroReading) sr;
-                                avgX = StableAverageComputation.computeNext(avgX, reading.getGyroX(), t);
-                                avgY = StableAverageComputation.computeNext(avgY, reading.getGyroY(), t);
-                                avgZ = StableAverageComputation.computeNext(avgZ, reading.getGyroZ(), t);
-                                t++;
-                            }
-
-                            this.list.add(avgX);
-                            this.list.add(avgY);
-                            this.list.add(avgZ);
-                        }
-                        else if(sensor instanceof LightReading){
-                            Log.d(LOG_TAG, "average - inside call back - compute light average. List size "+ list.size());
-                            double avg = 0;
-                            int t = 1;
-                            for (SensorReading sr : list){
-                                LightReading reading = (LightReading) sr;
-                                avg = StableAverageComputation.computeNext(avg, reading.getLuxValue(), t);
-                                t++;
-                            }
-
-                            this.list.add(avg);
-                        }
-                        else if(sensor instanceof NoiseReading){
-                            Log.d(LOG_TAG, "average - noise");
-                            double avg = 0;
-                            int t = 1;
-                            for (SensorReading sr : list){
-                                NoiseReading reading = (NoiseReading) sr;
-                                avg = StableAverageComputation.computeNext(avg, reading.getdbValue(), t);
-                                t++;
-                            }
-
-                            this.list.add(avg);
-                        }
-                        else if(sensor instanceof ProximityReading){
-                            Log.d(LOG_TAG, "average - proximity");
-                            double avg = 0;
-                            int t = 1;
-                            for (SensorReading sr : list){
-                                ProximityReading reading = (ProximityReading) sr;
-                                avg = StableAverageComputation.computeNext(avg, reading.getProximity(), t);
-                                t++;
-                            }
-
-                            this.list.add(avg);
-                        }
-                    }
-                }
-
-                @Override
-                public void failure(ErrorReading reading) throws RemoteException {
-                    this.list = new ArrayList();
-                    this.list.add(reading);
-                }
-
-                @Override
-                public IBinder asBinder() {
-                    return null;
-                }
-
-                public List getList(){
-                    return this.list;
-                }
-            }
-
-            Callback cb = new Callback();
-
-            sqlHelper.getSensorReadings((int) sensorID, 0, Long.MAX_VALUE, cb);
-            List list = cb.getList();
-            return cb.getList();
-
-        }
-    }
 
     public byte getSensorState(long id) {
-        return hSensorConfig.get(id).getState();
+        // TODO
+        return 0;
+        //return hSensorConfig.get(id).getState();
     }
 
 
@@ -479,7 +361,7 @@ public class NervousnetVM {
     public void onNNEvent(NNEvent event) {
         NNLog.d(LOG_TAG, "onSensorStateEvent called ");
 
-        if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_SENSOR_STATE_REQUEST) {
+        /*if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_SENSOR_STATE_REQUEST) {
             updateSensorConfig(event.sensorID, event.state);
             BaseSensor sensor = hSensors.get(event.sensorID);
             sensor.stopAndRestart(state);
@@ -497,12 +379,8 @@ public class NervousnetVM {
         } else if (event.eventType == NervousnetVMConstants.EVENT_START_NERVOUSNET_REQUEST) {
             storeNervousnetState(NervousnetVMConstants.STATE_RUNNING);
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED));
-        }
+        }*/
 
     }
 
-    public synchronized void getMax(int sensorID, RemoteCallback cb){
-
-        sqlHelper.getMax(sensorID, cb);
-    }
 }
