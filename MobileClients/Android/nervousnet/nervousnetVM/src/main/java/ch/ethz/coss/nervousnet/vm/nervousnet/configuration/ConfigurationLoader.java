@@ -11,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import ch.ethz.coss.nervousnet.vm.nervousnet.configuration.ConfigurationMap;
+
 /**
  * Created by ales on 21/09/16.
  */

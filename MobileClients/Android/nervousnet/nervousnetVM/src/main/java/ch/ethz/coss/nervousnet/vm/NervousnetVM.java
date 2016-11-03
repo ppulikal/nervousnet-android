@@ -15,7 +15,7 @@ import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
 import ch.ethz.coss.nervousnet.vm.events.NNEvent;
-import ch.ethz.coss.nervousnet.vm.nervousnet.NervousnetCore;
+import ch.ethz.coss.nervousnet.vm.nervousnet.NervousnetMain;
 
 
 public class NervousnetVM {
@@ -43,12 +43,12 @@ public class NervousnetVM {
     };
 
 
-    private NervousnetCore generalNervousnet;
+    private NervousnetMain generalNervousnet;
 
 
     public NervousnetVM(Context context) {
         this.context = context;
-        this.generalNervousnet = new NervousnetCore(context);
+        this.generalNervousnet = new NervousnetMain(context);
 
 
         initSensors();
