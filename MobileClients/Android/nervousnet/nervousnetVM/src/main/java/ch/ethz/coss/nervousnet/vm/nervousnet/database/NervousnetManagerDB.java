@@ -282,6 +282,12 @@ public class NervousnetManagerDB extends SQLiteOpenHelper {
         //DATABASE.close();
     }
 
+    /////////////////////////////////////////////////////////////
+    // STORE CONFIGURATION DATA
+    /////////////////////////////////////////////////////////////
+
+
+
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

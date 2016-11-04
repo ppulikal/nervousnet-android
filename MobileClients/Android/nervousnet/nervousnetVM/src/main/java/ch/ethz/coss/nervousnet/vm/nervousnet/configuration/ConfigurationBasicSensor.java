@@ -5,14 +5,17 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.AndroidSensor;
+
 /**
  * Created by ales on 21/09/16.
  */
 public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
 
-    private final int androidSensorType;
-    private final int[] androidParametersPositions;
-    private final int samplingPeriod;
+    private int androidSensorType;
+    private int[] androidParametersPositions;
+    private int samplingPeriod;
+    private String wrapperName;
 
     public ConfigurationBasicSensor(String sensorName, int androidSensorType, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
@@ -21,8 +24,21 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
         this.androidSensorType = androidSensorType;
         this.androidParametersPositions = androidParametersPositions;
         this.samplingPeriod = samplingPeriod;
+        this.wrapperName = AndroidSensor.class.getSimpleName();
     }
 
+    public ConfigurationBasicSensor(String sensorName, ArrayList<String> parametersNames,
+                                    ArrayList<String> parametersTypes,
+                                    String wrapperName,
+                                    int samplingPeriod) {
+        super(sensorName, parametersNames, parametersTypes);
+        this.samplingPeriod = samplingPeriod;
+        this.wrapperName = wrapperName;
+    }
+
+    public String getWrapperName() {
+        return wrapperName;
+    }
 
     public int getAndroidSensorType() {
         return androidSensorType;

@@ -127,11 +127,36 @@ public class NervousnetVM {
 
 
     public synchronized SensorReading getLatestReading(long sensorID) {
-        return generalNervousnet.getLatestReading("Light_v2");
+        // TODO this switch is temporary
+        String sensorName = "";
+        switch ((int) sensorID){
+            case 0: sensorName = "Accelerometer"; break;
+            case 1: sensorName = "Battery"; break;
+            case 2: sensorName = "Gyroscope"; break;
+            case 3: sensorName = "Location"; break;
+            case 4: sensorName = "Light"; break;
+            case 5: sensorName = "Noise"; break;
+            case 6: sensorName = "Proximity"; break;
+        }
+
+        return generalNervousnet.getLatestReading(sensorName);
     }
 
     public synchronized void getReading(Long sensorID, RemoteCallback cb) {
         NNLog.d(LOG_TAG, "getReading with callback " + cb);
+
+        // TODO this switch is temporary
+        String sensorName = "";
+        switch (sensorID.intValue()){
+            case 0: sensorName = "Accelerometer"; break;
+            case 1: sensorName = "Battery"; break;
+            case 2: sensorName = "Gyroscope"; break;
+            case 3: sensorName = "Location"; break;
+            case 4: sensorName = "Light"; break;
+            case 5: sensorName = "Noise"; break;
+            case 6: sensorName = "Proximity"; break;
+        }
+
 
         if (state == NervousnetVMConstants.STATE_PAUSED) {
             NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
@@ -142,24 +167,19 @@ public class NervousnetVM {
             }
         } else {
 
-            if (sensorID == 4) {
-
-                ArrayList<SensorReading> readings = generalNervousnet.getReadings("Light_v2");
+            ArrayList<SensorReading> readings = generalNervousnet.getReadings(sensorName);
+            try {
+                cb.success(readings);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
                 try {
-                    cb.success(readings);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    try {
-                        cb.failure(Utils.getErrorReading(301));
-                    } catch (RemoteException re) {
-                        re.printStackTrace();
-                    }
+                    cb.failure(Utils.getErrorReading(301));
+                } catch (RemoteException re) {
+                    re.printStackTrace();
                 }
             }
         }
-
-
     }
 
     public synchronized void getReadings(long sensorID, long startTime, long endTime, RemoteCallback cb) {

@@ -37,6 +37,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
@@ -130,9 +132,10 @@ public class GyroFragment extends BaseFragment {
             TextView y_value = (TextView) getActivity().findViewById(R.id.gyro_y);
             TextView z_value = (TextView) getActivity().findViewById(R.id.gyro_z);
 
-            /*x_value.setText("" + ((GyroReading) reading).getGyroX());
-            y_value.setText("" + ((GyroReading) reading).getGyroY());
-            z_value.setText("" + ((GyroReading) reading).getGyroZ());*/
+            ArrayList values = reading.getValues();
+            x_value.setText("" + values.get(0));
+            y_value.setText("" + values.get(1));
+            z_value.setText("" + values.get(2));
 
         }
 

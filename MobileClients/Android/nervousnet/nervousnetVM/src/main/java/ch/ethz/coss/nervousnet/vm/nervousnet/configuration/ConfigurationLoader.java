@@ -11,8 +11,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import ch.ethz.coss.nervousnet.vm.nervousnet.configuration.ConfigurationMap;
-
 /**
  * Created by ales on 21/09/16.
  */
@@ -63,15 +61,27 @@ public class ConfigurationLoader {
             for (int i = 0; i < sensorConfList.length(); i++) {
                 JSONObject sensorConf = sensorConfList.getJSONObject(i);
 
+                ConfigurationBasicSensor confClass = null;
+                // MANDATORY
                 String sensorName = sensorConf.getString("sensorName");
-                int androidSensorType = sensorConf.getInt("androidSensorType");
                 ArrayList<String> paramNames = convertToArr(sensorConf.getJSONArray("parametersNames"));
                 ArrayList<String> paramTypes = convertToArr(sensorConf.getJSONArray("parametersTypes"));
-                int[] positions = convertToIntArr(sensorConf.getJSONArray("androidParametersPositions"));
                 int samplingPeriod = sensorConf.getInt("samplingPeriod");
+                // OPTIONAL
 
-                ConfigurationBasicSensor confClass = new ConfigurationBasicSensor(sensorName, androidSensorType,
-                        paramNames, paramTypes, positions, samplingPeriod);
+                // This one is for simple android sensors
+                if (sensorConf.has("androidSensorType") && sensorConf.has("androidParametersPositions")) {
+                    int androidSensorType = sensorConf.getInt("androidSensorType");
+                    int[] positions = convertToIntArr(sensorConf.getJSONArray("androidParametersPositions"));
+                    confClass = new ConfigurationBasicSensor(sensorName, androidSensorType,
+                            paramNames, paramTypes, positions, samplingPeriod);
+                }
+                // This one is for other sensors
+                else if (sensorConf.has("wrapperName")) {
+                    String wrapperName = sensorConf.getString("wrapperName");
+                    confClass = new ConfigurationBasicSensor(sensorName,
+                            paramNames, paramTypes, wrapperName, samplingPeriod);
+                }
 
                 ConfigurationMap.addSensorConfig(confClass);
 

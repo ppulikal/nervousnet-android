@@ -1,37 +1,102 @@
-{  "sensors_configurations" : [
-  {
-    "sensorName" : "Light_v2",
-    "androidSensorType" : 5,
-    "parametersNames" : [
-      "Lux"
-    ],
-    "parametersTypes" : [
-      "double"
-    ],
-    "metadata" : [
-      "not supported yet"
-    ],
-    "androidParametersPositions" : [ 0 ],
-    "samplingPeriod" : 500000
-  },
-  {
-      "sensorName" : "Accelerometer_v2",
+{  "sensors_configurations" :
+  [
+    {
+      "sensorName" : "Light",
+      "androidSensorType" : 5,
+      "parametersNames" :
+      [
+        "Lux"
+      ],
+      "parametersTypes" :
+      [
+        "double"
+      ],
+      "androidParametersPositions" : [ 0 ],
+      "samplingPeriod" : 500000
+    },
+    {
+      "sensorName" : "Accelerometer",
       "androidSensorType" : 1,
-      "parametersNames" : [
+      "parametersNames" :
+      [
         "accX",
         "accY",
         "accZ"
       ],
-      "parametersTypes" : [
+      "parametersTypes" :
+      [
         "double",
         "double",
         "double"
       ],
-      "metadata" : [
-        ""
+      "androidParametersPositions" : [ 0, 1, 2 ],
+      "samplingPeriod" : 500000
+    },
+    {
+      "sensorName" : "Gyroscope",
+      "androidSensorType" : 4,
+      "parametersNames" :
+      [
+        "gyroX",
+        "gyroY",
+        "gyroZ"
+      ],
+      "parametersTypes" :
+      [
+        "double",
+        "double",
+        "double"
       ],
       "androidParametersPositions" : [ 0, 1, 2 ],
       "samplingPeriod" : 500000
+    },
+    {
+      "sensorName" : "Noise",
+      "parametersNames" :
+      [
+        "Decibel"
+      ],
+      "parametersTypes" :
+      [
+        "double"
+      ],
+      "samplingPeriod" : 500000,
+      "wrapperName" : "NoiseSensor"
+    },
+    {
+      "sensorName" : "Battery",
+      "parametersNames" :
+      [
+        "temp",
+        "volt",
+        "health",
+        "level",
+        "scale",
+        "status",
+        "chargePlug",
+        "isCharging",
+        "isChargingUSB",
+        "isChargingAC",
+        "tech",
+        "percent"
+      ],
+      "parametersTypes" :
+      [
+        "int",
+        "int",
+        "int",
+        "int",
+        "int",
+        "int",
+        "int",
+        "int",
+        "int",
+        "int",
+        "String",
+        "float"
+      ],
+      "samplingPeriod" : 500000,
+      "wrapperName" : "BatterySensor"
     }
   ]
 }

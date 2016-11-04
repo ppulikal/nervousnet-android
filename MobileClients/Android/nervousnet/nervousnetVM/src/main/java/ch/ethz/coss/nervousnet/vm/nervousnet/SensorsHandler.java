@@ -6,15 +6,17 @@ import android.util.Log;
 import java.util.HashMap;
 
 import ch.ethz.coss.nervousnet.vm.nervousnet.configuration.ConfigurationBasicSensor;
-import ch.ethz.coss.nervousnet.vm.nervousnet.wrappers.Wrapper_v3;
-import ch.ethz.coss.nervousnet.vm.nervousnet.wrappers.aWrapper;
+import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.AndroidSensor;
+import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.BaseSensor;
+import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.BatterySensor;
+import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.NoiseSensor;
 
 /**
  * Created by ales on 01/11/16.
  */
 public class SensorsHandler {
 
-    private static HashMap<String, aWrapper> wrappers = new HashMap<>();
+    private static HashMap<String, BaseSensor> wrappers = new HashMap<>();
 
     protected static void initSensor(Context context, ConfigurationBasicSensor sensorConf){
 
@@ -22,24 +24,19 @@ public class SensorsHandler {
             // Ignore
         } else {
 
-            // TODO: select right Wrapper
-            String chooseWrapper = "Wrapper_v3";
-            aWrapper wrapper = null;
+            String chooseWrapper = sensorConf.getWrapperName();
+            BaseSensor wrapper = null;
             switch (chooseWrapper) {
-                case "Wrapper1":
-                   /* wrapper = new Wrapper1(this, databaseHelper, cc.getSensorName(),
-                            cc.getParametersNames(), cc.getParametersTypes(), cc.getMetadata(),
-                            cc.getAndroidSensorType(), cc.getSamplingPeriod(),
-                            cc.getAndroidParametersPositions());
-                    wrappers.add(wrapper);*/
-                    break;
-                case "Wrapper_v2":
 
+                case "NoiseSensor":
+                    wrapper = new NoiseSensor(context, sensorConf.getSensorName());
                     break;
 
-                case "Wrapper_v3":
-                    wrapper = new Wrapper_v3(context, sensorConf.getSensorName());
+                case "AndroidSensor":
+                    wrapper = new AndroidSensor(context, sensorConf.getSensorName());
                     break;
+                case "BatterySensor":
+                    wrapper = new BatterySensor(context, sensorConf.getSensorName());
                 default:
                     // do nothing, ignore
                     Log.d("MAIN", "ERROR - wrapper not supported in main activity class");
@@ -50,14 +47,14 @@ public class SensorsHandler {
     }
 
     protected static void startAllSensors(){
-        for ( aWrapper wrapper : wrappers.values()) {
-            wrapper.start();
+        for ( BaseSensor wrapper : wrappers.values()) {
+            wrapper.startListener();
         }
     }
 
     protected static void stopAllSensors(){
-        for ( aWrapper wrapper : wrappers.values() ){
-            wrapper.stop();
+        for ( BaseSensor wrapper : wrappers.values() ){
+            wrapper.stopListener();
         }
     }
 

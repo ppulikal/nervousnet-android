@@ -2,6 +2,7 @@ package ch.ethz.coss.nervousnet.lib;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +55,10 @@ public class SensorReading implements Parcelable {
         this.values.set(index, value);
     }
 
+    public void setValues(ArrayList values){
+        this.values = values;
+    }
+
     public void setTimestampEpoch(long timestamp){
         this.timestampEpoch = timestamp;
     }
@@ -71,21 +76,6 @@ public class SensorReading implements Parcelable {
     public void setId(int id) {
         this.id = id;
     }
-
-    @Override
-    public String toString() {
-        return "SensorReading{" +
-                "sensorName='" + sensorName + '\'' +
-                ", parametersNames size=" + parametersNames.size() +
-                ", timestampEpoch=" + timestampEpoch +
-
-                '}';
-    }
-
-
-
-
-
 
 
     // Context for communication
@@ -129,5 +119,17 @@ public class SensorReading implements Parcelable {
         //TODO
         //parametersNames = in.createStringArrayList();
         //values = in.readList();
+    }
+
+
+    @Override
+    public String toString() {
+        return "SensorReading{" +
+                "id=" + id +
+                ", sensorName='" + sensorName + '\'' +
+                ", timestampEpoch=" + timestampEpoch +
+                ", parametersNames=" + parametersNames +
+                ", values=" + TextUtils.join(", ", values) +
+                '}';
     }
 }

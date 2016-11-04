@@ -134,15 +134,14 @@ public class BatteryFragment extends BaseFragment {
             percent.setText("" + values.get(0) + " %");
 
 
-            // TODO
-            /*TextView isCharging = (TextView) getActivity().findViewById(R.id.battery_isCharging);
-            isCharging.setText((((BatteryReading) reading).isCharging()) ? "YES" : "NO");
+            TextView isCharging = (TextView) getActivity().findViewById(R.id.battery_isCharging);
+            isCharging.setText(((int)reading.getValues().get(7) != 0) ? "YES" : "NO");
 
             TextView USB_Charging = (TextView) getActivity().findViewById(R.id.battery_isUSB);
-            USB_Charging.setText(((BatteryReading) reading).getCharging_type() == 1 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
+            USB_Charging.setText((int)reading.getValues().get(8) > 0 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
 
             TextView AC_charging = (TextView) getActivity().findViewById(R.id.battery_isAC);
-            AC_charging.setText(((BatteryReading) reading).getCharging_type() == 2 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));*/
+            AC_charging.setText((int)reading.getValues().get(9) > 0 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
 
 
         }
