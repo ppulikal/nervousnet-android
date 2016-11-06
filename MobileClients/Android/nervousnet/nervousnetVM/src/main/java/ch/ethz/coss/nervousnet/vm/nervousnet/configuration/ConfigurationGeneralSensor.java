@@ -9,17 +9,23 @@ import java.util.ArrayList;
  */
 public class ConfigurationGeneralSensor {
 
+    protected long sensorID;
     protected String sensorName;
     protected ArrayList<String> parametersNames;
     protected ArrayList<String> parametersTypes;
     protected int dimensions;
 
-    public ConfigurationGeneralSensor(String sensorName, ArrayList<String> parametersNames,
+    public ConfigurationGeneralSensor(long sensorID, String sensorName, ArrayList<String> parametersNames,
                                       ArrayList<String> parametersTypes) {
+        this.sensorID = sensorID;
         this.sensorName = sensorName;
         this.parametersNames = parametersNames;
         this.parametersTypes = parametersTypes;
         this.dimensions = parametersNames.size();
+    }
+
+    public long getSensorID() {
+        return sensorID;
     }
 
     public String getSensorName() {

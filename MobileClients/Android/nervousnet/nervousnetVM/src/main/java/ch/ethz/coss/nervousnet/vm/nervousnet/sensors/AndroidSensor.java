@@ -28,13 +28,13 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
     protected Lock listenerMutex = new ReentrantLock();
 
 
-    public AndroidSensor(Context context, String sensorName) {
+    public AndroidSensor(Context context, long sensorID) {
         // Abstract class will take care of acquiring parameter names and
         // everything that is needed to initialize this listener
-        super(context, sensorName);
+        super(context, sensorID);
 
         this.mSensorManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
-        ConfigurationBasicSensor confSensor = (ConfigurationBasicSensor) ConfigurationMap.getSensorConfig(sensorName);
+        ConfigurationBasicSensor confSensor = (ConfigurationBasicSensor) ConfigurationMap.getSensorConfig(sensorID);
         this.sensor = mSensorManager.getDefaultSensor(confSensor.getAndroidSensorType());
         this.androidParametersPositions = confSensor.getAndroidParametersPositions();
     }
@@ -43,7 +43,7 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
     public boolean startListener() {
         Log.d(LOG_TAG, "Register sensor " + sensorName);
         listenerMutex.lock();
-        mSensorManager.registerListener(this, sensor, samplingPeriod);
+        mSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL); // TODO
         listenerMutex.unlock();
         return true;
     }
@@ -68,12 +68,12 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
             values.add(val);
         }
         // Fill sensor reading
-        SensorReading reading = new SensorReading(sensorName, paramNames);
+        SensorReading reading = new SensorReading(sensorID, sensorName, paramNames);
         reading.setTimestampEpoch(timestamp);
         reading.setValues(values);
         // Push reading
         push(reading);
-        //Log.d("SENSOR", ""+reading.getSensorName() + " " + TextUtils.join(", ", values));
+        Log.d("SENSOR", ""+reading.getSensorName() + " " + TextUtils.join(", ", values));
     }
 
     @Override

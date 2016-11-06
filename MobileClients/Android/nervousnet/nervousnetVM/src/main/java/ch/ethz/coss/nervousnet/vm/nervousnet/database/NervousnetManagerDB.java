@@ -11,6 +11,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.nervousnet.configuration.ConfigurationMap;
@@ -22,7 +23,7 @@ import ch.ethz.coss.nervousnet.vm.nervousnet.configuration.ConfigurationGeneralS
  */
 public class NervousnetManagerDB extends SQLiteOpenHelper {
 
-    private int cacheSize = 5; // TODO: this is just temporary
+    private int cacheSize = 20; // TODO: this is just temporary
     SQLiteDatabase DATABASE = this.getWritableDatabase();
 
     // Defining a singleton
@@ -34,6 +35,16 @@ public class NervousnetManagerDB extends SQLiteOpenHelper {
         return instance;
     }
 
+    private static HashMap<Long, SensorReading> LATEST_SENSORS_DATA = new HashMap<>();
+    private HashMap<Long, ArrayList<SensorReading>> TEMPORARY_STORAGE = new HashMap<>();
+
+    private long readingAgeThreshold = 864000;
+
+    private NervousnetManagerDB(Context context) {
+        super(context, ConstantsDB.DATABASE_NAME, null, ConstantsDB.DATABASE_VERSION);
+        createConfigTableIfNotExists();
+    }
+
     public static NervousnetManagerDB getInstance(Context context, long readingAgeThreshold){
         if (instance == null){
             instance = new NervousnetManagerDB(context);
@@ -42,60 +53,52 @@ public class NervousnetManagerDB extends SQLiteOpenHelper {
         return instance;
     }
 
-    private static HashMap<String, SensorReading> LATEST_SENSORS_DATA = new HashMap<>();
-    private HashMap<String, ArrayList<SensorReading>> TEMPORARY_STORAGE = new HashMap<>();
-
-    private long readingAgeThreshold = 864000;
-
-    private NervousnetManagerDB(Context context) {
-        super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
-    }
-
     /////////////////////////////////////////////////////////////
     // QUERY
     /////////////////////////////////////////////////////////////
 
 
-    public static SensorReading getLatestReading(String uniqueName){
-        SensorReading reading = LATEST_SENSORS_DATA.get(uniqueName);
+    public static SensorReading getLatestReading(long sensorID){
+        SensorReading reading = LATEST_SENSORS_DATA.get(sensorID);
         return reading;
     }
 
-    public ArrayList<SensorReading> getReadings(String sensorName){
-        String query = "SELECT * FROM " + sensorName;
-        return getReadings(sensorName, query);
+    public ArrayList<SensorReading> getReadings(long sensorID){
+        String query = "SELECT * FROM " + getTableName(sensorID);
+        return getReadings(sensorID, query);
     }
 
-    public ArrayList<SensorReading> getReadings(String sensorName, long start, long stop){
-        String query = "SELECT * FROM " + sensorName + " WHERE " + Constants.TIMESTAMP + " >= " + start + " AND " + Constants.TIMESTAMP + " <= " + stop + ";";
-        return getReadings(sensorName, query);
+    public ArrayList<SensorReading> getReadings(long sensorID, long start, long stop){
+        String query = "SELECT * FROM " + getTableName(sensorID) + " WHERE " + ConstantsDB.TIMESTAMP + " >= " + start + " AND " + ConstantsDB.TIMESTAMP + " <= " + stop + ";";
+        return getReadings(sensorID, query);
     }
 
-    public ArrayList<SensorReading> getReadings(String sensorName, long start, long stop,
+    public ArrayList<SensorReading> getReadings(long sensorID, long start, long stop,
                                                 ArrayList<String> selectColumns){
         String cols = TextUtils.join(", ", selectColumns);
-        String query = "SELECT " + Constants.ID + ", " + Constants.TIMESTAMP + ", " + cols + " " +
-                "FROM " + sensorName + " WHERE " + Constants.TIMESTAMP + " >= " + start + " AND " +
-                "" + Constants.TIMESTAMP + " <= " + stop + ";";
-        return getReadings(sensorName, query);
+        String query = "SELECT " + ConstantsDB.ID + ", " + ConstantsDB.TIMESTAMP + ", " + cols + " " +
+                "FROM " + getTableName(sensorID) + " WHERE " + ConstantsDB.TIMESTAMP + " >= " + start + " AND " +
+                "" + ConstantsDB.TIMESTAMP + " <= " + stop + ";";
+        return getReadings(sensorID, query);
     }
 
 
-    public ArrayList<SensorReading> getLatestReadingUnderRange(String sensorName,
+    public ArrayList<SensorReading> getLatestReadingUnderRange(long sensorID,
                                                                long start, long stop,
                                                                ArrayList<String> selectColumns) {
         String cols = TextUtils.join(", ", selectColumns);
-        String query = "SELECT " + Constants.ID + ", MAX(" + Constants.TIMESTAMP + ") AS " + Constants.TIMESTAMP+ ", " + cols + " " +
-                "FROM " + sensorName + " WHERE " + Constants.TIMESTAMP + " >= " + start + " AND " +
-                "" + Constants.TIMESTAMP + " <= " + stop + ";";
+        String query = "SELECT " + ConstantsDB.ID + ", MAX(" + ConstantsDB.TIMESTAMP + ") AS " + ConstantsDB.TIMESTAMP+ ", " + cols + " " +
+                "FROM " + getTableName(sensorID) + " WHERE " + ConstantsDB.TIMESTAMP + " >= " + start + " AND " +
+                "" + ConstantsDB.TIMESTAMP + " <= " + stop + ";";
 
-        ArrayList<SensorReading> readings = getReadings(sensorName, query);
+        ArrayList<SensorReading> readings = getReadings(sensorID, query);
         return readings;
     }
 
-    public ArrayList<SensorReading> getReadings(String sensorName, String query) {
+    public ArrayList<SensorReading> getReadings(long sensorID, String query) {
 
-        ArrayList<String> sensorParamNames = ConfigurationMap.getSensorConfig(sensorName).getParametersNames();
+        ConfigurationGeneralSensor conf = ConfigurationMap.getSensorConfig(sensorID);
+        ArrayList<String> sensorParamNames = conf.getParametersNames();
 
         // 2. get reference to writable DB
         //SQLiteDatabase db = this.getReadableDatabase();
@@ -110,8 +113,8 @@ public class NervousnetManagerDB extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 // Update timestamp and values
-                int indexTimestamp = cursor.getColumnIndex(Constants.TIMESTAMP);
-                SensorReading reading = new SensorReading(sensorName, sensorParamNames);
+                int indexTimestamp = cursor.getColumnIndex(ConstantsDB.TIMESTAMP);
+                SensorReading reading = new SensorReading(sensorID, conf.getSensorName(), sensorParamNames);
                 reading.setTimestampEpoch(cursor.getLong(indexTimestamp));
 
                 //Log.d("CURSOR", "Timestamp " + reading.getTimestampEpoch());
@@ -122,15 +125,15 @@ public class NervousnetManagerDB extends SQLiteOpenHelper {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         int type = cursor.getType(indexParam);
                         switch (type) {
-                            case Constants.FIELD_TYPE_INTEGER:
+                            case ConstantsDB.FIELD_TYPE_INTEGER:
                                 value = cursor.getInt(indexParam);
                                 break;
 
-                            case Constants.FIELD_TYPE_FLOAT:
+                            case ConstantsDB.FIELD_TYPE_FLOAT:
                                 value = cursor.getFloat(indexParam);
                                 break;
 
-                            case Constants.FIELD_TYPE_STRING:
+                            case ConstantsDB.FIELD_TYPE_STRING:
                                 value = cursor.getString(indexParam);
                                 break;
 
@@ -155,20 +158,20 @@ public class NervousnetManagerDB extends SQLiteOpenHelper {
     /////////////////////////////////////////////////////////////
 
 
-    public synchronized void deleteTableIfExists(String sensorName){
-        String sql = "DROP TABLE IF EXISTS " + sensorName + ";";
+    public synchronized void deleteTableIfExists(long sensorID){
+        String sql = "DROP TABLE IF EXISTS " + getTableName(sensorID) + ";";
         //SQLiteDatabase db = getWritableDatabase();
         DATABASE.execSQL(sql);
         //db.close();
     }
 
-    public synchronized void createTableIfNotExists(String sensorName){
+    public synchronized void createTableIfNotExists(long sensorID){
         //Log.d(LOG_TAG, "Create table " + tableName);
-        String sql = "CREATE TABLE IF NOT EXISTS " + sensorName + " ( " +
-                Constants.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                Constants.TIMESTAMP + " INTEGER";
+        String sql = "CREATE TABLE IF NOT EXISTS " + getTableName(sensorID) + " ( " +
+                ConstantsDB.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ConstantsDB.TIMESTAMP + " INTEGER";
 
-        ConfigurationGeneralSensor confSensor = ConfigurationMap.getSensorConfig(sensorName);
+        ConfigurationGeneralSensor confSensor = ConfigurationMap.getSensorConfig(sensorID);
         ArrayList<String> paramNames = confSensor.getParametersNames();
         ArrayList<String> paramTypes = confSensor.getParametersTypes();
 
@@ -208,9 +211,9 @@ public class NervousnetManagerDB extends SQLiteOpenHelper {
 
             ContentValues insertList = new ContentValues();
 
-            insertList.put(Constants.TIMESTAMP, reading.getTimestampEpoch());
+            insertList.put(ConstantsDB.TIMESTAMP, reading.getTimestampEpoch());
 
-            ConfigurationGeneralSensor conf = ConfigurationMap.getSensorConfig(reading.getSensorName());
+            ConfigurationGeneralSensor conf = ConfigurationMap.getSensorConfig(reading.getSensorID());
             ArrayList<String> paramNames = conf.getParametersNames();
             ArrayList<Object> values = reading.getValues();
 
@@ -242,41 +245,41 @@ public class NervousnetManagerDB extends SQLiteOpenHelper {
 
             }
 
-            DATABASE.insert(reading.getSensorName(), null, insertList);
+            DATABASE.insert(getTableName(conf.getSensorID()), null, insertList);
             latest = reading;
         }
         //DATABASE.close();
-        if (latest != null)
-            LATEST_SENSORS_DATA.put(latest.getSensorName(), latest);
     }
 
 
-    public synchronized void store(SensorReading reading){
+    public void store(SensorReading reading){
+        LATEST_SENSORS_DATA.put(reading.getSensorID(), reading);
+
 
         ArrayList<SensorReading> readings = null;
-        if (TEMPORARY_STORAGE.containsKey(reading.getSensorName())) {
-            readings = TEMPORARY_STORAGE.get(reading.getSensorName());
+        if (TEMPORARY_STORAGE.containsKey(reading.getSensorID())) {
+            readings = TEMPORARY_STORAGE.get(reading.getSensorID());
             readings.add(reading);
             if (readings.size() > cacheSize){
-                TEMPORARY_STORAGE.put(reading.getSensorName(), new ArrayList());
+                TEMPORARY_STORAGE.put(reading.getSensorID(), new ArrayList());
                 Log.d("STORE", "Store " + reading.getSensorName());
                 try {
                     store(readings);
                 } catch (Exception e){
-                    TEMPORARY_STORAGE.get(reading.getSensorName()).addAll(readings);
+                    TEMPORARY_STORAGE.get(reading.getSensorID()).addAll(readings);
                 }
             }
         }
         else {
             ArrayList<SensorReading> newArray = new ArrayList();
             newArray.add(reading);
-            TEMPORARY_STORAGE.put(reading.getSensorName(), newArray);
+            TEMPORARY_STORAGE.put(reading.getSensorID(), newArray);
             return;
         }
     }
 
-    public synchronized void removeOldReadings(String sensorName, long threshold){
-        String sql = "DELETE FROM " + sensorName + " WHERE " + Constants.TIMESTAMP + " < " + threshold + ";";
+    public synchronized void removeOldReadings(long sensorID, long threshold){
+        String sql = "DELETE FROM " + String.valueOf(sensorID) + " WHERE " + ConstantsDB.TIMESTAMP + " < " + threshold + ";";
         //SQLiteDatabase db = this.getWritableDatabase();
         DATABASE.execSQL(sql);
         //DATABASE.close();
@@ -286,8 +289,31 @@ public class NervousnetManagerDB extends SQLiteOpenHelper {
     // STORE CONFIGURATION DATA
     /////////////////////////////////////////////////////////////
 
+    public synchronized void createConfigTableIfNotExists(){
+        //Log.d(LOG_TAG, "Create table " + tableName);
+        String sql = "CREATE TABLE IF NOT EXISTS " + ConstantsDB.CONFIG_TABLE + " ( " +
+                ConstantsDB.ID + " INTEGER PRIMARY KEY, "+ ConstantsDB.STATE+" INTEGER);";
+        DATABASE.execSQL(sql);
+    }
 
+    public synchronized void storeState(long sensorID, int state){
+        ContentValues insertList = new ContentValues();
+        insertList.put(ConstantsDB.ID, sensorID);
+        insertList.put(ConstantsDB.STATE, state);
+        DATABASE.insertWithOnConflict(ConstantsDB.CONFIG_TABLE, null, insertList, SQLiteDatabase.CONFLICT_REPLACE);
+    }
 
+    public synchronized int getState(long sensorID, int state) throws NoSuchElementException{
+        String query = "SELECT " + ConstantsDB.STATE + " FROM " + ConstantsDB.CONFIG_TABLE + " WHERE " +
+                "" + ConstantsDB.ID + " == " + sensorID + " ;";
+        Cursor cursor = DATABASE.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            return cursor.getInt(0);
+        }
+        else {
+            throw new NoSuchElementException("Config table has no config info for the id="+sensorID);
+        }
+    }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -297,6 +323,11 @@ public class NervousnetManagerDB extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+    }
+
+
+    private static String getTableName(long sensorID){
+        return "ID" + String.valueOf(sensorID);
     }
 
 }

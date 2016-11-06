@@ -17,21 +17,21 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
     private int samplingPeriod;
     private String wrapperName;
 
-    public ConfigurationBasicSensor(String sensorName, int androidSensorType, ArrayList<String> parametersNames,
+    public ConfigurationBasicSensor(int sensorID, String sensorName, int androidSensorType, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
                                     int[] androidParametersPositions, int samplingPeriod) {
-        super(sensorName, parametersNames, parametersTypes);
+        super(sensorID, sensorName, parametersNames, parametersTypes);
         this.androidSensorType = androidSensorType;
         this.androidParametersPositions = androidParametersPositions;
         this.samplingPeriod = samplingPeriod;
         this.wrapperName = AndroidSensor.class.getSimpleName();
     }
 
-    public ConfigurationBasicSensor(String sensorName, ArrayList<String> parametersNames,
+    public ConfigurationBasicSensor(int sensorID, String sensorName, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
                                     String wrapperName,
                                     int samplingPeriod) {
-        super(sensorName, parametersNames, parametersTypes);
+        super(sensorID, sensorName, parametersNames, parametersTypes);
         this.samplingPeriod = samplingPeriod;
         this.wrapperName = wrapperName;
     }

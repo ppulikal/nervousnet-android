@@ -204,13 +204,9 @@ public class NervousnetServiceController {
             if (mService != null)
                 return mService.getLatestReading(sensorID);
             else
-                // TODO
-                return null;
-                //return new ErrorReading(new String[]{"002", "Service not connected."});
+               return new ErrorReading(new String[]{"002", "Service not connected."});
         } else
-            // TODO
-            return null;
-            //return new ErrorReading(new String[]{"003", "Service not bound."});
+            return new ErrorReading(new String[]{"003", "Service not bound."});
 
 
     }

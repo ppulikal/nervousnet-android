@@ -21,6 +21,7 @@ public class NervousnetVMConstants {
     public static byte SENSOR_STATE_AVAILABLE_DELAY_HIGH = 3;
 
 
+
     public static int REQUEST_CODE_ASK_PERMISSIONS_LOC = 1;
     public static int REQUEST_CODE_ASK_PERMISSIONS_NOISE = 2;
 

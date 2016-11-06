@@ -20,16 +20,19 @@ public abstract class BaseSensor {
     private NervousnetManagerDB databaseHandler;
 
     // Sensor configuration
+    protected long sensorID;
     protected String sensorName;
     protected int samplingPeriod;
     protected ArrayList<String> paramNames;
 
-    public BaseSensor(Context context, String sensorName){
+    public BaseSensor(Context context, long sensorID){
         this.databaseHandler = NervousnetManagerDB.getInstance(context);
-        this.sensorName = sensorName;
-        ConfigurationBasicSensor confSensor = (ConfigurationBasicSensor) ConfigurationMap.getSensorConfig(sensorName);
+
+        ConfigurationBasicSensor confSensor = (ConfigurationBasicSensor) ConfigurationMap.getSensorConfig(sensorID);
+        this.sensorID = sensorID;
+        this.sensorName = confSensor.getSensorName();
         this.paramNames = confSensor.getParametersNames();
-        this.databaseHandler.createTableIfNotExists(sensorName);
+        this.databaseHandler.createTableIfNotExists(sensorID);
         this.samplingPeriod = confSensor.getSamplingPeriod();
     }
 
@@ -37,7 +40,21 @@ public abstract class BaseSensor {
         databaseHandler.store(reading);
     }
 
-    public abstract boolean startListener();
-    public abstract boolean stopListener();
+    public void start(){
+        stopListener();
+        ConfigurationBasicSensor confSensor = (ConfigurationBasicSensor) ConfigurationMap.getSensorConfig(sensorID);
+        this.sensorName = confSensor.getSensorName();
+        this.paramNames = confSensor.getParametersNames();
+        this.databaseHandler.createTableIfNotExists(sensorID);
+        this.samplingPeriod = confSensor.getSamplingPeriod();
+        startListener();
+    }
+
+    public void stop(){
+        stopListener();
+    }
+
+    protected abstract boolean startListener();
+    protected abstract boolean stopListener();
 
 }

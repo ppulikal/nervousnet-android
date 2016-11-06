@@ -14,7 +14,7 @@ import java.util.List;
 public class SensorReading implements Parcelable {
 
     // Description
-    protected      int         id;                 // unique id of the sensor or error=-1
+    protected      long        sensorID;
     protected     String      sensorName;         // sensor name
     protected     long        timestampEpoch;     // timestamp
     protected   List<String>  parametersNames;    // list of parameters' names
@@ -25,8 +25,9 @@ public class SensorReading implements Parcelable {
     // Constructor
     public SensorReading(){}
 
-    public SensorReading(String sensorName,
+    public SensorReading(long sensorID, String sensorName,
                          ArrayList<String> paramNames){
+        this.sensorID = sensorID;
         this.sensorName = sensorName;
         this.parametersNames = paramNames;
         this.values = new ArrayList<>();
@@ -69,12 +70,12 @@ public class SensorReading implements Parcelable {
             this.values = new ArrayList();
     }
 
-    public int getId() {
-        return id;
+    public long getSensorID() {
+        return sensorID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSensorID(int id) {
+        this.sensorID = id;
     }
 
 
@@ -99,7 +100,7 @@ public class SensorReading implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(id);
+        parcel.writeLong(sensorID);
         parcel.writeString(sensorName);
         parcel.writeLong(timestampEpoch);
         parcel.writeStringList(parametersNames);
@@ -113,7 +114,7 @@ public class SensorReading implements Parcelable {
 
     // if the class id extended, one can override this function to satisfy reading
     public void readFromParcel(Parcel in){
-        id = in.readInt();
+        sensorID = in.readLong();
         sensorName = in.readString();
         timestampEpoch = in.readLong();
         //TODO
@@ -125,7 +126,7 @@ public class SensorReading implements Parcelable {
     @Override
     public String toString() {
         return "SensorReading{" +
-                "id=" + id +
+                "id=" + sensorID +
                 ", sensorName='" + sensorName + '\'' +
                 ", timestampEpoch=" + timestampEpoch +
                 ", parametersNames=" + parametersNames +

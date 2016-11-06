@@ -7,6 +7,8 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
@@ -30,8 +32,8 @@ public class BatterySensor extends BaseSensor {
     };
     private Context context;
 
-    public BatterySensor(Context context, String sensorName) {
-        super(context, sensorName);
+    public BatterySensor(Context context, long sensorID) {
+        super(context, sensorID);
         this.context = context;
     }
 
@@ -44,10 +46,6 @@ public class BatterySensor extends BaseSensor {
             push(reading);
 
     }
-
-    static String[] PARAM_HARD_CODED = new String[]{"temp", "volt", "health", "level",
-            "scale", "status", "chargePlug", "isCharging", "isChargingUBS", "isChargingAC",
-            "tech", "percent"};
 
     private SensorReading extractBatteryData(Intent batteryStatus) {
         int temp = batteryStatus.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
@@ -64,20 +62,22 @@ public class BatterySensor extends BaseSensor {
         String technology = batteryStatus.getExtras().getString(BatteryManager.EXTRA_TECHNOLOGY);
         float percent = level / (float) scale;
 
-        SensorReading reading = new SensorReading(sensorName, paramNames);
+        SensorReading reading = new SensorReading(sensorID, sensorName, paramNames);
         reading.setTimestampEpoch(System.currentTimeMillis());
-        reading.setValue("temp", temp);
-        reading.setValue("volt", volt);
-        reading.setValue("health", (int)health);
-        reading.setValue("level", level);
-        reading.setValue("scale", scale);
-        reading.setValue("status", status);
-        reading.setValue("chargePlug", chargePlug);
-        reading.setValue("isCharging", isCharging ? 1 : 0);
-        reading.setValue("isChargingUSB", usbCharge ? 1 : 0);
-        reading.setValue("isChargingAC", acCharge ? 1 : 0);
-        reading.setValue("tech", technology);
-        reading.setValue("percent", percent);
+        ArrayList values = new ArrayList();
+        values.add(temp);
+        values.add(volt);
+        values.add((int)health);
+        values.add(level);
+        values.add(scale);
+        values.add(status);
+        values.add(chargePlug);
+        values.add(isCharging ? 1 : 0);
+        values.add(usbCharge ? 1 : 0);
+        values.add(acCharge ? 1 : 0);
+        values.add(technology);
+        values.add(percent);
+        reading.setValues(values);
 
         return reading;
     }

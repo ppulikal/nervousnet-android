@@ -1,20 +1,7 @@
 {  "sensors_configurations" :
   [
     {
-      "sensorName" : "Light",
-      "androidSensorType" : 5,
-      "parametersNames" :
-      [
-        "Lux"
-      ],
-      "parametersTypes" :
-      [
-        "double"
-      ],
-      "androidParametersPositions" : [ 0 ],
-      "samplingPeriod" : 500000
-    },
-    {
+      "sensorID" : 0,
       "sensorName" : "Accelerometer",
       "androidSensorType" : 1,
       "parametersNames" :
@@ -32,38 +19,9 @@
       "androidParametersPositions" : [ 0, 1, 2 ],
       "samplingPeriod" : 500000
     },
+
     {
-      "sensorName" : "Gyroscope",
-      "androidSensorType" : 4,
-      "parametersNames" :
-      [
-        "gyroX",
-        "gyroY",
-        "gyroZ"
-      ],
-      "parametersTypes" :
-      [
-        "double",
-        "double",
-        "double"
-      ],
-      "androidParametersPositions" : [ 0, 1, 2 ],
-      "samplingPeriod" : 500000
-    },
-    {
-      "sensorName" : "Noise",
-      "parametersNames" :
-      [
-        "Decibel"
-      ],
-      "parametersTypes" :
-      [
-        "double"
-      ],
-      "samplingPeriod" : 500000,
-      "wrapperName" : "NoiseSensor"
-    },
-    {
+      "sensorID" : 1,
       "sensorName" : "Battery",
       "parametersNames" :
       [
@@ -97,6 +55,58 @@
       ],
       "samplingPeriod" : 500000,
       "wrapperName" : "BatterySensor"
+    },
+
+    {
+      "sensorID" : 4,
+      "sensorName" : "Light",
+      "androidSensorType" : 5,
+      "parametersNames" :
+      [
+        "Lux"
+      ],
+      "parametersTypes" :
+      [
+        "double"
+      ],
+      "androidParametersPositions" : [ 0 ],
+      "samplingPeriod" : 500000
+    },
+
+
+    {
+      "sensorID" : 5,
+      "sensorName" : "Noise",
+      "parametersNames" :
+      [
+        "Decibel"
+      ],
+      "parametersTypes" :
+      [
+        "double"
+      ],
+      "samplingPeriod" : 500000,
+      "wrapperName" : "NoiseSensor"
+    },
+    {
+      "sensorID" : 2,
+      "sensorName" : "Gyroscope",
+      "androidSensorType" : 4,
+      "parametersNames" :
+      [
+        "gyroX",
+        "gyroY",
+        "gyroZ"
+      ],
+      "parametersTypes" :
+      [
+        "double",
+        "double",
+        "double"
+      ],
+      "androidParametersPositions" : [ 0, 1, 2 ],
+      "samplingPeriod" : 2
     }
+
   ]
 }

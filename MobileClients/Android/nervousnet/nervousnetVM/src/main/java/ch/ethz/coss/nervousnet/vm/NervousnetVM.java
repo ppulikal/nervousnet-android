@@ -16,6 +16,7 @@ import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
 import ch.ethz.coss.nervousnet.vm.events.NNEvent;
 import ch.ethz.coss.nervousnet.vm.nervousnet.NervousnetMain;
+import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.BaseSensor;
 
 
 public class NervousnetVM {
@@ -128,35 +129,11 @@ public class NervousnetVM {
 
     public synchronized SensorReading getLatestReading(long sensorID) {
         // TODO this switch is temporary
-        String sensorName = "";
-        switch ((int) sensorID){
-            case 0: sensorName = "Accelerometer"; break;
-            case 1: sensorName = "Battery"; break;
-            case 2: sensorName = "Gyroscope"; break;
-            case 3: sensorName = "Location"; break;
-            case 4: sensorName = "Light"; break;
-            case 5: sensorName = "Noise"; break;
-            case 6: sensorName = "Proximity"; break;
-        }
-
-        return generalNervousnet.getLatestReading(sensorName);
+        return generalNervousnet.getLatestReading(sensorID);
     }
 
-    public synchronized void getReading(Long sensorID, RemoteCallback cb) {
+    public synchronized void getReading(long sensorID, RemoteCallback cb) {
         NNLog.d(LOG_TAG, "getReading with callback " + cb);
-
-        // TODO this switch is temporary
-        String sensorName = "";
-        switch (sensorID.intValue()){
-            case 0: sensorName = "Accelerometer"; break;
-            case 1: sensorName = "Battery"; break;
-            case 2: sensorName = "Gyroscope"; break;
-            case 3: sensorName = "Location"; break;
-            case 4: sensorName = "Light"; break;
-            case 5: sensorName = "Noise"; break;
-            case 6: sensorName = "Proximity"; break;
-        }
-
 
         if (state == NervousnetVMConstants.STATE_PAUSED) {
             NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
@@ -167,7 +144,7 @@ public class NervousnetVM {
             }
         } else {
 
-            ArrayList<SensorReading> readings = generalNervousnet.getReadings(sensorName);
+            ArrayList<SensorReading> readings = generalNervousnet.getReadings(sensorID);
             try {
                 cb.success(readings);
             } catch (RemoteException e) {
@@ -212,16 +189,19 @@ public class NervousnetVM {
     public void onNNEvent(NNEvent event) {
         NNLog.d(LOG_TAG, "onSensorStateEvent called ");
 
-        /*if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_SENSOR_STATE_REQUEST) {
+        if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_SENSOR_STATE_REQUEST) {
             updateSensorConfig(event.sensorID, event.state);
-            BaseSensor sensor = hSensors.get(event.sensorID);
-            sensor.stopAndRestart(state);
+            BaseSensor sensor = generalNervousnet.getSensor(event.sensorID);
+            /*switch (state){
+                case NervousnetVMConstants.
+            }*/
+            //sensor.stopAndRestart();
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED));
 
 
         } else if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST) {
             updateAllSensorConfig(event.state);
-            stopSensors();
+            generalNervousnet.stopAllSensors();
             startSensors();
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED));
         } else if (event.eventType == NervousnetVMConstants.EVENT_PAUSE_NERVOUSNET_REQUEST) {
@@ -230,7 +210,7 @@ public class NervousnetVM {
         } else if (event.eventType == NervousnetVMConstants.EVENT_START_NERVOUSNET_REQUEST) {
             storeNervousnetState(NervousnetVMConstants.STATE_RUNNING);
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED));
-        }*/
+        }
 
     }
 

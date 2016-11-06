@@ -39,8 +39,8 @@ public class NoiseSensor extends BaseSensor {
     private Context context;
 
 
-    public NoiseSensor(Context context, String sensorName) {
-        super(context, sensorName);
+    public NoiseSensor(Context context, long sensorID) {
+        super(context, sensorID);
         this.context = context;
     }
 
@@ -217,7 +217,7 @@ public class NoiseSensor extends BaseSensor {
         public void onPostExecute(Void params) {
             ArrayList values = new ArrayList<>();
             values.add(spl);
-            SensorReading reading = new SensorReading(sensorName, paramNames);
+            SensorReading reading = new SensorReading(sensorID, sensorName, paramNames);
             reading.setTimestampEpoch(recordTime);
             reading.setValues(values);
             push(reading);

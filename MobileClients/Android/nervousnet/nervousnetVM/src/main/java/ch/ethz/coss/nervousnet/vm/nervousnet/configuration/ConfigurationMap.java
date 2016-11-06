@@ -9,13 +9,13 @@ import ch.ethz.coss.nervousnet.vm.nervousnet.configuration.ConfigurationGeneralS
  */
 public class ConfigurationMap {
 
-    private static HashMap<String, ConfigurationGeneralSensor> CONFIGURATION = new HashMap<>();
+    private static HashMap<Long, ConfigurationGeneralSensor> CONFIGURATION = new HashMap<>();
 
     public static void addSensorConfig(ConfigurationGeneralSensor config){
-        CONFIGURATION.put(config.getSensorName(), config);
+        CONFIGURATION.put(config.getSensorID(), config);
     }
 
-    public static ConfigurationGeneralSensor getSensorConfig(String name){
-        return CONFIGURATION.get(name);
+    public static ConfigurationGeneralSensor getSensorConfig(long sensorID){
+        return CONFIGURATION.get(sensorID);
     }
 }
