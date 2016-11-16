@@ -17,7 +17,7 @@ public class Aggregation<G extends GeneralAggrItem> {
 	public ArrayList<Float> var()
 	{
 
-		ArrayList<Float> variance = new ArrayList<>();
+		ArrayList<Float> variance = new ArrayList();
 		try {
 			int n = this.list.size();
 			if (n <= 0) {
@@ -27,7 +27,7 @@ public class Aggregation<G extends GeneralAggrItem> {
 			int dimensions = this.list.get(0).getValue().size();
 
 			ArrayList<Float> average = getAverage();
-			ArrayList<Float> sumOfSquares = new ArrayList<>();
+			ArrayList<Float> sumOfSquares = new ArrayList();
 			for (int i = 0; i < dimensions; i++)
 				sumOfSquares.add(new Float(0));
 
@@ -55,7 +55,7 @@ public class Aggregation<G extends GeneralAggrItem> {
 
 	public ArrayList<Float> sd()
 	{
-		ArrayList<Float> array = new ArrayList<>();
+		ArrayList<Float> array = new ArrayList();
 		try{
 			array = var();
 

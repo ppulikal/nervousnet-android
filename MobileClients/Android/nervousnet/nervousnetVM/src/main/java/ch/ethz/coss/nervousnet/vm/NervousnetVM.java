@@ -4,6 +4,7 @@ import android.content.Context;
 import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -14,9 +15,11 @@ import java.util.UUID;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
+import ch.ethz.coss.nervousnet.vm.nervousnet.database.StateDBManager;
 import ch.ethz.coss.nervousnet.vm.events.NNEvent;
 import ch.ethz.coss.nervousnet.vm.nervousnet.NervousnetMain;
-import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.BaseSensor;
+import ch.ethz.coss.nervousnet.vm.nervousnet.database.NoSuchElementInDBException;
+import ch.ethz.coss.nervousnet.vm.nervousnet.iNervousnetMain;
 
 
 public class NervousnetVM {
@@ -31,6 +34,10 @@ public class NervousnetVM {
     private Context context;
     private byte state = NervousnetVMConstants.STATE_PAUSED;
 
+
+    StateDBManager configStoreManager;
+
+
     private SensorManager sensorManager;
     private Handler dataCollectionHandler = new Handler();
 
@@ -44,13 +51,13 @@ public class NervousnetVM {
     };
 
 
-    private NervousnetMain generalNervousnet;
+    private iNervousnetMain nervousnetMain;
 
 
     public NervousnetVM(Context context) {
         this.context = context;
-        this.generalNervousnet = new NervousnetMain(context);
-
+        this.nervousnetMain = new NervousnetMain(context);
+        this.configStoreManager = new StateDBManager(context);
 
         initSensors();
 
@@ -68,14 +75,14 @@ public class NervousnetVM {
     public void startSensors() {
 
 
-        generalNervousnet.startAllSensors();
+        nervousnetMain.startAllSensors();
         dataCollectionHandler.postDelayed(runnable, 1000);
 
     }
 
     public void stopSensors() {
 
-        generalNervousnet.stopAllSensors();
+        nervousnetMain.stopAllSensors();
         dataCollectionHandler.removeCallbacks(runnable);
 
     }
@@ -106,30 +113,34 @@ public class NervousnetVM {
 
 
     public void storeNervousnetState(byte state) {
-        this.state = state;
+        configStoreManager.storeNervousnetState(state);
     }
 
     public synchronized void updateSensorConfig(long id, byte state) {
-
+        configStoreManager.storeSensorState(id, state);
     }
 
 
-    public synchronized void updateAllSensorConfig(byte state) {
+/*    public synchronized void updateAllSensorConfig(long rate) {
+        //configStoreManager.storeSensorState();
+    }*/
 
-    }
 
-
-    public byte getState() {
+    public byte getNervousnetState() {
         //return state;
-        return NervousnetVMConstants.STATE_RUNNING;
+        try {
+            return configStoreManager.getNervousnetState();
+        } catch (NoSuchElementInDBException e) {
+            e.printStackTrace();
+            return NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE;
+        }
     }
 
 
 
 
     public synchronized SensorReading getLatestReading(long sensorID) {
-        // TODO this switch is temporary
-        return generalNervousnet.getLatestReading(sensorID);
+        return nervousnetMain.getLatestReading(sensorID);
     }
 
     public synchronized void getReading(long sensorID, RemoteCallback cb) {
@@ -144,7 +155,7 @@ public class NervousnetVM {
             }
         } else {
 
-            ArrayList<SensorReading> readings = generalNervousnet.getReadings(sensorID);
+            ArrayList<SensorReading> readings = nervousnetMain.getReadings(sensorID);
             try {
                 cb.success(readings);
             } catch (RemoteException e) {
@@ -161,9 +172,7 @@ public class NervousnetVM {
 
     public synchronized void getReadings(long sensorID, long startTime, long endTime, RemoteCallback cb) {
 
-        // For library
-
-        /*if (state == NervousnetVMConstants.STATE_PAUSED) {
+        if (state == NervousnetVMConstants.STATE_PAUSED) {
             NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
             try {
                 cb.failure(Utils.getErrorReading(101));
@@ -172,43 +181,54 @@ public class NervousnetVM {
             }
         } else {
 
-            sqlHelper.getSensorReadings((int) sensorID, startTime, endTime, cb);
-        }*/
+            ArrayList<SensorReading> readings = nervousnetMain.getReadings(sensorID, startTime, endTime);
+            try {
+                cb.success(readings);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                try {
+                    cb.failure(Utils.getErrorReading(301));
+                } catch (RemoteException re) {
+                    re.printStackTrace();
+                }
+            }
+        }
     }
 
 
 
     public byte getSensorState(long id) {
-        // TODO
-        return 0;
-        //return hSensorConfig.get(id).getState();
+        try {
+            return configStoreManager.getSensorState(id);
+        } catch (NoSuchElementInDBException e) {
+            e.printStackTrace();
+            return NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE;
+        }
     }
 
 
     @Subscribe
     public void onNNEvent(NNEvent event) {
-        NNLog.d(LOG_TAG, "onSensorStateEvent called ");
+        Log.d(LOG_TAG, "onSensorStateEvent called ");
 
         if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_SENSOR_STATE_REQUEST) {
-            updateSensorConfig(event.sensorID, event.state);
-            BaseSensor sensor = generalNervousnet.getSensor(event.sensorID);
-            /*switch (state){
-                case NervousnetVMConstants.
-            }*/
-            //sensor.stopAndRestart();
+            if (event.state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
+                nervousnetMain.stopSensor(event.sensorID);
+            } else {
+                nervousnetMain.updateSamplingRate(event.sensorID, event.state);
+            }
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED));
-
-
         } else if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST) {
-            updateAllSensorConfig(event.state);
-            generalNervousnet.stopAllSensors();
-            startSensors();
+            //TODO nervousnetMain.updateSamplingRateAll(event.state);
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED));
         } else if (event.eventType == NervousnetVMConstants.EVENT_PAUSE_NERVOUSNET_REQUEST) {
             storeNervousnetState(NervousnetVMConstants.STATE_PAUSED);
+            nervousnetMain.stopAllSensors();
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED));
         } else if (event.eventType == NervousnetVMConstants.EVENT_START_NERVOUSNET_REQUEST) {
             storeNervousnetState(NervousnetVMConstants.STATE_RUNNING);
+            nervousnetMain.startAllSensors();
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED));
         }
 

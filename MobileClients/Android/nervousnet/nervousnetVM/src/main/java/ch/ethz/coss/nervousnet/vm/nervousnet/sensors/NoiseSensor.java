@@ -7,14 +7,12 @@ import android.media.MediaRecorder.AudioSource;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.NNLog;
-import ch.ethz.coss.nervousnet.vm.utils.FFT;
+import ch.ethz.coss.nervousnet.vm.nervousnet.utils.FFT;
 
 public class NoiseSensor extends BaseSensor {
     public static final int BANDCOUNT = 12;
@@ -215,7 +213,7 @@ public class NoiseSensor extends BaseSensor {
 
         @Override
         public void onPostExecute(Void params) {
-            ArrayList values = new ArrayList<>();
+            ArrayList values = new ArrayList();
             values.add(spl);
             SensorReading reading = new SensorReading(sensorID, sensorName, paramNames);
             reading.setTimestampEpoch(recordTime);
@@ -231,8 +229,8 @@ public class NoiseSensor extends BaseSensor {
                     for (short channelConfig : new short[]{AudioFormat.CHANNEL_IN_MONO,
                             AudioFormat.CHANNEL_IN_STEREO}) {
                         try {
-                            NNLog.d("NoiseSensor", "Attempting rate " + rate + "Hz, bits: " + audioFormat
-                                    + ", channel: " + channelConfig);
+                            //NNLog.d("NoiseSensor", "Attempting rate " + rate + "Hz, bits: " + audioFormat
+                            //        + ", channel: " + channelConfig);
                             int bufferSize = AudioRecord.getMinBufferSize(rate, channelConfig, audioFormat);
 
                             if (bufferSize != AudioRecord.ERROR_BAD_VALUE) {

@@ -10,7 +10,6 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.NNLog;
 
 public class BatterySensor extends BaseSensor {
     private static final String LOG_TAG = BatterySensor.class.getSimpleName();
@@ -98,7 +97,7 @@ public class BatterySensor extends BaseSensor {
             context.unregisterReceiver(batteryReceiver);
             return true;
         } catch (IllegalArgumentException e) {
-            NNLog.d(LOG_TAG, "Exception trying to close battery sensor");
+            //NNLog.d(LOG_TAG, "Exception trying to close battery sensor");
             e.printStackTrace();
         } catch (NullPointerException e){
             e.printStackTrace();

@@ -17,7 +17,8 @@
         "double"
       ],
       "androidParametersPositions" : [ 0, 1, 2 ],
-      "samplingPeriod" : 500000
+      "samplingRates" : [2000, 250, 60],
+      "initialSamplingRateIndex" : 0
     },
 
     {
@@ -53,7 +54,8 @@
         "String",
         "float"
       ],
-      "samplingPeriod" : 500000,
+      "samplingRates" : [2000, 250, 60],
+      "initialSamplingRateIndex" : 0,
       "wrapperName" : "BatterySensor"
     },
 
@@ -70,24 +72,10 @@
         "double"
       ],
       "androidParametersPositions" : [ 0 ],
-      "samplingPeriod" : 500000
+      "samplingRates" : [2000, 250, 60],
+      "initialSamplingRateIndex" : 0
     },
 
-
-    {
-      "sensorID" : 5,
-      "sensorName" : "Noise",
-      "parametersNames" :
-      [
-        "Decibel"
-      ],
-      "parametersTypes" :
-      [
-        "double"
-      ],
-      "samplingPeriod" : 500000,
-      "wrapperName" : "NoiseSensor"
-    },
     {
       "sensorID" : 2,
       "sensorName" : "Gyroscope",
@@ -105,7 +93,8 @@
         "double"
       ],
       "androidParametersPositions" : [ 0, 1, 2 ],
-      "samplingPeriod" : 2
+      "samplingRates" : [2000, 250, 60],
+      "initialSamplingRateIndex" : 0
     }
 
   ]

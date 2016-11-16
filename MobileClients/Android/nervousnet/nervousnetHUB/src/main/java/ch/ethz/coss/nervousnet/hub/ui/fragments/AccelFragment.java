@@ -118,7 +118,7 @@ public class AccelFragment extends BaseFragment {
             }
         });
 
-        if ((((Application) ((Activity) getContext()).getApplication()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED)) {
+        if ((((Application) ((Activity) getContext()).getApplication()).nn_VM.getNervousnetState() == NervousnetVMConstants.STATE_PAUSED)) {
             for (int i = 0; i < radioGroup.getChildCount(); i++) {
                 ((RadioButton) radioGroup.getChildAt(i)).setEnabled(false);
             }

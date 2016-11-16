@@ -5,7 +5,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -41,9 +40,9 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
 
     @Override
     public boolean startListener() {
-        Log.d(LOG_TAG, "Register sensor " + sensorName);
+        Log.d(LOG_TAG, "Register sensor " + sensorName + " ...");
         listenerMutex.lock();
-        mSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL); // TODO
+        mSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
         listenerMutex.unlock();
         return true;
     }
@@ -62,7 +61,7 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
         // Get timestamp for the sensor
         long timestamp = System.currentTimeMillis();
         // Get values
-        ArrayList values = new ArrayList<>();
+        ArrayList values = new ArrayList();
         for (int i = 0; i < androidParametersPositions.length; i++) {
             Object val = sensorEvent.values[androidParametersPositions[i]];
             values.add(val);
@@ -73,7 +72,7 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
         reading.setValues(values);
         // Push reading
         push(reading);
-        Log.d("SENSOR", ""+reading.getSensorName() + " " + TextUtils.join(", ", values));
+        //Log.d("SENSOR", ""+reading.getSensorName() + " " + TextUtils.join(", ", values));
     }
 
     @Override

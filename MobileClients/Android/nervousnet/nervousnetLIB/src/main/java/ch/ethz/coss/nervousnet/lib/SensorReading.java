@@ -30,7 +30,7 @@ public class SensorReading implements Parcelable {
         this.sensorID = sensorID;
         this.sensorName = sensorName;
         this.parametersNames = paramNames;
-        this.values = new ArrayList<>();
+        this.values = new ArrayList();
         for (String name : parametersNames)
             values.add(0);
     }

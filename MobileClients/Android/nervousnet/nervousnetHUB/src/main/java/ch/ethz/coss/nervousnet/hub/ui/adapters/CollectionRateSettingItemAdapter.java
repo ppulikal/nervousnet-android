@@ -59,7 +59,7 @@ public class CollectionRateSettingItemAdapter extends ArrayAdapter<String> {
             }
         });
 
-        if (((Application) context.getApplicationContext()).nn_VM.getState() == NervousnetVMConstants.STATE_PAUSED
+        if (((Application) context.getApplicationContext()).nn_VM.getNervousnetState() == NervousnetVMConstants.STATE_PAUSED
                 || ((Application) context.getApplicationContext()).nn_VM
                 .getSensorState(position) == NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE
                 || ((Application) context.getApplicationContext()).nn_VM

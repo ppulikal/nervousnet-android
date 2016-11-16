@@ -14,25 +14,32 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
 
     private int androidSensorType;
     private int[] androidParametersPositions;
-    private int samplingPeriod;
+    private long samplingRate;
+    private ArrayList<Long> samplingRates;
     private String wrapperName;
 
-    public ConfigurationBasicSensor(int sensorID, String sensorName, int androidSensorType, ArrayList<String> parametersNames,
+    public ConfigurationBasicSensor(int sensorID, String sensorName, int androidSensorType,
+                                    ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
-                                    int[] androidParametersPositions, int samplingPeriod) {
+                                    int[] androidParametersPositions,
+                                    ArrayList<Long> samplingRates,
+                                    int selectedSamplingRateIndex) {
         super(sensorID, sensorName, parametersNames, parametersTypes);
         this.androidSensorType = androidSensorType;
         this.androidParametersPositions = androidParametersPositions;
-        this.samplingPeriod = samplingPeriod;
+        this.samplingRate = samplingRates.get(selectedSamplingRateIndex);
+        this.samplingRates = samplingRates;
         this.wrapperName = AndroidSensor.class.getSimpleName();
     }
 
     public ConfigurationBasicSensor(int sensorID, String sensorName, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
                                     String wrapperName,
-                                    int samplingPeriod) {
+                                    ArrayList<Long> samplingRates,
+                                    int selectedSamplingRateIndex) {
         super(sensorID, sensorName, parametersNames, parametersTypes);
-        this.samplingPeriod = samplingPeriod;
+        this.samplingRate = samplingRates.get(selectedSamplingRateIndex);
+        this.samplingRates = samplingRates;
         this.wrapperName = wrapperName;
     }
 
@@ -48,8 +55,12 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
         return androidParametersPositions;
     }
 
-    public int getSamplingPeriod() {
-        return samplingPeriod;
+    public long getSamplingRate() {
+        return samplingRate;
+    }
+
+    public void setSamplingRate(long samplingRate) {
+        this.samplingRate = samplingRate;
     }
 
     @Override
@@ -60,7 +71,7 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
                 ", parametersNames=" + TextUtils.join(", ", parametersNames) +
                 ", parametersTypes=" + TextUtils.join(", ", parametersTypes) +
                 ", androidParametersPositions=" + Arrays.toString(androidParametersPositions) +
-                ", samplingPeriod=" + samplingPeriod +
+                ", samplingPeriod=" + samplingRate +
                 '}';
     }
 }

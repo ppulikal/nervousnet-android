@@ -88,7 +88,7 @@ public class Application extends android.app.Application {
     }
 
     public byte getState() {
-        return nn_VM.getState();
+        return nn_VM.getNervousnetState();
     }
 
 

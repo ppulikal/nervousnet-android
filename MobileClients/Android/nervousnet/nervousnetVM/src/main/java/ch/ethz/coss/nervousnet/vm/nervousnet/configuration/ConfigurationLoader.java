@@ -53,7 +53,7 @@ public class ConfigurationLoader {
 
 
     public static ArrayList<ConfigurationBasicSensor> load(String strJson){
-        ArrayList<ConfigurationBasicSensor> list = new ArrayList<>();
+        ArrayList<ConfigurationBasicSensor> list = new ArrayList();
 
         try {
             JSONArray sensorConfList = (new JSONObject(strJson)).getJSONArray("sensors_configurations");
@@ -67,7 +67,8 @@ public class ConfigurationLoader {
                 String sensorName = sensorConf.getString("sensorName");
                 ArrayList<String> paramNames = convertToArr(sensorConf.getJSONArray("parametersNames"));
                 ArrayList<String> paramTypes = convertToArr(sensorConf.getJSONArray("parametersTypes"));
-                int samplingPeriod = sensorConf.getInt("samplingPeriod");
+                int samplingRateIndex = sensorConf.getInt("initialSamplingRateIndex");
+                ArrayList<Long> samplingRates = convertToArrLong(sensorConf.getJSONArray("samplingRates"));
                 // OPTIONAL
 
                 // This one is for simple android sensors
@@ -75,13 +76,13 @@ public class ConfigurationLoader {
                     int androidSensorType = sensorConf.getInt("androidSensorType");
                     int[] positions = convertToIntArr(sensorConf.getJSONArray("androidParametersPositions"));
                     confClass = new ConfigurationBasicSensor(sensorID, sensorName, androidSensorType,
-                            paramNames, paramTypes, positions, samplingPeriod);
+                            paramNames, paramTypes, positions, samplingRates, samplingRateIndex);
                 }
                 // This one is for other sensors
                 else if (sensorConf.has("wrapperName")) {
                     String wrapperName = sensorConf.getString("wrapperName");
                     confClass = new ConfigurationBasicSensor(sensorID, sensorName,
-                            paramNames, paramTypes, wrapperName, samplingPeriod);
+                            paramNames, paramTypes, wrapperName, samplingRates, samplingRateIndex);
                 }
 
                 ConfigurationMap.addSensorConfig(confClass);
@@ -100,12 +101,26 @@ public class ConfigurationLoader {
 
     private static ArrayList<String> convertToArr(JSONArray jList){
         int len = jList.length();
-        ArrayList<String> arr = new ArrayList<>();
+        ArrayList<String> arr = new ArrayList();
         for (int i = 0; i < len; i++){
             try {
                 arr.add(jList.getString(i));
             } catch (JSONException e) {
-                arr.add( "null" );
+                arr.add( null );
+                e.printStackTrace();
+            }
+        }
+        return arr;
+    }
+
+    private static ArrayList<Long> convertToArrLong(JSONArray jList){
+        int len = jList.length();
+        ArrayList<Long> arr = new ArrayList();
+        for (int i = 0; i < len; i++){
+            try {
+                arr.add(jList.getLong(i));
+            } catch (JSONException e) {
+                arr.add( null );
                 e.printStackTrace();
             }
         }
