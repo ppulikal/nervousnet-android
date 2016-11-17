@@ -69,7 +69,7 @@ public class StateDBManager extends SQLiteOpenHelper{
 
     private int nervousnet_row_id = 0; // ID is always the same - we have only 1 row in the nervousnet table
 
-    public synchronized void storeNervousnetState(byte state) {
+    public synchronized void storeNervousnetState(int state) {
         ContentValues insertList = new ContentValues();
         insertList.put(Constants.ID, nervousnet_row_id);
         insertList.put(Constants.STATE, state);

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by ales on 18/10/16.
  */
-public class ConfigurationGeneralSensor {
+public class GeneralSensorConfiguration {
 
     protected long sensorID;
     protected String sensorName;
@@ -15,7 +15,7 @@ public class ConfigurationGeneralSensor {
     protected ArrayList<String> parametersTypes;
     protected int dimensions;
 
-    public ConfigurationGeneralSensor(long sensorID, String sensorName, ArrayList<String> parametersNames,
+    public GeneralSensorConfiguration(long sensorID, String sensorName, ArrayList<String> parametersNames,
                                       ArrayList<String> parametersTypes) {
         this.sensorID = sensorID;
         this.sensorName = sensorName;

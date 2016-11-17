@@ -11,7 +11,7 @@ import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.AndroidSensor;
 /**
  * Created by ales on 21/09/16.
  */
-public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
+public class BasicSensorConfiguration extends GeneralSensorConfiguration {
 
     private int androidSensorType;
     private int[] androidParametersPositions;
@@ -20,7 +20,7 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
     private ArrayList<Long> samplingRates;
     private String wrapperName;
 
-    public ConfigurationBasicSensor(int sensorID, String sensorName, int androidSensorType,
+    public BasicSensorConfiguration(int sensorID, String sensorName, int androidSensorType,
                                     ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
                                     int[] androidParametersPositions,
@@ -31,10 +31,10 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
         this.androidParametersPositions = androidParametersPositions;
         this.samplingRates = samplingRates;
         this.wrapperName = AndroidSensor.class.getSimpleName();
-        updateState(state);
+        setState(state);
     }
 
-    public ConfigurationBasicSensor(int sensorID, String sensorName, ArrayList<String> parametersNames,
+    public BasicSensorConfiguration(int sensorID, String sensorName, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
                                     String wrapperName,
                                     ArrayList<Long> samplingRates,
@@ -42,7 +42,7 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
         super(sensorID, sensorName, parametersNames, parametersTypes);
         this.samplingRates = samplingRates;
         this.wrapperName = wrapperName;
-        updateState(state);
+        setState(state);
     }
 
     public String getWrapperName() {
@@ -65,7 +65,7 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
         this.samplingRate = samplingRate;
     }
 
-    public void updateState(int state){
+    public void setState(int state){
         this.state = state;
         switch (state){
             case NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF:

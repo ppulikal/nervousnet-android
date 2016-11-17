@@ -14,17 +14,17 @@ import java.util.ArrayList;
 /**
  * Created by ales on 21/09/16.
  */
-public class ConfigurationLoader {
+public class JsonConfigurationLoader {
 
     private String CONF_FILE_NAME = "sensors_configuration.json";
-    private static final String LOG_TAG = ConfigurationLoader.class.getSimpleName();
+    private static final String LOG_TAG = JsonConfigurationLoader.class.getSimpleName();
     private Context context;
 
-    public ConfigurationLoader(Context context) {
+    public JsonConfigurationLoader(Context context) {
         this.context = context;
     }
 
-    public ArrayList<ConfigurationBasicSensor> load() {
+    public ArrayList<BasicSensorConfiguration> load() {
 
         String line,line1 = "";
         try
@@ -52,8 +52,8 @@ public class ConfigurationLoader {
     }
 
 
-    public static ArrayList<ConfigurationBasicSensor> load(String strJson){
-        ArrayList<ConfigurationBasicSensor> list = new ArrayList();
+    public static ArrayList<BasicSensorConfiguration> load(String strJson){
+        ArrayList<BasicSensorConfiguration> list = new ArrayList();
 
         try {
             JSONArray sensorConfList = (new JSONObject(strJson)).getJSONArray("sensors_configurations");
@@ -61,7 +61,7 @@ public class ConfigurationLoader {
             for (int i = 0; i < sensorConfList.length(); i++) {
                 JSONObject sensorConf = sensorConfList.getJSONObject(i);
 
-                ConfigurationBasicSensor confClass = null;
+                BasicSensorConfiguration confClass = null;
                 // MANDATORY
                 int sensorID = sensorConf.getInt("sensorID");
                 String sensorName = sensorConf.getString("sensorName");
@@ -75,17 +75,15 @@ public class ConfigurationLoader {
                 if (sensorConf.has("androidSensorType") && sensorConf.has("androidParametersPositions")) {
                     int androidSensorType = sensorConf.getInt("androidSensorType");
                     int[] positions = convertToIntArr(sensorConf.getJSONArray("androidParametersPositions"));
-                    confClass = new ConfigurationBasicSensor(sensorID, sensorName, androidSensorType,
+                    confClass = new BasicSensorConfiguration(sensorID, sensorName, androidSensorType,
                             paramNames, paramTypes, positions, samplingRates, state);
                 }
                 // This one is for other sensors
                 else if (sensorConf.has("wrapperName")) {
                     String wrapperName = sensorConf.getString("wrapperName");
-                    confClass = new ConfigurationBasicSensor(sensorID, sensorName,
+                    confClass = new BasicSensorConfiguration(sensorID, sensorName,
                             paramNames, paramTypes, wrapperName, samplingRates, state);
                 }
-
-                ConfigurationMap.addSensorConfig(confClass);
 
                 list.add(confClass);
                 Log.d(LOG_TAG, confClass.toString());

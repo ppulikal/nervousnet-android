@@ -10,14 +10,18 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationBasicSensor;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationLoader;
+import ch.ethz.coss.nervousnet.vm.configuration.BasicSensorConfiguration;
+import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationManager;
+import ch.ethz.coss.nervousnet.vm.configuration.GeneralSensorConfiguration;
+import ch.ethz.coss.nervousnet.vm.configuration.JsonConfigurationLoader;
 import ch.ethz.coss.nervousnet.vm.configuration.StateDBManager;
+import ch.ethz.coss.nervousnet.vm.configuration.iConfigurationManager;
 import ch.ethz.coss.nervousnet.vm.events.NNEvent;
 import ch.ethz.coss.nervousnet.vm.nervousnet.ConfigurationError;
 import ch.ethz.coss.nervousnet.vm.nervousnet.NervousnetMain;
@@ -36,12 +40,6 @@ public class NervousnetVM {
     private UUID uuid;
     private Context context;
     private byte state = NervousnetVMConstants.STATE_PAUSED;
-
-
-    StateDBManager configStoreManager;
-
-
-    private SensorManager sensorManager;
     private Handler dataCollectionHandler = new Handler();
 
     private Runnable runnable = new Runnable() {
@@ -52,26 +50,20 @@ public class NervousnetVM {
             dataCollectionHandler.postDelayed(this, 1000);
         }
     };
-
-
     private iNervousnetMain nervousnetMain;
-
+    private iConfigurationManager configurationManager;
 
     public NervousnetVM(Context context) {
         this.context = context;
         this.nervousnetMain = new NervousnetMain(context);
-        this.configStoreManager = new StateDBManager(context);
+        this.configurationManager = new ConfigurationManager(context);
 
-        ConfigurationLoader loader = new ConfigurationLoader(context);
-        ArrayList<ConfigurationBasicSensor> configuration = loader.load();
-        for (ConfigurationBasicSensor conf : configuration){
+        for (GeneralSensorConfiguration conf : configurationManager.getAllConfigurations()){
             try {
-                int state = configStoreManager.getSensorState(conf.getSensorID());
-                conf.updateState(state);
-            } catch (NoSuchElementInDBException e) {
-                configStoreManager.storeSensorState(conf.getSensorID(), conf.getState());
+                nervousnetMain.registerSensor((BasicSensorConfiguration)conf);
+            } catch (Exception e){
+                e.printStackTrace();
             }
-            nervousnetMain.registerSensor(conf);
         }
 
         initSensors();
@@ -125,11 +117,19 @@ public class NervousnetVM {
 
 
     public void storeNervousnetState(byte state) {
-        configStoreManager.storeNervousnetState(state);
+        configurationManager.setNervousnetState(state);
     }
 
     public synchronized void updateSensorConfig(long id, byte state) {
-        configStoreManager.storeSensorState(id, state);
+        try {
+            int oldState = configurationManager.getSensorState(id);
+            if (state != oldState) {
+                configurationManager.setSensorState(id, state);
+                nervousnetMain.restartSensor(id);
+            }
+        } catch (NoSuchElementException e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -141,7 +141,7 @@ public class NervousnetVM {
     public byte getNervousnetState() {
         //return state;
         try {
-            return configStoreManager.getNervousnetState();
+            return (byte) configurationManager.getNervousnetState();
         } catch (NoSuchElementInDBException e) {
             e.printStackTrace();
             return NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE;
@@ -208,13 +208,10 @@ public class NervousnetVM {
         }
     }
 
-
-
     public byte getSensorState(long id) {
         try {
-            return configStoreManager.getSensorState(id);
-        } catch (NoSuchElementInDBException e) {
-            // TODO
+            return (byte) configurationManager.getSensorState(id);
+        } catch (NoSuchElementException e){
             return NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF;
         }
     }
@@ -225,22 +222,7 @@ public class NervousnetVM {
         Log.d(LOG_TAG, "onSensorStateEvent called ");
 
         if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_SENSOR_STATE_REQUEST) {
-            if (event.state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
-                nervousnetMain.stopSensor(event.sensorID);
-            } else {
-                try {
-                    ConfigurationBasicSensor conf = (ConfigurationBasicSensor)
-                            nervousnetMain.getConf(event.sensorID);
-                    ArrayList<Long> samplingRates = conf.getSamplingRates();
-                    long selectedRate = samplingRates.get(event.state-1);
-                    conf.setSamplingRate(selectedRate);
-                    nervousnetMain.restartSensor(event.sensorID);
-                    // Store state
-                    configStoreManager.storeSensorState(event.sensorID, event.state);
-                } catch (ConfigurationError configurationError) {
-                    configurationError.printStackTrace();
-                }
-            }
+            updateSensorConfig(event.sensorID, event.state);
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED));
         } else if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST) {
             //TODO nervousnetMain.updateSamplingRateAll(event.state);
@@ -251,8 +233,6 @@ public class NervousnetVM {
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED));
         } else if (event.eventType == NervousnetVMConstants.EVENT_START_NERVOUSNET_REQUEST) {
             storeNervousnetState(NervousnetVMConstants.STATE_RUNNING);
-            // Get config from db first
-
             nervousnetMain.startAllSensors();
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED));
         }

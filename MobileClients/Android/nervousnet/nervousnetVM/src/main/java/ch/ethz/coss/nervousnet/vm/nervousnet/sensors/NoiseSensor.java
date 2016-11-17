@@ -12,7 +12,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationBasicSensor;
+import ch.ethz.coss.nervousnet.vm.configuration.BasicSensorConfiguration;
 import ch.ethz.coss.nervousnet.vm.nervousnet.utils.FFT;
 
 public class NoiseSensor extends BaseSensor {
@@ -38,7 +38,7 @@ public class NoiseSensor extends BaseSensor {
     private Context context;
 
 
-    public NoiseSensor(Context context, ConfigurationBasicSensor conf) {
+    public NoiseSensor(Context context, BasicSensorConfiguration conf) {
         super(context, conf);
         this.context = context;
     }

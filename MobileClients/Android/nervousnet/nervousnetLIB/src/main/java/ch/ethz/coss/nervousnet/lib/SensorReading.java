@@ -17,7 +17,7 @@ public class SensorReading implements Parcelable {
     protected      long        sensorID;
     protected     String      sensorName;         // sensor name
     protected     long        timestampEpoch;     // timestamp
-    protected   List<String>  parametersNames;    // list of parameters' names
+    protected   ArrayList<String>  parametersNames;    // list of parameters' names
 
     // Data
     protected     ArrayList    values;
@@ -43,7 +43,7 @@ public class SensorReading implements Parcelable {
         return timestampEpoch;
     }
 
-    public List<String> getParametersNames() {
+    public ArrayList<String> getParametersNames() {
         return parametersNames;
     }
 

@@ -10,7 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationBasicSensor;
+import ch.ethz.coss.nervousnet.vm.configuration.BasicSensorConfiguration;
 
 public class BatterySensor extends BaseSensor {
     private static final String LOG_TAG = BatterySensor.class.getSimpleName();
@@ -32,7 +32,7 @@ public class BatterySensor extends BaseSensor {
     };
     private Context context;
 
-    public BatterySensor(Context context, ConfigurationBasicSensor conf) {
+    public BatterySensor(Context context, BasicSensorConfiguration conf) {
         super(context, conf);
         this.context = context;
     }
@@ -99,7 +99,7 @@ public class BatterySensor extends BaseSensor {
             return true;
         } catch (IllegalArgumentException e) {
             //NNLog.d(LOG_TAG, "Exception trying to close battery sensor");
-            e.printStackTrace();
+            //e.printStackTrace();
         } catch (NullPointerException e){
             e.printStackTrace();
         }

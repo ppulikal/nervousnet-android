@@ -3,7 +3,7 @@ package ch.ethz.coss.nervousnet.vm.nervousnet;
 import java.util.ArrayList;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationGeneralSensor;
+import ch.ethz.coss.nervousnet.vm.configuration.GeneralSensorConfiguration;
 
 /**
  * Created by ales on 16/11/16.
@@ -21,6 +21,6 @@ public interface iNervousnetMain {
     public void restartSensor(long sensorID);
     public void updateSamplingRate(long sensorID, long newSamplingRate);
     public void updateSamplingRateAll(long newSamplingRate);
-    public void registerSensor(ConfigurationGeneralSensor config);
-    public ConfigurationGeneralSensor getConf(long sensorID) throws ConfigurationError;
+    public void registerSensor(GeneralSensorConfiguration config);
+    public GeneralSensorConfiguration getConf(long sensorID) throws ConfigurationError;
 }

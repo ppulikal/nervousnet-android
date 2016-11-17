@@ -6,8 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationBasicSensor;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationMap;
+import ch.ethz.coss.nervousnet.vm.configuration.BasicSensorConfiguration;
 import ch.ethz.coss.nervousnet.vm.nervousnet.database.NervousnetDBManager;
 
 /**
@@ -21,7 +20,7 @@ public abstract class BaseSensor {
     private NervousnetDBManager databaseHandler;
 
     // Sensor configuration
-    protected ConfigurationBasicSensor configuration;
+    protected BasicSensorConfiguration configuration;
     protected long sensorID;
     protected String sensorName;
     protected long samplingRate;
@@ -29,7 +28,7 @@ public abstract class BaseSensor {
 
     private long nextSampling = 0;
 
-    public BaseSensor(Context context, ConfigurationBasicSensor conf){
+    public BaseSensor(Context context, BasicSensorConfiguration conf){
         this.databaseHandler = NervousnetDBManager.getInstance(context);
         this.configuration = conf;
         this.sensorID = conf.getSensorID();

@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationBasicSensor;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationGeneralSensor;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationLoader;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationMap;
+import ch.ethz.coss.nervousnet.vm.configuration.BasicSensorConfiguration;
+import ch.ethz.coss.nervousnet.vm.configuration.GeneralSensorConfiguration;
+import ch.ethz.coss.nervousnet.vm.configuration.JsonConfigurationLoader;
 import ch.ethz.coss.nervousnet.vm.nervousnet.database.NervousnetDBManager;
-import ch.ethz.coss.nervousnet.vm.nervousnet.database.NoSuchElementInDBException;
 import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.BaseSensor;
 
 /**
@@ -22,14 +20,14 @@ public class NervousnetMain implements iNervousnetMain {
     Context context;
     private NervousnetDBManager nervousnetDB;
     private HashMap<Long, BaseSensor> wrappers = new HashMap();
-    HashMap<Long, ConfigurationGeneralSensor> configMap;
+    HashMap<Long, GeneralSensorConfiguration> configMap;
 
     public NervousnetMain(Context context){
         this.context = context;
         this.configMap = new HashMap<>();
         //deleteDatabase();
         this.nervousnetDB = NervousnetDBManager.getInstance(context);
-        ConfigurationLoader confLoader = new ConfigurationLoader(context);
+        JsonConfigurationLoader confLoader = new JsonConfigurationLoader(context);
         stopAllSensors();
     }
 
@@ -65,7 +63,7 @@ public class NervousnetMain implements iNervousnetMain {
         nervousnetDB.removeOldReadings(sensorID, threshold);
     }
 
-    private void initSensor(Context context, ConfigurationBasicSensor sensorConf)
+    private void initSensor(Context context, BasicSensorConfiguration sensorConf)
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, InstantiationException {
 
@@ -83,7 +81,7 @@ public class NervousnetMain implements iNervousnetMain {
 
             // Automatically get the class from the config file
             BaseSensor wrapper = (BaseSensor) Class.forName(className)
-                    .getConstructor(Context.class, ConfigurationBasicSensor.class)
+                    .getConstructor(Context.class, BasicSensorConfiguration.class)
                     .newInstance(context, sensorConf);
 
             wrappers.put(sensorConf.getSensorID(), wrapper);
@@ -94,9 +92,9 @@ public class NervousnetMain implements iNervousnetMain {
     }
 
     public void startAllSensors(){
-        for (ConfigurationGeneralSensor conf : configMap.values())
+        for (GeneralSensorConfiguration conf : configMap.values())
             try {
-                initSensor(context, (ConfigurationBasicSensor) conf);
+                initSensor(context, (BasicSensorConfiguration) conf);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (NoSuchMethodException e) {
@@ -126,7 +124,7 @@ public class NervousnetMain implements iNervousnetMain {
     }
 
     public void stopAllSensors(){
-        for (ConfigurationGeneralSensor conf : configMap.values()){
+        for (GeneralSensorConfiguration conf : configMap.values()){
             stopSensor(conf.getSensorID());
         }
     }
@@ -134,7 +132,7 @@ public class NervousnetMain implements iNervousnetMain {
     public void restartSensor(long sensorID){
 
         try {
-            initSensor(context, (ConfigurationBasicSensor) ConfigurationMap.getSensorConfig(sensorID));
+            initSensor(context, (BasicSensorConfiguration) configMap.get(sensorID));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -156,7 +154,7 @@ public class NervousnetMain implements iNervousnetMain {
     }
 
     public void updateSamplingRateAll(long newSamplingRate){
-        for (ConfigurationGeneralSensor conf : configMap.values())
+        for (GeneralSensorConfiguration conf : configMap.values())
             updateSamplingRate(conf.getSensorID(), newSamplingRate);
     }
 
@@ -168,17 +166,17 @@ public class NervousnetMain implements iNervousnetMain {
         }
     }
 
-    public void registerSensor(ConfigurationGeneralSensor config){
+    public void registerSensor(GeneralSensorConfiguration config){
         configMap.put(config.getSensorID(), config);
         nervousnetDB.createTableIfNotExists(config);
     }
 
 
-    public ConfigurationGeneralSensor getConf(long sensorID) throws ConfigurationError {
+    public GeneralSensorConfiguration getConf(long sensorID) throws ConfigurationError {
         if (configMap.containsKey(sensorID)) {
             return configMap.get(sensorID);
         } else {
-            throw new ConfigurationError("Sensor " + sensorID + " is not regitered.");
+            throw new ConfigurationError("Sensor " + sensorID + " is not registered.");
         }
     }
 }

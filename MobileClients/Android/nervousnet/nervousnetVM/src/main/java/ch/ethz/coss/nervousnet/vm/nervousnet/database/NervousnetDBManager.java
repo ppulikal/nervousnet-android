@@ -16,8 +16,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationGeneralSensor;
-import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationMap;
+import ch.ethz.coss.nervousnet.vm.configuration.GeneralSensorConfiguration;
 
 
 /**
@@ -61,17 +60,17 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
         return reading;
     }
 
-    public ArrayList<SensorReading> getReadings(ConfigurationGeneralSensor config){
+    public ArrayList<SensorReading> getReadings(GeneralSensorConfiguration config){
         String query = "SELECT * FROM " + getTableName(config.getSensorID());
         return getReadings(config, query);
     }
 
-    public ArrayList<SensorReading> getReadings(ConfigurationGeneralSensor config, long start, long stop){
+    public ArrayList<SensorReading> getReadings(GeneralSensorConfiguration config, long start, long stop){
         String query = "SELECT * FROM " + getTableName(config.getSensorID()) + " WHERE " + ConstantsDB.TIMESTAMP + " >= " + start + " AND " + ConstantsDB.TIMESTAMP + " <= " + stop + ";";
         return getReadings(config, query);
     }
 
-    public ArrayList<SensorReading> getReadings(ConfigurationGeneralSensor config, long start, long stop,
+    public ArrayList<SensorReading> getReadings(GeneralSensorConfiguration config, long start, long stop,
                                                 ArrayList<String> selectColumns){
         String cols = TextUtils.join(", ", selectColumns);
         String query = "SELECT " + ConstantsDB.ID + ", " + ConstantsDB.TIMESTAMP + ", " + cols + " " +
@@ -81,7 +80,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
     }
 
 
-    public ArrayList<SensorReading> getLatestReadingUnderRange(ConfigurationGeneralSensor config,
+    public ArrayList<SensorReading> getLatestReadingUnderRange(GeneralSensorConfiguration config,
                                                                long start, long stop,
                                                                ArrayList<String> selectColumns) {
         String cols = TextUtils.join(", ", selectColumns);
@@ -93,7 +92,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
         return readings;
     }
 
-    public ArrayList<SensorReading> getReadings(ConfigurationGeneralSensor config, String query) {
+    public ArrayList<SensorReading> getReadings(GeneralSensorConfiguration config, String query) {
 
         ArrayList<String> sensorParamNames = config.getParametersNames();
 
@@ -164,7 +163,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
         db.close();
     }
 
-    public synchronized void createTableIfNotExists(ConfigurationGeneralSensor config){
+    public synchronized void createTableIfNotExists(GeneralSensorConfiguration config){
         //Log.d(LOG_TAG, "Create table " + tableName);
         String sql = "CREATE TABLE IF NOT EXISTS " + getTableName(config.getSensorID()) + " ( " +
                 ConstantsDB.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -210,11 +209,10 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
 
             insertList.put(ConstantsDB.TIMESTAMP, reading.getTimestampEpoch());
 
-            ConfigurationGeneralSensor conf = ConfigurationMap.getSensorConfig(reading.getSensorID());
-            ArrayList<String> paramNames = conf.getParametersNames();
+            ArrayList<String> paramNames = reading.getParametersNames();
             ArrayList<Object> values = reading.getValues();
 
-            for (int i = 0; i < conf.getDimension(); i++) {
+            for (int i = 0; i < paramNames.size(); i++) {
                 String name = paramNames.get(i);
                 Object val = values.get(i);
 
@@ -242,7 +240,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
 
             }
 
-            db.insert(getTableName(conf.getSensorID()), null, insertList);
+            db.insert(getTableName(reading.getSensorID()), null, insertList);
         }
         db.close();
     }
