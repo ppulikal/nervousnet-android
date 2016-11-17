@@ -131,7 +131,7 @@ public class BatteryFragment extends BaseFragment {
             ArrayList values = reading.getValues();
 
             TextView percent = (TextView) getActivity().findViewById(R.id.battery_percent);
-            percent.setText("" + values.get(0) + " %");
+            percent.setText("" + (float)values.get(11)*100 + " %");
 
 
             TextView isCharging = (TextView) getActivity().findViewById(R.id.battery_isCharging);

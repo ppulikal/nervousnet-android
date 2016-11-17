@@ -6,8 +6,8 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.nervousnet.configuration.ConfigurationBasicSensor;
-import ch.ethz.coss.nervousnet.vm.nervousnet.configuration.ConfigurationMap;
+import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationBasicSensor;
+import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationMap;
 import ch.ethz.coss.nervousnet.vm.nervousnet.database.NervousnetDBManager;
 
 /**
@@ -21,6 +21,7 @@ public abstract class BaseSensor {
     private NervousnetDBManager databaseHandler;
 
     // Sensor configuration
+    protected ConfigurationBasicSensor configuration;
     protected long sensorID;
     protected String sensorName;
     protected long samplingRate;
@@ -28,32 +29,27 @@ public abstract class BaseSensor {
 
     private long nextSampling = 0;
 
-    public BaseSensor(Context context, long sensorID){
+    public BaseSensor(Context context, ConfigurationBasicSensor conf){
         this.databaseHandler = NervousnetDBManager.getInstance(context);
-
-        ConfigurationBasicSensor confSensor = (ConfigurationBasicSensor) ConfigurationMap.getSensorConfig(sensorID);
-        this.sensorID = sensorID;
-        this.sensorName = confSensor.getSensorName();
-        this.paramNames = confSensor.getParametersNames();
-        this.databaseHandler.createTableIfNotExists(sensorID);
-        this.samplingRate = confSensor.getSamplingRate();
+        this.configuration = conf;
+        this.sensorID = conf.getSensorID();
+        this.sensorName = conf.getSensorName();
+        this.paramNames = conf.getParametersNames();
+        this.databaseHandler.createTableIfNotExists(conf);
     }
 
     public void push(SensorReading reading){
         if (reading.getTimestampEpoch() >= nextSampling) {
             Log.d(LOG_TAG, reading.toString());
-            nextSampling = reading.getTimestampEpoch() + samplingRate;
+            nextSampling = reading.getTimestampEpoch() + configuration.getSamplingRate();
             databaseHandler.store(reading);
         }
     }
 
     public void start(){
         stopListener();
-        ConfigurationBasicSensor confSensor = (ConfigurationBasicSensor) ConfigurationMap.getSensorConfig(sensorID);
-        this.sensorName = confSensor.getSensorName();
-        this.paramNames = confSensor.getParametersNames();
-        this.databaseHandler.createTableIfNotExists(sensorID);
-        this.samplingRate = confSensor.getSamplingRate();
+        this.databaseHandler.createTableIfNotExists(configuration);
+        this.samplingRate = configuration.getSamplingRate();
         startListener();
     }
 

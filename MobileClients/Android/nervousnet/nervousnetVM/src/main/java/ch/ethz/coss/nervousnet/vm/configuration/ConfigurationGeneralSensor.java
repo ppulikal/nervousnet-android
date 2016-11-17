@@ -1,4 +1,4 @@
-package ch.ethz.coss.nervousnet.vm.nervousnet.configuration;
+package ch.ethz.coss.nervousnet.vm.configuration;
 
 import android.text.TextUtils;
 

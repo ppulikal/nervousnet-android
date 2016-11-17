@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationBasicSensor;
 
 public class BatterySensor extends BaseSensor {
     private static final String LOG_TAG = BatterySensor.class.getSimpleName();
@@ -31,8 +32,8 @@ public class BatterySensor extends BaseSensor {
     };
     private Context context;
 
-    public BatterySensor(Context context, long sensorID) {
-        super(context, sensorID);
+    public BatterySensor(Context context, ConfigurationBasicSensor conf) {
+        super(context, conf);
         this.context = context;
     }
 

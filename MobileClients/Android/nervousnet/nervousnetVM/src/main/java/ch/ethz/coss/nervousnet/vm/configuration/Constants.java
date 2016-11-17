@@ -1,4 +1,4 @@
-package ch.ethz.coss.nervousnet.vm.nervousnet.database;
+package ch.ethz.coss.nervousnet.vm.configuration;
 
 /**
  * Created by ales on 16/11/16.

@@ -13,12 +13,12 @@ public class NervousnetVMConstants {
     public final static String SERVICE_PREFS = "ServicePreferences";
     public final static String UPLOAD_PREFS = "UploadPreferences";
 
-    public static byte SENSOR_STATE_NOT_AVAILABLE = -2;
-    public static byte SENSOR_STATE_AVAILABLE_PERMISSION_DENIED = -1;
-    public static byte SENSOR_STATE_AVAILABLE_BUT_OFF = 0;
-    public static byte SENSOR_STATE_AVAILABLE_DELAY_LOW = 1;
-    public static byte SENSOR_STATE_AVAILABLE_DELAY_MED = 2;
-    public static byte SENSOR_STATE_AVAILABLE_DELAY_HIGH = 3;
+    public final static byte SENSOR_STATE_NOT_AVAILABLE = -2;
+    public final static byte SENSOR_STATE_AVAILABLE_PERMISSION_DENIED = -1;
+    public final static byte SENSOR_STATE_AVAILABLE_BUT_OFF = 0;
+    public final static byte SENSOR_STATE_AVAILABLE_DELAY_LOW = 1;
+    public final static byte SENSOR_STATE_AVAILABLE_DELAY_MED = 2;
+    public final static byte SENSOR_STATE_AVAILABLE_DELAY_HIGH = 3;
 
 
 
@@ -40,10 +40,10 @@ public class NervousnetVMConstants {
 
     public static String[] sensor_freq_labels = {"Off", "Low", "Medium", "High"};
 
-    public static int[][] sensor_freq_constants = {{-1, 1000000, 250000, 60000}, {-1, 300000, 120000, 60000},
+    /*public static int[][] sensor_freq_constants = {{-1, 1000000, 250000, 60000}, {-1, 300000, 120000, 60000},
             {-1, 1000000, 250000, 60000}, {-1, 300000, 120000, 60000}, {-1, 300000, 120000, 60000}, {-1, 300000, 120000, 60000},
             {-1, 300000, 120000, 60000}
-    };
+    };*/
 
     public static byte EVENT_PAUSE_NERVOUSNET_REQUEST = 0;
     public static byte EVENT_START_NERVOUSNET_REQUEST = 1;

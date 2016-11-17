@@ -1,10 +1,12 @@
-package ch.ethz.coss.nervousnet.vm.nervousnet.database;
+package ch.ethz.coss.nervousnet.vm.configuration;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import ch.ethz.coss.nervousnet.vm.nervousnet.database.NoSuchElementInDBException;
 
 /**
  * Created by ales on 16/11/16.

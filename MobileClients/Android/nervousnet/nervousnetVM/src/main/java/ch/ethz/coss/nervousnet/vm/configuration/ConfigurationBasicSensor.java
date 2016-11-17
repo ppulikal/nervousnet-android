@@ -1,10 +1,11 @@
-package ch.ethz.coss.nervousnet.vm.nervousnet.configuration;
+package ch.ethz.coss.nervousnet.vm.configuration;
 
 import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.AndroidSensor;
 
 /**
@@ -14,6 +15,7 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
 
     private int androidSensorType;
     private int[] androidParametersPositions;
+    private int state;
     private long samplingRate;
     private ArrayList<Long> samplingRates;
     private String wrapperName;
@@ -23,24 +25,24 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
                                     ArrayList<String> parametersTypes,
                                     int[] androidParametersPositions,
                                     ArrayList<Long> samplingRates,
-                                    int selectedSamplingRateIndex) {
+                                    int state) {
         super(sensorID, sensorName, parametersNames, parametersTypes);
         this.androidSensorType = androidSensorType;
         this.androidParametersPositions = androidParametersPositions;
-        this.samplingRate = samplingRates.get(selectedSamplingRateIndex);
         this.samplingRates = samplingRates;
         this.wrapperName = AndroidSensor.class.getSimpleName();
+        updateState(state);
     }
 
     public ConfigurationBasicSensor(int sensorID, String sensorName, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
                                     String wrapperName,
                                     ArrayList<Long> samplingRates,
-                                    int selectedSamplingRateIndex) {
+                                    int state) {
         super(sensorID, sensorName, parametersNames, parametersTypes);
-        this.samplingRate = samplingRates.get(selectedSamplingRateIndex);
         this.samplingRates = samplingRates;
         this.wrapperName = wrapperName;
+        updateState(state);
     }
 
     public String getWrapperName() {
@@ -61,6 +63,30 @@ public class ConfigurationBasicSensor extends ConfigurationGeneralSensor{
 
     public void setSamplingRate(long samplingRate) {
         this.samplingRate = samplingRate;
+    }
+
+    public void updateState(int state){
+        this.state = state;
+        switch (state){
+            case NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF:
+                this.samplingRate = -1; break;
+            case NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW:
+                this.samplingRate = samplingRates.get(0); break;
+            case NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED:
+                this.samplingRate = samplingRates.get(1); break;
+            case NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH:
+                this.samplingRate = samplingRates.get(2); break;
+            default:
+                this.samplingRate = -1; break;
+        }
+    }
+
+    public ArrayList<Long> getSamplingRates() {
+        return samplingRates;
+    }
+
+    public int getState() {
+        return state;
     }
 
     @Override

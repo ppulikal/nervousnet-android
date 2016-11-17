@@ -12,8 +12,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
-import ch.ethz.coss.nervousnet.vm.nervousnet.configuration.ConfigurationBasicSensor;
-import ch.ethz.coss.nervousnet.vm.nervousnet.configuration.ConfigurationMap;
+import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationBasicSensor;
+import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationMap;
 
 public class AndroidSensor extends BaseSensor  implements SensorEventListener {
 
@@ -27,10 +27,10 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
     protected Lock listenerMutex = new ReentrantLock();
 
 
-    public AndroidSensor(Context context, long sensorID) {
+    public AndroidSensor(Context context, ConfigurationBasicSensor conf) {
         // Abstract class will take care of acquiring parameter names and
         // everything that is needed to initialize this listener
-        super(context, sensorID);
+        super(context, conf);
 
         this.mSensorManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
         ConfigurationBasicSensor confSensor = (ConfigurationBasicSensor) ConfigurationMap.getSensorConfig(sensorID);

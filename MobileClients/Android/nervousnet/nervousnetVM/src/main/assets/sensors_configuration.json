@@ -18,7 +18,7 @@
       ],
       "androidParametersPositions" : [ 0, 1, 2 ],
       "samplingRates" : [2000, 250, 60],
-      "initialSamplingRateIndex" : 0
+      "initialState" : 1
     },
 
     {
@@ -55,7 +55,7 @@
         "float"
       ],
       "samplingRates" : [2000, 250, 60],
-      "initialSamplingRateIndex" : 0,
+      "initialState" : 0,
       "wrapperName" : "BatterySensor"
     },
 
@@ -73,7 +73,7 @@
       ],
       "androidParametersPositions" : [ 0 ],
       "samplingRates" : [2000, 250, 60],
-      "initialSamplingRateIndex" : 0
+      "initialState" : 0
     },
 
     {
@@ -94,7 +94,7 @@
       ],
       "androidParametersPositions" : [ 0, 1, 2 ],
       "samplingRates" : [2000, 250, 60],
-      "initialSamplingRateIndex" : 0
+      "initialState" : 0
     }
 
   ]

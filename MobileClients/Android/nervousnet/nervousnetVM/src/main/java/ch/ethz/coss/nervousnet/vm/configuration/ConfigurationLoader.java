@@ -1,4 +1,4 @@
-package ch.ethz.coss.nervousnet.vm.nervousnet.configuration;
+package ch.ethz.coss.nervousnet.vm.configuration;
 
 import android.content.Context;
 import android.util.Log;
@@ -67,7 +67,7 @@ public class ConfigurationLoader {
                 String sensorName = sensorConf.getString("sensorName");
                 ArrayList<String> paramNames = convertToArr(sensorConf.getJSONArray("parametersNames"));
                 ArrayList<String> paramTypes = convertToArr(sensorConf.getJSONArray("parametersTypes"));
-                int samplingRateIndex = sensorConf.getInt("initialSamplingRateIndex");
+                int state = sensorConf.getInt("initialState");
                 ArrayList<Long> samplingRates = convertToArrLong(sensorConf.getJSONArray("samplingRates"));
                 // OPTIONAL
 
@@ -76,13 +76,13 @@ public class ConfigurationLoader {
                     int androidSensorType = sensorConf.getInt("androidSensorType");
                     int[] positions = convertToIntArr(sensorConf.getJSONArray("androidParametersPositions"));
                     confClass = new ConfigurationBasicSensor(sensorID, sensorName, androidSensorType,
-                            paramNames, paramTypes, positions, samplingRates, samplingRateIndex);
+                            paramNames, paramTypes, positions, samplingRates, state);
                 }
                 // This one is for other sensors
                 else if (sensorConf.has("wrapperName")) {
                     String wrapperName = sensorConf.getString("wrapperName");
                     confClass = new ConfigurationBasicSensor(sensorID, sensorName,
-                            paramNames, paramTypes, wrapperName, samplingRates, samplingRateIndex);
+                            paramNames, paramTypes, wrapperName, samplingRates, state);
                 }
 
                 ConfigurationMap.addSensorConfig(confClass);

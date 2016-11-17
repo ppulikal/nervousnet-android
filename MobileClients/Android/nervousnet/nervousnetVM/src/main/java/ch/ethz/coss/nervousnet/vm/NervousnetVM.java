@@ -15,8 +15,11 @@ import java.util.UUID;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.Utils;
-import ch.ethz.coss.nervousnet.vm.nervousnet.database.StateDBManager;
+import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationBasicSensor;
+import ch.ethz.coss.nervousnet.vm.configuration.ConfigurationLoader;
+import ch.ethz.coss.nervousnet.vm.configuration.StateDBManager;
 import ch.ethz.coss.nervousnet.vm.events.NNEvent;
+import ch.ethz.coss.nervousnet.vm.nervousnet.ConfigurationError;
 import ch.ethz.coss.nervousnet.vm.nervousnet.NervousnetMain;
 import ch.ethz.coss.nervousnet.vm.nervousnet.database.NoSuchElementInDBException;
 import ch.ethz.coss.nervousnet.vm.nervousnet.iNervousnetMain;
@@ -59,6 +62,18 @@ public class NervousnetVM {
         this.nervousnetMain = new NervousnetMain(context);
         this.configStoreManager = new StateDBManager(context);
 
+        ConfigurationLoader loader = new ConfigurationLoader(context);
+        ArrayList<ConfigurationBasicSensor> configuration = loader.load();
+        for (ConfigurationBasicSensor conf : configuration){
+            try {
+                int state = configStoreManager.getSensorState(conf.getSensorID());
+                conf.updateState(state);
+            } catch (NoSuchElementInDBException e) {
+                configStoreManager.storeSensorState(conf.getSensorID(), conf.getState());
+            }
+            nervousnetMain.registerSensor(conf);
+        }
+
         initSensors();
 
         if (state == NervousnetVMConstants.STATE_RUNNING)
@@ -73,15 +88,12 @@ public class NervousnetVM {
     }
 
     public void startSensors() {
-
-
         nervousnetMain.startAllSensors();
         dataCollectionHandler.postDelayed(runnable, 1000);
 
     }
 
     public void stopSensors() {
-
         nervousnetMain.stopAllSensors();
         dataCollectionHandler.removeCallbacks(runnable);
 
@@ -202,8 +214,8 @@ public class NervousnetVM {
         try {
             return configStoreManager.getSensorState(id);
         } catch (NoSuchElementInDBException e) {
-            e.printStackTrace();
-            return NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE;
+            // TODO
+            return NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF;
         }
     }
 
@@ -216,7 +228,18 @@ public class NervousnetVM {
             if (event.state == NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF){
                 nervousnetMain.stopSensor(event.sensorID);
             } else {
-                nervousnetMain.updateSamplingRate(event.sensorID, event.state);
+                try {
+                    ConfigurationBasicSensor conf = (ConfigurationBasicSensor)
+                            nervousnetMain.getConf(event.sensorID);
+                    ArrayList<Long> samplingRates = conf.getSamplingRates();
+                    long selectedRate = samplingRates.get(event.state-1);
+                    conf.setSamplingRate(selectedRate);
+                    nervousnetMain.restartSensor(event.sensorID);
+                    // Store state
+                    configStoreManager.storeSensorState(event.sensorID, event.state);
+                } catch (ConfigurationError configurationError) {
+                    configurationError.printStackTrace();
+                }
             }
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED));
         } else if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST) {
@@ -228,6 +251,8 @@ public class NervousnetVM {
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED));
         } else if (event.eventType == NervousnetVMConstants.EVENT_START_NERVOUSNET_REQUEST) {
             storeNervousnetState(NervousnetVMConstants.STATE_RUNNING);
+            // Get config from db first
+
             nervousnetMain.startAllSensors();
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED));
         }
