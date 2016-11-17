@@ -39,7 +39,6 @@ public class NervousnetVM {
 
     private UUID uuid;
     private Context context;
-    private byte state = NervousnetVMConstants.STATE_PAUSED;
     private Handler dataCollectionHandler = new Handler();
 
     private Runnable runnable = new Runnable() {
@@ -68,7 +67,7 @@ public class NervousnetVM {
 
         initSensors();
 
-        if (state == NervousnetVMConstants.STATE_RUNNING)
+        if (configurationManager.getNervousnetState() == NervousnetVMConstants.STATE_RUNNING)
             startSensors();
 
         EventBus.getDefault().register(this);
@@ -140,12 +139,7 @@ public class NervousnetVM {
 
     public byte getNervousnetState() {
         //return state;
-        try {
-            return (byte) configurationManager.getNervousnetState();
-        } catch (NoSuchElementInDBException e) {
-            e.printStackTrace();
-            return NervousnetVMConstants.SENSOR_STATE_NOT_AVAILABLE;
-        }
+        return (byte) configurationManager.getNervousnetState();
     }
 
 
@@ -158,7 +152,7 @@ public class NervousnetVM {
     public synchronized void getReading(long sensorID, RemoteCallback cb) {
         NNLog.d(LOG_TAG, "getReading with callback " + cb);
 
-        if (state == NervousnetVMConstants.STATE_PAUSED) {
+        if (configurationManager.getNervousnetState() == NervousnetVMConstants.STATE_PAUSED) {
             NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
             try {
                 cb.failure(Utils.getErrorReading(101));
@@ -184,7 +178,7 @@ public class NervousnetVM {
 
     public synchronized void getReadings(long sensorID, long startTime, long endTime, RemoteCallback cb) {
 
-        if (state == NervousnetVMConstants.STATE_PAUSED) {
+        if (configurationManager.getNervousnetState() == NervousnetVMConstants.STATE_PAUSED) {
             NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
             try {
                 cb.failure(Utils.getErrorReading(101));

@@ -15,6 +15,6 @@ public interface iConfigurationManager {
     public GeneralSensorConfiguration getConfiguration(long sensorID) throws NoSuchElementException;
     public int getSensorState(long sensorID) throws NoSuchElementException;
     public void setSensorState(long sensorID, int state) throws NoSuchElementException;
-    public int getNervousnetState() throws NoSuchElementInDBException;
+    public int getNervousnetState();
     public void setNervousnetState(int state);
 }

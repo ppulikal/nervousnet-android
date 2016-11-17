@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -38,9 +40,15 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
 
     private NervousnetDBManager(Context context) {
         super(context, ConstantsDB.DATABASE_NAME, null, ConstantsDB.DATABASE_VERSION);
+        instance = this;
+        startSchedluer();
+    }
+
+    private void startSchedluer(){
         this.scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this, initialDelayForStoring,
+        scheduler.scheduleAtFixedRate(instance, initialDelayForStoring,
                 storingRate, TimeUnit.MILLISECONDS);
+        Log.d("STORE", "Start NervousnetDBManager scheduler");
     }
 
     public static NervousnetDBManager getInstance(Context context){
@@ -245,8 +253,71 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
         db.close();
     }
 
+    private synchronized void store(Collection<ArrayList<SensorReading>> readingsList){
+        //Log.d("NervousnetDBmanager", "" + readings);
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        boolean allEmpty = true;
+        for (ArrayList<SensorReading> readings : readingsList) {
+            Log.d("STORE", "Store " + readings.get(0).getSensorName() + " size " + readings.size());
+
+            if (!readings.isEmpty()) allEmpty = false;
+
+            for (SensorReading reading : readings) {
+                //Log.d("NervousnetDBmanager", "Store " + reading);
+
+                ContentValues insertList = new ContentValues();
+
+                insertList.put(ConstantsDB.TIMESTAMP, reading.getTimestampEpoch());
+
+                ArrayList<String> paramNames = reading.getParametersNames();
+                ArrayList<Object> values = reading.getValues();
+
+                for (int i = 0; i < paramNames.size(); i++) {
+                    String name = paramNames.get(i);
+                    Object val = values.get(i);
+
+                    if (val.getClass().equals(String.class))
+                        insertList.put(name, (String) val);
+
+
+                    else if (val instanceof Integer)
+                        insertList.put(name, (Integer) val);
+
+
+                    else if (val instanceof Double)
+                        insertList.put(name, (Double) val);
+
+
+                    else if (val instanceof Float)
+                        insertList.put(name, (Float) val);
+
+
+                    else if (val instanceof Long)
+                        insertList.put(name, (Long) val);
+
+                    else
+                        insertList.putNull(name);
+
+                }
+
+                db.insert(getTableName(reading.getSensorID()), null, insertList);
+            }
+        }
+        db.close();
+
+        if (allEmpty){
+            this.scheduler.shutdown();
+            Log.d("STORE", "Shutdown the NervousnetDBManager");
+        }
+    }
+
+
 
     public void store(SensorReading reading){
+        if (scheduler.isShutdown()){
+            startSchedluer();
+        }
         //Log.d(LOG_TAG, "Latest reading " + reading);
         LATEST_SENSORS_DATA.put(reading.getSensorID(), reading);
         if (TEMPORARY_STORAGE.containsKey(reading.getSensorID())) {
@@ -287,10 +358,12 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
 
         HashMap<Long, ArrayList<SensorReading>> tmp = TEMPORARY_STORAGE;
         TEMPORARY_STORAGE = new HashMap<>();
-        for (ArrayList<SensorReading> readings : tmp.values()){
-            store(readings);
-            Log.d("STORE", "Store " + readings.get(0).getSensorName() + " size " + readings.size());
-        }
+
+        long startTime = System.currentTimeMillis();
+        store(tmp.values());
+        long stopTime = System.currentTimeMillis();
+        long duration = stopTime - startTime;
+        Log.d("STORE", "Store all readings in " + duration + "ms");
 
     }
 }

@@ -95,7 +95,22 @@
       "androidParametersPositions" : [ 0, 1, 2 ],
       "samplingRates" : [2000, 250, 60],
       "initialState" : 0
-    }
+    },
 
+    {
+      "sensorID" : 5,
+      "sensorName" : "Noise",
+      "parametersNames" :
+      [
+        "Db"
+      ],
+      "parametersTypes" :
+      [
+        "int"
+      ],
+      "samplingRates" : [2000, 250, 60],
+      "initialState" : 0,
+      "wrapperName" : "NoiseSensor"
+    }
   ]
 }

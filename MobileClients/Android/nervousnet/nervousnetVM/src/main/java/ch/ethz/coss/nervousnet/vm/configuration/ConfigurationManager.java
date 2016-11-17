@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.nervousnet.database.NoSuchElementInDBException;
 
 /**
@@ -66,8 +67,12 @@ public class ConfigurationManager implements iConfigurationManager {
     }
 
     @Override
-    public int getNervousnetState() throws NoSuchElementInDBException {
-        return stateDBManager.getNervousnetState();
+    public int getNervousnetState() {
+        try {
+            return stateDBManager.getNervousnetState();
+        } catch (NoSuchElementInDBException e) {
+            return NervousnetVMConstants.STATE_PAUSED;
+        }
     }
 
     @Override
