@@ -21,7 +21,7 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub.ui;
 
@@ -46,9 +46,7 @@ import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.ImageAdapter;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
-/**
- * @author prasad
- */
+
 public class ShowcaseActivity extends BaseActivity {
 
     private static final String LOG_TAG = ShowcaseActivity.class.getSimpleName();

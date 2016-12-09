@@ -21,7 +21,7 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub.ui;
 
@@ -77,6 +77,9 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.events.NNEvent;
 
+/**
+ * Activity for displaying the Sensor Display Screen.
+ */
 public class SensorDisplayActivity extends FragmentActivity implements ActionBarImplementation, NervousnetServiceConnectionListener {
     private static BaseFragment fragment;
     int m_interval = 300; // 100 milliseconds by default, can be changed later
@@ -98,9 +101,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(sapAdapter);
-//        if (savedInstanceState == null) {
         initServiceConnection();
-//        }
     }
 
     private void initServiceConnection() {
@@ -113,7 +114,6 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         NNLog.d("SensorDisplayActivityon", "onNNEvent called ");
 
         if (event.eventType == NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED || event.eventType == NervousnetVMConstants.EVENT_NERVOUSNET_STATE_UPDATED) {
-//            getSupportFragmentManager().beginTransaction().detach(sapAdapter.getItem(viewPager.getCurrentItem())).commit();
             finish();
             startActivity(getIntent());
             NNLog.d("SensorDisplayActivityon", "onNNEvent 2 called ");

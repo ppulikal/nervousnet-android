@@ -21,7 +21,7 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 
 package ch.ethz.coss.nervousnet.lib;
@@ -29,9 +29,7 @@ package ch.ethz.coss.nervousnet.lib;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * @author prasad
- */
+
 public class LightReading extends SensorReading {
 
     public static final Parcelable.Creator<LightReading> CREATOR = new Parcelable.Creator<LightReading>() {

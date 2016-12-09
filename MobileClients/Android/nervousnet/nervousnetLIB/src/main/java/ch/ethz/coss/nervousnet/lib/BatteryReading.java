@@ -21,7 +21,7 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 
 package ch.ethz.coss.nervousnet.lib;
@@ -30,9 +30,7 @@ import android.os.BatteryManager;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * @author prasad
- */
+
 public class BatteryReading extends SensorReading {
 
     public static final Parcelable.Creator<BatteryReading> CREATOR = new Parcelable.Creator<BatteryReading>() {

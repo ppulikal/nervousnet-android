@@ -21,7 +21,7 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub;
 
@@ -55,6 +55,10 @@ public class TermsOfUse {
         this.mActivity = context;
     }
 
+    /**
+     * Method to display terms and conditions after first Installation and from about screen.
+     * @param showApproveButtons - boolean to show Accept, Reject Buttons.
+     */
     public void showTerms(boolean showApproveButtons) {
 
         final String versionKey;

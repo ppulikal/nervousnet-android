@@ -23,7 +23,7 @@ package ch.ethz.coss.nervousnet.lib;
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 public interface NervousnetServiceConnectionListener {
 

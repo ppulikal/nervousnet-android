@@ -21,7 +21,7 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 
 package ch.ethz.coss.nervousnet.hub.ui;
@@ -32,10 +32,10 @@ import android.view.View;
 
 import ch.ethz.coss.nervousnet.hub.R;
 
-/**
- * @author prasad
- */
 
+/**
+ * Activity for displaying the Settings Screen.
+ */
 public class SettingsActivity extends BaseActivity {
 
     @Override

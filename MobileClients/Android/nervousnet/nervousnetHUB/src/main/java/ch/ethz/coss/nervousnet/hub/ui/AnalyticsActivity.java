@@ -21,7 +21,7 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 
 package ch.ethz.coss.nervousnet.hub.ui;
@@ -41,9 +41,7 @@ import android.widget.Toast;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
-/**
- * @author prasad
- */
+
 public class AnalyticsActivity extends BaseActivity {
 
     @Override

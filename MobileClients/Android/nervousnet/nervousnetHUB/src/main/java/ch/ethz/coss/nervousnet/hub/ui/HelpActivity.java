@@ -21,7 +21,7 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 
 package ch.ethz.coss.nervousnet.hub.ui;
@@ -42,7 +42,7 @@ import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.views.FaqExpandableListAdapter;
 
 /**
- * @author prasad
+ * Activity for displaying the Help Screen.
  */
 public class HelpActivity extends BaseActivity {
 

@@ -1,4 +1,4 @@
-/**
+/**********************************************************************************
  * *     Nervousnet - a distributed middleware software for social sensing.
  * *      It is responsible for collecting and managing data in a fully de-centralised fashion
  * *
@@ -21,11 +21,8 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
- */
-/**
- *
- */
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub.ui;
 
 import android.app.ActionBar;
@@ -43,9 +40,7 @@ import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
-/**
- * @author prasad
- */
+
 public abstract class BaseActivity extends Activity implements ActionBarImplementation {
 
     private static final String LOG_TAG = BaseActivity.class.getSimpleName();

@@ -21,7 +21,7 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub.ui;
 
@@ -39,7 +39,9 @@ import ch.ethz.coss.nervousnet.hub.Constants;
 import ch.ethz.coss.nervousnet.hub.R;
 import ch.ethz.coss.nervousnet.hub.ui.adapters.ImageAdapter;
 import ch.ethz.coss.nervousnet.vm.NNLog;
-
+/**
+ * Activity for displaying the Home Screen.
+ */
 public class MainActivity extends BaseActivity {
     ServiceConnection mServiceConnection;
     EditText counter;

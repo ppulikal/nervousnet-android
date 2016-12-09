@@ -21,7 +21,7 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 
 package ch.ethz.coss.nervousnet.hub.ui;
@@ -46,10 +46,10 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.events.NNEvent;
 
-/**
- * @author prasad
- */
 
+/**
+ * Activity for displaying the Collections Rate Settings page
+ */
 public class CollectionRateSettingsActivity extends BaseActivity {
 
     ImageButton globalButton;
@@ -110,6 +110,10 @@ public class CollectionRateSettingsActivity extends BaseActivity {
         return builder.create();
     }
 
+    /**
+     * Alert / Popup displaying information tip
+     * @param view
+     */
     public void showInfo(View view) {
         String title = "Sensor Collection Rate Settings:";
 

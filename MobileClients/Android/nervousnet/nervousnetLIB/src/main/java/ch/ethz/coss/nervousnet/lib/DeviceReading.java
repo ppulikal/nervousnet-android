@@ -21,16 +21,14 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.lib;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * @author prasad
- */
+
 public class DeviceReading extends SensorReading {
 
     public static final Parcelable.Creator<DeviceReading> CREATOR = new Parcelable.Creator<DeviceReading>() {

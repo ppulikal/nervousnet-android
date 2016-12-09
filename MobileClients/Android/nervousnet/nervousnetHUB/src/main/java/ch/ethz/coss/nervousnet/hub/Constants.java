@@ -21,20 +21,24 @@
  * *
  * *
  * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub;
 
-/**
- * @author prasad
- */
+
 public final class Constants {
 
     public final static int VIBRATION_DURATION = 50;
 
+    /**
+     * Constant array of icons for use in the home screen
+     */
     public static Integer[] icons_main_screen = {R.drawable.ic_sensors, R.drawable.ic_analytics_disabled, R.drawable.ic_apps,
             R.drawable.ic_settings, R.drawable.ic_help, R.drawable.ic_about};
 
+    /**
+     * Constant array of icons for individual sensors
+     */
     public static Integer[] icon_array_sensors = {R.drawable.ic_accel, R.drawable.ic_batt,
             R.drawable.ic_gyro, R.drawable.ic_loc, R.drawable.ic_light,
             R.drawable.ic_noise, R.drawable.ic_proxim};

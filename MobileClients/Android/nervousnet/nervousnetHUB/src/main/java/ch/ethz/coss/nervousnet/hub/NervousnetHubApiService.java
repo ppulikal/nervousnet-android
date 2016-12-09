@@ -19,7 +19,8 @@
  * *     You should have received a copy of the GNU General Public License
  * *     along with NervousNet. If not, see <http://www.gnu.org/licenses/>.
  * *
- * *
+ * *    Contributors:
+ * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub;
 
@@ -38,12 +39,18 @@ import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
+/**
+ * The Nervousnet HUB Service class.
+ */
 public class NervousnetHubApiService extends Service {
 
     private static final String LOG_TAG = NervousnetHubApiService.class.getSimpleName();
 
     private static int NOTIFICATION_Text = R.string.local_service_started;
 
+    /**
+     * Binder object for the Nervousnet Service
+     */
     private final NervousnetRemote.Stub mBinder = new NervousnetRemote.Stub() {
 
         @Override

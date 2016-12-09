@@ -1,27 +1,26 @@
 /*******************************************************************************
- * *     Nervousnet - a distributed middleware software for social sensing.
- * *      It is responsible for collecting and managing data in a fully de-centralised fashion
- * *
- * *     Copyright (C) 2016 ETH Zürich, COSS
- * *
- * *     This file is part of Nervousnet Framework
- * *
- * *     Nervousnet is free software: you can redistribute it and/or modify
- * *     it under the terms of the GNU General Public License as published by
- * *     the Free Software Foundation, either version 3 of the License, or
- * *     (at your option) any later version.
- * *
- * *     Nervousnet is distributed in the hope that it will be useful,
- * *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- * *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * *     GNU General Public License for more details.
- * *
- * *     You should have received a copy of the GNU General Public License
- * *     along with NervousNet. If not, see <http://www.gnu.org/licenses/>.
- * *
- * *
- * * 	Contributors:
- * * 	Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+*     Nervousnet - a distributed middleware software for social sensing.
+*      It is responsible for collecting and managing data in a fully de-centralised fashion
+*
+*     Copyright (C) 2016 ETH Zürich, COSS
+*
+*     This file is part of Nervousnet Framework
+*
+*     Nervousnet is free software: you can redistribute it and/or modify
+*     it under the terms of the GNU General Public License as published by
+*     the Free Software Foundation, either version 3 of the License, or
+*     (at your option) any later version.
+*
+*     Nervousnet is distributed in the hope that it will be useful,
+*     but WITHOUT ANY WARRANTY; without even the implied warranty of
+*     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*     GNU General Public License for more details.
+*
+*     You should have received a copy of the GNU General Public License
+*     along with NervousNet. If not, see <http://www.gnu.org/licenses/>.
+*
+* 	Contributors:
+* 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
 package ch.ethz.coss.nervousnet.hub;
 
@@ -40,6 +39,7 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVM;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.events.NNEvent;
+
 
 public class Application extends android.app.Application {
 
@@ -69,7 +69,7 @@ public class Application extends android.app.Application {
     }
 
     /**
-     *
+     * Initialize the NervousnetVM object
      */
     private void init() {
         NNLog.init(getApplicationContext());
@@ -87,11 +87,19 @@ public class Application extends android.app.Application {
         System.exit(0);
     }
 
+    /**
+     * Gets the current state of the Nervousnet Service
+     * @return  NervousnetVMConstants.STATE_RUNNING or NervousnetVMConstants.STATE_PAUSED
+     */
     public byte getState() {
         return nn_VM.getState();
+
     }
 
-
+    /**
+     * Starts the Nervousnet Service
+     * @param context
+     */
     public void startService(Context context) {
         NNLog.d(LOG_TAG, "inside startService");
         Toast.makeText(context, R.string.toast_service_started, Toast.LENGTH_SHORT).show();
@@ -101,6 +109,10 @@ public class Application extends android.app.Application {
         showNotification();
     }
 
+    /**
+     * Stops the Nervousnet Service
+     * @param context
+     */
     public void stopService(Context context) {
         NNLog.d(LOG_TAG, "inside stopService");
         Toast.makeText(context, R.string.toast_service_stopped, Toast.LENGTH_SHORT).show();
@@ -113,7 +125,7 @@ public class Application extends android.app.Application {
     }
 
     /**
-     * Show a notification while this service is running.
+     * Initialise the notification object for showing in the statusbar while this service is running.
      */
     public void initNotification() {
         if (notification != null)
@@ -144,11 +156,17 @@ public class Application extends android.app.Application {
 
     }
 
+    /**
+     * Shows the notification icon in the status bar when the service is switched on and running
+     */
     public void showNotification() {
         if (mNM != null)
             mNM.notify(NOTIFICATION, notification);
     }
 
+    /**
+     * Removes the notification icon in the status bar when the service is switched off.
+     */
     public void removeNotification() {
         if (mNM != null)
             mNM.cancel(NOTIFICATION);
@@ -159,12 +177,5 @@ public class Application extends android.app.Application {
         return useWhiteIcon ? R.drawable.ic_logo_white : R.drawable.ic_logo;
     }
 
-    // public void storeSensor(SensorDataImpl sensorData) {
-    // nn_VM.storeSensorAsync(sensorData);
-    // }
 
-//	@SuppressWarnings("rawtypes")
-//	public void readSensorData(int type, long startTime, long endTime, ArrayList list) {
-//		nn_VM.getSensorReadings(type, startTime, endTime, list);
-//	}
 }
