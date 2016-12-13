@@ -3,6 +3,9 @@ package ch.ethz.coss.nervousnet.vm;
 import android.content.Context;
 import android.util.Log;
 
+/**
+ * Class used for logging outputs
+ */
 public class NNLog {
     private static boolean isDebug = false;
 

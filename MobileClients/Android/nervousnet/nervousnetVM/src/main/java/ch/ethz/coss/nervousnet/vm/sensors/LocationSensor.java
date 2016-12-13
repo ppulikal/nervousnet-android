@@ -40,6 +40,11 @@ import ch.ethz.coss.nervousnet.lib.LocationReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
+
+/**
+ * Location Sensor class
+ *
+ */
 public class LocationSensor extends BaseSensor implements LocationListener {
 
     private static String LOG_TAG = LocationSensor.class.getSimpleName();

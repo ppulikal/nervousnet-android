@@ -1,16 +1,3 @@
-package ch.ethz.coss.nervousnet.lib;
-
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.IBinder;
-import android.os.RemoteException;
-import android.util.Log;
-import android.widget.Toast;
 
 /*******************************************************************************
  * *     Nervousnet - a distributed middleware software for social sensing.
@@ -37,6 +24,20 @@ import android.widget.Toast;
  * * 	Contributors:
  * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
+package ch.ethz.coss.nervousnet.lib;
+
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.util.Log;
+import android.widget.Toast;
+
 public class NervousnetServiceController {
 
     private static String LOG_TAG = NervousnetServiceController.class.getSimpleName();

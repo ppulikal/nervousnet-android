@@ -43,6 +43,11 @@ import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.utils.FFT;
 
+
+/**
+ * Noise Sensor class
+ *
+ */
 public class NoiseSensor extends BaseSensor {
     public static final int BANDCOUNT = 12;
     public static final int SAMPPERSEC = 8000; // 8000Hz sampling rate, the

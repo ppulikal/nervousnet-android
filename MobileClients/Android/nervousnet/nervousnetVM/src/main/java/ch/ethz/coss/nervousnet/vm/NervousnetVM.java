@@ -1,3 +1,27 @@
+/*******************************************************************************
+ *     Nervousnet - a distributed middleware software for social sensing.
+ *      It is responsible for collecting and managing data in a fully de-centralised fashion
+ *
+ *     Copyright (C) 2016 ETH Zürich, COSS
+ *
+ *     This file is part of Nervousnet Framework
+ *
+ *     Nervousnet is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Nervousnet is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with NervousNet. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * 	Contributors:
+ * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
+ *******************************************************************************/
 package ch.ethz.coss.nervousnet.vm;
 
 import android.content.Context;
@@ -32,7 +56,9 @@ import ch.ethz.coss.nervousnet.vm.storage.Config;
 import ch.ethz.coss.nervousnet.vm.storage.SQLHelper;
 import ch.ethz.coss.nervousnet.vm.storage.SensorConfig;
 
-
+/**
+ * Main class for the Nervousnet Virtual Machine.
+ */
 public class NervousnetVM {
 
     private static final String LOG_TAG = NervousnetVM.class.getSimpleName();
@@ -59,6 +85,10 @@ public class NervousnetVM {
         }
     };
 
+    /**
+     * Constructor of the NervousnetVM object
+     * @param context Application Context object
+     */
     public NervousnetVM(Context context) {
         NNLog.d(LOG_TAG, "Inside constructor");
         this.context = context;
@@ -86,6 +116,9 @@ public class NervousnetVM {
     }
 
 
+    /**
+     * Register and analyse the available Sensors
+     */
     private void initSensors() {
         NNLog.d(LOG_TAG, "Inside initSensors");
         storeMutex = new ReentrantLock();
@@ -140,6 +173,9 @@ public class NervousnetVM {
 
     }
 
+    /**
+     * Starts all Sensors according to their current state
+     */
     public void startSensors() {
         NNLog.d(LOG_TAG, "Inside startSensors");
         int count = 0;
@@ -153,6 +189,10 @@ public class NervousnetVM {
         dataCollectionHandler.postDelayed(runnable, 1000);
     }
 
+
+    /**
+     * Stops all sensors if already running
+     */
     public void stopSensors() {
         NNLog.d(LOG_TAG, "Inside stopSensors");
         int count = 0;
@@ -182,29 +222,50 @@ public class NervousnetVM {
 //
 //    }
 
+
+    /**
+     * Method to Stop individual Sensors
+     * @param sensorID - long Sensor ID of the Sensors
+     * @param changeStateFlag - boolean flag for forcing stop of sensors
+     */
     public void stopSensor(long sensorID, boolean changeStateFlag) {
         BaseSensor sensor = hSensors.get(sensorID);
         if (sensor != null)
             sensor.stop(true);
     }
 
+
+    /**
+     * gets UUID representing the installation.
+     * note: remember the UUID is transient and can be reset by the user from the settinsg screen
+     * @return UUID
+     */
     public synchronized UUID getUUID() {
         return uuid;
     }
 
 
+    /**
+     * Method to generate a new UUID and store it in the database
+     */
     public synchronized void newUUID() {
         uuid = UUID.randomUUID();
         sqlHelper.storeVMConfig(state, uuid);
     }
 
-
+    /**
+     * Method to regenerate a new UUID and update this value into the database
+     */
     public synchronized void regenerateUUID() {
         newUUID();
         sqlHelper.resetDatabase();
     }
 
 
+    /**
+     * Method to save or update the state of Nervousnet and save it onto the database
+     * @param state - new state. Can be one of NervousnetVMConstants.STATE_PAUSED or NervousnetVMConstants.STATE_RUNNING
+     */
     public void storeNervousnetState(byte state) {
         this.state = state;
         try {
@@ -216,6 +277,12 @@ public class NervousnetVM {
 
     }
 
+
+    /**
+     * Method to update the state of an individual sensor
+     * @param id long id of the Sensors
+     * @param state new state of the Sensor
+     */
     public synchronized void updateSensorConfig(long id, byte state) {
         NNLog.d(LOG_TAG, "UpdateSensorConfig called with state = " + state);
         SensorConfig sensorConfig = hSensorConfig.get(id);
@@ -246,7 +313,10 @@ public class NervousnetVM {
 //
 //    }
 
-
+    /**
+     * Method to change the state of an all available sensor
+     * @param state new state of the Sensors.
+     */
     public synchronized void updateAllSensorConfig(byte state) {
         NNLog.d(LOG_TAG, "updateAllSensorConfig called with state = " + state);
         int count = 0;
@@ -268,10 +338,20 @@ public class NervousnetVM {
     }
 
 
+    /**
+     * Returns the state of Nervousnet
+     * @return byte state of Nervousnet
+     */
     public byte getState() {
         return state;
     }
 
+
+    /**
+     * Returns the latest readings available for a specific sensor
+     * @param sensorID -  id of the sensor
+     * @return SensorReading - object of SensorReading containing the Readings.
+     */
     public synchronized SensorReading getLatestReading(long sensorID) {
         NNLog.d(LOG_TAG, "getLatestReading of ID = " + sensorID + " requested ");
 
@@ -283,6 +363,11 @@ public class NervousnetVM {
         return hSensors.get(sensorID).getReading();
     }
 
+    /**
+     *  Get reading for a specific Sensor using callback.
+     * @param sensorID sensor id of specific sensors
+     * @param cb RemoteCallback object
+     */
     public synchronized void getReading(Long sensorID, RemoteCallback cb) {
         NNLog.d(LOG_TAG, "getReading with callback " + cb);
 
@@ -315,6 +400,14 @@ public class NervousnetVM {
 
     }
 
+    /**
+     * Gets readings for a specific sensors for a time period using callback.
+     * @param sensorID sensor id of the sensor
+     * @param startTime starting time for the readings
+     * @param endTime end time for the readings
+     * @param cb callback object
+     */
+
     public synchronized void getReadings(long sensorID, long startTime, long endTime, RemoteCallback cb) {
         if (state == NervousnetVMConstants.STATE_PAUSED) {
             NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
@@ -329,11 +422,19 @@ public class NervousnetVM {
         }
     }
 
+    /**
+     * Gets the sensor state
+     * @param id Sensor id
+     * @return byte returns current state of the sensor
+     */
     public byte getSensorState(long id) {
         return hSensorConfig.get(id).getState();
     }
 
-
+    /**
+      * Method to catch NNEvents.
+      * @param event NNEvent object
+     */
     @Subscribe
     public void onNNEvent(NNEvent event) {
         NNLog.d(LOG_TAG, "onSensorStateEvent called ");

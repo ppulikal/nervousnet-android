@@ -34,6 +34,11 @@ import ch.ethz.coss.nervousnet.lib.ProximityReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
+
+/**
+ * Proximity Sensor class
+ *
+ */
 public class ProximitySensor extends BaseSensor implements SensorEventListener {
     private static final String LOG_TAG = ProximitySensor.class.getSimpleName();
 

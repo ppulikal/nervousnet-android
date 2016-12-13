@@ -35,6 +35,10 @@ import ch.ethz.coss.nervousnet.lib.BatteryReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
+/**
+ * Battery Sensor class
+ *
+ */
 public class BatterySensor extends BaseSensor {
     private static final String LOG_TAG = BatterySensor.class.getSimpleName();
     BroadcastReceiver batteryReceiver = new BroadcastReceiver() {

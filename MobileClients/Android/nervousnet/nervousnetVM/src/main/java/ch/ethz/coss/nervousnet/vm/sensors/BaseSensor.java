@@ -35,6 +35,10 @@ import ch.ethz.coss.nervousnet.lib.Utils;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
+/**
+ * Base class for all sensors.
+ *
+ */
 public abstract class BaseSensor {
     private static final String LOG_TAG = BaseSensor.class.getSimpleName();
 
@@ -44,24 +48,41 @@ public abstract class BaseSensor {
     protected List<BaseSensorListener> listenerList = new ArrayList<BaseSensorListener>();
     protected Lock listenerMutex = new ReentrantLock();
 
+
+    /**
+     * Method to add listeners to the Sensor
+     * @param listener Object of BaseSensorListener
+     */
     public void addListener(BaseSensorListener listener) {
         listenerMutex.lock();
         listenerList.add(listener);
         listenerMutex.unlock();
     }
 
+
+    /**
+     * Method to remove listeners for the Sensor.
+     * @param listener Object of BaseSensorListener
+     */
     public void removeListener(BaseSensorListener listener) {
         listenerMutex.lock();
         listenerList.remove(listener);
         listenerMutex.unlock();
     }
 
+    /**
+     * Method to remove all listeners for the Sensor.
+     */
     public void clearListeners() {
         listenerMutex.lock();
         listenerList.clear();
         listenerMutex.unlock();
     }
 
+
+    /**
+     * Method called when data is ready by a specific Sensor to inform all listners
+     */
     public void dataReady(SensorReading reading) {
 
         this.reading = reading;
@@ -76,10 +97,19 @@ public abstract class BaseSensor {
         listenerMutex.unlock();
     }
 
+
+    /**
+     *
+     * @return State of sensor. Check NervousnetVmConstants.sensor_default_states
+     */
     public byte getSensorState() {
         return sensorState;
     }
 
+    /**
+     * Sets the state of sensor
+     * @param sensorState new state for the sensor. Check NervousnetVmConstants.sensor_default_states
+     */
     public void setSensorState(byte sensorState) {
         this.sensorState = sensorState;
     }

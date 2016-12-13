@@ -33,7 +33,10 @@ import android.hardware.SensorManager;
 import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
-
+/**
+ * Accelerometer Sensor class
+ *
+ */
 public class AccelerometerSensor extends BaseSensor implements SensorEventListener {
 
     private static final String LOG_TAG = AccelerometerSensor.class.getSimpleName();

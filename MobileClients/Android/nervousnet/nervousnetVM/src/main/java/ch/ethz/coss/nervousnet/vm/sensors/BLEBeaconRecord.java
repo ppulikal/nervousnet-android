@@ -31,6 +31,10 @@ import java.util.UUID;
 
 import ch.ethz.coss.nervousnet.vm.utils.UnsignedArithmetic;
 
+/**
+ * BLEBeaconRecord Sensor class
+ *
+ */
 public class BLEBeaconRecord {
 
     private long tokenDetectTime;

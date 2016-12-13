@@ -1,4 +1,3 @@
-package ch.ethz.coss.nervousnet.lib;
 
 /*******************************************************************************
  * *     Nervousnet - a distributed middleware software for social sensing.
@@ -25,6 +24,8 @@ package ch.ethz.coss.nervousnet.lib;
  * * 	Contributors:
  * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
+package ch.ethz.coss.nervousnet.lib;
+
 public interface NervousnetServiceConnectionListener {
 
     public void onServiceConnected();

@@ -34,6 +34,10 @@ import ch.ethz.coss.nervousnet.lib.LightReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
+/**
+ * Lights Sensor class
+ *
+ */
 public class LightSensor extends BaseSensor implements SensorEventListener {
 
     private static final String LOG_TAG = LightSensor.class.getSimpleName();

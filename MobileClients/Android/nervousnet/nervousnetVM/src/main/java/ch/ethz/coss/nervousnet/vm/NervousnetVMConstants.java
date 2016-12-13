@@ -13,12 +13,16 @@ public class NervousnetVMConstants {
     public final static String SERVICE_PREFS = "ServicePreferences";
     public final static String UPLOAD_PREFS = "UploadPreferences";
 
-    public static byte SENSOR_STATE_NOT_AVAILABLE = -2;
-    public static byte SENSOR_STATE_AVAILABLE_PERMISSION_DENIED = -1;
-    public static byte SENSOR_STATE_AVAILABLE_BUT_OFF = 0;
-    public static byte SENSOR_STATE_AVAILABLE_DELAY_LOW = 1;
-    public static byte SENSOR_STATE_AVAILABLE_DELAY_MED = 2;
-    public static byte SENSOR_STATE_AVAILABLE_DELAY_HIGH = 3;
+
+    /**
+     * Sensors State Constants
+     */
+    public static byte SENSOR_STATE_NOT_AVAILABLE = -2; // Sensor not available on phone
+    public static byte SENSOR_STATE_AVAILABLE_PERMISSION_DENIED = -1; // Sensor Available but permission denied
+    public static byte SENSOR_STATE_AVAILABLE_BUT_OFF = 0; // Sensor available but switched off
+    public static byte SENSOR_STATE_AVAILABLE_DELAY_LOW = 1; // Sensor Available and switched on with low frequency
+    public static byte SENSOR_STATE_AVAILABLE_DELAY_MED = 2; // Sensor Available and switched on with Medium frequency
+    public static byte SENSOR_STATE_AVAILABLE_DELAY_HIGH = 3; // Sensor Available and switched on with High frequency
 
 
     public static int REQUEST_CODE_ASK_PERMISSIONS_LOC = 1;
@@ -44,12 +48,12 @@ public class NervousnetVMConstants {
             {-1, 300000, 120000, 60000}
     };
 
-    public static byte EVENT_PAUSE_NERVOUSNET_REQUEST = 0;
-    public static byte EVENT_START_NERVOUSNET_REQUEST = 1;
-    public static byte EVENT_CHANGE_SENSOR_STATE_REQUEST = 2;
-    public static byte EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST = 3;
-    public static byte EVENT_NERVOUSNET_STATE_UPDATED = 4;
-    public static byte EVENT_SENSOR_STATE_UPDATED = 5;
+    public static byte EVENT_PAUSE_NERVOUSNET_REQUEST = 0; //Event for pausing nervousnet
+    public static byte EVENT_START_NERVOUSNET_REQUEST = 1; //Event for starting nervousnet
+    public static byte EVENT_CHANGE_SENSOR_STATE_REQUEST = 2; // Event for changing the Sensor state
+    public static byte EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST = 3; //Event for changing state of All sensors at one go
+    public static byte EVENT_NERVOUSNET_STATE_UPDATED = 4; // Event generated when Nervousnet state is updated successfully
+    public static byte EVENT_SENSOR_STATE_UPDATED = 5;  // Event generated when Sensor state is updated successfully
 
 
 }

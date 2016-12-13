@@ -1,5 +1,3 @@
-package ch.ethz.coss.nervousnet.lib;
-
 /*******************************************************************************
  * *     Nervousnet - a distributed middleware software for social sensing.
  * *      It is responsible for collecting and managing data in a fully de-centralised fashion
@@ -25,6 +23,10 @@ package ch.ethz.coss.nervousnet.lib;
  * * 	Contributors:
  * * 	@author Prasad Pulikal - prasad.pulikal@gess.ethz.ch  -  Initial API and implementation
  *******************************************************************************/
+
+package ch.ethz.coss.nervousnet.lib;
+
+
 public interface NervousnetSensorDataListener {
 
     public void onSensorDataReady(SensorReading reading);

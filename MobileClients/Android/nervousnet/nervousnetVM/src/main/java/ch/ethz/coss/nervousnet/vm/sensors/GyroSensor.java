@@ -34,6 +34,11 @@ import ch.ethz.coss.nervousnet.lib.GyroReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
+
+/**
+ * Gyroscope Sensor class
+ *
+ */
 public class GyroSensor extends BaseSensor implements SensorEventListener {
 
     private static final String LOG_TAG = GyroSensor.class.getSimpleName();

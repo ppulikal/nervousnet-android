@@ -25,7 +25,7 @@
 package ch.ethz.coss.nervousnet.vm.events;
 
 /**
- * Event class
+ * Event class used to send and receive Events across to NervousnetHUB and NervousnetVM
  */
 public class NNEvent {
 
@@ -33,17 +33,57 @@ public class NNEvent {
     public byte state;
     public long sensorID;
 
+    /**
+     *
+     * @param sensorID - Sensor ID the event is meant to be for
+     * @param state - State of the sensor
+     * @param type - Type of Event
+     *                Valid values are defined in NervousnetVMConstants.java
+     *                 EVENT_PAUSE_NERVOUSNET_REQUEST
+     *                 EVENT_START_NERVOUSNET_REQUEST
+     *                 EVENT_CHANGE_SENSOR_STATE_REQUEST
+     *                 EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST
+     *                 EVENT_NERVOUSNET_STATE_UPDATED
+     *                 EVENT_SENSOR_STATE_UPDATE
+     */
     public NNEvent(long sensorID, byte state, byte type) {
         this.sensorID = sensorID;
         this.state = state;
         this.eventType = type;
     }
 
+    /**
+     *
+     * @param state - State of the Sensor
+     * @param type - Type of Event
+     *                Valid values are defined in NervousnetVMConstants.java
+     *                 EVENT_PAUSE_NERVOUSNET_REQUEST
+     *                 EVENT_START_NERVOUSNET_REQUEST
+     *                 EVENT_CHANGE_SENSOR_STATE_REQUEST
+     *                 EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST
+     *                 EVENT_NERVOUSNET_STATE_UPDATED
+     *                 EVENT_SENSOR_STATE_UPDATE
+     */
 
     public NNEvent(byte state, byte type) {
         this.eventType = type;
         this.state = state;
     }
+
+
+    /**
+     *
+     *
+     *  @param type - Type of Event
+     *                Valid values are defined in NervousnetVMConstants.java
+     *                 EVENT_PAUSE_NERVOUSNET_REQUEST
+     *                 EVENT_START_NERVOUSNET_REQUEST
+     *                 EVENT_CHANGE_SENSOR_STATE_REQUEST
+     *                 EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST
+     *                 EVENT_NERVOUSNET_STATE_UPDATED
+     *                 EVENT_SENSOR_STATE_UPDATE
+     *
+     */
 
     public NNEvent(byte type) {
         this.eventType = type;
