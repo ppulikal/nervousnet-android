@@ -1,4 +1,4 @@
-package ch.ethz.coss.nervousnet.vm.nervousnet.sensors;
+package ch.ethz.coss.nervousnet.vm.sensors;
 
 import android.content.Context;
 import android.media.AudioFormat;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.configuration.BasicSensorConfiguration;
-import ch.ethz.coss.nervousnet.vm.nervousnet.utils.FFT;
+import ch.ethz.coss.nervousnet.vm.utils.FFT;
 
 public class NoiseSensor extends BaseSensor {
     public static final int BANDCOUNT = 12;

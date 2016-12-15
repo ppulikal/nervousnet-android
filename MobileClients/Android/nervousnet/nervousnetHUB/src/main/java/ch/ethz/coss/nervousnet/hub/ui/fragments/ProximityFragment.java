@@ -78,22 +78,22 @@ public class ProximityFragment extends BaseFragment {
                 switch (checkedId) {
                     case R.id.radioOff:
                         if (lastCollectionRate > NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_PROXIMITY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorState(LibConstants.SENSOR_PROXIMITY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF);
                         }
                         break;
                     case R.id.radioLow:
                         if (lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_PROXIMITY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW);
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorState(LibConstants.SENSOR_PROXIMITY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW);
                         }
                         break;
                     case R.id.radioMed:
                         if (lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_PROXIMITY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED);
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorState(LibConstants.SENSOR_PROXIMITY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED);
                         }
                         break;
                     case R.id.radioHigh:
                         if (lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF) {
-                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorConfig(LibConstants.SENSOR_PROXIMITY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH);
+                            ((Application) ((Activity) getContext()).getApplication()).nn_VM.updateSensorState(LibConstants.SENSOR_PROXIMITY, NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH);
                         }
                         break;
                 }

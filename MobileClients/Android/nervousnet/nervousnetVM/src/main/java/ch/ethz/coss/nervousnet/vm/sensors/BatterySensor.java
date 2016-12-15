@@ -1,4 +1,4 @@
-package ch.ethz.coss.nervousnet.vm.nervousnet.sensors;
+package ch.ethz.coss.nervousnet.vm.sensors;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package ch.ethz.coss.nervousnet.vm.nervousnet.database;
+package ch.ethz.coss.nervousnet.vm.database;
 
 /**
  * Created by ales on 26/09/16.
@@ -18,7 +18,4 @@ public class ConstantsDB {
 
     public static final String TIMESTAMP = "timestamp";
     public static final String ID = "ID";
-
-    public static final String CONFIG_TABLE = "ConfigTable";
-    public static final String STATE = "STATE";
 }

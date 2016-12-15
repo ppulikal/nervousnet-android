@@ -15,6 +15,13 @@ public class GeneralSensorConfiguration {
     protected ArrayList<String> parametersTypes;
     protected int dimensions;
 
+    /**
+     * Constructs an object that holds parameters for a general sensor.
+     * @param sensorID - unique sensor identifier
+     * @param sensorName - arbitrary sensor name
+     * @param parametersNames - arbitrary persistent parameter names of the sensor
+     * @param parametersTypes - arbitrary persistent parameter types of the sensor
+     */
     public GeneralSensorConfiguration(long sensorID, String sensorName, ArrayList<String> parametersNames,
                                       ArrayList<String> parametersTypes) {
         this.sensorID = sensorID;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
-import ch.ethz.coss.nervousnet.vm.nervousnet.sensors.AndroidSensor;
+import ch.ethz.coss.nervousnet.vm.sensors.AndroidSensor;
 
 /**
  * Created by ales on 21/09/16.
@@ -20,6 +20,20 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
     private ArrayList<Long> samplingRates;
     private String wrapperName;
 
+    /**
+     * Constructs an object that holds parameters for a basic android sensor.
+     * @param sensorID - unique sensor identifier
+     * @param sensorName - arbitrary sensor name
+     * @param androidSensorType - check Sensor class from official android documentation
+     * @param parametersNames - arbitrary persistent parameter names of the sensor
+     * @param parametersTypes - arbitrary persistent parameter types of the sensor
+     * @param androidParametersPositions - enables to select subset of values among all that are
+     *                                   specified in SensorEvent class from official android
+     *                                   documentation
+     * @param samplingRates - list of possible sampling rates
+     * @param state - selected sampling rate; 0 represents OFF; 1 selects the first sampling rate from
+     *              samplingRates, 2 selects next one and so on;
+     */
     public BasicSensorConfiguration(int sensorID, String sensorName, int androidSensorType,
                                     ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
@@ -34,6 +48,17 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
         setState(state);
     }
 
+    /**
+     * Constructor an object that holds parameters for an arbitrary sensor.
+     * @param sensorID - unique sensor identifier
+     * @param sensorName - arbitrary sensor name
+     * @param parametersNames - arbitrary persistent parameter names of the sensor
+     * @param parametersTypes - arbitrary persistent parameter types of the sensor
+     * @param wrapperName - name of the class that handles sensor reading
+     * @param samplingRates - list of possible sampling rates
+     * @param state - selected sampling rate; 0 represents OFF; 1 selects the first sampling rate from
+     *              samplingRates, 2 selects next one and so on;
+     */
     public BasicSensorConfiguration(int sensorID, String sensorName, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
                                     String wrapperName,

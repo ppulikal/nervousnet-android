@@ -3,11 +3,12 @@ package ch.ethz.coss.nervousnet.vm.configuration;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
-import ch.ethz.coss.nervousnet.vm.nervousnet.database.NoSuchElementInDBException;
 
 /**
  * Created by ales on 17/11/16.
@@ -27,17 +28,20 @@ public class ConfigurationManager implements iConfigurationManager {
             try {
                 int state = stateDBManager.getSensorState(conf.getSensorID());
                 conf.setState(state);
-            } catch (NoSuchElementInDBException e) {
+            } catch (NoSuchElementException e) {
                 stateDBManager.storeSensorState(conf.getSensorID(), conf.getState());
             }
         }
     }
 
     @Override
-    public ArrayList<GeneralSensorConfiguration> getAllConfigurations() {
-        ArrayList<GeneralSensorConfiguration> returnList = new ArrayList<>();
-        returnList.addAll(configMap.values());
-        return returnList;
+    public Collection<GeneralSensorConfiguration> getAllConfigurations() {
+        return configMap.values();
+    }
+
+    @Override
+    public Set<Long> getSensorIDs(){
+        return configMap.keySet();
     }
 
     @Override
@@ -70,7 +74,7 @@ public class ConfigurationManager implements iConfigurationManager {
     public int getNervousnetState() {
         try {
             return stateDBManager.getNervousnetState();
-        } catch (NoSuchElementInDBException e) {
+        } catch (NoSuchElementException e) {
             return NervousnetVMConstants.STATE_PAUSED;
         }
     }

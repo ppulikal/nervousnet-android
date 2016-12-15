@@ -1,4 +1,4 @@
-package ch.ethz.coss.nervousnet.vm.nervousnet.sensors;
+package ch.ethz.coss.nervousnet.vm.sensors;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -25,19 +25,20 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
     // Locking
     protected Lock listenerMutex = new ReentrantLock();
 
-
+    /**
+     * Constructor for basic sensor specified in the documentation for Android Sensor class.
+     */
     public AndroidSensor(Context context, BasicSensorConfiguration conf) {
         // Abstract class will take care of acquiring parameter names and
         // everything that is needed to initialize this listener
         super(context, conf);
-
         this.mSensorManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
         this.sensor = mSensorManager.getDefaultSensor(conf.getAndroidSensorType());
         this.androidParametersPositions = conf.getAndroidParametersPositions();
     }
 
     @Override
-    public boolean startListener() {
+    protected boolean startListener() {
         Log.d(LOG_TAG, "Register sensor " + sensorName + " ...");
         listenerMutex.lock();
         mSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
@@ -46,7 +47,7 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
     }
 
     @Override
-    public boolean stopListener() {
+    protected boolean stopListener() {
         Log.d(LOG_TAG, "Unregister sensor " + sensorName);
         listenerMutex.lock();
         mSensorManager.unregisterListener(this, this.sensor);
@@ -54,6 +55,11 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
         return true;
     }
 
+
+    /**
+     * Method is called by SensorEventListener when an event occurs. Check
+     * SensorEvenListener for more details.
+     */
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         // Get timestamp for the sensor
@@ -73,6 +79,11 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
         //Log.d("SENSOR", ""+reading.getSensorName() + " " + TextUtils.join(", ", values));
     }
 
+
+    /**
+     * Method is called by SensorEventListener. Check SensorEvenListener
+     * for more details.
+     */
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 

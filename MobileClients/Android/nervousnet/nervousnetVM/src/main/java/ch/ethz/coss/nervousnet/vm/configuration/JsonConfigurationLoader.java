@@ -20,47 +20,35 @@ public class JsonConfigurationLoader {
     private static final String LOG_TAG = JsonConfigurationLoader.class.getSimpleName();
     private Context context;
 
-    public JsonConfigurationLoader(Context context) {
+    protected JsonConfigurationLoader(Context context) {
         this.context = context;
     }
 
-    public ArrayList<BasicSensorConfiguration> load() {
-
-        String line,line1 = "";
+    protected ArrayList<BasicSensorConfiguration> load() {
+        String line,total = "";
         try
         {
-            //TODO
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(context.getAssets().open(CONF_FILE_NAME)));
-
-            try
-            {
+            try {
                 while ((line = reader.readLine()) != null)
-                    line1+=line;
-            }catch (Exception e)
-            {
+                    total+=line;
+            }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
-        catch (Exception e)
-        {
+        catch (Exception e){
             Log.d(LOG_TAG, "ERROR " + e.getMessage());
         }
-
-        return load(line1);
+        return load(total);
     }
 
-
-    public static ArrayList<BasicSensorConfiguration> load(String strJson){
+    protected static ArrayList<BasicSensorConfiguration> load(String strJson){
         ArrayList<BasicSensorConfiguration> list = new ArrayList();
-
         try {
             JSONArray sensorConfList = (new JSONObject(strJson)).getJSONArray("sensors_configurations");
-
             for (int i = 0; i < sensorConfList.length(); i++) {
                 JSONObject sensorConf = sensorConfList.getJSONObject(i);
-
                 BasicSensorConfiguration confClass = null;
                 // MANDATORY
                 int sensorID = sensorConf.getInt("sensorID");
@@ -70,7 +58,6 @@ public class JsonConfigurationLoader {
                 int state = sensorConf.getInt("initialState");
                 ArrayList<Long> samplingRates = convertToArrLong(sensorConf.getJSONArray("samplingRates"));
                 // OPTIONAL
-
                 // This one is for simple android sensors
                 if (sensorConf.has("androidSensorType") && sensorConf.has("androidParametersPositions")) {
                     int androidSensorType = sensorConf.getInt("androidSensorType");
@@ -84,7 +71,6 @@ public class JsonConfigurationLoader {
                     confClass = new BasicSensorConfiguration(sensorID, sensorName,
                             paramNames, paramTypes, wrapperName, samplingRates, state);
                 }
-
                 list.add(confClass);
                 Log.d(LOG_TAG, confClass.toString());
             }
@@ -92,7 +78,6 @@ public class JsonConfigurationLoader {
             e.printStackTrace();
             return null;
         }
-
         return list;
     }
 
