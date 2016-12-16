@@ -117,9 +117,16 @@ public class SensorReading implements Parcelable {
         sensorID = in.readLong();
         sensorName = in.readString();
         timestampEpoch = in.readLong();
-        //TODO
-        //parametersNames = in.createStringArrayList();
-        //values = in.readList();
+
+        if(parametersNames == null)
+            parametersNames = new ArrayList<String>();
+
+        in.readStringList(parametersNames);
+        if(values == null)
+            values = new ArrayList<Object>();
+
+        in.readList(values, Object.class.getClassLoader());
+
     }
 
 
