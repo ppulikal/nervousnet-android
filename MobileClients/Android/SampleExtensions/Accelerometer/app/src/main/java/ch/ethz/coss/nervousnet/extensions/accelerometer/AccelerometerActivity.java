@@ -13,11 +13,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.ethz.coss.nervousnet.lib.ErrorReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
-import ch.ethz.coss.nervousnet.lib.AccelerometerReading;
+import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.lib.NervousnetSensorDataListener;
 import ch.ethz.coss.nervousnet.lib.NervousnetServiceConnectionListener;
 import ch.ethz.coss.nervousnet.lib.NervousnetServiceController;
@@ -109,11 +110,13 @@ public class AccelerometerActivity extends Activity implements NervousnetService
         if(nervousnetServiceController != null) {
             aReading  = nervousnetServiceController.getLatestReading(LibConstants.SENSOR_ACCELEROMETER);
             if (aReading != null) {
-                if (aReading instanceof AccelerometerReading) {
-                    Log.d("AccelerometerActivity", "LightReading found");
-                    x_val.setText("" + ((AccelerometerReading) aReading).getX());
-                    y_val.setText("" + ((AccelerometerReading) aReading).getY());
-                    z_val.setText("" + ((AccelerometerReading) aReading).getZ());
+                if (aReading instanceof SensorReading) {
+                    Log.d("AccelerometerActivity", "Accelreading found");
+                    ArrayList values = aReading.getValues();
+
+                    x_val.setText("" + values.get(0));
+                    y_val.setText("" + values.get(1));
+                    z_val.setText("" + values.get(2));
                     reading.setVisibility(View.VISIBLE);
                     error.setVisibility(View.INVISIBLE);
                 } else if (aReading instanceof ErrorReading) {
