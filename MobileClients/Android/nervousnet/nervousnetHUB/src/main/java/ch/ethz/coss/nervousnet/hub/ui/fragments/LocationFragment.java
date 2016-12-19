@@ -40,7 +40,7 @@ import android.widget.TextView;
 
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.InfoReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -123,10 +123,10 @@ public class LocationFragment extends BaseFragment {
 
         NNLog.d("LocationFragment", "Inside updateReadings");
 
-        if (reading instanceof ErrorReading) {
+        if (reading instanceof InfoReading) {
 
-            NNLog.d("LocationFragment", "Inside updateReadings - ErrorReading");
-            handleError((ErrorReading) reading);
+            NNLog.d("LocationFragment", "Inside updateReadings - InfoReading");
+            handleError((InfoReading) reading);
         } else {
 
             sensorStatusTV.setText(R.string.sensor_status_connected);
@@ -147,9 +147,9 @@ public class LocationFragment extends BaseFragment {
     }
 
     @Override
-    public void handleError(ErrorReading reading) {
+    public void handleError(InfoReading reading) {
         NNLog.d("LocationFragment", "handleError called");
-        sensorStatusTV.setText(reading.getErrorString());
+        sensorStatusTV.setText(reading.getInfoString());
 
 //        // Android 6.0 permission request
 //        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

@@ -39,7 +39,7 @@ import android.widget.TextView;
 
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.InfoReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -119,10 +119,10 @@ public class ProximityFragment extends BaseFragment {
     public void updateReadings(SensorReading reading) {
         NNLog.d("ProximityFragment", "Inside updateReadings");
 
-        if (reading instanceof ErrorReading) {
+        if (reading instanceof InfoReading) {
 
-            NNLog.d("ProximityFragment", "Inside updateReadings - ErrorReading");
-            handleError((ErrorReading) reading);
+            NNLog.d("ProximityFragment", "Inside updateReadings - InfoReading");
+            handleError((InfoReading) reading);
         } else {
             sensorStatusTV.setText(R.string.sensor_status_connected);
             TextView prox = (TextView) getActivity().findViewById(R.id.proxValue);
@@ -132,9 +132,9 @@ public class ProximityFragment extends BaseFragment {
 
 
     @Override
-    public void handleError(ErrorReading reading) {
+    public void handleError(InfoReading reading) {
         NNLog.d("ProximityFragment", "handleError called");
-        sensorStatusTV.setText(reading.getErrorString());
+        sensorStatusTV.setText(reading.getInfoString());
     }
 
 

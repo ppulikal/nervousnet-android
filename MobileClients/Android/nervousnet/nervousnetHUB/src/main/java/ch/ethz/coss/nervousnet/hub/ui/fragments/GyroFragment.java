@@ -41,7 +41,7 @@ import java.util.ArrayList;
 
 import ch.ethz.coss.nervousnet.hub.Application;
 import ch.ethz.coss.nervousnet.hub.R;
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.InfoReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
@@ -121,10 +121,10 @@ public class GyroFragment extends BaseFragment {
     public void updateReadings(SensorReading reading) {
         NNLog.d("GyroFragment", "Inside updateReadings, X = " + reading.toString());
 
-        if (reading instanceof ErrorReading) {
+        if (reading instanceof InfoReading) {
 
-            NNLog.d("GyroFragment", "Inside updateReadings - ErrorReading");
-            handleError((ErrorReading) reading);
+            NNLog.d("GyroFragment", "Inside updateReadings - InfoReading");
+            handleError((InfoReading) reading);
         } else {
 
             sensorStatusTV.setText(R.string.sensor_status_connected);
@@ -142,9 +142,9 @@ public class GyroFragment extends BaseFragment {
     }
 
     @Override
-    public void handleError(ErrorReading reading) {
+    public void handleError(InfoReading reading) {
         NNLog.d("GyroFragment", "handleError called");
-        sensorStatusTV.setText(reading.getErrorString());
+        sensorStatusTV.setText(reading.getInfoString());
     }
 
 

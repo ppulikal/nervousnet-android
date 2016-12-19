@@ -36,6 +36,8 @@ public class LibConstants {
     public static final int SENSOR_PROXIMITY = 6;
 
     public static final int DEVICE_INFO = 101;
-    public static final int ERROR = -1;
+
+    public static final int INFO = -1;
+    public static final int ERROR = -2;
 
 }

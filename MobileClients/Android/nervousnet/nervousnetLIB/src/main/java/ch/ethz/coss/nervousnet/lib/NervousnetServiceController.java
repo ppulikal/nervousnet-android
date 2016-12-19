@@ -204,9 +204,24 @@ public class NervousnetServiceController {
             if (mService != null)
                 return mService.getLatestReading(sensorID);
             else
-               return new ErrorReading(new String[]{"002", "Service not connected."});
+               return new InfoReading(new String[]{"002", "Service not connected."});
         } else
-            return new ErrorReading(new String[]{"003", "Service not bound."});
+            return new InfoReading(new String[]{"003", "Service not bound."});
+
+
+    }
+
+    public InfoReading writeReading(SensorReading reading) throws RemoteException {
+        if (bindFlag) {
+            if (mService != null) {
+                mService.writeReading(reading);
+                return new InfoReading(new String[]{"0", "Write Success."});
+            }
+
+            else
+                return new InfoReading(new String[]{"002", "Service not connected."});
+        } else
+            return new InfoReading(new String[]{"003", "Service not bound."});
 
 
     }
@@ -219,9 +234,9 @@ public class NervousnetServiceController {
                 mService.getReadings(sensorID, startTime, endTime, cb);
                 return null;
             } else
-                return new ErrorReading(new String[]{"002", "Nervousnet Service not connected."});
+                return new InfoReading(new String[]{"002", "Nervousnet Service not connected."});
         } else
-            return new ErrorReading(new String[]{"003", "Nervousnet Service not bound."});
+            return new InfoReading(new String[]{"003", "Nervousnet Service not bound."});
 
 
     }*/
@@ -258,8 +273,8 @@ public class NervousnetServiceController {
         }
 
         @Override
-        public void failure(final ErrorReading reading) throws RemoteException {
-            //Log.d("NERVOUSNET CALLBACK", sType + "callback failure "+reading.getErrorString());
+        public void failure(final InfoReading reading) throws RemoteException {
+            //Log.d("NERVOUSNET CALLBACK", sType + "callback failure "+reading.getInfoString());
         }
 
         public List getList() { return this.list; }

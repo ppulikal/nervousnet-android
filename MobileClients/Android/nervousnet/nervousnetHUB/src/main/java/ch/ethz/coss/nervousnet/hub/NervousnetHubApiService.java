@@ -34,6 +34,7 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
+import ch.ethz.coss.nervousnet.lib.InfoReading;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
@@ -74,6 +75,13 @@ public class NervousnetHubApiService extends Service {
 //			((Application) getApplicationContext()).nn_VM.getSensorReadings(sensorType, startTime, endTime,
 //					(ArrayList) list);
 
+        }
+
+        @Override
+        public InfoReading writeReading(SensorReading reading) {
+            NNLog.d(LOG_TAG, "WriteReading:  Sensor ID= " + reading.getSensorID() + " sensorName "+reading.getSensorName());
+            ((Application) getApplication()).nn_VM.store(reading);
+            return new InfoReading(new String[]{"0","Write Successful"});
         }
 
     };

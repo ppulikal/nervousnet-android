@@ -33,7 +33,7 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.InfoReading;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 
@@ -62,7 +62,7 @@ public abstract class BaseFragment extends Fragment {
 
     public abstract void updateReadings(SensorReading reading);
 
-    public abstract void handleError(ErrorReading reading);
+    public abstract void handleError(InfoReading reading);
 
     @Override
     public void onResume() {

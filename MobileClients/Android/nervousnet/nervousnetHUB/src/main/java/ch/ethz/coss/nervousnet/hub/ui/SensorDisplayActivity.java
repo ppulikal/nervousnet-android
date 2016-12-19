@@ -67,7 +67,7 @@ import ch.ethz.coss.nervousnet.hub.ui.fragments.LightFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.LocationFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.NoiseFragment;
 import ch.ethz.coss.nervousnet.hub.ui.fragments.ProximityFragment;
-import ch.ethz.coss.nervousnet.lib.ErrorReading;
+import ch.ethz.coss.nervousnet.lib.InfoReading;
 import ch.ethz.coss.nervousnet.lib.LibConstants;
 import ch.ethz.coss.nervousnet.lib.NervousnetServiceConnectionListener;
 import ch.ethz.coss.nervousnet.lib.NervousnetServiceController;
@@ -176,8 +176,8 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
         NNLog.d("SensorDisplayActivity", "Inside updateStatus, index =  " + index);
 
         if (reading != null) {
-            if (reading instanceof ErrorReading) {
-                fragment.handleError((ErrorReading) reading);
+            if (reading instanceof InfoReading) {
+                fragment.handleError((InfoReading) reading);
             } else {
                 fragment.updateReadings(reading);
             }
@@ -299,7 +299,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
     }
 
     @Override
-    public void onServiceConnectionFailed(ErrorReading errorReading) {
+    public void onServiceConnectionFailed(InfoReading infoReading) {
 
     }
 

@@ -32,49 +32,49 @@ import android.util.Log;
 /**
  * @author prasad
  */
-public class ErrorReading extends SensorReading {
+public class InfoReading extends SensorReading {
 
-    public static final Parcelable.Creator<ErrorReading> CREATOR = new Parcelable.Creator<ErrorReading>() {
+    public static final Parcelable.Creator<InfoReading> CREATOR = new Parcelable.Creator<InfoReading>() {
         @Override
-        public ErrorReading createFromParcel(Parcel in) {
-            return new ErrorReading(in);
+        public InfoReading createFromParcel(Parcel in) {
+            return new InfoReading(in);
         }
 
         @Override
-        public ErrorReading[] newArray(int size) {
-            return new ErrorReading[size];
+        public InfoReading[] newArray(int size) {
+            return new InfoReading[size];
         }
     };
-    private String[] errorValues = new String[2];
+    private String[] infoValues = new String[2];
 
-    public ErrorReading() {
+    public InfoReading() {
         this.setSensorID(LibConstants.ERROR);
     }
 
-    public ErrorReading(String[] values) {
+    public InfoReading(String[] values) {
         this.setSensorID(LibConstants.ERROR);
-        this.errorValues = values;
+        this.infoValues = values;
     }
 
     /**
      * @param in
      */
-    public ErrorReading(Parcel in) {
+    public InfoReading(Parcel in) {
         readFromParcel(in);
     }
 
-    public int getErrorCode() {
-        return Integer.parseInt(errorValues[0]);
+    public int getInfoCode() {
+        return Integer.parseInt(infoValues[0]);
     }
 
-    public String getErrorString() {
-        return errorValues[1];
+    public String getInfoString() {
+        return infoValues[1];
     }
 
     public void readFromParcel(Parcel in) {
-        Log.e("ErrorReading", "Exception - not able to bind ! ");
+        Log.e("InfoReading", "Exception - not able to bind ! ");
 
-        in.readStringArray(errorValues);
+        in.readStringArray(infoValues);
     }
 
     /*
@@ -96,7 +96,7 @@ public class ErrorReading extends SensorReading {
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(getClass().getName());
-        out.writeStringArray(errorValues);
+        out.writeStringArray(infoValues);
     }
 
 }
