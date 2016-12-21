@@ -293,7 +293,7 @@ public class SensorDisplayActivity extends FragmentActivity implements ActionBar
 
     @Override
     public void onServiceDisconnected() {
-        fragment.handleError(Utils.getErrorReading(101));
+        fragment.handleError(Utils.getInfoReading(101));
 
         stopRepeatingTask();
     }

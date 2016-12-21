@@ -70,6 +70,11 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
         setState(state);
     }
 
+    public BasicSensorConfiguration(int sensorID, String sensorName, ArrayList<String> parametersNames,
+                                    ArrayList<String> parametersTypes) {
+        super(sensorID, sensorName, parametersNames, parametersTypes);
+    }
+
     public String getWrapperName() {
         return wrapperName;
     }

@@ -219,6 +219,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
      * Create table for a sensor. Configuration of a sensor has to be passed.
      */
     public synchronized void createTableIfNotExists(GeneralSensorConfiguration config){
+        Log.d(LOG_TAG, "createTableIfNotExists called with name: "+getTableName(config.getSensorID()));
         String sql = "CREATE TABLE IF NOT EXISTS " +
                 getTableName(config.getSensorID()) + " ( " +
                 ConstantsDB.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

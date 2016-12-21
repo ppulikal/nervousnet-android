@@ -91,11 +91,14 @@ public class NervousnetVM {
     private BaseSensor initSensor(BasicSensorConfiguration sensorConf)
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, InstantiationException, SensorIsOffException {
+        Log.d(LOG_TAG, "initSensor called for sensorID: "+sensorConf.getSensorID());
         if (sensorWrappersMap.containsKey(sensorConf.getSensorID())){
             sensorWrappersMap.get(sensorConf.getSensorID()).stop();
         }
-        if (sensorConf.getSamplingRate() < 0){
-            throw new SensorIsOffException("Sensor rate is negative, so we assume it's off");
+        nervousnetDB.createTableIfNotExists(sensorConf);
+        if (sensorConf.getSamplingRate() < -1){
+
+            throw new SensorIsOffException("Sensor ID = "+sensorConf.getSensorID()+", Sensor rate is negative, so we assume it's off");
         } else {
             String wrapperName = sensorConf.getWrapperName();
             String packageName = BaseSensor.class.getPackage().getName();
@@ -105,8 +108,10 @@ public class NervousnetVM {
                     .getConstructor(Context.class, BasicSensorConfiguration.class)
                     .newInstance(context, sensorConf);
             sensorWrappersMap.put(sensorConf.getSensorID(), sensorListener);
-            nervousnetDB.createTableIfNotExists(sensorConf);
+//            nervousnetDB.createTableIfNotExists(sensorConf);
             //sensorListener.start();
+
+
             return sensorListener;
         }
     }
@@ -133,7 +138,6 @@ public class NervousnetVM {
         for (Long sensorID : configurationManager.getSensorIDs())
             stopSensor(sensorID);
     }
-
 
     /**
      * Start sensor with a given ID. If sensor does not work properly, will be ignored.
@@ -197,7 +201,7 @@ public class NervousnetVM {
         if (configurationManager.getNervousnetState() == NervousnetVMConstants.STATE_PAUSED) {
             NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
             try {
-                cb.failure(Utils.getErrorReading(101));
+                cb.failure(Utils.getInfoReading(101));
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -209,7 +213,7 @@ public class NervousnetVM {
                 e.printStackTrace();
             } catch (Exception e) {
                 try {
-                    cb.failure(Utils.getErrorReading(301));
+                    cb.failure(Utils.getInfoReading(301));
                 } catch (RemoteException re) {
                     re.printStackTrace();
                 }
@@ -228,7 +232,7 @@ public class NervousnetVM {
         if (configurationManager.getNervousnetState() == NervousnetVMConstants.STATE_PAUSED) {
             NNLog.d(LOG_TAG, "Error 001 : nervousnet is paused.");
             try {
-                cb.failure(Utils.getErrorReading(101));
+                cb.failure(Utils.getInfoReading(101));
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -241,7 +245,7 @@ public class NervousnetVM {
                 e.printStackTrace();
             } catch (Exception e) {
                 try {
-                    cb.failure(Utils.getErrorReading(301));
+                    cb.failure(Utils.getInfoReading(301));
                 } catch (RemoteException re) {
                     re.printStackTrace();
                 }
@@ -274,6 +278,7 @@ public class NervousnetVM {
     //####################################################################
 
     public void store(SensorReading reading){
+        NNLog.d(LOG_TAG, "Writing external SensorReading object");
         nervousnetDB.store(reading);
     }
 

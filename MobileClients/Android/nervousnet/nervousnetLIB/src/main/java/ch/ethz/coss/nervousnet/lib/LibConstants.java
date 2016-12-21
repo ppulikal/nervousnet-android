@@ -27,13 +27,13 @@ package ch.ethz.coss.nervousnet.lib;
 
 public class LibConstants {
 
-    public static final int SENSOR_ACCELEROMETER = 0;
-    public static final int SENSOR_BATTERY = 1;
-    public static final int SENSOR_GYROSCOPE = 2;
-    public static final int SENSOR_LOCATION = 3;
-    public static final int SENSOR_LIGHT = 4;
+    public static final int SENSOR_ACCELEROMETER = 1;
+    public static final int SENSOR_BATTERY = 2;
+    public static final int SENSOR_GYROSCOPE = 4;
+    public static final int SENSOR_LOCATION = 6;
+    public static final int SENSOR_LIGHT = 3;
     public static final int SENSOR_NOISE = 5;
-    public static final int SENSOR_PROXIMITY = 6;
+    public static final int SENSOR_PROXIMITY = 7;
 
     public static final int DEVICE_INFO = 101;
 

@@ -9,7 +9,8 @@ import java.util.Hashtable;
 
 public class Utils {
 
-    private static Hashtable<Integer, InfoReading> hErrorReadings = new Hashtable<Integer, InfoReading>() {{
+    private static Hashtable<Integer, InfoReading> hInfoReadings = new Hashtable<Integer, InfoReading>() {{
+        put(010, new InfoReading(new String[]{"010", "Write Success"}));
         put(101, new InfoReading(new String[]{"101", "Nervousnet is switched off."}));
         put(102, new InfoReading(new String[]{"102", "Security Exception - Cannot bind to nervousnet HUB service. Missing or denied Permission. 'ch.ethz.coss.nervousnet.hub.BIND_PERM'"}));
         put(103, new InfoReading(new String[]{"103", "Unkown Exception - Unable to bind to service."}));
@@ -58,8 +59,8 @@ public class Utils {
 
     }
 
-    public static InfoReading getErrorReading(int errorCode) {
+    public static InfoReading getInfoReading(int errorCode) {
 
-        return hErrorReadings.get(errorCode);
+        return hInfoReadings.get(errorCode);
     }
 }

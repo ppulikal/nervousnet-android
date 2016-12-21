@@ -38,6 +38,7 @@ import ch.ethz.coss.nervousnet.lib.InfoReading;
 import ch.ethz.coss.nervousnet.lib.NervousnetRemote;
 import ch.ethz.coss.nervousnet.lib.RemoteCallback;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
+import ch.ethz.coss.nervousnet.lib.Utils;
 import ch.ethz.coss.nervousnet.vm.NNLog;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
@@ -81,7 +82,7 @@ public class NervousnetHubApiService extends Service {
         public InfoReading writeReading(SensorReading reading) {
             NNLog.d(LOG_TAG, "WriteReading:  Sensor ID= " + reading.getSensorID() + " sensorName "+reading.getSensorName());
             ((Application) getApplication()).nn_VM.store(reading);
-            return new InfoReading(new String[]{"0","Write Successful"});
+            return Utils.getInfoReading(001);
         }
 
     };

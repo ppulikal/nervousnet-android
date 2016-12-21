@@ -79,7 +79,7 @@ public class NervousnetServiceController {
 //                                }
 //                            });
 
-                        listener.onServiceConnectionFailed(Utils.getErrorReading(101));
+                        listener.onServiceConnectionFailed(Utils.getInfoReading(101));
 
                     }
                 } catch (SecurityException e) {
@@ -87,13 +87,13 @@ public class NervousnetServiceController {
                     Log.e(LOG_TAG, "SecurityException - cannot bind to nervousnet service due to missing permission or permission denied. use 'ch.ethz.coss.nervousnet.hub.BIND_PERM' in your manifest to connect to nervousnet HUB Service");
                     doUnbindService();
 
-                    listener.onServiceConnectionFailed(Utils.getErrorReading(102));
+                    listener.onServiceConnectionFailed(Utils.getInfoReading(102));
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(LOG_TAG, "Exception - not able to bind ! ");
                     doUnbindService();
 
-                    listener.onServiceConnectionFailed(Utils.getErrorReading(103));
+                    listener.onServiceConnectionFailed(Utils.getInfoReading(103));
                 }
 
 
@@ -157,13 +157,13 @@ public class NervousnetServiceController {
                                 listener.onServiceConnected();
                         } else {
                             if (listener != null)
-                                listener.onServiceConnectionFailed(Utils.getErrorReading(101));
+                                listener.onServiceConnectionFailed(Utils.getInfoReading(101));
                         }
                     }
 
                 } catch (RemoteException e) {
                     if (listener != null)
-                        listener.onServiceConnectionFailed(Utils.getErrorReading(104));
+                        listener.onServiceConnectionFailed(Utils.getInfoReading(104));
 
                     e.printStackTrace();
                 }
@@ -182,7 +182,7 @@ public class NervousnetServiceController {
         bindFlag = context.bindService(it, mServiceConnection, 0);
 
         if (!bindFlag && listener != null) {
-            listener.onServiceConnectionFailed(Utils.getErrorReading(103));
+            listener.onServiceConnectionFailed(Utils.getInfoReading(103));
         }
 
     }
@@ -214,8 +214,7 @@ public class NervousnetServiceController {
     public InfoReading writeReading(SensorReading reading) throws RemoteException {
         if (bindFlag) {
             if (mService != null) {
-                mService.writeReading(reading);
-                return new InfoReading(new String[]{"0", "Write Success."});
+                return mService.writeReading(reading);
             }
 
             else

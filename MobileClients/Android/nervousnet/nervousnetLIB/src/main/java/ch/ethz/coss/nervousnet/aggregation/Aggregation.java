@@ -84,8 +84,6 @@ public class Aggregation<G extends GeneralAggrItem> {
 				}
 				newAverage = newAverage / value.size();
 
-
-
 				if (newAverage > maxAverage) {
 					maxAverage = newAverage;
 					maxSensDesc = sensorData;
@@ -132,6 +130,7 @@ public class Aggregation<G extends GeneralAggrItem> {
 			for (G sensorData : list) {
 				prioQueue.add(sensorData);
 			}
+
 			int i = 1;
 
 			while (i <= k && !prioQueue.isEmpty()) {

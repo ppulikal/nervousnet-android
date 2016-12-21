@@ -55,8 +55,13 @@ public class JsonConfigurationLoader {
                 String sensorName = sensorConf.getString("sensorName");
                 ArrayList<String> paramNames = convertToArr(sensorConf.getJSONArray("parametersNames"));
                 ArrayList<String> paramTypes = convertToArr(sensorConf.getJSONArray("parametersTypes"));
-                int state = sensorConf.getInt("initialState");
-                ArrayList<Long> samplingRates = convertToArrLong(sensorConf.getJSONArray("samplingRates"));
+                int state = 0;
+                if (sensorConf.has("initialState"))
+                state = sensorConf.getInt("initialState");
+                ArrayList<Long> samplingRates = new ArrayList<Long>();
+
+                if (sensorConf.has("samplingRates"))
+                samplingRates=    convertToArrLong(sensorConf.getJSONArray("samplingRates"));
                 // OPTIONAL
                 // This one is for simple android sensors
                 if (sensorConf.has("androidSensorType") && sensorConf.has("androidParametersPositions")) {
@@ -70,6 +75,9 @@ public class JsonConfigurationLoader {
                     String wrapperName = sensorConf.getString("wrapperName");
                     confClass = new BasicSensorConfiguration(sensorID, sensorName,
                             paramNames, paramTypes, wrapperName, samplingRates, state);
+                } else {
+                    confClass = new BasicSensorConfiguration(sensorID, sensorName,
+                            paramNames, paramTypes);
                 }
                 list.add(confClass);
                 Log.d(LOG_TAG, confClass.toString());
