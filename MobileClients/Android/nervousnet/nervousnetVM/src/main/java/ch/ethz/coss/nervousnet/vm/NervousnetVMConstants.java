@@ -12,6 +12,9 @@ public class NervousnetVMConstants {
     public final static byte SENSOR_STATE_AVAILABLE_DELAY_MED = 2;
     public final static byte SENSOR_STATE_AVAILABLE_DELAY_HIGH = 3;
 
+
+
+    public static final long[] sensorIDs = new long[]{1, 2, 4, 6, 3, 5, 7};
     public static String[] sensor_labels = {"ACCELEROMETER", "BATTERY", "GYROSCOPE",
             "LOCATION", "LIGHT", "NOISE", "PROXIMITY"};
 

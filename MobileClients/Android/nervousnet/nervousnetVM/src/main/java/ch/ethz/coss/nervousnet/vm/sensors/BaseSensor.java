@@ -26,7 +26,6 @@ public abstract class BaseSensor {
     // representation
     protected long sensorID;
     protected String sensorName;
-    protected long samplingRate;
     protected ArrayList<String> paramNames;
 
     private long nextSampling = 0;
@@ -63,7 +62,6 @@ public abstract class BaseSensor {
     public void start(){
         stopListener();
         this.databaseHandler.createTableIfNotExists(configuration);
-        this.samplingRate = configuration.getSamplingRate();
         startListener();
     }
 

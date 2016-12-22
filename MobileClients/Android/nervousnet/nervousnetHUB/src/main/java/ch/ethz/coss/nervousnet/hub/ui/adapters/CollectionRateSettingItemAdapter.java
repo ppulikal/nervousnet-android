@@ -22,6 +22,8 @@ import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.events.NNEvent;
 
 public class CollectionRateSettingItemAdapter extends ArrayAdapter<String> {
+    // TODO
+    private final long[] sensorIDs = NervousnetVMConstants.sensorIDs;
 
     private final Context context;
     private final String[] labels;
@@ -50,7 +52,7 @@ public class CollectionRateSettingItemAdapter extends ArrayAdapter<String> {
 
         button = (Button) convertView.findViewById(R.id.sensor_level_button);
         button.setText(NervousnetVMConstants.sensor_freq_labels[((Application) context.getApplicationContext()).nn_VM
-                .getSensorState(position)]);
+                .getSensorState(sensorIDs[position])]);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +82,7 @@ public class CollectionRateSettingItemAdapter extends ArrayAdapter<String> {
                 String[] option_array = NervousnetVMConstants.sensor_freq_labels;
                 String optionSelected = option_array[itemClicked];
 
-                EventBus.getDefault().post(new NNEvent((long) position, (byte) itemClicked, NervousnetVMConstants.EVENT_CHANGE_SENSOR_STATE_REQUEST));
+                EventBus.getDefault().post(new NNEvent(sensorIDs[position], (byte) itemClicked, NervousnetVMConstants.EVENT_CHANGE_SENSOR_STATE_REQUEST));
 //                ((Application) context.getApplicationContext()).nn_VM.updateSensorConfig((long) position,
 //                        (byte) itemClicked);
 //                ((Activity) context).finish();
