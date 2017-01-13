@@ -339,7 +339,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
      * Delete readings that are older than threshold timestamp (milliseconds).
      */
     public synchronized void removeOldReadings(long sensorID, long threshold){
-        String sql = "DELETE FROM " + String.valueOf(sensorID) +
+        String sql = "DELETE FROM " + getTableName(sensorID) +
                 " WHERE " + ConstantsDB.TIMESTAMP + " < " + threshold + ";";
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(sql);
