@@ -99,6 +99,5 @@ https://github.com/nervousnet/nervousnet-android/wiki/Nervousnet
 For more information or support check out our website http://www.nervousnet.info or email us at nervousnet@ethz.ch
 
 ### Author 
- Prasad P. Pulikal - prasad.pulikal@gess.ethz.ch
-  (Nervousnet Platform Architecture / Android Client / Nervousnet CORE Servers)-
+ Prasad P. Pulikal - (Nervousnet Platform Architecture / Android Client / Nervousnet CORE Servers)
 
