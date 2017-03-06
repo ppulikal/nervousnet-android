@@ -5,34 +5,57 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 import ch.ethz.coss.nervousnet.vm.sensors.AndroidSensor;
 
 /**
- * Created by ales on 21/09/16.
+ * Intention of this class is to hold configuration values for a physical sensor,
+ * such as Accelerometer, Light sensor, Battery, etc., in attributes for fast
+ * and easy access to the values.
  */
 public class BasicSensorConfiguration extends GeneralSensorConfiguration {
 
+    /**
+     * This attribute holds type of a sensor as specified in documentation
+     * for {@link android.hardware.Sensor}
+     */
     private int androidSensorType;
+    /**
+     * This attribute specifies positions of the sensor values to be selected.
+     * Follow the documentation {@link android.hardware.SensorEvent}.
+     */
     private int[] androidParametersPositions;
-    private int state;
-    private long samplingRate;
+    /**
+     * List of sampling rates.
+     */
     private ArrayList<Long> samplingRates;
-    private String wrapperName;
+    /**
+     * This attribute contains information of the state of the sensor. If
+     * it is 0, then the sampling rate is set to -1. If it is positive
+     * integer, then it represents an index in samplingRates and the value
+     * at that position is actual sampling rate. The indexing starts counting
+     * with 1 and not 0 as the value 0 is reserved as described before.
+     */
+    private int state;
+    /**
+     * This is name of the class in {@link ch.ethz.coss.nervousnet.vm.sensors}
+     */
+    private String sensorListenerName;
 
     /**
-     * Constructs an object that holds parameters for a basic android sensor.
-     * @param sensorID - unique sensor identifier
-     * @param sensorName - arbitrary sensor name
-     * @param androidSensorType - check Sensor class from official android documentation
-     * @param parametersNames - arbitrary persistent parameter names of the sensor
-     * @param parametersTypes - arbitrary persistent parameter types of the sensor
-     * @param androidParametersPositions - enables to select subset of values among all that are
-     *                                   specified in SensorEvent class from official android
-     *                                   documentation
-     * @param samplingRates - list of possible sampling rates
-     * @param state - selected sampling rate; 0 represents OFF; 1 selects the first sampling rate from
-     *              samplingRates, 2 selects next one and so on;
+     * @param sensorID unique sensor identifier
+     * @param sensorName sensor name
+     * @param androidSensorType type of a sensor as specified in documentation
+     * for {@link android.hardware.Sensor}
+     * @param parametersNames parameter names of the sensor
+     * @param parametersTypes types of the sensor in Java notation
+     * @param androidParametersPositions specifies positions of the sensor values to be selected.
+     * Follow the documentation {@link android.hardware.SensorEvent}.
+     * @param samplingRates list of possible sampling rates
+     * @param state contains information of the state of the sensor. If
+     * it is 0, then the sampling rate is set to -1. If it is positive
+     * integer, then it represents an index in samplingRates and the value
+     * at that position is actual sampling rate. The indexing starts counting
+     * with 1 and not 0 as the value 0 is reserved as described before.
      */
     public BasicSensorConfiguration(int sensorID, String sensorName, int androidSensorType,
                                     ArrayList<String> parametersNames,
@@ -44,20 +67,23 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
         this.androidSensorType = androidSensorType;
         this.androidParametersPositions = androidParametersPositions;
         this.samplingRates = samplingRates;
-        this.wrapperName = AndroidSensor.class.getSimpleName();
+        this.sensorListenerName = AndroidSensor.class.getSimpleName();
         setState(state);
     }
 
     /**
-     * Constructor an object that holds parameters for an arbitrary sensor.
-     * @param sensorID - unique sensor identifier
-     * @param sensorName - arbitrary sensor name
-     * @param parametersNames - arbitrary persistent parameter names of the sensor
-     * @param parametersTypes - arbitrary persistent parameter types of the sensor
-     * @param wrapperName - name of the class that handles sensor reading
-     * @param samplingRates - list of possible sampling rates
-     * @param state - selected sampling rate; 0 represents OFF; 1 selects the first sampling rate from
-     *              samplingRates, 2 selects next one and so on;
+     * @param sensorID unique sensor identifier
+     * @param sensorName sensor name
+     * for {@link android.hardware.Sensor}
+     * @param parametersNames parameter names of the sensor
+     * @param parametersTypes types of the sensor in Java notation
+     * Follow the documentation {@link android.hardware.SensorEvent}.
+     * @param samplingRates list of possible sampling rates
+     * @param state contains information of the state of the sensor. If
+     * it is 0, then the sampling rate is set to -1. If it is positive
+     * integer, then it represents an index in samplingRates and the value
+     * at that position is actual sampling rate. The indexing starts counting
+     * with 1 and not 0 as the value 0 is reserved as described before.
      */
     public BasicSensorConfiguration(int sensorID, String sensorName, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
@@ -66,55 +92,75 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
                                     int state) {
         super(sensorID, sensorName, parametersNames, parametersTypes);
         this.samplingRates = samplingRates;
-        this.wrapperName = wrapperName;
+        this.sensorListenerName = wrapperName;
         setState(state);
     }
 
+
+    /**
+     * @param sensorID unique sensor identifier
+     * @param sensorName sensor name
+     * for {@link android.hardware.Sensor}
+     * @param parametersNames parameter names of the sensor
+     * @param parametersTypes types of the sensor in Java notation
+     * Follow the documentation {@link android.hardware.SensorEvent}.
+     */
     public BasicSensorConfiguration(int sensorID, String sensorName, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes) {
         super(sensorID, sensorName, parametersNames, parametersTypes);
     }
 
+    /**
+     * @return The name of the class from
+     * {@link ch.ethz.coss.nervousnet.vm.sensors} that handles the sensor.
+     */
     public String getWrapperName() {
-        return wrapperName;
+        return sensorListenerName;
     }
 
+    /**
+     * @return Type of the sensor as specified in documentation
+     * for {@link android.hardware.Sensor}.
+     */
     public int getAndroidSensorType() {
         return androidSensorType;
     }
 
+    /**
+     *
+     * @return Selected positions of the sensor values.
+     * Follow the documentation {@link android.hardware.SensorEvent} to see the values.
+     */
     public int[] getAndroidParametersPositions() {
         return androidParametersPositions;
     }
 
-    public long getSamplingRate() {
-        return samplingRate;
-    }
-
-    public void setSamplingRate(long samplingRate) {
-        this.samplingRate = samplingRate;
+    /**
+     *
+     * @return Actual sampling rate.
+     */
+    public long getActualSamplingRate() {
+        if (state <= 0)
+            return -1;
+        else
+            return samplingRates.get(state-1);
     }
 
     public void setState(int state){
         this.state = state;
-        switch (state){
-            case NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF:
-                this.samplingRate = -1; break;
-            case NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW:
-                this.samplingRate = samplingRates.get(0); break;
-            case NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED:
-                this.samplingRate = samplingRates.get(1); break;
-            case NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH:
-                this.samplingRate = samplingRates.get(2); break;
-            default:
-                this.samplingRate = -1; break;
-        }
     }
 
+    /**
+     *
+     * @return List of possible sampling rates.
+     */
     public ArrayList<Long> getSamplingRates() {
         return samplingRates;
     }
 
+    /**
+    * @return State.
+     */
     public int getState() {
         return state;
     }
@@ -127,7 +173,7 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
                 ", parametersNames=" + TextUtils.join(", ", parametersNames) +
                 ", parametersTypes=" + TextUtils.join(", ", parametersTypes) +
                 ", androidParametersPositions=" + Arrays.toString(androidParametersPositions) +
-                ", samplingPeriod=" + samplingRate +
+                ", state=" + state +
                 '}';
     }
 }

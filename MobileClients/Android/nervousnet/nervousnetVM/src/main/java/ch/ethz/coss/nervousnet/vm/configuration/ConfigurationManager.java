@@ -11,18 +11,42 @@ import java.util.Set;
 import ch.ethz.coss.nervousnet.vm.NervousnetVMConstants;
 
 /**
- * Created by ales on 17/11/16.
+ * ConfigurationManager is responsible for sensor collection state. It is responsible
+ * for storing the state when some sensor collection configuration changes and restoring
+ * the state when the application turns back on. This is necessary because application
+ * crashes can appear. The idea is that the whole state is managed by ConfigurationManager.
+ * <br/>
+ * At the initialization of the ConfigurationManager, the manager goes through the
+ * configuration file, that holds all sensors' configurations, and initializes sensors
+ * according to the configurations. Then, it checks database and restores states of the
+ * sensors that are stored before the app crashes or is shut down - default states form configuration file
+ * are overwritten. If there is nothing to be restored, the states from configuration file persist.
+ * <br/>
+ * All configurations are hold in hashmap that map sensors' IDs into their configuration.
+ * <br/>
+ * TODO: To make this class a singleton. At the current development
+ * stage, this is not the case yet.
+ * TODO: There may be better solutions for database management.
  */
 public class ConfigurationManager implements iConfigurationManager {
 
+    /**
+     * This hashmap maps sensor ID into sensor's configuration.
+     */
     HashMap<Long, GeneralSensorConfiguration> configMap;
+    /**
+     * Database manager for sensors' configuration storing and for application state storing.
+     */
     StateDBManager stateDBManager;
 
     public ConfigurationManager(Context context) {
         this.configMap = new HashMap<>();
         this.stateDBManager = new StateDBManager(context);
+        // Load default configuration from configuration file
         JsonConfigurationLoader loader = new JsonConfigurationLoader(context);
         ArrayList<BasicSensorConfiguration> confList = loader.load();
+        // Check database if there are some stored states and overwrite default states from
+        // the configuration file.
         for (BasicSensorConfiguration conf : confList){
             configMap.put(conf.getSensorID(), conf);
             try {
@@ -71,6 +95,9 @@ public class ConfigurationManager implements iConfigurationManager {
     }
 
     @Override
+    /**
+     * @return Application state.
+     */
     public int getNervousnetState() {
         try {
             return stateDBManager.getNervousnetState();
@@ -80,6 +107,9 @@ public class ConfigurationManager implements iConfigurationManager {
     }
 
     @Override
+    /**
+     * Set application state.
+     */
     public void setNervousnetState(int state) throws NoSuchElementException {
         stateDBManager.storeNervousnetState(state);
     }

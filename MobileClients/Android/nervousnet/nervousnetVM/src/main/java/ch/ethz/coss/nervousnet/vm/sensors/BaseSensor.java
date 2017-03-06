@@ -9,9 +9,6 @@ import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.configuration.BasicSensorConfiguration;
 import ch.ethz.coss.nervousnet.vm.database.NervousnetDBManager;
 
-/**
- * Created by ales on 24/10/16.
- */
 public abstract class BaseSensor {
 
     private static final String LOG_TAG = BaseSensor.class.getSimpleName();
@@ -49,9 +46,9 @@ public abstract class BaseSensor {
      * readings further for storing.
      */
     public void push(SensorReading reading){
-        if (reading.getTimestampEpoch() >= nextSampling && configuration.getSamplingRate() >= 0) {
+        if (reading.getTimestampEpoch() >= nextSampling && configuration.getActualSamplingRate() >= 0) {
             Log.d(LOG_TAG, reading.toString());
-            nextSampling = reading.getTimestampEpoch() + configuration.getSamplingRate();
+            nextSampling = reading.getTimestampEpoch() + configuration.getActualSamplingRate();
             databaseHandler.store(reading);
         }
     }

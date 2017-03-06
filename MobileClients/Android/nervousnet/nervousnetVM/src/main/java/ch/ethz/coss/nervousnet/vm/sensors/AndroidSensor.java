@@ -14,6 +14,11 @@ import java.util.concurrent.locks.ReentrantLock;
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.configuration.BasicSensorConfiguration;
 
+/**
+ * AndroidSensor is a listener for any sensor that is documented in {@link android.hardware.Sensor}.
+ * This enables that for any new sensor in the documentation only configuration needs to be updated.
+ */
+
 public class AndroidSensor extends BaseSensor  implements SensorEventListener {
 
     private static final String LOG_TAG = AndroidSensor.class.getSimpleName();

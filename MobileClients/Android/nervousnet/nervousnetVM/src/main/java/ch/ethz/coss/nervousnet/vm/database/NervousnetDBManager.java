@@ -20,7 +20,17 @@ import ch.ethz.coss.nervousnet.vm.configuration.GeneralSensorConfiguration;
 
 
 /**
- * Created by ales on 18/10/16.
+ * This class enables that values of sensors get stored and queried.
+ * First, table for a specific sensor type has to be created by calling
+ * {@link #createTableIfNotExists(GeneralSensorConfiguration)}  createTableIfNotExists}.
+ * Then, SensorReading values of the sensor can be stored. As it is very expensive,
+ * that evey SensorReading get stored individually, a 'cache' mechanism is implemented.
+ * When a SensorReading is stored, it goes into a temporary storage and there is a
+ * timer (storingRate) which tells the scheduler when to store temporary into the
+ * database. The scheduler calls method {@link #run() run} which performs that temporary
+ * storage is stored into the database and clears temporary storage for new input SensorReadings.
+ * TODO: If would be great that method {@link #createTableIfNotExists(GeneralSensorConfiguration)}  createTableIfNotExists}
+ * doesn't be called from outside. Little work can improve this.
  */
 public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
 
@@ -68,7 +78,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
     /**
      * Creates new instance if it does not exist and returns it.
      * @param context
-     * @return - instance of NervousnetDBManager
+     * @return instance of NervousnetDBManager
      */
     public static NervousnetDBManager getInstance(Context context){
         if (instance == null){
@@ -205,7 +215,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
     //####################################################################
 
     /**
-     * Delete table of a sesnor.
+     * Delete table of the sesnor.
      */
     public synchronized void deleteTableIfExists(long sensorID){
         String sql = "DROP TABLE IF EXISTS " + getTableName(sensorID) + ";";

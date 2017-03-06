@@ -96,7 +96,7 @@ public class NervousnetVM {
             sensorWrappersMap.get(sensorConf.getSensorID()).stop();
         }
         nervousnetDB.createTableIfNotExists(sensorConf);
-        if (sensorConf.getSamplingRate() < -1){
+        if (sensorConf.getActualSamplingRate() < -1){
 
             throw new SensorIsOffException("Sensor ID = "+sensorConf.getSensorID()+", Sensor rate is negative, so we assume it's off");
         } else {

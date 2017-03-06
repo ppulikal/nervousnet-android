@@ -1,7 +1,10 @@
 package ch.ethz.coss.nervousnet.vm.configuration;
 
 /**
- * Created by ales on 16/11/16.
+ * This class holds static constants for database that holds configurations.
+ * TODO: This is temporary solution. It would be better to make this safer as
+ * it is possible that a developer creates new database with the same name
+ * and some collisions can appear.
  */
 public class Constants {
 

@@ -1,8 +1,6 @@
 package ch.ethz.coss.nervousnet.vm.database;
 
-/**
- * Created by ales on 26/09/16.
- */
+
 public class ConstantsDB {
 
     // SQLite documentation

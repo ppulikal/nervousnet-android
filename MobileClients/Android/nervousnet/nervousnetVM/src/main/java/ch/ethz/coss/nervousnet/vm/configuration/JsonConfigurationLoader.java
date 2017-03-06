@@ -12,7 +12,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
- * Created by ales on 21/09/16.
+ * JsonConfigurationLoader loads configuration file from the assets.
+ * TODO: Should be improved in terms of default values and method structure.
  */
 public class JsonConfigurationLoader {
 
@@ -24,6 +25,10 @@ public class JsonConfigurationLoader {
         this.context = context;
     }
 
+    /**
+     * Load sensor configurations from configuration file.
+     * @return List of sensor configurations.
+     */
     protected ArrayList<BasicSensorConfiguration> load() {
         String line,total = "";
         try
@@ -43,6 +48,11 @@ public class JsonConfigurationLoader {
         return load(total);
     }
 
+    /**
+     * Load sensor configurations from a json string.
+     * @param strJson Json string with sensor configurations.
+     * @return List of sensor configurations.
+     */
     protected static ArrayList<BasicSensorConfiguration> load(String strJson){
         ArrayList<BasicSensorConfiguration> list = new ArrayList();
         try {
@@ -90,6 +100,11 @@ public class JsonConfigurationLoader {
     }
 
 
+    /**
+     * Convert JSONArray into ArrayList
+     * @param jList
+     * @return
+     */
     private static ArrayList<String> convertToArr(JSONArray jList){
         int len = jList.length();
         ArrayList<String> arr = new ArrayList();
@@ -104,6 +119,12 @@ public class JsonConfigurationLoader {
         return arr;
     }
 
+
+    /**
+     * Convert JSONArray of long values into ArrayList of long values.
+     * @param jList
+     * @return
+     */
     private static ArrayList<Long> convertToArrLong(JSONArray jList){
         int len = jList.length();
         ArrayList<Long> arr = new ArrayList();
@@ -118,6 +139,12 @@ public class JsonConfigurationLoader {
         return arr;
     }
 
+
+    /**
+     * Convert JSONArray list of int values into ArryaList of int values.
+     * @param jList
+     * @return
+     */
     private static int[] convertToIntArr(JSONArray jList){
         int len = jList.length();
         int[] list = new int[len];

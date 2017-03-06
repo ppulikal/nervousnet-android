@@ -9,7 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.NoSuchElementException;
 
 /**
- * Created by ales on 16/11/16.
+ * This class offers that sensors' states get stored or queried from database.
+ * The same for application state.
+ *
+ * TODO: methods could be optimized.
  */
 public class StateDBManager extends SQLiteOpenHelper{
 

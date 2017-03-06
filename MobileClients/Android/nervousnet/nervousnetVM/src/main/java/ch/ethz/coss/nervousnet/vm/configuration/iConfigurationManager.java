@@ -6,7 +6,9 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
- * Created by ales on 17/11/16.
+ * iConfigurationManager is an interface that defines methods of ConfigurationManager.
+ * The idea is that this interface is the only connection between configuration package
+ * and other packages. All management should be done through this interface.
  */
 public interface iConfigurationManager {
     public Collection<GeneralSensorConfiguration> getAllConfigurations();
