@@ -25,6 +25,12 @@ import ch.ethz.coss.nervousnet.vm.events.NNEvent;
 import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor;
 
 
+/**
+ * NervousnetVM is the main class of sensor collection. It can accept new sensor configuration
+ * and passes it to {@link ch.ethz.coss.nervousnet.vm.configuration.ConfigurationManager}. It
+ * keeps a hashmap of active sensor listeners. SensorReadings can be queried or stored. It
+ * enables sensor configuration update. 
+ */
 public class NervousnetVM {
 
     private static final String LOG_TAG = NervousnetVM.class.getSimpleName();
