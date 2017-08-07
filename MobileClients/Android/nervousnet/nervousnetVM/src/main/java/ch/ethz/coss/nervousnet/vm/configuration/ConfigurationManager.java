@@ -47,7 +47,7 @@ public class ConfigurationManager implements iConfigurationManager {
         ArrayList<BasicSensorConfiguration> confList = loader.load();
         // Check database if there are some stored states and overwrite default states from
         // the configuration file.
-        for (BasicSensorConfiguration conf : confList){
+        for (BasicSensorConfiguration conf : confList) {
             configMap.put(conf.getSensorID(), conf);
             try {
                 int state = stateDBManager.getSensorState(conf.getSensorID());
@@ -64,7 +64,7 @@ public class ConfigurationManager implements iConfigurationManager {
     }
 
     @Override
-    public Set<Long> getSensorIDs(){
+    public Set<Long> getSensorIDs() {
         return configMap.keySet();
     }
 
@@ -77,9 +77,9 @@ public class ConfigurationManager implements iConfigurationManager {
     }
 
     @Override
-    public int getSensorState(long sensorID) throws NoSuchElementException{
+    public int getSensorState(long sensorID) throws NoSuchElementException {
         if (configMap.containsKey(sensorID))
-            return ((BasicSensorConfiguration)configMap.get(sensorID)).getState();
+            return ((BasicSensorConfiguration) configMap.get(sensorID)).getState();
         else
             throw new NoSuchElementException("Sensor " + sensorID + " has not been configured.");
     }
@@ -89,8 +89,7 @@ public class ConfigurationManager implements iConfigurationManager {
         if (configMap.containsKey(sensorID)) {
             stateDBManager.storeSensorState(sensorID, state);
             ((BasicSensorConfiguration) configMap.get(sensorID)).setState(state);
-        }
-        else
+        } else
             throw new NoSuchElementException("Sensor " + sensorID + " has not been configured.");
     }
 

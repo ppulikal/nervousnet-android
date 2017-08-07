@@ -42,20 +42,20 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
     private String sensorListenerName;
 
     /**
-     * @param sensorID unique sensor identifier
-     * @param sensorName sensor name
-     * @param androidSensorType type of a sensor as specified in documentation
-     * for {@link android.hardware.Sensor}
-     * @param parametersNames parameter names of the sensor
-     * @param parametersTypes types of the sensor in Java notation
+     * @param sensorID                   unique sensor identifier
+     * @param sensorName                 sensor name
+     * @param androidSensorType          type of a sensor as specified in documentation
+     *                                   for {@link android.hardware.Sensor}
+     * @param parametersNames            parameter names of the sensor
+     * @param parametersTypes            types of the sensor in Java notation
      * @param androidParametersPositions specifies positions of the sensor values to be selected.
-     * Follow the documentation {@link android.hardware.SensorEvent}.
-     * @param samplingRates list of possible sampling rates
-     * @param state contains information of the state of the sensor. If
-     * it is 0, then the sampling rate is set to -1. If it is positive
-     * integer, then it represents an index in samplingRates and the value
-     * at that position is actual sampling rate. The indexing starts counting
-     * with 1 and not 0 as the value 0 is reserved as described before.
+     *                                   Follow the documentation {@link android.hardware.SensorEvent}.
+     * @param samplingRates              list of possible sampling rates
+     * @param state                      contains information of the state of the sensor. If
+     *                                   it is 0, then the sampling rate is set to -1. If it is positive
+     *                                   integer, then it represents an index in samplingRates and the value
+     *                                   at that position is actual sampling rate. The indexing starts counting
+     *                                   with 1 and not 0 as the value 0 is reserved as described before.
      */
     public BasicSensorConfiguration(int sensorID, String sensorName, int androidSensorType,
                                     ArrayList<String> parametersNames,
@@ -72,18 +72,18 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
     }
 
     /**
-     * @param sensorID unique sensor identifier
-     * @param sensorName sensor name
-     * for {@link android.hardware.Sensor}
+     * @param sensorID        unique sensor identifier
+     * @param sensorName      sensor name
+     *                        for {@link android.hardware.Sensor}
      * @param parametersNames parameter names of the sensor
      * @param parametersTypes types of the sensor in Java notation
-     * Follow the documentation {@link android.hardware.SensorEvent}.
-     * @param samplingRates list of possible sampling rates
-     * @param state contains information of the state of the sensor. If
-     * it is 0, then the sampling rate is set to -1. If it is positive
-     * integer, then it represents an index in samplingRates and the value
-     * at that position is actual sampling rate. The indexing starts counting
-     * with 1 and not 0 as the value 0 is reserved as described before.
+     *                        Follow the documentation {@link android.hardware.SensorEvent}.
+     * @param samplingRates   list of possible sampling rates
+     * @param state           contains information of the state of the sensor. If
+     *                        it is 0, then the sampling rate is set to -1. If it is positive
+     *                        integer, then it represents an index in samplingRates and the value
+     *                        at that position is actual sampling rate. The indexing starts counting
+     *                        with 1 and not 0 as the value 0 is reserved as described before.
      */
     public BasicSensorConfiguration(int sensorID, String sensorName, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes,
@@ -98,12 +98,12 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
 
 
     /**
-     * @param sensorID unique sensor identifier
-     * @param sensorName sensor name
-     * for {@link android.hardware.Sensor}
+     * @param sensorID        unique sensor identifier
+     * @param sensorName      sensor name
+     *                        for {@link android.hardware.Sensor}
      * @param parametersNames parameter names of the sensor
      * @param parametersTypes types of the sensor in Java notation
-     * Follow the documentation {@link android.hardware.SensorEvent}.
+     *                        Follow the documentation {@link android.hardware.SensorEvent}.
      */
     public BasicSensorConfiguration(int sensorID, String sensorName, ArrayList<String> parametersNames,
                                     ArrayList<String> parametersTypes) {
@@ -127,7 +127,6 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
     }
 
     /**
-     *
      * @return Selected positions of the sensor values.
      * Follow the documentation {@link android.hardware.SensorEvent} to see the values.
      */
@@ -136,22 +135,16 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
     }
 
     /**
-     *
      * @return Actual sampling rate.
      */
     public long getActualSamplingRate() {
         if (state <= 0)
             return -1;
         else
-            return samplingRates.get(state-1);
-    }
-
-    public void setState(int state){
-        this.state = state;
+            return samplingRates.get(state - 1);
     }
 
     /**
-     *
      * @return List of possible sampling rates.
      */
     public ArrayList<Long> getSamplingRates() {
@@ -159,10 +152,14 @@ public class BasicSensorConfiguration extends GeneralSensorConfiguration {
     }
 
     /**
-    * @return State.
+     * @return State.
      */
     public int getState() {
         return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     @Override

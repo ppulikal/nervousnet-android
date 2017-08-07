@@ -29,7 +29,7 @@ import ch.ethz.coss.nervousnet.vm.sensors.BaseSensor;
  * NervousnetVM is the main class of sensor collection. It can accept new sensor configuration
  * and passes it to {@link ch.ethz.coss.nervousnet.vm.configuration.ConfigurationManager}. It
  * keeps a hashmap of active sensor listeners. SensorReadings can be queried or stored. It
- * enables sensor configuration update. 
+ * enables sensor configuration update.
  */
 public class NervousnetVM {
 
@@ -52,11 +52,11 @@ public class NervousnetVM {
         this.context = context;
         this.configurationManager = new ConfigurationManager(context);
         this.nervousnetDB = NervousnetDBManager.getInstance(context);
-        for (GeneralSensorConfiguration conf : configurationManager.getAllConfigurations()){
+        for (GeneralSensorConfiguration conf : configurationManager.getAllConfigurations()) {
             try {
                 initSensor((BasicSensorConfiguration) conf);
                 //TODO If registration doesn't succeed, we ignore it for now
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.d(LOG_TAG, e.getMessage());
             }
         }
@@ -73,7 +73,7 @@ public class NervousnetVM {
     /**
      * Register new sensor by providing configuration. TODO not implemented yet
      */
-    public void registerSensor(GeneralSensorConfiguration config){
+    public void registerSensor(GeneralSensorConfiguration config) {
         // TODO: configuration manager has to accept new registration
         //configurationManager.setConf????
         //configMap.put(config.getSensorID(), config);
@@ -87,6 +87,7 @@ public class NervousnetVM {
 
     /**
      * Initialize sensor with a given configuration.
+     *
      * @param sensorConf
      * @throws ClassNotFoundException
      * @throws NoSuchMethodException
@@ -97,14 +98,14 @@ public class NervousnetVM {
     private BaseSensor initSensor(BasicSensorConfiguration sensorConf)
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, InstantiationException, SensorIsOffException {
-        Log.d(LOG_TAG, "initSensor called for sensorID: "+sensorConf.getSensorID());
-        if (sensorWrappersMap.containsKey(sensorConf.getSensorID())){
+        Log.d(LOG_TAG, "initSensor called for sensorID: " + sensorConf.getSensorID());
+        if (sensorWrappersMap.containsKey(sensorConf.getSensorID())) {
             sensorWrappersMap.get(sensorConf.getSensorID()).stop();
         }
         nervousnetDB.createTableIfNotExists(sensorConf);
-        if (sensorConf.getActualSamplingRate() < -1){
+        if (sensorConf.getActualSamplingRate() < -1) {
 
-            throw new SensorIsOffException("Sensor ID = "+sensorConf.getSensorID()+", Sensor rate is negative, so we assume it's off");
+            throw new SensorIsOffException("Sensor ID = " + sensorConf.getSensorID() + ", Sensor rate is negative, so we assume it's off");
         } else {
             String wrapperName = sensorConf.getWrapperName();
             String packageName = BaseSensor.class.getPackage().getName();
@@ -148,8 +149,8 @@ public class NervousnetVM {
     /**
      * Start sensor with a given ID. If sensor does not work properly, will be ignored.
      */
-    public void startSensor(long sensorID){
-        if (sensorWrappersMap.containsKey(sensorID)){
+    public void startSensor(long sensorID) {
+        if (sensorWrappersMap.containsKey(sensorID)) {
             sensorWrappersMap.get(sensorID).start();
         } else {
             try {
@@ -168,7 +169,7 @@ public class NervousnetVM {
                 e.printStackTrace();
             } catch (SensorIsOffException e) {
                 e.printStackTrace();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -178,8 +179,8 @@ public class NervousnetVM {
     /**
      * Stop sensor with a given ID.
      */
-    public void stopSensor(long sensorID){
-        if (sensorWrappersMap.containsKey(sensorID)){
+    public void stopSensor(long sensorID) {
+        if (sensorWrappersMap.containsKey(sensorID)) {
             sensorWrappersMap.get(sensorID).stop();
             //sensorWrappersMap.remove(sensorID);
         }
@@ -194,7 +195,7 @@ public class NervousnetVM {
      * Returns latest reading that has been stored since starting the application.
      */
     public SensorReading getLatestReading(long sensorID)
-            throws NoSuchElementException{
+            throws NoSuchElementException {
         return NervousnetDBManager.getLatestReading(sensorID);
     }
 
@@ -263,7 +264,7 @@ public class NervousnetVM {
     /**
      * Returns list of readings.
      */
-    private ArrayList<SensorReading> getReadings(long sensorID){
+    private ArrayList<SensorReading> getReadings(long sensorID) {
         return nervousnetDB.getReadings(configurationManager.getConfiguration(sensorID));
     }
 
@@ -271,24 +272,22 @@ public class NervousnetVM {
      * Returns list of readings between the time range.
      */
     private ArrayList<SensorReading> getReadings(long sensorID,
-                                                 long startTimestamp, long endTimestamp){
+                                                 long startTimestamp, long endTimestamp) {
         return nervousnetDB.getReadings(configurationManager.getConfiguration(sensorID),
                 startTimestamp, endTimestamp);
     }
-
-
 
 
     //####################################################################
     //STORE SENSOR DATA
     //####################################################################
 
-    public void store(SensorReading reading){
+    public void store(SensorReading reading) {
         NNLog.d(LOG_TAG, "Writing external SensorReading object");
         nervousnetDB.store(reading);
     }
 
-    public void store(ArrayList<SensorReading> readings){
+    public void store(ArrayList<SensorReading> readings) {
         nervousnetDB.store(readings);
     }
 
@@ -297,17 +296,17 @@ public class NervousnetVM {
     //TABLE AND DATABASE MANAGEMENT
     //####################################################################
 
-    public void deleteTableIfExists(long sensorID){
+    public void deleteTableIfExists(long sensorID) {
         nervousnetDB.deleteTableIfExists(sensorID);
     }
 
-    public void createTableIfNotExists(long sensorID){
+    public void createTableIfNotExists(long sensorID) {
         nervousnetDB.createTableIfNotExists(configurationManager.getConfiguration(sensorID));
     }
 
-    public void deleteAllDatabases(){
+    public void deleteAllDatabases() {
         String[] dblist = context.databaseList();
-        for (String db : dblist){
+        for (String db : dblist) {
             context.deleteDatabase(db);
         }
     }
@@ -317,7 +316,7 @@ public class NervousnetVM {
     //GETTERS
     //####################################################################
 
-    public Context getContext(){
+    public Context getContext() {
         return context;
     }
 
@@ -338,11 +337,10 @@ public class NervousnetVM {
                 if (state == 0) stopSensor(id);                 // turn it off
                 else if (oldState == 0) startSensor(id);        // turn it on
             }
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             e.printStackTrace();
         }
     }
-
 
 
     public byte getNervousnetState() {
@@ -352,7 +350,7 @@ public class NervousnetVM {
     public byte getSensorState(long id) {
         try {
             return (byte) configurationManager.getSensorState(id);
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF;
         }
     }
@@ -378,7 +376,7 @@ public class NervousnetVM {
             updateSensorState(event.sensorID, event.state);
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED));
         } else if (event.eventType == NervousnetVMConstants.EVENT_CHANGE_ALL_SENSORS_STATE_REQUEST) {
-            for(Long sensorID : configurationManager.getSensorIDs()){
+            for (Long sensorID : configurationManager.getSensorIDs()) {
                 updateSensorState(sensorID, event.state);
             }
             EventBus.getDefault().post(new NNEvent(NervousnetVMConstants.EVENT_SENSOR_STATE_UPDATED));

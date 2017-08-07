@@ -1,30 +1,35 @@
-{  "sensors_configurations" :
-  [
+{
+  "sensors_configurations": [
     {
-      "sensorID" : 1,
-      "sensorName" : "Accelerometer",
-      "androidSensorType" : 1,
-      "parametersNames" :
-      [
+      "sensorID": 1,
+      "sensorName": "Accelerometer",
+      "androidSensorType": 1,
+      "parametersNames": [
         "accX",
         "accY",
         "accZ"
       ],
-      "parametersTypes" :
-      [
+      "parametersTypes": [
         "double",
         "double",
         "double"
       ],
-      "androidParametersPositions" : [ 0, 1, 2 ],
-      "samplingRates" : [2000, 250, 60],
-      "initialState" : 1
+      "androidParametersPositions": [
+        0,
+        1,
+        2
+      ],
+      "samplingRates": [
+        2000,
+        250,
+        60
+      ],
+      "initialState": 1
     },
     {
-      "sensorID" : 2,
-      "sensorName" : "Battery",
-      "parametersNames" :
-      [
+      "sensorID": 2,
+      "sensorName": "Battery",
+      "parametersNames": [
         "temp",
         "volt",
         "health",
@@ -38,8 +43,7 @@
         "tech",
         "percent"
       ],
-      "parametersTypes" :
-      [
+      "parametersTypes": [
         "int",
         "int",
         "int",
@@ -53,77 +57,91 @@
         "String",
         "float"
       ],
-      "samplingRates" : [2000, 250, 60],
-      "initialState" : 0,
-      "wrapperName" : "BatterySensor"
+      "samplingRates": [
+        2000,
+        250,
+        60
+      ],
+      "initialState": 0,
+      "wrapperName": "BatterySensor"
     },
     {
-      "sensorID" : 3,
-      "sensorName" : "Light",
-      "androidSensorType" : 5,
-      "parametersNames" :
-      [
+      "sensorID": 3,
+      "sensorName": "Light",
+      "androidSensorType": 5,
+      "parametersNames": [
         "Lux"
       ],
-      "parametersTypes" :
-      [
+      "parametersTypes": [
         "double"
       ],
-      "androidParametersPositions" : [ 0 ],
-      "samplingRates" : [2000, 250, 60],
-      "initialState" : 0
+      "androidParametersPositions": [
+        0
+      ],
+      "samplingRates": [
+        2000,
+        250,
+        60
+      ],
+      "initialState": 0
     },
     {
-      "sensorID" : 4,
-      "sensorName" : "Gyroscope",
-      "androidSensorType" : 4,
-      "parametersNames" :
-      [
+      "sensorID": 4,
+      "sensorName": "Gyroscope",
+      "androidSensorType": 4,
+      "parametersNames": [
         "gyroX",
         "gyroY",
         "gyroZ"
       ],
-      "parametersTypes" :
-      [
+      "parametersTypes": [
         "double",
         "double",
         "double"
       ],
-      "androidParametersPositions" : [ 0, 1, 2 ],
-      "samplingRates" : [2000, 250, 60],
-      "initialState" : 0
+      "androidParametersPositions": [
+        0,
+        1,
+        2
+      ],
+      "samplingRates": [
+        2000,
+        250,
+        60
+      ],
+      "initialState": 0
     },
     {
-      "sensorID" : 5,
-      "sensorName" : "Noise",
-      "parametersNames" :
-      [
+      "sensorID": 5,
+      "sensorName": "Noise",
+      "parametersNames": [
         "Db"
       ],
-      "parametersTypes" :
-      [
+      "parametersTypes": [
         "int"
       ],
-      "samplingRates" : [2000, 250, 60],
-      "initialState" : 0,
-      "wrapperName" : "NoiseSensor"
+      "samplingRates": [
+        2000,
+        250,
+        60
+      ],
+      "initialState": 0,
+      "wrapperName": "NoiseSensor"
     },
     {
-      "sensorID" : 10001,
-      "sensorName" : "AccelerometerWriteTest",
-      "parametersNames" :
-      [
+      "sensorID": 10001,
+      "sensorName": "AccelerometerWriteTest",
+      "parametersNames": [
         "accX",
         "accY",
         "accZ"
       ],
-      "parametersTypes" :
-      [
+      "parametersTypes": [
         "double",
         "double",
         "double"
       ],
-      "initialState" : 0
+      "initialState": 0
     }
   ]
 }

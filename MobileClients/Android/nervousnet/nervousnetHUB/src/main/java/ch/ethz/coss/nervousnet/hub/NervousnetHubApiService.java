@@ -28,10 +28,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
-import android.util.Log;
 import android.widget.Toast;
 
-import java.util.List;
 import java.util.concurrent.locks.Lock;
 
 import ch.ethz.coss.nervousnet.lib.InfoReading;
@@ -80,7 +78,7 @@ public class NervousnetHubApiService extends Service {
 
         @Override
         public InfoReading writeReading(SensorReading reading) {
-            NNLog.d(LOG_TAG, "WriteReading:  Sensor ID= " + reading.getSensorID() + " sensorName "+reading.getSensorName());
+            NNLog.d(LOG_TAG, "WriteReading:  Sensor ID= " + reading.getSensorID() + " sensorName " + reading.getSensorName());
             ((Application) getApplication()).nn_VM.store(reading);
             return Utils.getInfoReading(001);
         }

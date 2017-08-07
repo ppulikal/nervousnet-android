@@ -8,7 +8,10 @@ package ch.ethz.coss.nervousnet.clustering;
 public interface iPoint {
 
     public int getDimensions();
+
     public double[] getCoordinates();
+
     public int getCluster();
+
     public void setCluster(int c);
 }

@@ -23,18 +23,15 @@ import ch.ethz.coss.nervousnet.vm.database.NervousnetDBManager;
 public abstract class BaseSensor {
 
     private static final String LOG_TAG = BaseSensor.class.getSimpleName();
-
-    // Database handler
-    private NervousnetDBManager databaseHandler;
     // Sensor configuration
     protected BasicSensorConfiguration configuration;
-
     // Just a shortcut of configuration above and maybe more intuitive
     // representation
     protected long sensorID;
     protected String sensorName;
     protected ArrayList<String> paramNames;
-
+    // Database handler
+    private NervousnetDBManager databaseHandler;
     // In order to reduce the amount of SensorReadings to be stored into a database,
     // sampling rate is specified in the configuration. This variable is only temporary
     // variable which stores timestamp by which no SensorReading will be stored. Then, the
@@ -44,11 +41,10 @@ public abstract class BaseSensor {
 
 
     /**
-     *
      * @param context Service context
-     * @param conf Sensor configuration
+     * @param conf    Sensor configuration
      */
-    public BaseSensor(Context context, BasicSensorConfiguration conf){
+    public BaseSensor(Context context, BasicSensorConfiguration conf) {
         this.databaseHandler = NervousnetDBManager.getInstance(context);
         this.configuration = conf;
         this.sensorID = conf.getSensorID();
@@ -62,7 +58,7 @@ public abstract class BaseSensor {
      * Method for accepting all new sensor readings from subclasses. It takes care of passing new
      * readings further for storing.
      */
-    public void push(SensorReading reading){
+    public void push(SensorReading reading) {
         if (reading.getTimestampEpoch() >= nextSampling && configuration.getActualSamplingRate() >= 0) {
             Log.d(LOG_TAG, reading.toString());
             nextSampling = reading.getTimestampEpoch() + configuration.getActualSamplingRate();
@@ -73,7 +69,7 @@ public abstract class BaseSensor {
     /**
      * Start sensor reading.
      */
-    public void start(){
+    public void start() {
         stopListener();
         this.databaseHandler.createTableIfNotExists(configuration);
         startListener();
@@ -82,7 +78,7 @@ public abstract class BaseSensor {
     /**
      * Stop sensor reading
      */
-    public void stop(){
+    public void stop() {
         stopListener();
     }
 

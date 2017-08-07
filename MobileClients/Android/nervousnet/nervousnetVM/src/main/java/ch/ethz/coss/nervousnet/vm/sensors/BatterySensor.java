@@ -67,7 +67,7 @@ public class BatterySensor extends BaseSensor {
         ArrayList values = new ArrayList();
         values.add(temp);
         values.add(volt);
-        values.add((int)health);
+        values.add((int) health);
         values.add(level);
         values.add(scale);
         values.add(status);
@@ -100,7 +100,7 @@ public class BatterySensor extends BaseSensor {
         } catch (IllegalArgumentException e) {
             //NNLog.d(LOG_TAG, "Exception trying to close battery sensor");
             //e.printStackTrace();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
         return false;

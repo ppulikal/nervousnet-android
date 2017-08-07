@@ -11,31 +11,36 @@ import java.util.NoSuchElementException;
 /**
  * This class offers that sensors' states get stored or queried from database.
  * The same for application state.
- *
+ * <p>
  * TODO: methods could be optimized.
  */
-public class StateDBManager extends SQLiteOpenHelper{
+public class StateDBManager extends SQLiteOpenHelper {
 
-    protected StateDBManager(Context context){
-        super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
-        createConfigTableIfNotExists();
-        createNervousnetConfigTableIfNotExists();
-    }
+    //###############################################################################
+    // NERVOUSNET STATE
+    //###############################################################################
+    private int nervousnet_row_id = 0;  // ID is always the same - we have only 1 row
 
 
     //###############################################################################
     // SENSOR STATE
     //###############################################################################
 
-    protected synchronized void createConfigTableIfNotExists(){
+    protected StateDBManager(Context context) {
+        super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
+        createConfigTableIfNotExists();
+        createNervousnetConfigTableIfNotExists();
+    }
+
+    protected synchronized void createConfigTableIfNotExists() {
         String sql = "CREATE TABLE IF NOT EXISTS " + Constants.SENSOR_CONFIG_TABLE + " ( " +
-                Constants.ID + " INTEGER PRIMARY KEY, "+ Constants.STATE+" INTEGER);";
+                Constants.ID + " INTEGER PRIMARY KEY, " + Constants.STATE + " INTEGER);";
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(sql);
         db.close();
     }
 
-    public synchronized void storeSensorState(long sensorID, int state){
+    public synchronized void storeSensorState(long sensorID, int state) {
         ContentValues insertList = new ContentValues();
         insertList.put(Constants.ID, sensorID);
         insertList.put(Constants.STATE, state);
@@ -53,25 +58,17 @@ public class StateDBManager extends SQLiteOpenHelper{
         if (cursor.moveToFirst()) {
             long c = cursor.getInt(0);
             db.close();
-            return (byte)c;
-        }
-        else {
+            return (byte) c;
+        } else {
             db.close();
-            throw new NoSuchElementException("Config table has no config info for the id="+sensorID);
+            throw new NoSuchElementException("Config table has no config info for the id=" + sensorID);
         }
     }
+    // in the nervousnet table
 
-
-
-    //###############################################################################
-    // NERVOUSNET STATE
-    //###############################################################################
-    private int nervousnet_row_id = 0;  // ID is always the same - we have only 1 row
-                                        // in the nervousnet table
-
-    public synchronized void createNervousnetConfigTableIfNotExists(){
+    public synchronized void createNervousnetConfigTableIfNotExists() {
         String sql = "CREATE TABLE IF NOT EXISTS " + Constants.NERVOUSNET_CONFIG_TABLE + " ( " +
-                Constants.ID + " INTEGER PRIMARY KEY, "+ Constants.STATE+" INTEGER);";
+                Constants.ID + " INTEGER PRIMARY KEY, " + Constants.STATE + " INTEGER);";
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(sql);
         db.close();
@@ -97,8 +94,7 @@ public class StateDBManager extends SQLiteOpenHelper{
             int c = cursor.getInt(0);
             db.close();
             return (byte) c;
-        }
-        else {
+        } else {
             db.close();
             throw new NoSuchElementException("Nervousnet state has not been stored yet");
         }
