@@ -78,14 +78,19 @@ public class ProximityFragment extends BaseFragment {
                 byte state;
                 switch (checkedId) {
                     case R.id.radioOff:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF; break;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF;
+                        break;
                     case R.id.radioLow:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW; break;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW;
+                        break;
                     case R.id.radioMed:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED; break;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED;
+                        break;
                     case R.id.radioHigh:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH; break;
-                    default: state = -1;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH;
+                        break;
+                    default:
+                        state = -1;
                 }
                 if (lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF
                         && state >= 0) {

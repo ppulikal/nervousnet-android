@@ -204,7 +204,7 @@ public class NervousnetServiceController {
             if (mService != null)
                 return mService.getLatestReading(sensorID);
             else
-               return new InfoReading(new String[]{"002", "Service not connected."});
+                return new InfoReading(new String[]{"002", "Service not connected."});
         } else
             return new InfoReading(new String[]{"003", "Service not bound."});
 
@@ -215,9 +215,7 @@ public class NervousnetServiceController {
         if (bindFlag) {
             if (mService != null) {
                 return mService.writeReading(reading);
-            }
-
-            else
+            } else
                 return new InfoReading(new String[]{"002", "Service not connected."});
         } else
             return new InfoReading(new String[]{"003", "Service not bound."});
@@ -249,8 +247,6 @@ public class NervousnetServiceController {
     }*/
 
 
-
-
     private boolean isAppInstalled(String packageName) {
         try {
             context.getPackageManager().getApplicationInfo(packageName, 0);
@@ -259,10 +255,11 @@ public class NervousnetServiceController {
             return false;
         }
     }
+
     class Callback extends RemoteCallback.Stub {
         private List<SensorReading> list;
 
-        public Callback(){
+        public Callback() {
         }
 
         @Override
@@ -276,6 +273,8 @@ public class NervousnetServiceController {
             //Log.d("NERVOUSNET CALLBACK", sType + "callback failure "+reading.getInfoString());
         }
 
-        public List getList() { return this.list; }
+        public List getList() {
+            return this.list;
+        }
     }
 }

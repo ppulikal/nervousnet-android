@@ -43,6 +43,7 @@ public class GeneralSensorConfiguration {
     public int getDimension() {
         return dimensions;
     }
+
     @Override
     public String toString() {
         return "ConfigurationClass{" +

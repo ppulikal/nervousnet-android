@@ -62,7 +62,7 @@ public class SpaceActivity extends BaseActivity {
                 alertDialog.show();
             }
         });
-        webview.loadUrl("http://play.google.com/store/search?q=pub:ETH%20Zurich%20-%20COSS");
+        webview.loadUrl("https://play.google.com/store/apps/developer?id=ETH+Zurich+-+COSS");
 
     }
 

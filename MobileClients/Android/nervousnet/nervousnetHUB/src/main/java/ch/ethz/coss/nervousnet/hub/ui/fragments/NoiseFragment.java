@@ -79,14 +79,19 @@ public class NoiseFragment extends BaseFragment {
                 byte state;
                 switch (checkedId) {
                     case R.id.radioOff:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF; break;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF;
+                        break;
                     case R.id.radioLow:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW; break;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW;
+                        break;
                     case R.id.radioMed:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED; break;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED;
+                        break;
                     case R.id.radioHigh:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH; break;
-                    default: state = -1;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH;
+                        break;
+                    default:
+                        state = -1;
                 }
                 if (lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF
                         && state >= 0) {
@@ -120,7 +125,7 @@ public class NoiseFragment extends BaseFragment {
         } else {
             NNLog.d("NoiseFragment", "Inside updateReadings");
             sensorStatusTV.setText(R.string.sensor_status_connected);
-            db = (float)reading.getValues().get(0);
+            db = (float) reading.getValues().get(0);
             TextView dbTV = (TextView) getActivity().findViewById(R.id.dbValue);
 
             if (newDb < Math.round(db))

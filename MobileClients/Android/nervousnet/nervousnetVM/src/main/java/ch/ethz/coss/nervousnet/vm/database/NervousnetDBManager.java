@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
 import ch.ethz.coss.nervousnet.lib.SensorReading;
 import ch.ethz.coss.nervousnet.vm.configuration.GeneralSensorConfiguration;
 
@@ -50,20 +52,14 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
     // can be very unefficient. For this reason, it collects data for the given interval
     // and then stores all of it.
     private static HashMap<Long, ArrayList<SensorReading>> TEMPORARY_STORAGE = new HashMap();
-
-
+    // Scheduler, which dictates storing of cache
+    ScheduledExecutorService scheduler;
     // Initial delay for storing is used at start up of the application. Sometimes,
     // it is good to wait a bit and then start the scheduler for storing the data.
     private long initialDelayForStoring = 5000; //5 sec
-
-
     // Storing rate is a parameter which tells scheduler at what rate it should store
     // the data collected in temporary storage.
     private long storingRate = 10000; // 10 sec
-
-
-    // Scheduler, which dictates storing of cache
-    ScheduledExecutorService scheduler;
 
 
     // Constructor is private as we want only one instance of the class to prevent database
@@ -77,23 +73,25 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
 
     /**
      * Creates new instance if it does not exist and returns it.
+     *
      * @param context
      * @return instance of NervousnetDBManager
      */
-    public static NervousnetDBManager getInstance(Context context){
-        if (instance == null){
+    public static NervousnetDBManager getInstance(Context context) {
+        if (instance == null) {
             instance = new NervousnetDBManager(context);
         }
         return instance;
     }
 
-
-    private void startSchedluer(){
-        // Create new scheduler and run it
-        this.scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(instance, initialDelayForStoring,
-                storingRate, TimeUnit.MILLISECONDS);
-        Log.d(LOG_TAG, "Start scheduler for storing at rate " + storingRate);
+    /**
+     * Returns latest reading that has been stored since starting the application.
+     */
+    public static SensorReading getLatestReading(long sensorID) throws NoSuchElementException {
+        if (LATEST_SENSORS_DATA.containsKey(sensorID))
+            return LATEST_SENSORS_DATA.get(sensorID);
+        else
+            throw new NoSuchElementException("No data arrived yet for the sensor id " + sensorID);
     }
 
 
@@ -105,40 +103,38 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
     // The class provides all the data, which is necessary to create
     // SensorReading object.
 
-    /**
-     * Returns latest reading that has been stored since starting the application.
-     */
-    public static SensorReading getLatestReading(long sensorID) throws NoSuchElementException{
-        if (LATEST_SENSORS_DATA.containsKey(sensorID))
-            return LATEST_SENSORS_DATA.get(sensorID);
-        else
-            throw new NoSuchElementException("No data arrived yet for the sensor id " + sensorID);
+    private static String getTableName(long sensorID) {
+        return "ID" + String.valueOf(sensorID);
+    }
+
+    private void startSchedluer() {
+        // Create new scheduler and run it
+        this.scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(instance, initialDelayForStoring,
+                storingRate, TimeUnit.MILLISECONDS);
+        Log.d(LOG_TAG, "Start scheduler for storing at rate " + storingRate);
     }
 
     /**
      * Returns list of all readings for a sensor specified in config.
      */
     public ArrayList<SensorReading> getReadings(
-            GeneralSensorConfiguration config)
-    {
+            GeneralSensorConfiguration config) {
         String query = "SELECT * FROM " + getTableName(config.getSensorID());
         return getReadings(config, query);
     }
-
 
     /**
      * Returns list of readings in the interval specified with start timestamp and stop timestamp in
      * milliseconds.
      */
     public ArrayList<SensorReading> getReadings(
-            GeneralSensorConfiguration config, long startTimestamp, long endTimestamp)
-    {
+            GeneralSensorConfiguration config, long startTimestamp, long endTimestamp) {
         String query = "SELECT * FROM " + getTableName(config.getSensorID()) +
                 " WHERE " + ConstantsDB.TIMESTAMP + " >= " + startTimestamp + " AND " +
                 ConstantsDB.TIMESTAMP + " <= " + endTimestamp + ";";
         return getReadings(config, query);
     }
-
 
     /**
      * Returns list of readings in the interval specified with start timestamp and stop timestamp in
@@ -147,8 +143,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
      */
     public ArrayList<SensorReading> getReadings(
             GeneralSensorConfiguration config, long start, long stop,
-            ArrayList<String> selectParameters)
-    {
+            ArrayList<String> selectParameters) {
         String cols = TextUtils.join(", ", selectParameters);
         String query = "SELECT " + ConstantsDB.ID + ", " +
                 ConstantsDB.TIMESTAMP + ", " + cols +
@@ -159,12 +154,15 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
     }
 
 
+    //####################################################################
+    //STORE
+    //####################################################################
+
     /**
      * Returns list of readings based on a manual sql query.
      */
     public synchronized ArrayList<SensorReading> getReadings(
-            GeneralSensorConfiguration config, String query)
-    {
+            GeneralSensorConfiguration config, String query) {
         ArrayList<String> sensorParamNames = config.getParametersNames();
         SQLiteDatabase DATABASE = getReadableDatabase();
         // TODO: check this version
@@ -181,7 +179,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
                         config.getSensorName(),
                         sensorParamNames);
                 reading.setTimestampEpoch(cursor.getLong(indexTimestamp));
-                for (String columnName : sensorParamNames){
+                for (String columnName : sensorParamNames) {
                     int indexParam = cursor.getColumnIndex(columnName);
                     Object value = null;
                     // TODO: check this version
@@ -189,11 +187,14 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
                         int type = cursor.getType(indexParam);
                         switch (type) {
                             case ConstantsDB.FIELD_TYPE_INTEGER:
-                                value = cursor.getInt(indexParam); break;
+                                value = cursor.getInt(indexParam);
+                                break;
                             case ConstantsDB.FIELD_TYPE_FLOAT:
-                                value = cursor.getFloat(indexParam); break;
+                                value = cursor.getFloat(indexParam);
+                                break;
                             case ConstantsDB.FIELD_TYPE_STRING:
-                                value = cursor.getString(indexParam); break;
+                                value = cursor.getString(indexParam);
+                                break;
                             default:
                                 value = null;
                         }
@@ -208,43 +209,39 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
         return returnList;
     }
 
-
-
-    //####################################################################
-    //STORE
-    //####################################################################
-
     /**
      * Delete table of the sesnor.
      */
-    public synchronized void deleteTableIfExists(long sensorID){
+    public synchronized void deleteTableIfExists(long sensorID) {
         String sql = "DROP TABLE IF EXISTS " + getTableName(sensorID) + ";";
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(sql);
         db.close();
     }
 
-
     /**
      * Create table for a sensor. Configuration of a sensor has to be passed.
      */
-    public synchronized void createTableIfNotExists(GeneralSensorConfiguration config){
-        Log.d(LOG_TAG, "createTableIfNotExists called with name: "+getTableName(config.getSensorID()));
+    public synchronized void createTableIfNotExists(GeneralSensorConfiguration config) {
+        Log.d(LOG_TAG, "createTableIfNotExists called with name: " + getTableName(config.getSensorID()));
         String sql = "CREATE TABLE IF NOT EXISTS " +
                 getTableName(config.getSensorID()) + " ( " +
                 ConstantsDB.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ConstantsDB.TIMESTAMP + " INTEGER";
         ArrayList<String> paramNames = config.getParametersNames();
         ArrayList<String> paramTypes = config.getParametersTypes();
-        for (int i = 0; i < config.getDimension(); i++){
+        for (int i = 0; i < config.getDimension(); i++) {
             String type = "";
-            switch (paramTypes.get(i)){
+            switch (paramTypes.get(i)) {
                 case "int":
-                    type = "INT"; break;
+                    type = "INT";
+                    break;
                 case "double":
-                    type = "REAL"; break;
+                    type = "REAL";
+                    break;
                 case "String":
-                    type = "TEXT"; break;
+                    type = "TEXT";
+                    break;
             }
             sql += ", " + paramNames.get(i) + " " + type;
         }
@@ -254,11 +251,10 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
         db.close();
     }
 
-
     /**
      * Store list of readings.
      */
-    public synchronized void store(ArrayList<? extends SensorReading> readings){
+    public synchronized void store(ArrayList<? extends SensorReading> readings) {
         SQLiteDatabase db = this.getWritableDatabase();
         for (SensorReading reading : readings) {
             ContentValues insertList = new ContentValues();
@@ -286,8 +282,7 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
         db.close();
     }
 
-
-    private synchronized void store(Collection<ArrayList<SensorReading>> readingsList){
+    private synchronized void store(Collection<ArrayList<SensorReading>> readingsList) {
         SQLiteDatabase db = this.getWritableDatabase();
         boolean allEmpty = true;
         for (ArrayList<SensorReading> readings : readingsList) {
@@ -318,37 +313,34 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
             }
         }
         db.close();
-        if (allEmpty){
+        if (allEmpty) {
             this.scheduler.shutdown();
             Log.d(LOG_TAG, "Shutdown the NervousnetDBManager");
         }
     }
 
-
     /**
      * Store reading into cache.
      */
-    public void store(SensorReading reading){
-        if (scheduler.isShutdown()){
+    public void store(SensorReading reading) {
+        if (scheduler.isShutdown()) {
             startSchedluer();
         }
         LATEST_SENSORS_DATA.put(reading.getSensorID(), reading);
         if (TEMPORARY_STORAGE.containsKey(reading.getSensorID())) {
             ArrayList<SensorReading> readings = TEMPORARY_STORAGE.get(reading.getSensorID());
             readings.add(reading);
-        }
-        else {
+        } else {
             ArrayList<SensorReading> newArray = new ArrayList();
             newArray.add(reading);
             TEMPORARY_STORAGE.put(reading.getSensorID(), newArray);
         }
     }
 
-
     /**
      * Delete readings that are older than threshold timestamp (milliseconds).
      */
-    public synchronized void removeOldReadings(long sensorID, long threshold){
+    public synchronized void removeOldReadings(long sensorID, long threshold) {
         String sql = "DELETE FROM " + getTableName(sensorID) +
                 " WHERE " + ConstantsDB.TIMESTAMP + " < " + threshold + ";";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -364,11 +356,6 @@ public class NervousnetDBManager extends SQLiteOpenHelper implements Runnable {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
-    }
-
-
-    private static String getTableName(long sensorID){
-        return "ID" + String.valueOf(sensorID);
     }
 
     /**

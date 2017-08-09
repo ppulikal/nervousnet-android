@@ -81,14 +81,19 @@ public class BatteryFragment extends BaseFragment {
                 byte state;
                 switch (checkedId) {
                     case R.id.radioOff:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF; break;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF;
+                        break;
                     case R.id.radioLow:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW; break;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_LOW;
+                        break;
                     case R.id.radioMed:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED; break;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_MED;
+                        break;
                     case R.id.radioHigh:
-                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH; break;
-                    default: state = -1;
+                        state = NervousnetVMConstants.SENSOR_STATE_AVAILABLE_DELAY_HIGH;
+                        break;
+                    default:
+                        state = -1;
                 }
                 if (lastCollectionRate >= NervousnetVMConstants.SENSOR_STATE_AVAILABLE_BUT_OFF
                         && state >= 0) {
@@ -125,17 +130,17 @@ public class BatteryFragment extends BaseFragment {
             ArrayList values = reading.getValues();
 
             TextView percent = (TextView) getActivity().findViewById(R.id.battery_percent);
-            percent.setText("" + (float)values.get(11)*100 + " %");
+            percent.setText("" + (float) values.get(11) * 100 + " %");
 
 
             TextView isCharging = (TextView) getActivity().findViewById(R.id.battery_isCharging);
-            isCharging.setText(((int)reading.getValues().get(7) != 0) ? "YES" : "NO");
+            isCharging.setText(((int) reading.getValues().get(7) != 0) ? "YES" : "NO");
 
             TextView USB_Charging = (TextView) getActivity().findViewById(R.id.battery_isUSB);
-            USB_Charging.setText((int)reading.getValues().get(8) > 0 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
+            USB_Charging.setText((int) reading.getValues().get(8) > 0 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
 
             TextView AC_charging = (TextView) getActivity().findViewById(R.id.battery_isAC);
-            AC_charging.setText((int)reading.getValues().get(9) > 0 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
+            AC_charging.setText((int) reading.getValues().get(9) > 0 ? getContext().getString(R.string.yes) : getContext().getString(R.string.no));
 
 
         }

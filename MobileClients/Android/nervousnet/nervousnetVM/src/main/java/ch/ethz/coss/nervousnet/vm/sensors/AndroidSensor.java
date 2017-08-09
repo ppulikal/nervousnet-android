@@ -19,16 +19,14 @@ import ch.ethz.coss.nervousnet.vm.configuration.BasicSensorConfiguration;
  * This enables that for any new sensor in the documentation only configuration needs to be updated.
  */
 
-public class AndroidSensor extends BaseSensor  implements SensorEventListener {
+public class AndroidSensor extends BaseSensor implements SensorEventListener {
 
     private static final String LOG_TAG = AndroidSensor.class.getSimpleName();
-    private SensorManager mSensorManager;
-    private Sensor sensor;
-
-    private int[] androidParametersPositions;
-
     // Locking
     protected Lock listenerMutex = new ReentrantLock();
+    private SensorManager mSensorManager;
+    private Sensor sensor;
+    private int[] androidParametersPositions;
 
     /**
      * Constructor for basic sensor specified in the documentation for Android Sensor class.
@@ -37,7 +35,7 @@ public class AndroidSensor extends BaseSensor  implements SensorEventListener {
         // Abstract class will take care of acquiring parameter names and
         // everything that is needed to initialize this listener
         super(context, conf);
-        this.mSensorManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
+        this.mSensorManager = (SensorManager) context.getSystemService(context.SENSOR_SERVICE);
         this.sensor = mSensorManager.getDefaultSensor(conf.getAndroidSensorType());
         this.androidParametersPositions = conf.getAndroidParametersPositions();
     }
